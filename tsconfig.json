@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "esnext",
+    "target": "es2015",
+    "allowJs": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}
