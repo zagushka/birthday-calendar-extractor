@@ -1,3 +1,4 @@
+// Icon source : http://free-icon-rainbow.com/birthday-cake-free-icon-2/
 import * as FileSaver from 'file-saver';
 import {
   generateCalendar,
