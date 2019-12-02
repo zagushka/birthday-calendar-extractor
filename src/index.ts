@@ -5,7 +5,15 @@ import {
   thisWeekDays,
 } from './lib';
 
-const result = document.querySelectorAll('#birthdays_monthly_card li a');
+(function() {
+  const destinationElement = document.querySelectorAll('#events_dashboard_find_events ul')[0];
+  const button = document.createElement('a');
+  button.innerText = 'CLICK ME';
+  button.addEventListener('click', justDoIy);
+  destinationElement.append(button);
+
+  function justDoIy() {
+    const result = document.querySelectorAll('#birthdays_monthly_card li a');
 
     const nextWeekDays = thisWeekDays();
     const regExpForDateWithDays = new RegExp('(.*) \\(([0-9]{1,2})\\/([0-9]{1,2})\\)$');
@@ -48,4 +56,5 @@ const result = document.querySelectorAll('#birthdays_monthly_card li a');
 
     const blob = new Blob([generatedCalendar], {type: 'text/plain;charset=utf-8'});
     FileSaver.saveAs(blob, 'birthday calendar.ics');
-
+  }
+})();
