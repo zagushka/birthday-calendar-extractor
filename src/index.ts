@@ -9,10 +9,10 @@ import {
   const destinationElement = document.querySelectorAll('#events_dashboard_find_events ul')[0];
   const button = document.createElement('a');
   button.innerText = 'CLICK ME';
-  button.addEventListener('click', justDoIy);
+  button.addEventListener('click', parseCalendarAndSave);
   destinationElement.append(button);
 
-  function justDoIy() {
+  function parseCalendarAndSave() {
     const result = document.querySelectorAll('#birthdays_monthly_card li a');
 
     const nextWeekDays = thisWeekDays();
