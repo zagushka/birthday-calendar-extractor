@@ -1,3 +1,4 @@
+import * as FileSaver from 'file-saver';
 import {
   generateCalendar,
   RawEvent,
@@ -22,6 +23,8 @@ result.forEach((item: HTMLLinkElement) => {
   }
 });
 
-const r = generateCalendar(events, 2019);
-console.log(r);
+    const generatedCalendar = generateCalendar(events, 2019);
+
+    const blob = new Blob([generatedCalendar], {type: 'text/plain;charset=utf-8'});
+    FileSaver.saveAs(blob, 'birthday calendar.ics');
 

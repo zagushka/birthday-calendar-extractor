@@ -5,12 +5,14 @@
   "description": "Install from [Chrome Web Store](https://chrome.google.com/webstore/detail/facebook-video-volume-fix/elfninnghghhkopaakchobkbholknbjf).",
   "main": "index.js",
   "dependencies": {
+    "file-saver": "^2.0.2",
     "luxon": "^1.21.1",
     "moment": "^2.24.0",
     "rxjs": "^6.5.3"
   },
   "devDependencies": {
     "@types/chrome": "0.0.91",
+    "@types/file-saver": "^2.0.1",
     "@types/luxon": "^1.21.0",
     "codelyzer": "^5.2.0",
     "ts-loader": "^6.2.1",
