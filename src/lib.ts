@@ -47,7 +47,16 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
   baked.uid = window.btoa(event.href) + '-' + baked.start;
 
   return baked;
-};
+}
+
+export function thisWeekDays(date = DateTime): { [weekDay: string]: DateTime } {
+  const weeks: { [weekDay: string]: DateTime } = {};
+  for (let i = 1; i <= 7; i++) {
+    const weekDay = date.local().plus({'days': i});
+    weeks[weekDay.weekdayLong] = weekDay.plus({'days': 1});
+  }
+  return weeks;
+}
 
 export const DATE_FORMAT = 'YYYYMMDD';
 
