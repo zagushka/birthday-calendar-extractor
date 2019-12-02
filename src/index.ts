@@ -8,9 +8,27 @@ import {
 (function() {
   const destinationElement = document.querySelectorAll('#events_dashboard_find_events ul')[0];
   const button = document.createElement('a');
-  button.innerText = 'CLICK ME';
-  button.addEventListener('click', parseCalendarAndSave);
+  button.innerText = 'Save Birthday Calendar';
+  button.addEventListener('click', () => scrollDown(parseCalendarAndSave));
   destinationElement.append(button);
+
+  function scrollDown(callBack: Function, delay = 500, wait = 3000) {
+
+    const scrollInterval = setInterval(() => {
+      window.scroll(0, 100000);
+    }, delay);
+
+    let lastHeight = document.body.clientHeight;
+    const heightInterval = setInterval(() => {
+      if (lastHeight !== document.body.clientHeight) {
+        lastHeight = document.body.clientHeight;
+        return;
+      }
+      clearInterval(heightInterval);
+      clearInterval(scrollInterval);
+      callBack();
+    }, wait);
+  }
 
   function parseCalendarAndSave() {
     const result = document.querySelectorAll('#birthdays_monthly_card li a');
