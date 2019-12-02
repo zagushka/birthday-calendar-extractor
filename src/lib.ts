@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { DateTime } from 'luxon';
 
 export interface RawEvent {
   name: string;
@@ -17,24 +17,30 @@ export interface BakedEvent {
 }
 
 export function bakeEvent(event: RawEvent, year: number): BakedEvent {
-  // month - 1, because of https://momentjs.com/docs/#/parsing/array/
-  const start = moment([year, event.month - 1, event.day]);
+  let start = DateTime.local(year, event.month, event.day);
 
   //Take care of leap year issues (invalid at days)
-  if (2 === start.invalidAt()) {
-    start.set('day', 28);
+  if ('day out of range' === start.invalidExplanation) {
+    start = DateTime.local(year, event.month, 28);
   }
 
   // Wrong date
-  if (!start.isValid()) {
+  if (!start.isValid) {
     return null;
   }
+  /**
+   * The date with local time form is simply a DATE-TIME value that does not contain the UTC designator nor does it reference a time zone.
+   * For example, the following represents January 18, 1998, at 11 PM:
+
+   19980118T230000
+   1998 01 18 T23 00 00
+   */
 
   const baked: BakedEvent = {
     name: event.name,
-    start: start.format(DATE_FORMAT),
-    end: start.clone().add(1, 'day').format(DATE_FORMAT),
-    stamp: moment().format('YYYYMMDDTHHmmss'),
+    start: start.toFormat('yyyyLLdd\'T\'HHmmss'),
+    end: start.plus({days: 1}).toFormat('yyyyLLdd\'T\'HHmmss'),
+    stamp: DateTime.local().toFormat('yyyyLLdd\'T\'HHmmss'),
     href: event.href,
     uid: '',
   };
@@ -52,25 +58,24 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 ${generateEvents(events, tillYear)}
-END:VCALENDAR
-`;
+END:VCALENDAR`;
 }
 
 function generateEvents(events: Array<RawEvent>, tillYear: number) {
-  const now = moment();
-  let year = now.get('year');
-  let result = '';
+  let year = DateTime.local().year;
+  const result: Array<BakedEvent> = [];
 
   do {
-    result += events.reduce((c, event) => {
+    events.forEach(event => {
       const baked = bakeEvent(event, year);
-      c += baked && generateEvent(baked);
-      return c;
-    }, '');
+      if (baked) {
+        result.push(baked);
+      }
+    });
     year++;
   } while (tillYear >= year);
 
-  return result;
+  return result.map(generateEvent).join('\n\r');
 }
 
 function generateEvent(event: BakedEvent) {
@@ -87,6 +92,5 @@ SEQUENCE:0
 STATUS:CONFIRMED
 SUMMARY:${event.name}'s birthday
 TRANSP:OPAQUE
-END:VEVENT
-`;
+END:VEVENT`;
 }
