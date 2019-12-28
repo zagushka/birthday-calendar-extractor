@@ -1,9 +1,24 @@
-Intro
+Генератор Календаря Дней Рождений для Facebook
 
-What it does
+Это дополнение позволяет создать календарь дней рождений ваших друзей из Facebook на следующие два года.
 
+Созданый календарь сохряняется в файле формата `ICS` - универсальный формат календарей, успользуемый в некоторых емаил и программах календарях, включая Microsoft Outlook, Google Calendar, и Apple Calendar.
 
-What's good in it
+Важно!
+Я не советую импортировать сгенерированый календарь в уже существующий, лучше создать новый и использовать его только для дней рождений.
 
-TODO
+Как пользоваться этим дополнением
+1. Перейдите по линку https://www.facebook.com/events/birthday
+2. Нажмите на линк "Save Birthday Calendar" под "Find Events" в левом столбце страницы. Перезагрузите страницу, если линк не появился.
+3. Подождите пока дополнение скролит страницу вниз и создает календарь.
+4. Файл с именем `birthday-calendar.ics` будет сохранен автоматически в папку Downloads.
+5. Исползуйте сгенерированый файл для экспорта дней рождений ваших друзей в программу календарь.
+
+Things to improve
+It is open source, feel free to check it here: https://github.com/zagushka/birthday-calendar-extractor
+* Currently extension is not loaded automatically when navigated to the birthdays events page form other Facebook page.
+* Option to edit birthdays before generating the calendar file.
+* Leap years February 29 birthdays.
+* Get rid of luxon (https://moment.github.io/luxon/) to reduce bundle size.
+* Direct export to Google Calendar.
 

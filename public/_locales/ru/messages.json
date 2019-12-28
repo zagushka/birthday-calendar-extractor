@@ -1,8 +1,8 @@
 {
   "appName": {
-    "message": "Birthday Calendar Extractor"
+    "message": "Генератор Календаря Дней Рождений для Facebook"
   },
   "appDesc": {
-    "message": "Birthday Calendar Extractor"
+    "message": "Это дополнение позволяет создать календарь дней рождений ваших друзей из Facebook на следующие два года."
   }
 }

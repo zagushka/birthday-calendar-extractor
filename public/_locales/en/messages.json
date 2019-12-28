@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "Birthday Calendar Extractor",
+    "message": "Birthday Calendar Extractor for Facebook",
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Birthday Calendar Extractor",
+    "message": "This extension helps to create calendar with all your facebook friends birthdays for a next two years.",
     "description": "The description of the application, displayed in the web store."
   }
 }
