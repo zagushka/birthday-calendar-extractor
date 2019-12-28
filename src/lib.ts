@@ -60,7 +60,10 @@ export function thisWeekDays(date = DateTime): { [weekDay: string]: DateTime } {
 
 export const DATE_FORMAT = 'YYYYMMDD';
 
-export function generateCalendar(events: Array<RawEvent>, tillYear: number) {
+export function generateCalendar(
+  events: Array<RawEvent>,
+  tillYear: number = DateTime.local().plus({'year': 2}).year,
+) {
   return `BEGIN:VCALENDAR
 PRODID:-//Google Inc//Google Calendar 70.9054//EN
 VERSION:2.0
