@@ -71,9 +71,8 @@ import {
       }
     });
 
-    const generatedCalendar = generateCalendar(events);
-
-    const blob = new Blob([generatedCalendar], {type: 'text/plain;charset=utf-8'});
-    FileSaver.saveAs(blob, 'birthday-calendar.ics');
+    const generatedCalendar = generateCalendar(events).replace(/\r?\n/g, "\r\n");
+    const blob = new Blob([generatedCalendar], {endings: 'transparent', type: 'text/calendar; charset=UTF-8'});
+    FileSaver.saveAs(blob, 'birthday-calendar.ics', {autoBom: true});
   }
 })();
