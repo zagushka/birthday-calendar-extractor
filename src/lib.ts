@@ -65,7 +65,7 @@ export function generateCalendar(
   tillYear: number = DateTime.local().plus({'year': 2}).year,
 ) {
   return `BEGIN:VCALENDAR
-PRODID:-//Google Inc//Google Calendar 70.9054//EN
+PRODID:Birthday Calendar Extractor for Facebook
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
@@ -87,7 +87,7 @@ function generateEvents(events: Array<RawEvent>, tillYear: number) {
     year++;
   } while (tillYear >= year);
 
-  return result.map(generateEvent).join('\n\r');
+  return result.map(generateEvent).join('\n');
 }
 
 function generateEvent(event: BakedEvent) {
@@ -97,12 +97,12 @@ DTEND;VALUE=DATE:${event.end}
 DTSTAMP:${event.stamp}
 UID:${event.uid}
 X-GOOGLE-CALENDAR-CONTENT-DISPLAY:chip
-X-GOOGLE-CALENDAR-CONTENT-ICON:https://calendar.google.com/googlecalendar/images/cake.gif
-CLASS:PUBLIC
 DESCRIPTION:This is <a href='${event.href}'>${event.name}</a> birthday!
 SEQUENCE:0
 STATUS:CONFIRMED
-SUMMARY:${event.name}'s birthday
+` +
+    // There is unicode cake character before event.name, you may not see it in you editor
+    `SUMMARY:🎂 ${event.name}
 TRANSP:OPAQUE
 END:VEVENT`;
 }
