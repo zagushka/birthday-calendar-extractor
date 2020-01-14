@@ -62,7 +62,7 @@ export const DATE_FORMAT = 'YYYYMMDD';
 
 export function generateCalendar(
   events: Array<RawEvent>,
-  tillYear: number = DateTime.local().plus({'year': 2}).year,
+  tillYear: number = DateTime.local().plus({'year': 1}).year,
 ) {
   return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook
