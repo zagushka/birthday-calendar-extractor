@@ -12,7 +12,6 @@
     "@types/chrome": "0.0.91",
     "@types/file-saver": "^2.0.1",
     "@types/luxon": "^1.21.0",
-    "codelyzer": "^5.2.0",
     "copy-webpack-plugin": "^5.0.5",
     "ts-loader": "^6.2.1",
     "tslint": "^5.20.1",

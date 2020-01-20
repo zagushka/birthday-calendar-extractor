@@ -4,7 +4,7 @@ export interface RawEvent {
   name: string;
   month: number;
   day: number;
-  href: string
+  href: string;
 }
 
 export interface BakedEvent {
@@ -19,7 +19,7 @@ export interface BakedEvent {
 export function bakeEvent(event: RawEvent, year: number): BakedEvent {
   let start = DateTime.local(year, event.month, event.day);
 
-  //Take care of leap year issues (invalid at days)
+  // Take care of leap year issues (invalid at days)
   if ('day out of range' === start.invalidExplanation) {
     start = DateTime.local(year, event.month, 28);
   }
@@ -31,9 +31,9 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
   /**
    * The date with local time form is simply a DATE-TIME value that does not contain the UTC designator nor does it reference a time zone.
    * For example, the following represents January 18, 1998, at 11 PM:
-
-   19980118T230000
-   1998 01 18 T23 00 00
+   *
+   * 19980118T230000
+   * 1998 01 18 T23 00 00
    */
 
   const baked: BakedEvent = {
@@ -49,20 +49,20 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
   return baked;
 }
 
-export function thisWeekDays(date = DateTime): { [weekDay: string]: DateTime } {
-  const weeks: { [weekDay: string]: DateTime } = {};
-  for (let i = 1; i <= 7; i++) {
-    const weekDay = date.local().plus({'days': i});
-    weeks[weekDay.weekdayLong] = weekDay.plus({'days': 1});
-  }
-  return weeks;
-}
+export function weekDates(): { [name: number]: DateTime } {
+  const days: { [name: number]: DateTime } = {};
 
-export const DATE_FORMAT = 'YYYYMMDD';
+  for (let i = 1; i <= 7; i++) {
+    const date = DateTime.local().plus({days: i});
+    const weekDayNumber = +date.toFormat('c') - 1; // toFormat('c') returns weekday from 1-7 (Monday is 1, Sunday is 7)
+    days[weekDayNumber] = date;
+  }
+  return days;
+}
 
 export function generateCalendar(
   events: Array<RawEvent>,
-  tillYear: number = DateTime.local().plus({'year': 1}).year,
+  tillYear: number = DateTime.local().plus({year: 1}).year,
 ) {
   return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook
