@@ -25,7 +25,7 @@
     "placeholders": {
       "languages": {
         "content": "$1",
-        "example": "List of supported languages as HTML."
+        "example": "<ul><li>English (US)<li>English (UK)</ul>"
       }
     }
   },
