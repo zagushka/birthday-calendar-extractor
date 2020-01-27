@@ -3,7 +3,11 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: {
+    'content': './src/content.ts',
+    'popup': './src/popup.ts',
+    'background': './src/background.ts'
+  },
   module: {
     rules: [
       {
@@ -17,7 +21,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name]/[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [

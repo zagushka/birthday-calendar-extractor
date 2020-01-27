@@ -1,8 +1,46 @@
 {
   "appName": {
-    "message": "Генератор Календаря Дней Рождений для Facebook"
+    "message": "Генератор Календаря Дней Рождений для Facebook",
+    "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Это дополнение позволяет создать календарь дней рождений ваших друзей из Facebook на следующие два года."
+    "message": "Это дополнение позволяет создать календарь дней рождений ваших друзей из Facebook на следующие два года.",
+    "description": "The description of the application, displayed in the web store."
+  },
+  "FACEBOOK_REQUIRED": {
+    "message": "Вам нужно быть на странице с днями рождений facebook.<p>Нажмите на линк вниже для перехода и попробуйте снова.",
+    "description": "Description in case user is not on the birthdays page."
+  },
+  "FACEBOOK_REQUIRED_LINK": {
+    "message": "https://www.facebook.com/events/birthdays/",
+    "description": "Facebook birthday page url."
+  },
+  "FACEBOOK_REQUIRED_LINK_TITLE": {
+    "message": "На страницу дней рождений.",
+    "description": "Button to Facebook birthday page title."
+  },
+  "NOT_SUPPORTED_LANGUAGE": {
+    "message": "Ваш язык facebook'а не поддерживается. Смените на: <ul><li>'English (UK)' <li>'English (US) <li>'Русский' <li>'Українська'<li>'עברית'</ul> И нажмите на иконку снова.",
+    "description": "Description in case facebook language is not supported"
+  },
+  "NOT_SUPPORTED_LANGUAGE_LINK": {
+    "message": "https://www.facebook.com/settings?tab=language",
+    "description": "Facebook settings page with language set."
+  },
+  "NOT_SUPPORTED_LANGUAGE_TITLE": {
+    "message": "На страницу смены языка.",
+    "description": "Button to facebook settings page title."
+  },
+  "WORKING": {
+    "message": "Процесс генерации календаря стартовал успешно.<br>Страница будет прокрученна вниз, до тех пор, пока все дни рождения друзей не появятся.<br>После этого календарь будет создан и сохранен.",
+    "description": "Description when extraction process started successfully"
+  },
+  "WORKING_LINK": {
+    "message": "",
+    "description": "Empty link"
+  },
+  "WORKING_TITLE": {
+    "message": "Понятно",
+    "description": "Ok button"
   }
 }

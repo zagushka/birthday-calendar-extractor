@@ -6,5 +6,41 @@
   "appDesc": {
     "message": "This extension helps to create calendar with all your facebook friends birthdays for a next two years.",
     "description": "The description of the application, displayed in the web store."
+  },
+  "FACEBOOK_REQUIRED": {
+    "message": "You need to be on the facebook birthdays page in order to generate calendar.<p>Please follow the link below and click the icon again.",
+    "description": "Description in case user is not on the birthdays page."
+  },
+  "FACEBOOK_REQUIRED_LINK": {
+    "message": "https://www.facebook.com/events/birthdays/",
+    "description": "Facebook birthday page url."
+  },
+  "FACEBOOK_REQUIRED_LINK_TITLE": {
+    "message": "To facebook birthdays page.",
+    "description": "Button to Facebook birthday page title."
+  },
+  "NOT_SUPPORTED_LANGUAGE": {
+    "message": "Your facebook language is not supported. Please change it to: <ul><li>'English (UK)' <li>'English (US) <li>'Русский' <li>'Українська'<li>'עברית'</ul> And click the icon again.",
+    "description": "Description in case facebook language is not supported"
+  },
+  "NOT_SUPPORTED_LANGUAGE_LINK": {
+    "message": "https://www.facebook.com/settings?tab=language",
+    "description": "Facebook settings page with language set."
+  },
+  "NOT_SUPPORTED_LANGUAGE_TITLE": {
+    "message": "To facebook settings page.",
+    "description": "Button to facebook settings page title."
+  },
+  "WORKING": {
+    "message": "Calendar generation has been started.<br>Page will be scrolled down till all the friends birthdays appear.<br>After that calendar will be generated and saved.",
+    "description": "Description when extraction process started successfully"
+  },
+  "WORKING_LINK": {
+    "message": "",
+    "description": "Empty link"
+  },
+  "WORKING_TITLE": {
+    "message": "OK",
+    "description": "Ok button"
   }
 }
