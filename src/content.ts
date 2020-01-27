@@ -19,7 +19,6 @@ if (!findLanguageSetByLanguage(detectFacebookLanguage())) {
     },
   });
 } else {
-  console.log('it is fine');
   chrome.runtime.sendMessage({
     action: 'CONTENT_STATUS_REPORT',
     data: {

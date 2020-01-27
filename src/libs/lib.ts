@@ -173,7 +173,6 @@ function extractCardWithWeek(src: string, pattern: RegExp, languageSet: Language
   const result = src.match(pattern);
 
   if (!result) {
-    console.log(src, 1);
     return;
   }
 
@@ -181,7 +180,6 @@ function extractCardWithWeek(src: string, pattern: RegExp, languageSet: Language
   const weekDayNumber = weekDayNumberByName(languageSet, result.groups.weekDayName);
 
   if (-1 === weekDayNumber) {
-    console.log(src, 2);
     return;
   }
   const weekDay = weekDates()[weekDayNumber];
