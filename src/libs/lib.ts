@@ -218,5 +218,5 @@ export function parseCalendarAndSave() {
   const events: Array<RawEvent> = generateRawEvents(cardsElements, languageSet);
 
   const generatedCalendar = generateCalendar(events).replace(/\r?\n/g, '\r\n');
-  // saveCalendar(generatedCalendar);
+  saveCalendar(generatedCalendar);
 }
