@@ -20,8 +20,14 @@
     "description": "Button to Facebook birthday page title."
   },
   "NOT_SUPPORTED_LANGUAGE": {
-    "message": "Ваш язык facebook'а не поддерживается. Смените на: <ul><li>'English (UK)' <li>'English (US) <li>'Русский' <li>'Українська'<li>'עברית'</ul> И нажмите на иконку снова.",
-    "description": "Description in case facebook language is not supported"
+    "message": "Ваш язык facebook'а не поддерживается. Смените на: $languages$ И нажмите на иконку снова.",
+    "description": "Description in case facebook language is not supported",
+    "placeholders": {
+      "languages": {
+        "content": "$1",
+        "example": "List of supported languages as HTML."
+      }
+    }
   },
   "NOT_SUPPORTED_LANGUAGE_LINK": {
     "message": "https://www.facebook.com/settings?tab=language",

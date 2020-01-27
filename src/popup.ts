@@ -8,7 +8,7 @@ document.getElementById('link').addEventListener('click', () => {
 });
 
 chrome.runtime.sendMessage({action: 'CHECK_STATUS'}, (message) => {
-  document.getElementById('description').innerHTML = chrome.i18n.getMessage(message.description);
-  document.getElementById('link').setAttribute('href', chrome.i18n.getMessage(message.link));
-  document.getElementById('title').innerHTML = chrome.i18n.getMessage(message.title);
+  document.getElementById('description').innerHTML = message.description;
+  document.getElementById('link').setAttribute('href', message.link);
+  document.getElementById('title').innerHTML = message.title;
 });

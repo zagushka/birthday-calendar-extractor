@@ -16,9 +16,9 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
 
     if (url !== 'https://www.facebook.com/events/birthdays/') {
       callback({
-        description: 'FACEBOOK_REQUIRED',
-        link: 'FACEBOOK_REQUIRED_LINK',
-        title: 'FACEBOOK_REQUIRED_LINK_TITLE',
+        description: chrome.i18n.getMessage('FACEBOOK_REQUIRED'),
+        link: chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'),
+        title: chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK_TITLE'),
       });
       return;
     }

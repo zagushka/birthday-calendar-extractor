@@ -137,7 +137,10 @@ export function scrollDown(callBack: () => void, delay = 500, wait = 3000) {
 export function detectFacebookLanguage() {
   return document.querySelectorAll(LANGUAGE_QUERY_SELECTOR_PATTERN)[0].innerHTML;
 }
-
+export function getLanguagesList() {
+  // @ts-ignore
+  return languages.flatMap(l => l.languages);
+}
 export function findLanguageSetByLanguage(language: string): LanguageSet {
   return languages.find((data) => -1 !== data.languages.findIndex(l => l === language));
 }
