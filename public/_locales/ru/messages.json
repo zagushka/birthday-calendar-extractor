@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Это дополнение позволяет создать календарь дней рождений ваших друзей из Facebook на следующие два года.",
+    "message": "Создает календарь дней рождений ваших друзей из Facebook на следующие два года.",
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {
@@ -38,7 +38,7 @@
     "description": "Button to facebook settings page title."
   },
   "WORKING": {
-    "message": "Процесс генерации календаря стартовал успешно.<br>Страница будет прокрученна вниз, до тех пор, пока все дни рождения друзей не появятся.<br>После этого календарь будет создан и сохранен.",
+    "message": "Процесс генерации календаря стартовал успешно.<br>Страница будет прокручена вниз, до тех пор, пока все дни рождения друзей не появятся.<br>После этого календарь будет создан и сохранен.",
     "description": "Description when extraction process started successfully"
   },
   "WORKING_LINK": {

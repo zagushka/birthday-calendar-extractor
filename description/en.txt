@@ -1,7 +1,3 @@
-Birthday Calendar Extractor for Facebook
-
-This extension helps to create calendar with all your facebook friends birthdays for the next two years.
-
 Generated calendar file saved in `ICS` format - a universal calendar format used by several email and calendar programs, including Microsoft Outlook, Google Calendar, and Apple Calendar.
 
 Important!
@@ -14,7 +10,9 @@ At the end of the process file named `birthday-calendar.ics` will be downloaded 
 Use generated file to export your friends' birthdays to your calendar program.
 
 Changelog
-2.0.0
+1.0.1
+* Fixed typos
+1.0.0
 * All the functionality moved to browser action
 * Supported facebook languages: English (UK), English (US), Русский, Українська, עברית
 
@@ -24,4 +22,3 @@ It is open source, feel free to check it here: https://github.com/zagushka/birth
 * Leap years February 29 birthdays.
 * Get rid of luxon (https://moment.github.io/luxon/) to reduce bundle size.
 * Direct export to Google Calendar.
-
