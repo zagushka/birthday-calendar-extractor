@@ -113,7 +113,7 @@ STATUS:CONFIRMED
 ` +
     // There is unicode cake character before event.name, you may not see it in you editor
     `SUMMARY:🎂 ${event.name}
-TRANSP:OPAQUE
+TRANSP:TRANSPARENT
 END:VEVENT`;
 }
 
