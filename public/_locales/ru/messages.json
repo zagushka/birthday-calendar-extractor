@@ -42,11 +42,11 @@
     "description": "Description when extraction process started successfully"
   },
   "WORKING_LINK": {
-    "message": "",
-    "description": "Empty link"
+    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
+    "description": "Link to extension store"
   },
   "WORKING_TITLE": {
-    "message": "Понятно",
-    "description": "Ok button"
+    "message": "Оценить или поделиться",
+    "description": "Share button"
   }
 }

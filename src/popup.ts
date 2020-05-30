@@ -1,7 +1,7 @@
 document.getElementById('link').addEventListener('click', () => {
   const url = document.getElementById('link').getAttribute('href');
   if (url) {
-    chrome.tabs.update({url});
+    chrome.tabs.create({url});
   }
   window.close();
   return false;
