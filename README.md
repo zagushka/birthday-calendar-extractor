@@ -17,12 +17,16 @@ At the end of the process file named `birthday-calendar.ics` will be downloaded 
 Use generated file to export your friends' birthdays to your calendar program.
 
 ### Changelog
+2.0.0
+- All the events are recurring now, and will be repeated yearly. 
+- Events will appear as 'FREE' instead of 'BUSY'
+
 1.0.1
 - Fixed typos
 
 1.0.0
 - All the functionality moved to browser action
-- Bug Fix: When Facebook interface was set to 'English (UK)' calendar generated wrong dates.
+- Bug Fix: When Facebook interface set to 'English (UK)' calendar generated wrong dates.
 - Supported facebook languages: English (UK), English (US), Русский, Українська, עברית
 
 ### Things to improve
