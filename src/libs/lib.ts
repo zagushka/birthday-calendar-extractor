@@ -53,7 +53,7 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
     href: event.href,
     uid: '',
   };
-  baked.uid = window.btoa(event.href) + '-' + baked.start;
+  baked.uid = window.btoa(event.href);
 
   return baked;
 }
@@ -71,7 +71,7 @@ export function weekDates(): { [name: number]: DateTime } {
 
 export function generateCalendar(
   events: Array<RawEvent>,
-  tillYear: number = DateTime.local().plus({year: 1}).year,
+  tillYear: number = DateTime.local().plus({year: 0}).year,
 ) {
   return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook
@@ -103,6 +103,7 @@ function generateEvent(event: BakedEvent) {
   return `BEGIN:VEVENT
 DTSTART;VALUE=DATE:${event.start}
 DTEND;VALUE=DATE:${event.end}
+RRULE:FREQ=YEARLY
 DTSTAMP:${event.stamp}
 UID:${event.uid}
 X-GOOGLE-CALENDAR-CONTENT-DISPLAY:chip
@@ -137,10 +138,12 @@ export function scrollDown(callBack: () => void, delay = 500, wait = 3000) {
 export function detectFacebookLanguage() {
   return document.querySelectorAll(LANGUAGE_QUERY_SELECTOR_PATTERN)[0].innerHTML;
 }
+
 export function getLanguagesList() {
   // @ts-ignore
   return languages.flatMap(l => l.languages);
 }
+
 export function findLanguageSetByLanguage(language: string): LanguageSet {
   return languages.find((data) => -1 !== data.languages.findIndex(l => l === language));
 }
