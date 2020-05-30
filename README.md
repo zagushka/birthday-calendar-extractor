@@ -1,13 +1,13 @@
 ## ![Birthday Calendar Extractor for Facebook](public/icons/icon.48.png) [Birthday Calendar Extractor for Facebook](https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo)
 
-This extension helps to create calendar with all your facebook friends birthdays for a next two years.
+This extension helps to create a calendar with all your facebook friends birthdays.
 
 Generated calendar file saved in `ICS` format - a universal calendar format used by several email and calendar programs, including Microsoft Outlook, Google Calendar, and Apple Calendar.
 
 ### Important!
 **There is no easy way to remove birthday events from the calendar later!**
 
-At your calendar I suggest to create a new Birthday themed sub-calendar and use it for imports. 
+At your calendar I suggest creating a new Birthday themed sub-calendar and use it for imports. 
 
 ### How to use
 Just click extension icon, popups will guide you through step-by-step. Each click on the icon will bring you closer :)
@@ -20,6 +20,7 @@ Use generated file to export your friends' birthdays to your calendar program.
 2.0.0
 - All the events are recurring now, and will be repeated yearly. 
 - Events will appear as 'FREE' instead of 'BUSY'
+- Added Share button
 
 1.0.1
 - Fixed typos

@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Generate calendar with all your facebook friends birthdays for the next two years.",
+    "message": "Generate calendar with all your facebook friends birthdays.",
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {

@@ -10,6 +10,10 @@ There is no easy way to remove birthday events from the calendar later!
 At your calendar I suggest to create a new Birthday themed sub-calendar and use it for imports.
 
 Changelog
+2.0.0
+* All the events are recurring now, and will be repeated yearly.
+* Events will appear as 'FREE' instead of 'BUSY'
+* Added Share button
 1.0.1
 * Fixed typos
 1.0.0

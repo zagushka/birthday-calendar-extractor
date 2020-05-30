@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Создает календарь дней рождений ваших друзей из Facebook на следующие два года.",
+    "message": "Создает календарь дней рождений ваших друзей из Facebook.",
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {
