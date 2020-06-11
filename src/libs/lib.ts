@@ -1,5 +1,6 @@
-import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
+import { CalendarCSV } from './csv';
+import { CalendarICS } from './ics';
 import {
   languages,
   LanguageSet,
@@ -14,10 +15,10 @@ export interface RawEvent {
 
 export interface BakedEvent {
   uid: string;
-  stamp: string;
+  // stamp: string;
   name: string;
-  start: string;
-  end: string;
+  start: DateTime;
+  end: DateTime;
   href: string;
 }
 
@@ -37,25 +38,15 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
   if (!start.isValid) {
     return null;
   }
-  /**
-   * The date with local time form is simply a DATE-TIME value that does not contain the UTC designator nor does it reference a time zone.
-   * For example, the following represents January 18, 1998, at 11 PM:
-   *
-   * 19980118T230000
-   * 1998 01 18 T23 00 00
-   */
 
-  const baked: BakedEvent = {
+  return {
     name: event.name,
-    start: start.toFormat('yyyyLLdd\'T\'HHmmss'),
-    end: start.plus({days: 1}).toFormat('yyyyLLdd\'T\'HHmmss'),
-    stamp: DateTime.local().toFormat('yyyyLLdd\'T\'HHmmss'),
+    start: start, // .toFormat('yyyyLLdd\'T\'HHmmss'),
+    end: start.plus({days: 1}), // .toFormat('yyyyLLdd\'T\'HHmmss'),
+    // stamp: DateTime.local().toFormat('yyyyLLdd\'T\'HHmmss'),
     href: event.href,
-    uid: '',
+    uid: window.btoa(event.href),
   };
-  baked.uid = window.btoa(event.href);
-
-  return baked;
 }
 
 export function weekDates(): { [name: number]: DateTime } {
@@ -69,53 +60,6 @@ export function weekDates(): { [name: number]: DateTime } {
   return days;
 }
 
-export function generateCalendar(
-  events: Array<RawEvent>,
-  tillYear: number = DateTime.local().plus({year: 0}).year,
-) {
-  return `BEGIN:VCALENDAR
-PRODID:Birthday Calendar Extractor for Facebook
-VERSION:2.0
-CALSCALE:GREGORIAN
-METHOD:PUBLISH
-${generateEvents(events, tillYear)}
-END:VCALENDAR`;
-}
-
-function generateEvents(events: Array<RawEvent>, tillYear: number) {
-  let year = DateTime.local().year;
-  const result: Array<BakedEvent> = [];
-
-  do {
-    events.forEach(event => {
-      const baked = bakeEvent(event, year);
-      if (baked) {
-        result.push(baked);
-      }
-    });
-    year++;
-  } while (tillYear >= year);
-
-  return result.map(generateEvent).join('\n');
-}
-
-function generateEvent(event: BakedEvent) {
-  return `BEGIN:VEVENT
-DTSTART;VALUE=DATE:${event.start}
-DTEND;VALUE=DATE:${event.end}
-RRULE:FREQ=YEARLY
-DTSTAMP:${event.stamp}
-UID:${event.uid}
-X-GOOGLE-CALENDAR-CONTENT-DISPLAY:chip
-DESCRIPTION:This is <a href='${event.href}'>${event.name}</a> birthday!
-SEQUENCE:0
-STATUS:CONFIRMED
-` +
-    // There is unicode cake character before event.name, you may not see it in you editor
-    `SUMMARY:🎂 ${event.name}
-TRANSP:TRANSPARENT
-END:VEVENT`;
-}
 
 export function scrollDown(callBack: () => void, delay = 500, wait = 3000) {
 
@@ -209,17 +153,13 @@ function generateRawEvents(cardsElements: NodeListOf<Element>, languageSet: Lang
   return events;
 }
 
-function saveCalendar(calendarData: string) {
-  const blob = new Blob([calendarData], {endings: 'transparent', type: 'text/calendar; charset=UTF-8'});
-  FileSaver.saveAs(blob, 'birthday-calendar.ics', {autoBom: true});
-}
-
 export function parseCalendarAndSave() {
   const languageSet = findLanguageSetByLanguage(detectFacebookLanguage());
 
   const cardsElements = document.querySelectorAll(CARDS_QUERY_SELECTOR_PATTERN);
   const events: Array<RawEvent> = generateRawEvents(cardsElements, languageSet);
 
-  const generatedCalendar = generateCalendar(events).replace(/\r?\n/g, '\r\n');
-  saveCalendar(generatedCalendar);
+  const calendar = new CalendarICS();
+  // const calendar = new CalendarCSV();
+  calendar.generateAndSave(events);
 }
