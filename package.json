@@ -1,7 +1,7 @@
 {
   "name": "birthday-calendar-extractor",
   "sideEffects": false,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Chrome extension - birthday calendar extractor for Facebook.",
   "main": "index.js",
   "dependencies": {
@@ -19,9 +19,13 @@
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
+    "webpack-extension-reloader": "^1.1.4",
+    "webpack-merge": "^4.2.2",
     "zip-webpack-plugin": "^3.0.0"
   },
   "scripts": {
+    "start": "webpack --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Peter Pshenichny",
