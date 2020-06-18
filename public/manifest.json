@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "manifest_version": 2,
   "permissions": [
     "activeTab"
@@ -17,7 +17,7 @@
   },
   "background": {
     "scripts": [
-      "background/background.js"
+      "background.js"
     ],
     "persistent": false
   },

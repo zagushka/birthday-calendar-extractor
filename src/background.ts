@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
     chrome.runtime.onMessage.addListener(handleContentResponse((data: any) => {
       callback(data);
     }));
-    chrome.tabs.executeScript({file: './content/content.js'});
+    chrome.tabs.executeScript({file: './content.js'});
   });
   return true;
 });

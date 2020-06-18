@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { CalendarCSV } from './csv';
 import { CalendarICS } from './ics';
+import { CalendarJSON } from './json';
 import {
   languages,
   LanguageSet,
@@ -137,7 +138,7 @@ function extractCardWithWeek(src: string, pattern: RegExp, languageSet: Language
   };
 }
 
-function generateRawEvents(cardsElements: NodeListOf<Element>, languageSet: LanguageSet): Array<RawEvent> {
+function generateRawEvents(cardsElements: NodeListOf<HTMLLinkElement>, languageSet: LanguageSet): Array<RawEvent> {
   const events: Array<RawEvent> = [];
   cardsElements.forEach((item: HTMLLinkElement) => {
     // 'data-tooltip-content' - contains required data
@@ -156,10 +157,12 @@ function generateRawEvents(cardsElements: NodeListOf<Element>, languageSet: Lang
 export function parseCalendarAndSave() {
   const languageSet = findLanguageSetByLanguage(detectFacebookLanguage());
 
-  const cardsElements = document.querySelectorAll(CARDS_QUERY_SELECTOR_PATTERN);
+  const cardsElements = document.querySelectorAll<HTMLLinkElement>(CARDS_QUERY_SELECTOR_PATTERN);
   const events: Array<RawEvent> = generateRawEvents(cardsElements, languageSet);
 
-  const calendar = new CalendarICS();
+  const calendar = new CalendarJSON();
+  // const calendar = new CalendarICS();
   // const calendar = new CalendarCSV();
-  calendar.generateAndSave(events);
+  // calendar.generateAndSave(events);
+  return calendar.generateCalendar(events);
 }

@@ -1,4 +1,7 @@
 // Icon source : http://free-icon-rainbow.com/birthday-cake-free-icon-2/
+import Vue from 'vue';
+
+import App from './App.vue';
 import {
   detectFacebookLanguage,
   findLanguageSetByLanguage,
@@ -19,6 +22,7 @@ if (!findLanguageSetByLanguage(detectFacebookLanguage())) {
     },
   });
 } else {
+  console.log('HERE I GO');
   chrome.runtime.sendMessage({
     action: 'CONTENT_STATUS_REPORT',
     data: {
@@ -27,5 +31,23 @@ if (!findLanguageSetByLanguage(detectFacebookLanguage())) {
       title: chrome.i18n.getMessage('WORKING_TITLE'),
     },
   });
-  scrollDown(parseCalendarAndSave);
+  // scrollDown(parseCalendarAndSave);
+  scrollDown(() => {
+    console.log('HEYEYE');
+    const div = document.createElement('div');
+    div.id = 'popsa';
+    document.body.append(div);
+    //
+    // const data = {calendar: parseCalendarAndSave()};
+    // console.log(data);
+
+    new Vue({
+      el: '#popsa',
+      // data: data,
+      render: h => h(App),
+    });
+  });
 }
+
+
+

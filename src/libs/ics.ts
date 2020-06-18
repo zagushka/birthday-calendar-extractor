@@ -6,7 +6,7 @@ import {
 } from './lib';
 
 
-export class CalendarICS extends CalendarBase {
+export class CalendarICS extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.ics';
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
 
@@ -37,7 +37,7 @@ PRODID:Birthday Calendar Extractor for Facebook
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-${this.generateEvents(events, tillYear)}
+${this.generateEvents(events, tillYear).join('\n')}
 END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 
