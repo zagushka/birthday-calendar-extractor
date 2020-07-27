@@ -3,7 +3,7 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
     return;
   }
   chrome.runtime.onMessage.removeListener(handleContentResponse(firstLevelCallback));
-  firstLevelCallback(message.data);
+  firstLevelCallback(message.message);
 };
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
@@ -11,22 +11,25 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
     return;
   }
 
+  // Check current page url
   chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
+    // console.log('Action is here', tabs[0].url);
     const url = tabs[0].url;
 
-    if (url !== 'https://www.facebook.com/events/birthdays/') {
-      callback({
-        description: chrome.i18n.getMessage('FACEBOOK_REQUIRED'),
-        link: chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'),
-        title: chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK_TITLE'),
-      });
+    // Wrong URL
+    if (!url.startsWith(chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'))) {
+      callback('FACEBOOK_REQUIRED');
       return;
     }
 
-    chrome.runtime.onMessage.addListener(handleContentResponse((data: any) => {
-      callback(data);
-    }));
-    chrome.tabs.executeScript({file: './content/content.js'});
+    // Correct URL, wait for content response
+    chrome.runtime.onMessage.addListener(
+      handleContentResponse((data: any) => callback(data)),
+    );
+    // Execute content script and CSS`
+    chrome.tabs.insertCSS({file: './content.css'}, () => {
+      chrome.tabs.executeScript({file: './content.js'});
+    });
   });
   return true;
 });

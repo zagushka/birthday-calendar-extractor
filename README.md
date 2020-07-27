@@ -17,6 +17,12 @@ At the end of the process file named `birthday-calendar.ics` will be downloaded 
 Use generated file to export your friends' birthdays to your calendar program.
 
 ### Changelog
+2.1.0
+- Works with both new and old Facebook.
+- Makes ajax requests instead of scrolling birthday page down.
+- Using Vue.js to generate pages.
+- Fixed issue with missing persons on month joints.
+
 2.0.0
 - All the events are recurring now, and will be repeated yearly. 
 - Events will appear as 'FREE' instead of 'BUSY'

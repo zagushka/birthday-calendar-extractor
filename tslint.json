@@ -58,9 +58,10 @@
       true,
       "ignore-params"
     ],
+    "no-unused-expression": false,
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
-    "no-switch-case-fall-through": true,
+    "no-switch-case-fall-through": false,
     "no-use-before-declare": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [

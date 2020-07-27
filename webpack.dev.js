@@ -7,15 +7,15 @@ module.exports = merge.strategy({
 })
 (common, {
   mode: 'development',
-  watch: true,
   devtool: 'inline-source-map',
   plugins: [
     new ExtensionReloader({
-      entries: {
-        contentScript: 'content',
-        background: 'background',
-        popup: 'popup',
-      }
+      // entries: {
+      //   contentScript: 'content',
+      //   background: 'background',
+      //   popup: 'popup',
+      // }
+      reloadPage: true
     }),
   ],
 });

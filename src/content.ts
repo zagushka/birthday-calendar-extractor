@@ -1,31 +1,40 @@
 // Icon source : http://free-icon-rainbow.com/birthday-cake-free-icon-2/
+import { CalendarICS } from './libs/ics';
 import {
-  detectFacebookLanguage,
   findLanguageSetByLanguage,
-  getLanguagesList,
-  parseCalendarAndSave,
-  scrollDown,
+  getBirthdaysList,
+  parsePageForConfig,
 } from './libs/lib';
 
-if (!findLanguageSetByLanguage(detectFacebookLanguage())) {
-  chrome.runtime.sendMessage({
-    action: 'CONTENT_STATUS_REPORT',
-    data: {
-      description: chrome.i18n.getMessage('NOT_SUPPORTED_LANGUAGE',
-        '<ul><li>' + getLanguagesList().join('<li>') + '</ul>',
-      ),
-      link: chrome.i18n.getMessage('NOT_SUPPORTED_LANGUAGE_LINK'),
-      title: chrome.i18n.getMessage('NOT_SUPPORTED_LANGUAGE_TITLE'),
-    },
+parsePageForConfig()
+  .then(({language, token}) => {
+    if (!token) {
+      chrome.runtime.sendMessage({
+        action: 'CONTENT_STATUS_REPORT',
+        message: 'NO_TOKEN_DETECTED',
+      });
+      return;
+    }
+
+    if (!findLanguageSetByLanguage(language)) {
+      chrome.runtime.sendMessage({
+        action: 'CONTENT_STATUS_REPORT',
+        message: 'NOT_SUPPORTED_LANGUAGE',
+      });
+      return;
+    }
+
+    chrome.runtime.sendMessage({
+      action: 'CONTENT_STATUS_REPORT',
+      message: 'WORKING',
+    });
+
+    getBirthdaysList(language, token)
+      .then(events => {
+        const calendar = new CalendarICS();
+        return calendar.save(calendar.generateCalendar(Array.from(events.values())));
+      });
   });
-} else {
-  chrome.runtime.sendMessage({
-    action: 'CONTENT_STATUS_REPORT',
-    data: {
-      description: chrome.i18n.getMessage('WORKING'),
-      link: chrome.i18n.getMessage('WORKING_LINK'),
-      title: chrome.i18n.getMessage('WORKING_TITLE'),
-    },
-  });
-  scrollDown(parseCalendarAndSave);
-}
+
+
+

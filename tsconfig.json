@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "outDir": "./dist/",
+    "strict": true,
     "noImplicitAny": true,
-    "module": "esnext",
-    "target": "es2015",
+    "strictNullChecks": false,
+    "module": "ESNext",
+    "target": "ES2019",
     "allowJs": true,
     "lib": [
-      "es2018",
+      "es2019",
       "dom"
-    ]
-  }
+    ],
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

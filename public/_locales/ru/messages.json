@@ -12,12 +12,12 @@
     "description": "Description in case user is not on the birthdays page."
   },
   "FACEBOOK_REQUIRED_LINK": {
-    "message": "https://www.facebook.com/events/birthdays/",
-    "description": "Facebook birthday page url."
+    "message": "https://www.facebook.com/",
+    "description": "Facebook url."
   },
   "FACEBOOK_REQUIRED_LINK_TITLE": {
-    "message": "На страницу дней рождений.",
-    "description": "Button to Facebook birthday page title."
+    "message": "На сайт facebook",
+    "description": "Button to facebook title."
   },
   "NOT_SUPPORTED_LANGUAGE": {
     "message": "Ваш язык facebook'а не поддерживается. Смените на: $languages$ И нажмите на иконку снова.",
@@ -38,15 +38,23 @@
     "description": "Button to facebook settings page title."
   },
   "WORKING": {
-    "message": "Процесс генерации календаря стартовал успешно.<br>Страница будет прокручена вниз, до тех пор, пока все дни рождения друзей не появятся.<br>После этого календарь будет создан и сохранен.",
+    "message": "Процесс генерации стартовал успешно.<br>Через несколько секунд календарь будет создан и сохранен.",
     "description": "Description when extraction process started successfully"
   },
   "WORKING_LINK": {
     "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
     "description": "Link to extension store"
   },
-  "WORKING_TITLE": {
+  "WORKING_LINK_TITLE": {
     "message": "Оценить или поделиться",
     "description": "Share button"
+  },
+  "NO_TOKEN_DETECTED": {
+    "message": "Не удалось получить данные о днях рождения, удостоверьтесь что вы зашли в facebook и попробуйте снова.",
+    "description": "Description for error when no token found."
+  },
+  "ERROR_HEADER": {
+    "message": "Внимание!",
+    "description": "Error header"
   }
 }

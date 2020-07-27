@@ -1,3 +1,4 @@
+import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
@@ -6,9 +7,14 @@ import {
 } from './lib';
 
 
-export class CalendarICS extends CalendarBase {
+export class CalendarICS extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.ics';
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
+
+  save(calendarData: string) {
+    const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
+    FileSaver.saveAs(blob, this.filename, {autoBom: true});
+  }
 
   formatEvent(event: BakedEvent) {
     /**
@@ -22,7 +28,7 @@ export class CalendarICS extends CalendarBase {
       name: event.name,
       start: event.start.toFormat('yyyyLLdd\'T\'HHmmss'),
       end: event.start.plus({days: 1}).toFormat('yyyyLLdd\'T\'HHmmss'),
-      stamp: DateTime.local().toFormat('yyyyLLdd\'T\'HHmmss'),
+      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
       href: event.href,
       uid: event.uid,
     };
@@ -30,14 +36,14 @@ export class CalendarICS extends CalendarBase {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.local().plus({year: 0}).year,
+    tillYear: number = DateTime.utc().plus({year: 0}).year,
   ) {
     return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-${this.generateEvents(events, tillYear)}
+${this.generateEvents(events, tillYear).join('\n')}
 END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 

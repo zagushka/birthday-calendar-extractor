@@ -6,37 +6,36 @@ import {
   RawEvent,
 } from './lib';
 
-export interface CalendarGenerator {
+export interface CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar> {
   readonly filename: string;
   readonly fileMimeType: string;
 
-  generateCalendar(events: Array<RawEvent>, tillYear: number): string;
+  generateCalendar(events: Array<RawEvent>, tillYear: number): GeneratedCalendar;
 
-  generateEvents(events: Array<RawEvent>, tillYear: number): string;
+  generateEvents(events: Array<RawEvent>, tillYear: number): Array<GeneratedEvent>;
 
-  generateEvent(event: BakedEvent): string;
+  generateEvent(event: BakedEvent): GeneratedEvent;
 
-  formatEvent(event: BakedEvent): {};
+  formatEvent(event: BakedEvent): Formatted;
 }
 
-export abstract class CalendarBase implements CalendarGenerator {
+export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE, GC> {
   abstract readonly filename: string;
   abstract readonly fileMimeType: string;
 
-  abstract generateCalendar(events: Array<RawEvent>, tillYear?: number): string;
+  abstract generateCalendar(events: Array<RawEvent>, tillYear?: number): GC;
 
-  abstract generateEvent(event: BakedEvent): string;
+  abstract generateEvent(event: BakedEvent): GE;
 
-  abstract formatEvent(event: BakedEvent): {};
+  abstract formatEvent(event: BakedEvent): F;
 
-  generateAndSave(events: Array<RawEvent>) {
-    const calendarData = this.generateCalendar(events);
-    const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
-    FileSaver.saveAs(blob, this.filename, {autoBom: true});
-  }
+  // generateAndSave(calendarData: GC) {
+  //   const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
+  //   FileSaver.saveAs(blob, this.filename, {autoBom: true});
+  // }
 
-  generateEvents(events: Array<RawEvent>, tillYear: number) {
-    let year = DateTime.local().year;
+  generateEvents(events: Array<RawEvent>, tillYear: number): Array<GE> {
+    let year = DateTime.utc().year;
     const result: Array<BakedEvent> = [];
 
     do {
@@ -49,6 +48,6 @@ export abstract class CalendarBase implements CalendarGenerator {
       year++;
     } while (tillYear >= year);
 
-    return result.map(e => this.generateEvent(e)).join('\n');
+    return result.map(e => this.generateEvent(e));
   }
 }

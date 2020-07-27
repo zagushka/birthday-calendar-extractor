@@ -6,7 +6,7 @@ import {
 } from './lib';
 
 
-export class CalendarCSV extends CalendarBase {
+export class CalendarCSV extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.csv';
   readonly fileMimeType: string = 'text/csv; charset=UTF-8';
 
@@ -20,7 +20,7 @@ export class CalendarCSV extends CalendarBase {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.local().plus({year: 0}).year,
+    tillYear: number = DateTime.utc().plus({year: 0}).year,
   ) {
     return [
       `Subject`,
@@ -32,9 +32,9 @@ export class CalendarCSV extends CalendarBase {
       `Description`,
       // `Location,`,
       // `Private`,
-    ].join(',') + `
-${this.generateEvents(events, tillYear)}
-`.replace(/\r?\n/g, '\r\n');
+    ].join(',') +
+      this.generateEvents(events, tillYear).join('\n')
+        .replace(/\r?\n/g, '\r\n');
   }
 
   generateEvent(event: BakedEvent) {
