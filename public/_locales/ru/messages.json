@@ -54,7 +54,7 @@
     "description": "Description for error when no token found."
   },
   "ERROR_HEADER": {
-    "message": "Ошибка",
+    "message": "Внимание!",
     "description": "Error header"
   }
 }
