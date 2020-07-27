@@ -6,10 +6,10 @@
     "noImplicitAny": true,
     "strictNullChecks": false,
     "module": "ESNext",
-    "target": "ES2016",
+    "target": "ES2019",
     "allowJs": true,
     "lib": [
-      "es2018",
+      "es2019",
       "dom"
     ],
     "moduleResolution": "node"

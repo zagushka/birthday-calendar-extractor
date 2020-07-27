@@ -15,6 +15,7 @@ module.exports = merge.strategy({
       //   background: 'background',
       //   popup: 'popup',
       // }
+      reloadPage: true
     }),
   ],
 });
