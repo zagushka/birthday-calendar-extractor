@@ -20,7 +20,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.local().plus({year: 0}).year,
+    tillYear: number = DateTime.utc().plus({year: 0}).year,
   ) {
     return [
       `Subject`,

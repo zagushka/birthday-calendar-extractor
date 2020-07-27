@@ -22,7 +22,7 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
       name: event.name,
       start: event.start.toFormat('yyyyLLdd\'T\'HHmmss'),
       end: event.start.plus({days: 1}).toFormat('yyyyLLdd\'T\'HHmmss'),
-      stamp: DateTime.local().toFormat('yyyyLLdd\'T\'HHmmss'),
+      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
       href: event.href,
       uid: event.uid,
     };
@@ -30,7 +30,7 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.local().plus({year: 0}).year,
+    tillYear: number = DateTime.utc().plus({year: 0}).year,
   ) {
     return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook

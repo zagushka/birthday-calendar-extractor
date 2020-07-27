@@ -20,7 +20,7 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.local().plus({year: 0}).year,
+    tillYear: number = DateTime.utc().plus({year: 0}).year,
   ) {
     return this.generateEvents(events, tillYear);
   }

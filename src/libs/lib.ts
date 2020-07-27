@@ -28,11 +28,11 @@ const CARDS_QUERY_SELECTOR_PATTERN = '#birthdays_monthly_card li a';
 
 
 export function bakeEvent(event: RawEvent, year: number): BakedEvent {
-  let start = DateTime.local(year, event.month, event.day);
+  let start = DateTime.utc(year, event.month, event.day);
 
   // Take care of leap year issues (invalid at days)
   if ('day out of range' === start.invalidExplanation) {
-    start = DateTime.local(year, event.month, 28);
+    start = DateTime.utc(year, event.month, 28);
   }
 
   // Wrong date
@@ -44,7 +44,7 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
     name: event.name,
     start: start, // .toFormat('yyyyLLdd\'T\'HHmmss'),
     end: start.plus({days: 1}), // .toFormat('yyyyLLdd\'T\'HHmmss'),
-    // stamp: DateTime.local().toFormat('yyyyLLdd\'T\'HHmmss'),
+    // stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
     href: event.href,
     uid: window.btoa(event.href),
   };
@@ -54,7 +54,7 @@ export function weekDates(): { [name: number]: DateTime } {
   const days: { [name: number]: DateTime } = {};
 
   for (let i = 1; i <= 7; i++) {
-    const date = DateTime.local().plus({days: i});
+    const date = DateTime.utc().plus({days: i});
     const weekDayNumber = +date.toFormat('c') - 1; // toFormat('c') returns weekday from 1-7 (Monday is 1, Sunday is 7)
     days[weekDayNumber] = date;
   }

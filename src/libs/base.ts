@@ -35,7 +35,7 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
   // }
 
   generateEvents(events: Array<RawEvent>, tillYear: number): Array<GE> {
-    let year = DateTime.local().year;
+    let year = DateTime.utc().year;
     const result: Array<BakedEvent> = [];
 
     do {
