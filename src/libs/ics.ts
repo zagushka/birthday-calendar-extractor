@@ -1,3 +1,4 @@
+import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
@@ -9,6 +10,11 @@ import {
 export class CalendarICS extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.ics';
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
+
+  save(calendarData: string) {
+    const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
+    FileSaver.saveAs(blob, this.filename, {autoBom: true});
+  }
 
   formatEvent(event: BakedEvent) {
     /**
