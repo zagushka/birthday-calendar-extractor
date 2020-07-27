@@ -1,17 +1,17 @@
 import { DateTime } from 'luxon';
-import { CalendarCSV } from './csv';
-import { CalendarICS } from './ics';
-import { CalendarJSON } from './json';
 import {
   languages,
   LanguageSet,
 } from './languages';
 
 export interface RawEvent {
+  uid?: string; // User Id, unique id generated from facebook page url
   name: string;
   month: number;
   day: number;
   href: string;
+  ignored: boolean;
+  changeTime?: number;
 }
 
 export interface BakedEvent {
@@ -22,10 +22,6 @@ export interface BakedEvent {
   end: DateTime;
   href: string;
 }
-
-const LANGUAGE_QUERY_SELECTOR_PATTERN = '#pagelet_rhc_footer span[lang]';
-const CARDS_QUERY_SELECTOR_PATTERN = '#birthdays_monthly_card li a';
-
 
 export function bakeEvent(event: RawEvent, year: number): BakedEvent {
   let start = DateTime.utc(year, event.month, event.day);
@@ -59,29 +55,6 @@ export function weekDates(): { [name: number]: DateTime } {
     days[weekDayNumber] = date;
   }
   return days;
-}
-
-
-export function scrollDown(callBack: () => void, delay = 500, wait = 3000) {
-
-  const scrollInterval = setInterval(() => {
-    window.scroll(0, 100000);
-  }, delay);
-
-  let lastHeight = document.body.clientHeight;
-  const heightInterval = setInterval(() => {
-    if (lastHeight !== document.body.clientHeight) {
-      lastHeight = document.body.clientHeight;
-      return;
-    }
-    clearInterval(heightInterval);
-    clearInterval(scrollInterval);
-    callBack();
-  }, wait);
-}
-
-export function detectFacebookLanguage() {
-  return document.querySelectorAll(LANGUAGE_QUERY_SELECTOR_PATTERN)[0].innerHTML;
 }
 
 export function getLanguagesList() {
@@ -138,31 +111,177 @@ function extractCardWithWeek(src: string, pattern: RegExp, languageSet: Language
   };
 }
 
-function generateRawEvents(cardsElements: NodeListOf<HTMLLinkElement>, languageSet: LanguageSet): Array<RawEvent> {
-  const events: Array<RawEvent> = [];
-  cardsElements.forEach((item: HTMLLinkElement) => {
-    // 'data-tooltip-content' - contains required data
-    const data = item.getAttribute('data-tooltip-content');
-
-    const card = extractCardWithDate(data, languageSet.pattern) ||
-      extractCardWithWeek(data, languageSet.weekdays_pattern, languageSet);
+function generateRawEvents(data: Array<{ href: string; user: string }>, languageSet: LanguageSet): Array<RawEvent> {
+  return data.map(item => {
+    const card = extractCardWithDate(item.user, languageSet.pattern) ||
+      extractCardWithWeek(item.user, languageSet.weekdays_pattern, languageSet);
 
     if (card && item.href.length) {
-      events.push(Object.assign({}, card, {href: item.href}));
+      return Object.assign(card, {
+        ignored: false,
+        changeTime: 0,
+        href: item.href,
+        uid: window.btoa(item.href),
+      });
     }
   });
-  return events;
 }
 
-export function parseCalendarAndSave() {
-  const languageSet = findLanguageSetByLanguage(detectFacebookLanguage());
+export function decode(str: string) {
+  return (str + '')
+    .replace(/&#x[0-9a-f]+;/gm, (s) => {
+      return String.fromCharCode(parseInt(s.match(/[0-9a-f]+/gm)[0], 16));
+    });
+}
 
-  const cardsElements = document.querySelectorAll<HTMLLinkElement>(CARDS_QUERY_SELECTOR_PATTERN);
-  const events: Array<RawEvent> = generateRawEvents(cardsElements, languageSet);
+function extractBirthdayDataFromHtml(rawData: string): Array<{ href: string, user: string }> {
+  rawData = decode(rawData);
+  const regex = new RegExp('<a href="([^"]*)"[^>]+?data-tooltip-content="([^"]*)"', 'gm');
+  let m: RegExpExecArray;
+  const result = [];
+  // tslint:disable-next-line:no-conditional-assignment
+  while ((m = regex.exec(rawData)) !== null) {
+    // This is necessary to avoid infinite loops with zero-width matches
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
 
-  const calendar = new CalendarJSON();
-  // const calendar = new CalendarICS();
-  // const calendar = new CalendarCSV();
-  // calendar.generateAndSave(events);
-  return calendar.generateCalendar(events);
+    result.push({
+      href: m[1],
+      user: m[2],
+    });
+  }
+  return result;
+}
+
+function loopDates() {
+  /**
+   * Request dates are mess
+   * To fetch monthly birthdays Facebook uses timestamp with 1rst day of the month
+   * Though time used is different from month to month,
+   * i.e Dec, Jan, Feb, Mar use 8:00
+   * rest of the month use 7:00
+   *
+   * Additionally when requesting 1 March, 8:00 - no 31 of March birthdays appear,
+   * they can be found when requesting 1 April 6:00 !!!
+   *
+   * So to make sure I fetch all the birthdays I'll make two requests per month.
+   */
+  return Array(12)
+    .fill([8, 7])
+    .fill([7, 6], 3, 10)
+    .map((v, k) => [
+        DateTime.utc(2020, k + 1, 1, v[0]).toSeconds(),
+        DateTime.utc(2020, k + 1, 1, v[1]).toSeconds(),
+      ],
+    ).flat();
+}
+
+/**
+ * Parse provided html page and extract language from structures as
+ * ["LocaleInitialData",[],{"locale":"en_US","language":"English (US)"},273]
+ */
+function extractLanguageFromPage(page: string): string {
+  const pattern = new RegExp('."language":"(.*?)"', 'm');
+  const result = pattern.exec(page);
+  return result && result[1];
+}
+
+/**
+ * Parse provided html page and extract async_get_token
+ */
+function extractTokenFromPage(page: string): string {
+  const pattern = new RegExp('.*async_get_token":"(.*?)"', 'm');
+  const result = pattern.exec(page);
+  return result && result[1];
+}
+
+/**
+ * Make request to facebook.com in order to receive html with vital information such as
+ * async_get_token and used language
+ *
+ * return {language, token}
+ */
+export function parsePageForConfig() {
+  return fetch('https://www.facebook.com', {
+    headers: {
+      accept: 'text/html',
+    },
+  })
+    .then(data => data.text())
+    .then(page => ({token: extractTokenFromPage(page), language: extractLanguageFromPage(page)}));
+}
+
+function concatPromises(resolvers: Array<() => Promise<any>>): Promise<Array<any>> {
+  // const args = [...arguments];
+  return resolvers.reduce((c, p) => {
+    return c.then(results => {
+      return p().then(r => results.concat([r]));
+    });
+  }, Promise.resolve([]));
+}
+
+function fetchBirthdaysPage(url: string) {
+  return fetch(url)
+    .then(r => r.text())
+    .then(r => JSON.parse(r.substring(9)))
+    .then(r => r.domops[0][3].__html);
+}
+
+export function storageKeyName() {
+  return chrome.i18n.getMessage('STORAGE_KEY_NAME');
+}
+
+export function retrieveBirthdays(): Promise<Map<string, RawEvent>> {
+  try {
+    const items: Array<[string, RawEvent]> =
+      (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
+        .map(i => [i.uid, i]);
+    return Promise.resolve(new Map(items));
+  } catch (e) {
+    return Promise.resolve(null);
+  }
+}
+
+export function storeBirthdays(events: Map<string, RawEvent>) {
+  const asArray = Array.from(events.values());
+  sessionStorage.setItem(storageKeyName(), JSON.stringify(asArray));
+  return Promise.resolve();
+}
+
+export function fetchBirthdays(token: string, language: string): Promise<Map<string, RawEvent>> {
+  const languageSet = findLanguageSetByLanguage(language);
+
+  const requests = loopDates()
+    .map(date => 'https://www.facebook.com/async/birthdays/?date=' + date + '&__a=1&fb_dtsg_ag=' + token)
+    .map(url => () => fetchBirthdaysPage(url),
+      // .then(r => new Promise(resolve => setTimeout(() => resolve(r), 1000))), // Delay 1 second
+    );
+
+  return concatPromises(requests)
+    .then(responses => {
+      const nonUniques: Array<[string, RawEvent]> = responses
+        .map(extractBirthdayDataFromHtml)
+        .map(items => generateRawEvents(items, languageSet))
+        .flat()
+        .map(i => [i.uid, i]);
+
+      return new Map(nonUniques); // All non-uniques are removed
+    });
+}
+
+export function getBirthdaysList(language: string, token: string): Promise<Map<string, RawEvent>> {
+  return new Promise(resolve => {
+    retrieveBirthdays()
+      .then(items => {
+        if (items) {
+          return resolve(items);
+        }
+        // Make full run for the data
+        fetchBirthdays(token, language)
+          .then(r => storeBirthdays(r).then(() => {
+            resolve(r);
+          }));
+      });
+  });
 }
