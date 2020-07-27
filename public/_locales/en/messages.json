@@ -12,12 +12,12 @@
     "description": "Description in case user is not on the birthdays page."
   },
   "FACEBOOK_REQUIRED_LINK": {
-    "message": "https://www.facebook.com/events/birthdays/",
-    "description": "Facebook birthday page url."
+    "message": "https://www.facebook.com/",
+    "description": "Facebook url."
   },
   "FACEBOOK_REQUIRED_LINK_TITLE": {
-    "message": "To facebook birthdays page.",
-    "description": "Button to Facebook birthday page title."
+    "message": "To facebook",
+    "description": "Button to Facebook title."
   },
   "NOT_SUPPORTED_LANGUAGE": {
     "message": "Your facebook language is not supported. Please change it to: $languages$ And click the icon again.",
@@ -38,15 +38,23 @@
     "description": "Button to facebook settings page title."
   },
   "WORKING": {
-    "message": "Calendar generation has been started.<br>Page will be scrolled down till all the friends birthdays appear.<br>After that calendar will be generated and saved.",
+    "message": "Calendar generation has been started.<br>In few seconds calendar will be generated and saved.",
     "description": "Description when extraction process started successfully"
   },
   "WORKING_LINK": {
     "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
     "description": "Link to extension store"
   },
-  "WORKING_TITLE": {
-    "message": "Rate or Share",
+  "WORKING_LINK_TITLE": {
+    "message": "Helpful? Rate it",
     "description": "Share button"
+  },
+  "NO_TOKEN_DETECTED": {
+    "message": "Unable to fetch birthdays data, make sure you are logged in to facebook and try again.",
+    "description": "Description for error when no token found."
+  },
+  "ERROR_HEADER": {
+    "message": "Error",
+    "description": "Error header"
   }
 }
