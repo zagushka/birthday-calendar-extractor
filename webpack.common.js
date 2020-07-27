@@ -12,7 +12,6 @@ module.exports = {
     'background': './background.ts',
     'content': './content.ts',
     'popup/popup': './popup/popup.ts',
-    'options/options': './options/options.ts',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -38,10 +37,12 @@ module.exports = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        sideEffects: true,
       },
       {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        sideEffects: true,
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
@@ -76,18 +77,12 @@ module.exports = {
     new CopyPlugin([
       {from: '../public', to: './', ignore: ['manifest.json']},
       {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
-      {from: 'options/options.html', to: 'options/options.html', transform: transformHtml},
       {
         from: '../public/manifest.json',
         to: 'manifest.json',
         transform: (content) => {
           const jsonContent = JSON.parse(content);
           jsonContent.version = version;
-          //
-          // if (config.mode === 'development') {
-          //   jsonContent['content_security_policy'] = "script-src 'self' 'unsafe-eval'; object-src 'self'";
-          // }
-
           return JSON.stringify(jsonContent, null, 2);
         },
       },
