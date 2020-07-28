@@ -7,7 +7,7 @@ import {
 } from './libs/lib';
 
 parsePageForConfig()
-  .then(({language, token}) => {
+  .subscribe(({language, token}) => {
     if (!token) {
       chrome.runtime.sendMessage({
         action: 'CONTENT_STATUS_REPORT',
