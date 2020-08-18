@@ -1,3 +1,4 @@
+import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
@@ -9,6 +10,11 @@ import {
 export class CalendarCSV extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.csv';
   readonly fileMimeType: string = 'text/csv; charset=UTF-8';
+
+  save(calendarData: string) {
+    const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
+    FileSaver.saveAs(blob, this.filename, {autoBom: true});
+  }
 
   formatEvent(event: BakedEvent) {
     return {
@@ -23,16 +29,16 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     tillYear: number = DateTime.utc().plus({year: 0}).year,
   ) {
     return [
-      `Subject`,
-      `Start Date`,
-      // `Start Time,`,
-      // `End Date,`,
-      // `End Time,`,
-      `All Day Event`,
-      `Description`,
-      // `Location,`,
-      // `Private`,
-    ].join(',') +
+        `Subject`,
+        `Start Date`,
+        // `Start Time,`,
+        // `End Date,`,
+        // `End Time,`,
+        `All Day Event`,
+        `Description`,
+        // `Location,`,
+        // `Private`,
+      ].join(',') +
       this.generateEvents(events, tillYear).join('\n')
         .replace(/\r?\n/g, '\r\n');
   }

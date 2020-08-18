@@ -1,4 +1,6 @@
 // Icon source : http://free-icon-rainbow.com/birthday-cake-free-icon-2/
+import { CalendarBase } from './libs/base';
+import { CalendarDeleteICS } from './libs/delete-ics';
 import { CalendarICS } from './libs/ics';
 import {
   findLanguageSetByLanguage,
@@ -31,8 +33,15 @@ parsePageForConfig()
 
     getBirthdaysList(language, token)
       .subscribe(events => {
-        const calendar = new CalendarICS();
-        return calendar.save(calendar.generateCalendar(Array.from(events.values())));
+        let calendar: CalendarBase<any, any, any>;
+        switch ('ics') {
+          case 'ics':
+            calendar = new CalendarICS();
+            return calendar.save(calendar.generateCalendar(Array.from(events.values())));
+          case 'delete-ics':
+            calendar = new CalendarDeleteICS();
+            return calendar.save(calendar.generateCalendar(Array.from(events.values())));
+        }
       });
   });
 

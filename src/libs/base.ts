@@ -23,6 +23,8 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
   abstract readonly filename: string;
   abstract readonly fileMimeType: string;
 
+  abstract save(calendarData: string): void;
+
   abstract generateCalendar(events: Array<RawEvent>, tillYear?: number): GC;
 
   abstract generateEvent(event: BakedEvent): GE;
