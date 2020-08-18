@@ -7,7 +7,7 @@ import {
 } from './libs/lib';
 
 parsePageForConfig()
-  .then(({language, token}) => {
+  .subscribe(({language, token}) => {
     if (!token) {
       chrome.runtime.sendMessage({
         action: 'CONTENT_STATUS_REPORT',
@@ -30,7 +30,7 @@ parsePageForConfig()
     });
 
     getBirthdaysList(language, token)
-      .then(events => {
+      .subscribe(events => {
         const calendar = new CalendarICS();
         return calendar.save(calendar.generateCalendar(Array.from(events.values())));
       });

@@ -1,5 +1,18 @@
 import { DateTime } from 'luxon';
 import {
+  defer,
+  EMPTY,
+  forkJoin,
+  Observable,
+  of,
+} from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import {
+  map,
+  mapTo,
+  switchMap,
+} from 'rxjs/operators';
+import {
   languages,
   LanguageSet,
 } from './languages';
@@ -203,85 +216,91 @@ function extractTokenFromPage(page: string): string {
  * return {language, token}
  */
 export function parsePageForConfig() {
-  return fetch('https://www.facebook.com', {
+  return ajax({
+    url: 'https://www.facebook.com',
     headers: {
       accept: 'text/html',
     },
   })
-    .then(data => data.text())
-    .then(page => ({token: extractTokenFromPage(page), language: extractLanguageFromPage(page)}));
+    .pipe(
+      map(data => data.responseText),
+      map(page => ({token: extractTokenFromPage(page), language: extractLanguageFromPage(page)})),
+    );
 }
 
-function concatPromises(resolvers: Array<() => Promise<any>>): Promise<Array<any>> {
-  // const args = [...arguments];
-  return resolvers.reduce((c, p) => {
-    return c.then(results => {
-      return p().then(r => results.concat([r]));
-    });
-  }, Promise.resolve([]));
-}
-
-function fetchBirthdaysPage(url: string) {
-  return fetch(url)
-    .then(r => r.text())
-    .then(r => JSON.parse(r.substring(9)))
-    .then(r => r.domops[0][3].__html);
+function fetchBirthdaysPage(url: string): Observable<string> {
+  return ajax(url)
+    .pipe(
+      map(r => JSON.parse(r.responseText.substring(9))),
+      map(r => r.domops[0][3].__html),
+    );
 }
 
 export function storageKeyName() {
   return chrome.i18n.getMessage('STORAGE_KEY_NAME');
 }
 
-export function retrieveBirthdays(): Promise<Map<string, RawEvent>> {
-  try {
-    const items: Array<[string, RawEvent]> =
-      (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
-        .map(i => [i.uid, i]);
-    return Promise.resolve(new Map(items));
-  } catch (e) {
-    return Promise.resolve(null);
-  }
+/**
+ * Fetch data from sessionStorage
+ * Made it Observable to easy fit chrome.storage functionality
+ */
+export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
+  return defer(() => {
+    try {
+      const items: Array<[string, RawEvent]> =
+        (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
+          .map(i => [i.uid, i]);
+      return of(new Map(items));
+    } catch (e) {
+      return EMPTY;
+    }
+  });
 }
 
-export function storeBirthdays(events: Map<string, RawEvent>) {
+/**
+ * Store data to sessionStorage
+ * Made it Observable to easy fit chrome.storage functionality
+ */
+export function storeBirthdays(events: Map<string, RawEvent>): Observable<never> {
   const asArray = Array.from(events.values());
   sessionStorage.setItem(storageKeyName(), JSON.stringify(asArray));
-  return Promise.resolve();
+  return EMPTY;
 }
 
-export function fetchBirthdays(token: string, language: string): Promise<Map<string, RawEvent>> {
+export function fetchBirthdays(token: string, language: string): Observable<Map<string, RawEvent>> {
   const languageSet = findLanguageSetByLanguage(language);
 
   const requests = loopDates()
     .map(date => 'https://www.facebook.com/async/birthdays/?date=' + date + '&__a=1&fb_dtsg_ag=' + token)
-    .map(url => () => fetchBirthdaysPage(url),
-      // .then(r => new Promise(resolve => setTimeout(() => resolve(r), 1000))), // Delay 1 second
+    .map(fetchBirthdaysPage);
+
+  return forkJoin(requests)
+    .pipe(
+      map(
+        responses => {
+          const nonUniques: Array<[string, RawEvent]> = responses
+            .map(extractBirthdayDataFromHtml)
+            .map(items => generateRawEvents(items, languageSet))
+            .flat()
+            .map(i => [i.uid, i]);
+
+          return new Map(nonUniques); // All non-uniques are removed
+        }),
     );
-
-  return concatPromises(requests)
-    .then(responses => {
-      const nonUniques: Array<[string, RawEvent]> = responses
-        .map(extractBirthdayDataFromHtml)
-        .map(items => generateRawEvents(items, languageSet))
-        .flat()
-        .map(i => [i.uid, i]);
-
-      return new Map(nonUniques); // All non-uniques are removed
-    });
 }
 
-export function getBirthdaysList(language: string, token: string): Promise<Map<string, RawEvent>> {
-  return new Promise(resolve => {
-    retrieveBirthdays()
-      .then(items => {
+export function getBirthdaysList(language: string, token: string): Observable<Map<string, RawEvent>> {
+  return retrieveBirthdays()
+    .pipe(
+      switchMap(items => {
         if (items) {
-          return resolve(items);
+          return of(items);
         }
         // Make full run for the data
-        fetchBirthdays(token, language)
-          .then(r => storeBirthdays(r).then(() => {
-            resolve(r);
-          }));
-      });
-  });
+        return fetchBirthdays(token, language)
+          .pipe(
+            switchMap(r => storeBirthdays(r).pipe(mapTo(r))),
+          );
+      }),
+    );
 }
