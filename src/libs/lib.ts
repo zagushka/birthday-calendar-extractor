@@ -11,7 +11,6 @@ import {
   map,
   mapTo,
   switchMap,
-  switchMapTo,
 } from 'rxjs/operators';
 import {
   languages,
