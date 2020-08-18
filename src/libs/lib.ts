@@ -9,6 +9,7 @@ import {
 import { ajax } from 'rxjs/ajax';
 import {
   map,
+  mapTo,
   switchMap,
   switchMapTo,
 } from 'rxjs/operators';
@@ -261,7 +262,7 @@ export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
  * Store data to sessionStorage
  * Made it Observable to easy fit chrome.storage functionality
  */
-export function storeBirthdays(events: Map<string, RawEvent>) {
+export function storeBirthdays(events: Map<string, RawEvent>): Observable<never> {
   const asArray = Array.from(events.values());
   sessionStorage.setItem(storageKeyName(), JSON.stringify(asArray));
   return EMPTY;
@@ -289,20 +290,18 @@ export function fetchBirthdays(token: string, language: string): Observable<Map<
     );
 }
 
-export function getBirthdaysList(language: string, token: string): Promise<Map<string, RawEvent>> {
-  return new Promise(resolve => {
-    retrieveBirthdays()
-      .pipe(
-        switchMap(items => {
-          if (items) {
-            return of(items);
-          }
-          // Make full run for the data
-          return fetchBirthdays(token, language)
-            .pipe(
-              map(r => storeBirthdays(r).pipe(switchMapTo(r))),
-            );
-        }),
-      );
-  });
+export function getBirthdaysList(language: string, token: string): Observable<Map<string, RawEvent>> {
+  return retrieveBirthdays()
+    .pipe(
+      switchMap(items => {
+        if (items) {
+          return of(items);
+        }
+        // Make full run for the data
+        return fetchBirthdays(token, language)
+          .pipe(
+            switchMap(r => storeBirthdays(r).pipe(mapTo(r))),
+          );
+      }),
+    );
 }

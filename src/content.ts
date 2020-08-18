@@ -30,7 +30,7 @@ parsePageForConfig()
     });
 
     getBirthdaysList(language, token)
-      .then(events => {
+      .subscribe(events => {
         const calendar = new CalendarICS();
         return calendar.save(calendar.generateCalendar(Array.from(events.values())));
       });
