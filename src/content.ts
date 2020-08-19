@@ -1,5 +1,11 @@
 // Icon source : http://free-icon-rainbow.com/birthday-cake-free-icon-2/
+import { bindCallback } from 'rxjs';
+import {
+  map,
+  switchMap,
+} from 'rxjs/operators';
 import { CalendarBase } from './libs/base';
+import { CalendarCSV } from './libs/csv';
 import { CalendarDeleteICS } from './libs/delete-ics';
 import { CalendarICS } from './libs/ics';
 import {
@@ -31,18 +37,33 @@ parsePageForConfig()
       message: 'WORKING',
     });
 
-    getBirthdaysList(language, token)
-      .subscribe(events => {
-        let calendar: CalendarBase<any, any, any>;
-        switch ('ics') {
-          case 'ics':
-            calendar = new CalendarICS();
-            return calendar.save(calendar.generateCalendar(Array.from(events.values())));
-          case 'delete-ics':
-            calendar = new CalendarDeleteICS();
-            return calendar.save(calendar.generateCalendar(Array.from(events.values())));
-        }
-      });
+    const sendMessageAsObservable = bindCallback<any, { targetFormat: string }>(chrome.runtime.sendMessage);
+
+    sendMessageAsObservable({
+      action: 'USER_CONFIG',
+    })
+      .pipe(
+        switchMap(config => getBirthdaysList(language, token)
+          .pipe(
+            map(events => {
+              let calendar: CalendarBase<any, any, any>;
+              switch (config.targetFormat) {
+                case 'csv':
+                  calendar = new CalendarCSV();
+                  break;
+                case 'ics':
+                  calendar = new CalendarICS();
+                  break;
+                case 'delete-ics':
+                  calendar = new CalendarDeleteICS();
+                  break;
+              }
+              return calendar.save(calendar.generateCalendar(Array.from(events.values())));
+            }),
+          ),
+        ),
+      )
+      .subscribe(() => {});
   });
 
 

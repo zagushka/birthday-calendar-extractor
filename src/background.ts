@@ -7,6 +7,14 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 };
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
+  if ('USER_CONFIG' !== message.action) {
+    return;
+  }
+
+  callback({targetFormat: 'ics'});
+});
+
+chrome.runtime.onMessage.addListener((message, sender, callback) => {
   if ('CHECK_STATUS' !== message.action) {
     return;
   }
