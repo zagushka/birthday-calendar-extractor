@@ -1,9 +1,11 @@
 const ExtensionReloader = require('webpack-extension-reloader');
-const merge = require('webpack-merge');
+const {merge, mergeWithCustomize, customizeArray} = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-module.exports = merge.strategy({
-  plugins: 'prepend'
+module.exports = mergeWithCustomize({
+  customizeArray: customizeArray({
+    'plugins': 'prepend'
+  }),
 })
 (common, {
   mode: 'development',
