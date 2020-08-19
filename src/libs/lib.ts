@@ -219,11 +219,12 @@ export function parsePageForConfig() {
   return ajax({
     url: 'https://www.facebook.com',
     headers: {
-      accept: 'text/html',
+      'accept': 'text/html',
     },
+    responseType: 'text'
   })
     .pipe(
-      map(data => data.responseText),
+      map(data => data.response),
       map(page => ({token: extractTokenFromPage(page), language: extractLanguageFromPage(page)})),
     );
 }
