@@ -1,7 +1,5 @@
 import { DateTime } from 'luxon';
 import {
-  defer,
-  EMPTY,
   forkJoin,
   Observable,
   of,
@@ -221,7 +219,7 @@ export function parsePageForConfig() {
     headers: {
       'accept': 'text/html',
     },
-    responseType: 'text'
+    responseType: 'text',
   })
     .pipe(
       map(data => data.response),
@@ -230,9 +228,9 @@ export function parsePageForConfig() {
 }
 
 function fetchBirthdaysPage(url: string): Observable<string> {
-  return ajax(url)
+  return ajax({url, responseType: 'text'})
     .pipe(
-      map(r => JSON.parse(r.responseText.substring(9))),
+      map(r => JSON.parse(r.response.substring(9))),
       map(r => r.domops[0][3].__html),
     );
 }
@@ -246,26 +244,24 @@ export function storageKeyName() {
  * Made it Observable to easy fit chrome.storage functionality
  */
 export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
-  return defer(() => {
-    try {
-      const items: Array<[string, RawEvent]> =
-        (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
-          .map(i => [i.uid, i]);
-      return of(new Map(items));
-    } catch (e) {
-      return EMPTY;
-    }
-  });
+  try {
+    const items: Array<[string, RawEvent]> =
+      (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
+        .map(i => [i.uid, i]);
+    return of(new Map(items));
+  } catch (e) {
+    return of(null);
+  }
 }
 
 /**
  * Store data to sessionStorage
  * Made it Observable to easy fit chrome.storage functionality
  */
-export function storeBirthdays(events: Map<string, RawEvent>): Observable<never> {
+export function storeBirthdays(events: Map<string, RawEvent>): Observable<null> {
   const asArray = Array.from(events.values());
   sessionStorage.setItem(storageKeyName(), JSON.stringify(asArray));
-  return EMPTY;
+  return of(null);
 }
 
 export function fetchBirthdays(token: string, language: string): Observable<Map<string, RawEvent>> {
