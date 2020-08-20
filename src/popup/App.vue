@@ -2,8 +2,9 @@
   <popup-go-to-facebook v-if="status === 'FACEBOOK_REQUIRED'"></popup-go-to-facebook>
   <popup-change-language v-else-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
   <popup-working v-else-if="status === 'WORKING'"></popup-working>
+  <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
   <popup-no-token-detected v-else-if="status === 'NO_TOKEN_DETECTED'"></popup-no-token-detected>
-  <p v-else v-translate="'WORKING'"></p>
+  <p v-else>?</p>
 </template>
 
 <script>
@@ -12,7 +13,10 @@ import PopupGoToFacebook from "../components/popup.go-to-facebook";
 import PopupChangeLanguage from "../components/popup.change-language";
 import PopupWorking from "../components/popup.working";
 import PopupNoTokenDetected from "../components/popup.no-token";
+import PopupUserSettings from "../components/popup.user-settings";
 import translate from "../directives/translate";
+import {ACTION, CheckStatusAction, LogAction, StatusReportAction} from "../constants";
+import {sendMessage} from "../libs/lib";
 
 export default {
   components: {
@@ -20,14 +24,24 @@ export default {
     PopupChangeLanguage,
     PopupWorking,
     PopupNoTokenDetected,
+    PopupUserSettings
   },
   directives: {
     translate,
   },
   created() {
-    chrome.runtime.sendMessage({action: 'CHECK_STATUS'}, (message) => {
-      this.status = message;
-    });
+    chrome.runtime.onMessage.addListener((message, sender, callback) => {
+      if (ACTION.STATUS_REPORT === message.type) {
+        sendMessage(new LogAction(message));
+        this.status = message.status;
+      }
+    })
+
+    sendMessage(new CheckStatusAction()
+        // , (message) => {
+        //   this.status = message;
+        // }
+    );
   },
   data() {
     return {

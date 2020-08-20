@@ -1,35 +1,39 @@
+import {
+  ACTION,
+  StatusReportAction,
+} from './constants';
+import { sendMessage } from './libs/lib';
+
+export interface UserConfig {
+  targetFormat: 'ics' | 'csv' | 'delete-ics';
+}
+
+const userConfig: UserConfig = {targetFormat: 'ics'};
+
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
-  if ('CONTENT_STATUS_REPORT' !== message.action) {
+  if (ACTION.STATUS_REPORT !== message.type) {
     return;
   }
   chrome.runtime.onMessage.removeListener(handleContentResponse(firstLevelCallback));
-  firstLevelCallback(message.message);
+  firstLevelCallback(message.status);
 };
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
-  if ('USER_CONFIG' !== message.action) {
+  if (ACTION.LOG === message.type) {
+    console.log(message.data);
     return;
   }
 
-  callback({targetFormat: 'ics'});
-});
-
-chrome.runtime.onMessage.addListener((message, sender, callback) => {
-  if ('CHECK_STATUS' !== message.action) {
-    return;
+  if (ACTION.USER_CONFIG_SET === message.type) {
+    userConfig.targetFormat = message.targetFormat;
+    return true;
+  }
+  if (ACTION.USER_CONFIG === message.type) {
+    callback(userConfig);
+    return true;
   }
 
-  // Check current page url
-  chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
-    // console.log('Action is here', tabs[0].url);
-    const url = tabs[0].url;
-
-    // Wrong URL
-    if (!url.startsWith(chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'))) {
-      callback('FACEBOOK_REQUIRED');
-      return;
-    }
-
+  if (ACTION.START_GENERATION === message.type) {
     // Correct URL, wait for content response
     chrome.runtime.onMessage.addListener(
       handleContentResponse((data: any) => callback(data)),
@@ -38,6 +42,24 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
     // chrome.tabs.insertCSS({file: './content.css'}, () => {
     chrome.tabs.executeScript({file: './content.js'});
     // });
-  });
-  return true;
+    return true;
+  }
+  if (ACTION.CHECK_STATUS === message.type) {
+    // Check current page url
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
+      // console.log('Action is here', tabs[0].url);
+      const url = tabs[0].url;
+
+      // Wrong URL
+      if (!url.startsWith(chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'))) {
+        sendMessage(new StatusReportAction('FACEBOOK_REQUIRED'));
+        // callback('FACEBOOK_REQUIRED');
+        return true;
+      }
+
+      sendMessage(new StatusReportAction('USER_SETTINGS'));
+      // callback('USER_SETTINGS');
+    });
+    return true;
+  }
 });

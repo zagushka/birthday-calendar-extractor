@@ -4,6 +4,11 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators';
+import { UserConfig } from './background';
+import {
+  StatusReportAction,
+  GetUserConfigAction,
+} from './constants';
 import { CalendarBase } from './libs/base';
 import { CalendarCSV } from './libs/csv';
 import { CalendarDeleteICS } from './libs/delete-ics';
@@ -12,36 +17,26 @@ import {
   findLanguageSetByLanguage,
   getBirthdaysList,
   parsePageForConfig,
+  sendMessage,
 } from './libs/lib';
 
 parsePageForConfig()
   .subscribe(({language, token}) => {
     if (!token) {
-      chrome.runtime.sendMessage({
-        action: 'CONTENT_STATUS_REPORT',
-        message: 'NO_TOKEN_DETECTED',
-      });
+      sendMessage(new StatusReportAction('NO_TOKEN_DETECTED'));
       return;
     }
 
     if (!findLanguageSetByLanguage(language)) {
-      chrome.runtime.sendMessage({
-        action: 'CONTENT_STATUS_REPORT',
-        message: 'NOT_SUPPORTED_LANGUAGE',
-      });
+      sendMessage(new StatusReportAction('NOT_SUPPORTED_LANGUAGE'));
       return;
     }
 
-    chrome.runtime.sendMessage({
-      action: 'CONTENT_STATUS_REPORT',
-      message: 'WORKING',
-    });
+    sendMessage(new StatusReportAction('WORKING'));
 
-    const sendMessageAsObservable = bindCallback<any, { targetFormat: string }>(chrome.runtime.sendMessage);
+    const sendMessageAsObservable = bindCallback<any, UserConfig>(chrome.runtime.sendMessage);
 
-    sendMessageAsObservable({
-      action: 'USER_CONFIG',
-    })
+    sendMessageAsObservable(new GetUserConfigAction())
       .pipe(
         switchMap(config => getBirthdaysList(language, token)
           .pipe(
@@ -63,7 +58,8 @@ parsePageForConfig()
           ),
         ),
       )
-      .subscribe(() => {});
+      .subscribe(() => {
+      });
   });
 
 
