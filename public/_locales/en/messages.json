@@ -8,8 +8,8 @@
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {
-    "message": "You need to be on the facebook birthdays page in order to generate calendar.<p>Please follow the link below and click the icon again.",
-    "description": "Description in case user is not on the birthdays page."
+    "message": "You need to be on a facebook page in order to generate calendar.<p>Please follow the link below and click the icon again.",
+    "description": "Description in case user is not on a facebook page"
   },
   "FACEBOOK_REQUIRED_LINK": {
     "message": "https://www.facebook.com/",
@@ -60,5 +60,25 @@
   "STORAGE_KEY_NAME": {
     "message": "birthday-calendar-exporter-for-facebook-temp-storage",
     "description": "Session storage name"
+  },
+  "USER_SETTINGS": {
+    "message": "I Want to",
+    "description": "Header for extraction format selection"
+  },
+  "SELECT_FILE_FORMAT_ICS": {
+    "message": "Generate Google Calendar - ICS",
+    "description": "Label for ics file type radio button"
+  },
+  "SELECT_FILE_FORMAT_CSV": {
+    "message": "Generate Excel file - CSV",
+    "description": "Label for csv file type radio button"
+  },
+  "SELECT_FILE_FORMAT_DELETE_ICS": {
+    "message": "Remove from Google Calendar",
+    "description": "Label for delete-ics file type radio button"
+  },
+  "GENERATE": {
+    "message": "Generate",
+    "description": "Label 'generate' button"
   }
 }
