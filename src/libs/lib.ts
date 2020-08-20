@@ -10,6 +10,7 @@ import {
   mapTo,
   switchMap,
 } from 'rxjs/operators';
+import { Action } from '../constants';
 import {
   languages,
   LanguageSet,
@@ -237,6 +238,10 @@ function fetchBirthdaysPage(url: string): Observable<string> {
 
 export function storageKeyName() {
   return chrome.i18n.getMessage('STORAGE_KEY_NAME');
+}
+
+export function sendMessage(action: Action, callback?: (response: any) => void) {
+  return chrome.runtime.sendMessage(action, callback);
 }
 
 /**
