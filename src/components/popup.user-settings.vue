@@ -91,10 +91,11 @@ export default PopupUserSettings;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 1000;
 }
 
+/** https://github.com/tobiasahlin/SpinKit **/
 .spinner {
   margin: calc(50vh - 20px) auto;
   width: 50px;
