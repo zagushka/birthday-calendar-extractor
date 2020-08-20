@@ -37,16 +37,20 @@
     "message": "To facebook settings page.",
     "description": "Button to facebook settings page title."
   },
-  "WORKING": {
-    "message": "Calendar generation has been started.<br>In few seconds calendar will be generated and saved.",
-    "description": "Description when extraction process started successfully"
+  "DONE_DESCRIPTION": {
+    "message": "Your calendar is ready for export.<br><br>Please leave a feedback if you found it helpful :o)",
+    "description": "Description when extraction process successfully finished"
   },
-  "WORKING_LINK": {
+  "DONE_TITLE": {
+    "message": "Success!",
+    "description": "Title when extraction process successfully finished"
+  },
+  "LEAVE_FEEDBACK_LINK": {
     "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
     "description": "Link to extension store"
   },
-  "WORKING_LINK_TITLE": {
-    "message": "Helpful? Rate it",
+  "LEAVE_FEEDBACK_TITLE": {
+    "message": "Leave a feedback",
     "description": "Share button"
   },
   "NO_TOKEN_DETECTED": {

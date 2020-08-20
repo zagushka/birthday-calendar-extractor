@@ -32,8 +32,6 @@ parsePageForConfig()
       return;
     }
 
-    sendMessage(new StatusReportAction('WORKING'));
-
     const sendMessageAsObservable = bindCallback<any, UserConfig>(chrome.runtime.sendMessage);
 
     sendMessageAsObservable(new GetUserConfigAction())
@@ -59,6 +57,7 @@ parsePageForConfig()
         ),
       )
       .subscribe(() => {
+        sendMessage(new StatusReportAction('DONE'));
       });
   });
 

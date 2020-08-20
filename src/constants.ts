@@ -10,7 +10,7 @@ export enum ACTION {
 export type ApplicationStatus =
   'FACEBOOK_REQUIRED'
   | 'NOT_SUPPORTED_LANGUAGE'
-  | 'WORKING'
+  | 'DONE'
   | 'USER_SETTINGS'
   | 'NO_TOKEN_DETECTED';
 

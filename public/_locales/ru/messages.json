@@ -37,16 +37,20 @@
     "message": "На страницу смены языка.",
     "description": "Button to facebook settings page title."
   },
-  "WORKING": {
-    "message": "Процесс генерации стартовал успешно.<br>Через несколько секунд календарь будет создан и сохранен.",
-    "description": "Description when extraction process started successfully"
+  "DONE_DESCRIPTION": {
+    "message": "Ваш календарь готов и может быть экспортирован.<br><br> Пожалуйста оставьте отзыв :о)",
+    "description": "Description when extraction process successfully finished"
   },
-  "WORKING_LINK": {
+  "DONE_TITLE": {
+    "message": "Генерация завершена!",
+    "description": "Title when extraction process successfully finished"
+  },
+  "LEAVE_FEEDBACK_LINK": {
     "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
     "description": "Link to extension store"
   },
-  "WORKING_LINK_TITLE": {
-    "message": "Оценить или поделиться",
+  "LEAVE_FEEDBACK_TITLE": {
+    "message": "Оставить отзыв",
     "description": "Share button"
   },
   "NO_TOKEN_DETECTED": {

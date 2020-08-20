@@ -14,8 +14,10 @@
       <label for="format_delete-ics" v-translate="'SELECT_FILE_FORMAT_DELETE_ICS'"></label>
     </div>
     <br/>
-
-    <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
+    <div class="no-wrap">
+      <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
+      <a v-link="'LEAVE_FEEDBACK_LINK'" class="link special"><span v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
+    </div>
   </span>
 </template>
 
