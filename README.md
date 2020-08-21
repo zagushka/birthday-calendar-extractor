@@ -22,9 +22,11 @@ Use generated file to export your friends' birthdays to your calendar program.
 I suggest creating a new Birthday themed sub-calendar and use it for imports.
 
 ###FAQ
+
 Q: I accidentally saved birthdays to my main calendar, how to reverse it?
 
 A: On a format selection screen select "Remove form Google Calendar" and import the generated file to Google Calendar.
+
 ### Changelog
 2.2.0
 - Remove imported events from Google Calendar

@@ -74,19 +74,26 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
-    new CopyPlugin([
-      {from: '../public', to: './', ignore: ['manifest.json']},
-      {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
-      {
-        from: '../public/manifest.json',
-        to: 'manifest.json',
-        transform: (content) => {
-          const jsonContent = JSON.parse(content);
-          jsonContent.version = version;
-          return JSON.stringify(jsonContent, null, 2);
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'public'), to: './',
+          globOptions: {
+            ignore: ['**/manifest.json'],
+          },
         },
-      },
-    ]),
+        {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
+        {
+          from: '../public/manifest.json',
+          to: 'manifest.json',
+          transform: (content) => {
+            const jsonContent = JSON.parse(content);
+            jsonContent.version = version;
+            return JSON.stringify(jsonContent, null, 2);
+          },
+        },
+      ]
+    }),
   ],
   mode: 'production'
 };
