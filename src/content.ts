@@ -6,8 +6,8 @@ import {
 } from 'rxjs/operators';
 import { UserConfig } from './background';
 import {
-  StatusReportAction,
   GetUserConfigAction,
+  StatusReportAction,
 } from './constants';
 import { CalendarBase } from './libs/base';
 import { CalendarCSV } from './libs/csv';
@@ -51,7 +51,9 @@ parsePageForConfig()
                   calendar = new CalendarDeleteICS();
                   break;
               }
-              return calendar.save(calendar.generateCalendar(Array.from(events.values())));
+              return calendar.save(
+                calendar.generateCalendar(Array.from(events.values()))
+              );
             }),
           ),
         ),

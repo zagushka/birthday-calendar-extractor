@@ -28,7 +28,6 @@ export interface RawEvent {
 
 export interface BakedEvent {
   uid: string;
-  // stamp: string;
   name: string;
   start: DateTime;
   end: DateTime;
@@ -36,12 +35,11 @@ export interface BakedEvent {
 }
 
 export function bakeEvent(event: RawEvent, year: number): BakedEvent {
-  let start = DateTime.utc(year, event.month, event.day);
-
-  // Take care of leap year issues (invalid at days)
-  if ('day out of range' === start.invalidExplanation) {
-    start = DateTime.utc(year, event.month, 28);
-  }
+  // Take care of leap year
+  // Since all coming birthdays are from 2020 (leap year) 02/29 can occur
+  // So in order to prevent the error, I create the date from 2020 and change the year later
+  // luxon knows to handle this and change 29 to 28 if needed
+  const start = DateTime.utc(2020, event.month, event.day).set({year: year});
 
   // Wrong date
   if (!start.isValid) {
@@ -50,9 +48,8 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
 
   return {
     name: event.name,
-    start: start, // .toFormat('yyyyLLdd\'T\'HHmmss'),
-    end: start.plus({days: 1}), // .toFormat('yyyyLLdd\'T\'HHmmss'),
-    // stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
+    start: start,
+    end: start.plus({days: 1}),
     href: event.href,
     uid: window.btoa(event.href),
   };
@@ -70,7 +67,6 @@ export function weekDates(): { [name: number]: DateTime } {
 }
 
 export function getLanguagesList() {
-  // @ts-ignore
   return languages.flatMap(l => l.languages);
 }
 

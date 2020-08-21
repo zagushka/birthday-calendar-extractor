@@ -14,7 +14,7 @@ import PopupDone from "../components/popup.done";
 import PopupNoTokenDetected from "../components/popup.no-token";
 import PopupUserSettings from "../components/popup.user-settings";
 import translate from "../directives/translate";
-import {ACTION, CheckStatusAction, LogAction} from "../constants";
+import {ACTION, CheckStatusAction} from "../constants";
 import {sendMessage} from "../libs/lib";
 
 export default {
@@ -31,7 +31,6 @@ export default {
   created() {
     chrome.runtime.onMessage.addListener((message, sender, callback) => {
       if (ACTION.STATUS_REPORT === message.type) {
-        sendMessage(new LogAction(message));
         this.status = message.status;
       }
     })

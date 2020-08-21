@@ -19,10 +19,10 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 };
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
-  if (ACTION.LOG === message.type) {
-    console.log(message.data);
-    return;
-  }
+  // if (ACTION.LOG === message.type) {
+  //   console.log(message.data);
+  //   return;
+  // }
 
   if (ACTION.USER_CONFIG_SET === message.type) {
     userConfig.targetFormat = message.targetFormat;
@@ -53,12 +53,10 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
       // Wrong URL
       if (!url.startsWith(chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'))) {
         sendMessage(new StatusReportAction('FACEBOOK_REQUIRED'));
-        // callback('FACEBOOK_REQUIRED');
         return true;
       }
 
       sendMessage(new StatusReportAction('USER_SETTINGS'));
-      // callback('USER_SETTINGS');
     });
     return true;
   }

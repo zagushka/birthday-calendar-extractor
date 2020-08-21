@@ -26,9 +26,10 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.utc().plus({year: 0}).year,
+    fromYear: number = DateTime.utc().year, // Current year
+    tillYear: number = DateTime.utc().year // Same year
   ) {
-    return this.generateEvents(events, tillYear);
+    return this.generateEvents(events, fromYear, tillYear);
   }
 
   generateEvent(event: BakedEvent) {
