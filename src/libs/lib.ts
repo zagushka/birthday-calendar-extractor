@@ -1,7 +1,5 @@
 import { DateTime } from 'luxon';
 import {
-  defer,
-  EMPTY,
   forkJoin,
   Observable,
   of,
@@ -12,6 +10,7 @@ import {
   mapTo,
   switchMap,
 } from 'rxjs/operators';
+import { Action } from '../constants';
 import {
   languages,
   LanguageSet,
@@ -29,7 +28,6 @@ export interface RawEvent {
 
 export interface BakedEvent {
   uid: string;
-  // stamp: string;
   name: string;
   start: DateTime;
   end: DateTime;
@@ -37,12 +35,11 @@ export interface BakedEvent {
 }
 
 export function bakeEvent(event: RawEvent, year: number): BakedEvent {
-  let start = DateTime.utc(year, event.month, event.day);
-
-  // Take care of leap year issues (invalid at days)
-  if ('day out of range' === start.invalidExplanation) {
-    start = DateTime.utc(year, event.month, 28);
-  }
+  // Take care of leap year
+  // Since all coming birthdays are from 2020 (leap year) 02/29 can occur
+  // So in order to prevent the error, I create the date from 2020 and change the year later
+  // luxon knows to handle this and change 29 to 28 if needed
+  const start = DateTime.utc(2020, event.month, event.day).set({year: year});
 
   // Wrong date
   if (!start.isValid) {
@@ -51,9 +48,8 @@ export function bakeEvent(event: RawEvent, year: number): BakedEvent {
 
   return {
     name: event.name,
-    start: start, // .toFormat('yyyyLLdd\'T\'HHmmss'),
-    end: start.plus({days: 1}), // .toFormat('yyyyLLdd\'T\'HHmmss'),
-    // stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
+    start: start,
+    end: start.plus({days: 1}),
     href: event.href,
     uid: window.btoa(event.href),
   };
@@ -71,7 +67,6 @@ export function weekDates(): { [name: number]: DateTime } {
 }
 
 export function getLanguagesList() {
-  // @ts-ignore
   return languages.flatMap(l => l.languages);
 }
 
@@ -219,19 +214,20 @@ export function parsePageForConfig() {
   return ajax({
     url: 'https://www.facebook.com',
     headers: {
-      accept: 'text/html',
+      'accept': 'text/html',
     },
+    responseType: 'text',
   })
     .pipe(
-      map(data => data.responseText),
+      map(data => data.response),
       map(page => ({token: extractTokenFromPage(page), language: extractLanguageFromPage(page)})),
     );
 }
 
 function fetchBirthdaysPage(url: string): Observable<string> {
-  return ajax(url)
+  return ajax({url, responseType: 'text'})
     .pipe(
-      map(r => JSON.parse(r.responseText.substring(9))),
+      map(r => JSON.parse(r.response.substring(9))),
       map(r => r.domops[0][3].__html),
     );
 }
@@ -240,31 +236,33 @@ export function storageKeyName() {
   return chrome.i18n.getMessage('STORAGE_KEY_NAME');
 }
 
+export function sendMessage(action: Action, callback?: (response: any) => void) {
+  return chrome.runtime.sendMessage(action, callback);
+}
+
 /**
  * Fetch data from sessionStorage
  * Made it Observable to easy fit chrome.storage functionality
  */
 export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
-  return defer(() => {
-    try {
-      const items: Array<[string, RawEvent]> =
-        (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
-          .map(i => [i.uid, i]);
-      return of(new Map(items));
-    } catch (e) {
-      return EMPTY;
-    }
-  });
+  try {
+    const items: Array<[string, RawEvent]> =
+      (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
+        .map(i => [i.uid, i]);
+    return of(new Map(items));
+  } catch (e) {
+    return of(null);
+  }
 }
 
 /**
  * Store data to sessionStorage
  * Made it Observable to easy fit chrome.storage functionality
  */
-export function storeBirthdays(events: Map<string, RawEvent>): Observable<never> {
+export function storeBirthdays(events: Map<string, RawEvent>): Observable<null> {
   const asArray = Array.from(events.values());
   sessionStorage.setItem(storageKeyName(), JSON.stringify(asArray));
-  return EMPTY;
+  return of(null);
 }
 
 export function fetchBirthdays(token: string, language: string): Observable<Map<string, RawEvent>> {

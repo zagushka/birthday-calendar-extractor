@@ -2,7 +2,7 @@
 
 This extension helps to create a calendar with all your facebook friends birthdays.
 
-Generated calendar file saved in `ICS` format - a universal calendar format used by several email and calendar programs, including Microsoft Outlook, Google Calendar, and Apple Calendar.
+Generated calendar file saved in `ICS` or `CSV` formats.
 
 ### Important!
 **There is no easy way to remove birthday events from the calendar later!**
@@ -10,13 +10,27 @@ Generated calendar file saved in `ICS` format - a universal calendar format used
 At your calendar I suggest creating a new Birthday themed sub-calendar and use it for imports. 
 
 ### How to use
-Just click extension icon, popups will guide you through step-by-step. Each click on the icon will bring you closer :)
+Click on extension icon and select on of required formats:
+* Generate Google Calendar - ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.
+* Generate Excel file - CSV
+* Remove from Google Calendar - Generated file used to remove all already exported birthday events.
 
 At the end of the process file named `birthday-calendar.ics` will be downloaded automatically to your Downloads folder.
 
 Use generated file to export your friends' birthdays to your calendar program.
 
+I suggest creating a new Birthday themed sub-calendar and use it for imports.
+
+###FAQ
+Q: I accidentally saved birthdays to my main calendar, how to reverse it?
+
+A: On a format selection screen select "Remove form Google Calendar" and import the generated file to Google Calendar.
 ### Changelog
+2.2.0
+- Remove imported events from Google Calendar
+- Export as CSV
+- Migration to rxjs
+
 2.1.0
 - Works with both new and old Facebook.
 - Makes ajax requests instead of scrolling birthday page down.

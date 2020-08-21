@@ -1,5 +1,3 @@
-import * as FileSaver from 'file-saver';
-import { DateTime } from 'luxon';
 import {
   BakedEvent,
   bakeEvent,
@@ -12,7 +10,7 @@ export interface CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar>
 
   generateCalendar(events: Array<RawEvent>, tillYear: number): GeneratedCalendar;
 
-  generateEvents(events: Array<RawEvent>, tillYear: number): Array<GeneratedEvent>;
+  generateEvents(events: Array<RawEvent>, fromYear: number, tillYear: number): Array<GeneratedEvent>;
 
   generateEvent(event: BakedEvent): GeneratedEvent;
 
@@ -23,30 +21,26 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
   abstract readonly filename: string;
   abstract readonly fileMimeType: string;
 
-  abstract generateCalendar(events: Array<RawEvent>, tillYear?: number): GC;
+  abstract save(calendarData: string): void;
+
+  abstract generateCalendar(events: Array<RawEvent>, fromYear?: number, tillYear?: number): GC;
 
   abstract generateEvent(event: BakedEvent): GE;
 
   abstract formatEvent(event: BakedEvent): F;
 
-  // generateAndSave(calendarData: GC) {
-  //   const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
-  //   FileSaver.saveAs(blob, this.filename, {autoBom: true});
-  // }
-
-  generateEvents(events: Array<RawEvent>, tillYear: number): Array<GE> {
-    let year = DateTime.utc().year;
+  generateEvents(events: Array<RawEvent>, fromYear: number, tillYear: number): Array<GE> {
     const result: Array<BakedEvent> = [];
 
     do {
       events.forEach(event => {
-        const baked = bakeEvent(event, year);
+        const baked = bakeEvent(event, fromYear);
         if (baked) {
           result.push(baked);
         }
       });
-      year++;
-    } while (tillYear >= year);
+      fromYear++;
+    } while (tillYear >= fromYear);
 
     return result.map(e => this.generateEvent(e));
   }

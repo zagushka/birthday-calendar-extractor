@@ -36,14 +36,15 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.utc().plus({year: 0}).year,
+    fromYear: number = 2020, // Since all the events are recurring I generate them for leap year 2020
+    tillYear: number = 2020,
   ) {
     return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-${this.generateEvents(events, tillYear).join('\n')}
+${this.generateEvents(events, fromYear, tillYear).join('\n')}
 END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 

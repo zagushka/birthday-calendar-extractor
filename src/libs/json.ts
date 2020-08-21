@@ -1,3 +1,4 @@
+import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
@@ -10,6 +11,11 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   readonly filename: string = 'birthday-calendar.json';
   readonly fileMimeType: string = 'application/json; charset=UTF-8';
 
+  save(calendarData: string) {
+    const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
+    FileSaver.saveAs(blob, this.filename, {autoBom: true});
+  }
+
   formatEvent(event: BakedEvent) {
     return {
       name: event.name,
@@ -20,9 +26,10 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
 
   generateCalendar(
     events: Array<RawEvent>,
-    tillYear: number = DateTime.utc().plus({year: 0}).year,
+    fromYear: number = DateTime.utc().year, // Current year
+    tillYear: number = DateTime.utc().year // Same year
   ) {
-    return this.generateEvents(events, tillYear);
+    return this.generateEvents(events, fromYear, tillYear);
   }
 
   generateEvent(event: BakedEvent) {

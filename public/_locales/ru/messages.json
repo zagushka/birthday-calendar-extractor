@@ -8,8 +8,8 @@
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {
-    "message": "Вам нужно быть на странице с днями рождений facebook.<p>Нажмите на линк вниже для перехода и попробуйте снова.",
-    "description": "Description in case user is not on the birthdays page."
+    "message": "Вам нужно быть на сайте facebook.<p>Нажмите на линк ниже для перехода и попробуйте снова.",
+    "description": "Description in case user is not on a facebook page"
   },
   "FACEBOOK_REQUIRED_LINK": {
     "message": "https://www.facebook.com/",
@@ -37,16 +37,20 @@
     "message": "На страницу смены языка.",
     "description": "Button to facebook settings page title."
   },
-  "WORKING": {
-    "message": "Процесс генерации стартовал успешно.<br>Через несколько секунд календарь будет создан и сохранен.",
-    "description": "Description when extraction process started successfully"
+  "DONE_DESCRIPTION": {
+    "message": "Ваш календарь готов и может быть экспортирован.<br><br> Пожалуйста оставьте отзыв :о)",
+    "description": "Description when extraction process successfully finished"
   },
-  "WORKING_LINK": {
+  "DONE_TITLE": {
+    "message": "Генерация завершена!",
+    "description": "Title when extraction process successfully finished"
+  },
+  "LEAVE_FEEDBACK_LINK": {
     "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
     "description": "Link to extension store"
   },
-  "WORKING_LINK_TITLE": {
-    "message": "Оценить или поделиться",
+  "LEAVE_FEEDBACK_TITLE": {
+    "message": "Оставить отзыв",
     "description": "Share button"
   },
   "NO_TOKEN_DETECTED": {
@@ -56,5 +60,25 @@
   "ERROR_HEADER": {
     "message": "Внимание!",
     "description": "Error header"
+  },
+  "USER_SETTINGS": {
+    "message": "Я хочу",
+    "description": "Header for extraction format selection"
+  },
+  "SELECT_FILE_FORMAT_ICS": {
+    "message": "Создать Google Calendar - ICS",
+    "description": "Label for ics file type radio button"
+  },
+  "SELECT_FILE_FORMAT_CSV": {
+    "message": "Создать Excel file - CSV",
+    "description": "Label for csv file type radio button"
+  },
+  "SELECT_FILE_FORMAT_DELETE_ICS": {
+    "message": "Удалить из Google Calendar",
+    "description": "Label for delete-ics file type radio button"
+  },
+  "GENERATE": {
+    "message": "Создать",
+    "description": "Label 'generate' button"
   }
 }
