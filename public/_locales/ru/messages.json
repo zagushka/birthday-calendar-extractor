@@ -8,7 +8,7 @@
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {
-    "message": "Вам нужно быть на сайте facebook.<p>Нажмите на линк вниже для перехода и попробуйте снова.",
+    "message": "Вам нужно быть на сайте facebook.<p>Нажмите на линк ниже для перехода и попробуйте снова.",
     "description": "Description in case user is not on a facebook page"
   },
   "FACEBOOK_REQUIRED_LINK": {
