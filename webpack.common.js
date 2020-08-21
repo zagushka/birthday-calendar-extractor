@@ -77,9 +77,9 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: '../public', to: './',
+          from: path.resolve(__dirname, 'public'), to: './',
           globOptions: {
-            ignore: ['manifest.json']
+            ignore: ['**/manifest.json'],
           },
         },
         {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
