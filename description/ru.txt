@@ -1,48 +1,39 @@
+Создает календарь с днями рождения ваших друзей из facebook.
 Созданный календарь можно сохранить в формате `ICS` или `CSV`.
 
 Как пользоваться этим дополнением
-Просто нажимайте на иконку дополнения, всплывающие подсказки помогут завершить процесс.
-Каждое нажатие будет приближать вас к цели :)
+Нажмите на иконку дополнения ("торт") и выберите требуемый формат файла:
+- Создать Google Calendar - ICS - универсальный формат календарей, используемый в Microsoft Outlook, Google Calendar, и Apple Calendar.
+- Создать Excel file - CSV
+- Удалить из Google Calendar - генерирует файл для удаления уже импортированных дней рождений из календаря.
+
 В конце-концов, файл с именем `birthday-calendar.ics` будет сохранен автоматически в папку Downloads.
-Используйте сгенерированный файл для экспорта дней рождений ваших друзей в программу календарь.
-
-Click on extension icon and select on of required formats:
-* Создать Google Calendar - ICS - универсальный формат календарей, используемый в Microsoft Outlook, Google Calendar, и Apple Calendar.
-* Создать Excel file - CSV
-* Удалить из Google Calendar - генерирует файл для удаления уже импортированных дней рождений из календаря.
-
-Важно!
-Я не советую импортировать сгенерированный календарь в уже существующий, лучше создать новый и использовать его только для дней рождений.
+Используйте сгенерированный файл чтобы импортировзать дни рождения ваших друзей в программу календарь.
+Я советую создать новый календарь и использовать его только для дней рождений.
 
 ЧАВО
-В: Я случайно сохранил дни рождения в свой основной календарь, как мне их удалить или отменить?
-О: Нажмите на иконку дополнения ("торт") и выберете "Удалить из Google Calendar", импортируйте созданный файл в ваш календарь.
+Вопрос: Я случайно сохранил дни рождения в свой основной календарь, как мне их удалить или отменить?
+Ответ: Нажмите на иконку дополнения ("торт") и выберете "Удалить из Google Calendar", импортируйте созданный файл в ваш календарь.
 
+Вопрос: Возможно ли удалить часть контактов перед импортом в календарь?
+Ответ: Можно воспользоваться скриптом для командной строки: https://github.com/guenter-r/calendar_file_splitter
 
 Changelog
 2.2.0
-* Remove imported events from Google Calendar
-* Export as CSV
-* Migration to rxjs
+- Remove imported events from Google Calendar
+- Export as CSV
 2.1.0
-* Работает с новым и старым Facebook.
-* Работаем с ajax обращениями вместо скроллинга.
-* Добавлен Vue.js для генерации страниц.
-* Исправлена ошибка с недостающими днями рождения на стыке месяцев.
+- Работает с новым и старым Facebook.
+- Работаем с ajax обращениями вместо скроллинга.
+- Исправлена ошибка с недостающими днями рождения на стыке месяцев.
 2.0.0
-* Дни рождения теперь ежегодные и повторяются из года в год.
-* Дни рождения помечаются как 'СВОБОДЕН' вместо 'ЗАНЯТ'.
-* Добавлена кнопка поделиться.
-1.0.1
-* Исправлены грамматические ошибки
+- Дни рождения теперь ежегодные и повторяются из года в год.
+- Дни рождения помечаются как 'СВОБОДЕН' вместо 'ЗАНЯТ'.
 1.0.0
-* Большинство функционала переехало в browser action
-* Bug Fix: When Facebook interface was set to 'English (UK)' calendar generated wrong dates.
-* Поддерживаемые языки facebook: English (UK), English (US), Русский, Українська, עברית
+- Bug Fix: When Facebook interface was set to 'English (UK)' calendar generated wrong dates.
+- Поддерживаемые языки facebook: English (UK), English (US), Русский, Українська, עברית
 
 Things to improve
 It is open source, feel free to check it here: https://github.com/zagushka/birthday-calendar-extractor
-* Option to edit birthdays before generating the calendar file.
-* Leap years February 29 birthdays.
-* Get rid of luxon (https://moment.github.io/luxon/) to reduce bundle size.
-* Direct export to Google Calendar.
+- Option to edit birthdays before generating the calendar file.
+- Direct export to Google Calendar.
