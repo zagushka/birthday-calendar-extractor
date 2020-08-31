@@ -24,12 +24,12 @@ Use the generated file to import your friends birthdays to your calendar program
 
 I suggest creating a new Birthday themed sub-calendar and use it for imports.
 
-###FAQ
+### FAQ
 
 | Question | Answer |
 |---|---|
 | I accidentally saved birthdays to my main calendar, how to reverse it? | Click on extension icon and select "Remove from Google Calendar". A file named `delete-birthday-calendar.ics` will be downloaded. Import the file to your calendar |
-| Is it possible to remove some of the contacts before importing to calendar? | There is command line tool you can use: guenter-r/calendar_file_splitter |
+| Is it possible to remove some of the contacts before importing to calendar? | There is command line tool you can use: [guenter-r/calendar_file_splitter] |
 
 
 ### Things to improve
