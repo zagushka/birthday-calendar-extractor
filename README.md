@@ -3,7 +3,7 @@
 Generate a calendar with all your facebook friends birthdays.
 The generated calendar file is saved in `ICS` or `CSV` formats.
 
-## Source Code
+## Builds
 | Command  | Result |
 |---|---|
 | npm run build | Build extension and pack it to `birthday-calendar-exporter.zip` |  
@@ -11,7 +11,7 @@ The generated calendar file is saved in `ICS` or `CSV` formats.
 | npm run watch | Build extension in dev mode with `watch` |  
 | npm run watch:hmr | Build extension in dev mode with `watch` and hot module replacement |  
 
-## Calendar
+## Extractor
 
 ### How to use
 Click on extension icon and select one of the required formats:
