@@ -15,6 +15,10 @@
     "message": "https://www.facebook.com/",
     "description": "Facebook url."
   },
+  "FACEBOOK_REQUIRED_REGEXP": {
+    "message": "^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com",
+    "description": "Allowed Facebook urls regexp to validate url"
+  },
   "FACEBOOK_REQUIRED_LINK_TITLE": {
     "message": "To facebook",
     "description": "Button to Facebook title."

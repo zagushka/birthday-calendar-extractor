@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
       const url = tabs[0].url;
 
       // Wrong URL
-      if (!url.startsWith(chrome.i18n.getMessage('FACEBOOK_REQUIRED_LINK'))) {
+      if (!url.match(chrome.i18n.getMessage('FACEBOOK_REQUIRED_REGEXP'))) {
         sendMessage(new StatusReportAction('FACEBOOK_REQUIRED'));
         return true;
       }
