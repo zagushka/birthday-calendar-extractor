@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Generate calendar with all your facebook friends birthdays.",
+    "message": "Import friends birthdays from facebook to your favorite calendar.",
     "description": "The description of the application, displayed in the web store."
   },
   "FACEBOOK_REQUIRED": {
