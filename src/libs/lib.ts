@@ -59,7 +59,8 @@ export function weekDates(): { [name: number]: DateTime } {
   const days: { [name: number]: DateTime } = {};
 
   for (let i = 1; i <= 7; i++) {
-    const date = DateTime.utc().plus({days: i});
+    // Have to use DateTime.local() for a case when generated in the window between local() and utc() day change.
+    const date = DateTime.local().plus({days: i});
     const weekDayNumber = +date.toFormat('c') - 1; // toFormat('c') returns weekday from 1-7 (Monday is 1, Sunday is 7)
     days[weekDayNumber] = date;
   }
