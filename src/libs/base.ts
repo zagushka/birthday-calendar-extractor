@@ -42,6 +42,9 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
       fromYear++;
     } while (tillYear >= fromYear);
 
-    return result.map(e => this.generateEvent(e));
+    return result
+      // Sort event
+      .sort((a, b) => b.start.toSeconds() - a.start.toSeconds())
+      .map(e => this.generateEvent(e));
   }
 }
