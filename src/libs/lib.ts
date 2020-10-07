@@ -35,6 +35,13 @@ export interface PreparedEvent {
 }
 
 /**
+ * Convert array of strings to escaped array by converting by stringifying array and removing wrapping []
+ */
+export function arrayToCSVRow(notEscaped: Array<string>): string {
+  return JSON.stringify(notEscaped).slice(1, -1);
+}
+
+/**
  * Convert RawEvent to PreparedEvent
  * * Validate date
  * * Take care of leap year
