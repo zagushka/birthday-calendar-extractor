@@ -1,4 +1,14 @@
 ### Changelog
+2.3.4
+- Added sorting by dates
+- Today birthdays will be saved as for today and not next year to prevent confusion
+
+2.3.3
+- Fixed: While generating in a window between .local() and .utc() textual week days were added to wrong date. 
+
+2.3.2
+- Support more facebook domains such as web, wwww, m, l and mobile
+
 2.2.0
 - Remove imported events from Google Calendar
 - Export as CSV

@@ -2,7 +2,7 @@ import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
-  BakedEvent,
+  PreparedEvent,
   RawEvent,
 } from './lib';
 
@@ -16,7 +16,7 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
     FileSaver.saveAs(blob, this.filename, {autoBom: true});
   }
 
-  formatEvent(event: BakedEvent) {
+  formatEvent(event: PreparedEvent) {
     return {
       name: event.name,
       start: event.start.toFormat('LL/dd/yyyy'), // 05/30/2020
@@ -29,10 +29,11 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year // Same year
   ) {
-    return this.generateEvents(events, fromYear, tillYear);
+    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear);
+    return this.generateEvents(preparedEvents);
   }
 
-  generateEvent(event: BakedEvent) {
+  generateEvent(event: PreparedEvent) {
     return this.formatEvent(event);
   }
 }

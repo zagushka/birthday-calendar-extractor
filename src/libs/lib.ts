@@ -26,7 +26,7 @@ export interface RawEvent {
   changeTime?: number;
 }
 
-export interface BakedEvent {
+export interface PreparedEvent {
   uid: string;
   name: string;
   start: DateTime;
@@ -34,7 +34,21 @@ export interface BakedEvent {
   href: string;
 }
 
-export function bakeEvent(event: RawEvent, year: number): BakedEvent {
+/**
+ * Convert array of strings to escaped array by converting by stringifying array and removing wrapping []
+ */
+export function arrayToCSVRow(notEscaped: Array<string>): string {
+  return JSON.stringify(notEscaped).slice(1, -1);
+}
+
+/**
+ * Convert RawEvent to PreparedEvent
+ * * Validate date
+ * * Take care of leap year
+ * * Generate uid from user href
+ * * convert to the form suitable for further usage
+ */
+export function prepareEvent(event: RawEvent, year: number): PreparedEvent {
   // Take care of leap year
   // Since all coming birthdays are from 2020 (leap year) 02/29 can occur
   // So in order to prevent the error, I create the date from 2020 and change the year later

@@ -2,7 +2,8 @@ import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
-  BakedEvent,
+  arrayToCSVRow,
+  PreparedEvent,
   RawEvent,
 } from './lib';
 
@@ -15,13 +16,10 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     FileSaver.saveAs(blob, this.filename, {autoBom: true});
   }
 
-  formatEvent(event: BakedEvent) {
-    // csv requires past birthdays to be converted to future
-    const start = event.start < DateTime.utc() ? event.start.plus({year: 1}) : event.start;
-
+  formatEvent(event: PreparedEvent) {
     return {
       name: event.name,
-      start: start.toFormat('LL/dd/yyyy'), // 05/30/2020,
+      start: event.start.toFormat('LL/dd/yyyy'), // 05/30/2020,
       href: event.href,
     };
   }
@@ -31,37 +29,52 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {
-    return [
-        `Subject`,
-        `Start Date`,
-        // `Start Time,`,
-        // `End Date,`,
-        // `End Time,`,
-        `All Day Event`,
-        `Description`,
-        // `Location,`,
-        // `Private`,
-      ].join(',') + '\n' +
-      this.generateEvents(events, fromYear, tillYear).join('\n')
-        .replace(/\r?\n/g, '\r\n');
+
+    /**
+     * Prepare Events
+     */
+    const currentDateTime = DateTime.utc().set({hour: 0, second: 0, minute: 0, millisecond: 0});
+    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear)
+      // csv requires past birthdays to be converted to future
+      .map(event => {
+        event.start = event.start < currentDateTime ? event.start.plus({year: 1}) : event.start;
+        return event;
+      })
+      // Sort incrementally
+      .sort((a, b) => a.start.toSeconds() - b.start.toSeconds());
+
+    /**
+     * Generate Calendar
+     */
+    const headers = arrayToCSVRow([
+      `Subject`,
+      `Start Date`,
+      `All Day Event`,
+      `Description`,
+    ]);
+
+    const rows = this.generateEvents(preparedEvents);
+
+    // Prepend headers to rows
+    rows.unshift(headers);
+
+    return rows
+      .join('\n') // Separate each element by line
+      .replace(/\r?\n/g, '\r\n');
   }
 
-  generateEvent(event: BakedEvent) {
+  generateEvent(event: PreparedEvent): string {
     const formattedEvent = this.formatEvent(event);
-    return [
+
+    const preEscaped = [
       // There is unicode cake character before event.name, you may not see it in you editor
       `${formattedEvent.name}`, // `Subject,`,
       formattedEvent.start, // `Start Date,`,
-      // `Start Time,`,
-      // event.end, // `End Date,`,
-      // `End Time,`,
       'true', // `All Day Event,`,
       `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`, // Description,`,
-      // `Location,`,
-      // 'true', // `Private`,
-    ]
-      .map(col => '"' + col.replace(/"/g, '""') + '"')
-      .join(',');
+    ];
+
+    return arrayToCSVRow(preEscaped);
   }
 }
 

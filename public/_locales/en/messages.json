@@ -82,7 +82,7 @@
     "description": "Label for csv file type radio button"
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "Remove from Google Calendar",
+    "message": "Remove ICS from Google Calendar",
     "description": "Label for delete-ics file type radio button"
   },
   "GENERATE": {

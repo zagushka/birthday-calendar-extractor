@@ -1,12 +1,12 @@
 import { CalendarICS } from './ics';
-import { BakedEvent } from './lib';
+import { PreparedEvent } from './lib';
 
 
 export class CalendarDeleteICS extends CalendarICS {
   readonly filename: string = 'delete-birthday-calendar.ics';
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
 
-  generateEvent(event: BakedEvent) {
+  generateEvent(event: PreparedEvent) {
     const formattedEvent = this.formatEvent(event);
     return `BEGIN:VEVENT
 DTSTART;VALUE=DATE:${formattedEvent.start}
