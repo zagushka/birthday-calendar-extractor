@@ -39,12 +39,17 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
     fromYear: number = 2020, // Since all the events are recurring I generate them for leap year 2020
     tillYear: number = 2020,
   ) {
+
+    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear)
+      // Sort incrementally
+      .sort((a, b) => a.start.toSeconds() - b.start.toSeconds());
+
     return `BEGIN:VCALENDAR
 PRODID:Birthday Calendar Extractor for Facebook
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-${this.generateEvents(events, fromYear, tillYear).join('\n')}
+${this.generateEvents(preparedEvents).join('\n')}
 END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 

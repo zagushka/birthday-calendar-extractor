@@ -10,7 +10,7 @@ export interface CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar>
 
   generateCalendar(events: Array<RawEvent>, tillYear: number): GeneratedCalendar;
 
-  generateEvents(events: Array<RawEvent>, fromYear: number, tillYear: number): Array<GeneratedEvent>;
+  generateEvents(events: Array<PreparedEvent>): Array<GeneratedEvent>;
 
   generateEvent(event: PreparedEvent): GeneratedEvent;
 
@@ -29,22 +29,26 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
 
   abstract formatEvent(event: PreparedEvent): F;
 
-  generateEvents(events: Array<RawEvent>, fromYear: number, tillYear: number): Array<GE> {
+  /**
+   * Generate Array of events for required years range
+   */
+  protected generatePreparedEventsForYears(events: Array<RawEvent>, fromYear: number, tillYear: number) {
     const result: Array<PreparedEvent> = [];
 
     do {
       events.forEach(event => {
-        const baked = prepareEvent(event, fromYear);
-        if (baked) {
-          result.push(baked);
+        const preparedEvent = prepareEvent(event, fromYear);
+        if (preparedEvent) {
+          result.push(preparedEvent);
         }
       });
       fromYear++;
     } while (tillYear >= fromYear);
 
-    return result
-      // Sort event
-      .sort((a, b) => b.start.toSeconds() - a.start.toSeconds())
-      .map(e => this.generateEvent(e));
+    return result;
+  }
+
+  generateEvents(events: Array<PreparedEvent>): Array<GE> {
+    return events.map(e => this.generateEvent(e)); // Generate final events
   }
 }

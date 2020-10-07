@@ -29,7 +29,8 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year // Same year
   ) {
-    return this.generateEvents(events, fromYear, tillYear);
+    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear);
+    return this.generateEvents(preparedEvents);
   }
 
   generateEvent(event: PreparedEvent) {
