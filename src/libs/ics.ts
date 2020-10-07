@@ -2,7 +2,7 @@ import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
-  BakedEvent,
+  PreparedEvent,
   RawEvent,
 } from './lib';
 
@@ -16,7 +16,7 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
     FileSaver.saveAs(blob, this.filename, {autoBom: true});
   }
 
-  formatEvent(event: BakedEvent) {
+  formatEvent(event: PreparedEvent) {
     /**
      * The date with local time form is simply a DATE-TIME value that does not contain the UTC designator nor does it reference a time zone.
      * For example, the following represents January 18, 1998, at 11 PM:
@@ -48,7 +48,7 @@ ${this.generateEvents(events, fromYear, tillYear).join('\n')}
 END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 
-  generateEvent(event: BakedEvent) {
+  generateEvent(event: PreparedEvent) {
     const formattedEvent = this.formatEvent(event);
     return `BEGIN:VEVENT
 DTSTART;VALUE=DATE:${formattedEvent.start}

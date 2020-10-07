@@ -1,6 +1,6 @@
 import {
-  BakedEvent,
-  bakeEvent,
+  PreparedEvent,
+  prepareEvent,
   RawEvent,
 } from './lib';
 
@@ -12,9 +12,9 @@ export interface CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar>
 
   generateEvents(events: Array<RawEvent>, fromYear: number, tillYear: number): Array<GeneratedEvent>;
 
-  generateEvent(event: BakedEvent): GeneratedEvent;
+  generateEvent(event: PreparedEvent): GeneratedEvent;
 
-  formatEvent(event: BakedEvent): Formatted;
+  formatEvent(event: PreparedEvent): Formatted;
 }
 
 export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE, GC> {
@@ -25,16 +25,16 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
 
   abstract generateCalendar(events: Array<RawEvent>, fromYear?: number, tillYear?: number): GC;
 
-  abstract generateEvent(event: BakedEvent): GE;
+  abstract generateEvent(event: PreparedEvent): GE;
 
-  abstract formatEvent(event: BakedEvent): F;
+  abstract formatEvent(event: PreparedEvent): F;
 
   generateEvents(events: Array<RawEvent>, fromYear: number, tillYear: number): Array<GE> {
-    const result: Array<BakedEvent> = [];
+    const result: Array<PreparedEvent> = [];
 
     do {
       events.forEach(event => {
-        const baked = bakeEvent(event, fromYear);
+        const baked = prepareEvent(event, fromYear);
         if (baked) {
           result.push(baked);
         }

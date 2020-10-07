@@ -2,7 +2,7 @@ import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from './base';
 import {
-  BakedEvent,
+  PreparedEvent,
   RawEvent,
 } from './lib';
 
@@ -15,7 +15,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     FileSaver.saveAs(blob, this.filename, {autoBom: true});
   }
 
-  formatEvent(event: BakedEvent) {
+  formatEvent(event: PreparedEvent) {
     // csv requires past birthdays to be converted to future
     const start = event.start < DateTime.utc() ? event.start.plus({year: 1}) : event.start;
 
@@ -46,9 +46,10 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
         .replace(/\r?\n/g, '\r\n');
   }
 
-  generateEvent(event: BakedEvent) {
+  generateEvent(event: PreparedEvent) {
     const formattedEvent = this.formatEvent(event);
-    return [
+
+    const preescaped = [
       // There is unicode cake character before event.name, you may not see it in you editor
       `${formattedEvent.name}`, // `Subject,`,
       formattedEvent.start, // `Start Date,`,
