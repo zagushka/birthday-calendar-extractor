@@ -7,12 +7,12 @@
         <label for="format_ics" v-translate="'SELECT_FILE_FORMAT_ICS'"></label>
       </div>
       <div class="no-wrap">
-        <input type="radio" id="format_csv" name="file_format" value="csv" v-model="file_format">
-        <label for="format_csv" v-translate="'SELECT_FILE_FORMAT_CSV'"></label>
-      </div>
-      <div class="no-wrap">
         <input type="radio" id="format_delete-ics" name="file_format" value="delete-ics" v-model="file_format">
         <label for="format_delete-ics" v-translate="'SELECT_FILE_FORMAT_DELETE_ICS'"></label>
+      </div>
+      <div class="no-wrap">
+        <input type="radio" id="format_csv" name="file_format" value="csv" v-model="file_format">
+        <label for="format_csv" v-translate="'SELECT_FILE_FORMAT_CSV'"></label>
       </div>
       <br/>
       <div class="no-wrap">
