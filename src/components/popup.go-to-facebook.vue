@@ -2,7 +2,7 @@
   <span>
     <p><strong v-translate="'ERROR_HEADER'"></strong></p>
     <p v-translate="'FACEBOOK_REQUIRED'"></p>
-    <a v-link="'FACEBOOK_REQUIRED_LINK'" class="link"><span v-translate="'FACEBOOK_REQUIRED_LINK_TITLE'"></span></a>
+    <a v-link.close.active="'FACEBOOK_REQUIRED_LINK'" class="link"><span v-translate="'FACEBOOK_REQUIRED_LINK_TITLE'"></span></a>
   </span>
 </template>
 

@@ -14,10 +14,16 @@
         <input type="radio" id="format_csv" name="file_format" value="csv" v-model="file_format">
         <label for="format_csv" v-translate="'SELECT_FILE_FORMAT_CSV'"></label>
       </div>
+
+      <div class="no-wrap">
+        <input type="checkbox" id="reminder" name="file_format" v-model="reminder">
+        <label for="reminder" v-translate="'SELECT_REMINDER'"></label>
+      </div>
+
       <br/>
       <div class="no-wrap">
         <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
-        <a v-link="'LEAVE_FEEDBACK_LINK'" class="link special"><span v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
+        <a v-link.close.active="'LEAVE_FEEDBACK_LINK'" class="link special"><span v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
       </div>
     </span>
     <div id="spinner-container" v-show="waiting">
@@ -66,6 +72,7 @@ const PopupUserSettings = Vue.extend({
   data: () => {
     return {
       file_format: 'ics',
+      reminder: true,
       waiting: false,
     };
   },

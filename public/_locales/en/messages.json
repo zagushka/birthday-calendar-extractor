@@ -69,6 +69,12 @@
     "message": "birthday-calendar-exporter-for-facebook-temp-storage",
     "description": "Session storage name"
   },
+
+  "STORAGE_KEY_BADGE_VISITED": {
+    "message": "birthday-calendar-exporter-for-facebook-badge-visited",
+    "description": "Badge visited storage key name"
+  },
+
   "USER_SETTINGS": {
     "message": "I Want to",
     "description": "Header for extraction format selection"
@@ -84,6 +90,14 @@
   "SELECT_FILE_FORMAT_DELETE_ICS": {
     "message": "Remove ICS from Google Calendar",
     "description": "Label for delete-ics file type radio button"
+  },
+  "SELECT_REMINDER": {
+    "message": "Notify about birthdays",
+    "description": "Label for checkbox to display today's birthdays."
+  },
+  "TODAY_BIRTHDAY_TITLE": {
+    "message": "Today's Birthdays",
+    "description": "Header text above list of birthdays"
   },
   "GENERATE": {
     "message": "Generate",

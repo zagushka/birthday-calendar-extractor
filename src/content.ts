@@ -13,6 +13,7 @@ import { CalendarBase } from './libs/base';
 import { CalendarCSV } from './libs/csv';
 import { CalendarDeleteICS } from './libs/delete-ics';
 import { CalendarICS } from './libs/ics';
+import { CalendarJSON } from './libs/json';
 import {
   findLanguageSetByLanguage,
   getBirthdaysList,
@@ -43,6 +44,9 @@ parsePageForConfig()
               switch (config.targetFormat) {
                 case 'csv':
                   calendar = new CalendarCSV();
+                  break;
+                case 'json':
+                  calendar = new CalendarJSON();
                   break;
                 case 'ics':
                   calendar = new CalendarICS();

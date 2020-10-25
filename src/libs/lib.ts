@@ -15,6 +15,10 @@ import {
   languages,
   LanguageSet,
 } from './languages';
+import {
+  retrieveBirthdays,
+  storeBirthdays,
+} from './storage';
 
 export interface RawEvent {
   uid?: string; // User Id, unique id generated from facebook page url
@@ -247,37 +251,8 @@ function fetchBirthdaysPage(url: string): Observable<string> {
     );
 }
 
-export function storageKeyName() {
-  return chrome.i18n.getMessage('STORAGE_KEY_NAME');
-}
-
 export function sendMessage(action: Action, callback?: (response: any) => void) {
   return chrome.runtime.sendMessage(action, callback);
-}
-
-/**
- * Fetch data from sessionStorage
- * Made it Observable to easy fit chrome.storage functionality
- */
-export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
-  try {
-    const items: Array<[string, RawEvent]> =
-      (JSON.parse(sessionStorage.getItem(storageKeyName())) as Array<RawEvent>)
-        .map(i => [i.uid, i]);
-    return of(new Map(items));
-  } catch (e) {
-    return of(null);
-  }
-}
-
-/**
- * Store data to sessionStorage
- * Made it Observable to easy fit chrome.storage functionality
- */
-export function storeBirthdays(events: Map<string, RawEvent>): Observable<null> {
-  const asArray = Array.from(events.values());
-  sessionStorage.setItem(storageKeyName(), JSON.stringify(asArray));
-  return of(null);
 }
 
 export function fetchBirthdays(token: string, language: string): Observable<Map<string, RawEvent>> {
@@ -317,3 +292,4 @@ export function getBirthdaysList(language: string, token: string): Observable<Ma
       }),
     );
 }
+

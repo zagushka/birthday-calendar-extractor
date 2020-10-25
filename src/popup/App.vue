@@ -1,9 +1,12 @@
 <template>
-  <popup-go-to-facebook v-if="status === 'FACEBOOK_REQUIRED'"></popup-go-to-facebook>
-  <popup-change-language v-else-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
-  <popup-done v-else-if="status === 'DONE'"></popup-done>
-  <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
-  <popup-no-token-detected v-else-if="status === 'NO_TOKEN_DETECTED'"></popup-no-token-detected>
+  <span>
+    <TodayBirthdays></TodayBirthdays>
+    <popup-go-to-facebook v-if="status === 'FACEBOOK_REQUIRED'"></popup-go-to-facebook>
+    <popup-change-language v-else-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
+    <popup-done v-else-if="status === 'DONE'"></popup-done>
+    <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
+    <popup-no-token-detected v-else-if="status === 'NO_TOKEN_DETECTED'"></popup-no-token-detected>
+  </span>
 </template>
 
 <script>
@@ -13,9 +16,12 @@ import PopupChangeLanguage from "../components/popup.change-language";
 import PopupDone from "../components/popup.done";
 import PopupNoTokenDetected from "../components/popup.no-token";
 import PopupUserSettings from "../components/popup.user-settings";
+import TodayBirthdays from "../components/today-bdays";
 import translate from "../directives/translate";
 import {ACTION, CheckStatusAction} from "../constants";
 import {sendMessage} from "../libs/lib";
+import {setBadgeColor} from "../libs/badge";
+import {storeLastBadgeClicked} from "../libs/storage";
 
 export default {
   components: {
@@ -23,12 +29,16 @@ export default {
     PopupChangeLanguage,
     PopupDone,
     PopupNoTokenDetected,
-    PopupUserSettings
+    PopupUserSettings,
+    TodayBirthdays,
   },
   directives: {
     translate,
   },
   created() {
+    storeLastBadgeClicked();
+    setBadgeColor();
+
     chrome.runtime.onMessage.addListener((message, sender, callback) => {
       if (ACTION.STATUS_REPORT === message.type) {
         this.status = message.status;
@@ -79,6 +89,7 @@ p:first-child {
   color: #333;
   background: #eee linear-gradient(to bottom, #eee 5%, #e4e4e3 100%);
 }
+
 .link.special:hover {
   background: #e4e4e3 linear-gradient(to bottom, #e4e4e3 5%, #eee 100%);
 }

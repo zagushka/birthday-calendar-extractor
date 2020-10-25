@@ -5,7 +5,9 @@
   "version": "_",
   "manifest_version": 2,
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage",
+    "alarms"
   ],
   "icons": {
     "16": "icons/icon.16.png",

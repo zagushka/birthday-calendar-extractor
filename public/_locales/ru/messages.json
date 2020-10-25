@@ -77,6 +77,14 @@
     "message": "Удалить из Google Calendar",
     "description": "Label for delete-ics file type radio button"
   },
+  "SELECT_REMINDER": {
+    "message": "Сообщать об именинниках",
+    "description": "Label for checkbox to display today's birthdays."
+  },
+  "TODAY_BIRTHDAY_TITLE": {
+    "message": "Сегодняшние дни рождения",
+    "description": "Header text above list of birthdays"
+  },
   "GENERATE": {
     "message": "Создать",
     "description": "Label 'generate' button"

@@ -2,10 +2,11 @@ import {
   ACTION,
   StatusReportAction,
 } from './constants';
+import { setupBadges } from './libs/badge';
 import { sendMessage } from './libs/lib';
 
 export interface UserConfig {
-  targetFormat: 'ics' | 'csv' | 'delete-ics';
+  targetFormat: 'ics' | 'csv' | 'delete-ics' | 'json';
 }
 
 const userConfig: UserConfig = {targetFormat: 'ics'};
@@ -17,6 +18,8 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
   chrome.runtime.onMessage.removeListener(handleContentResponse(firstLevelCallback));
   firstLevelCallback(message.status);
 };
+
+setupBadges(); // Setup badges
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
   // if (ACTION.LOG === message.type) {

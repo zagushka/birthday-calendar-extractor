@@ -54,3 +54,8 @@ export class LogAction extends Action {
 
   }
 }
+
+export const STORAGE_KEY = {
+  DATA: chrome.i18n.getMessage('STORAGE_KEY_NAME'),
+  BADGE_VISITED: chrome.i18n.getMessage('STORAGE_KEY_BADGE_VISITED'),
+};

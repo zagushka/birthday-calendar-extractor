@@ -2,7 +2,7 @@
   <span>
     <p><strong v-translate="'ERROR_HEADER'"></strong></p>
     <p v-translate="['NOT_SUPPORTED_LANGUAGE', languages]"></p>
-    <a v-link="'NOT_SUPPORTED_LANGUAGE_LINK'" class="link"><span
+    <a v-link.close.active="'NOT_SUPPORTED_LANGUAGE_LINK'" class="link"><span
         v-translate="'NOT_SUPPORTED_LANGUAGE_TITLE'"></span></a>
   </span>
 </template>
