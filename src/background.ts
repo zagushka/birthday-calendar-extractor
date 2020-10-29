@@ -1,9 +1,20 @@
+import { map } from 'rxjs/operators';
 import {
   ACTION,
   StatusReportAction,
 } from './constants';
 import { setupBadges } from './libs/badge';
-import { sendMessage } from './libs/lib';
+import { CalendarBase } from './libs/base';
+import { CalendarCSV } from './libs/csv';
+import { CalendarDeleteICS } from './libs/delete-ics';
+import { CalendarICS } from './libs/ics';
+import { CalendarJSON } from './libs/json';
+import {
+  findLanguageSetByLanguage,
+  getBirthdaysList,
+  parsePageForConfig,
+  sendMessage,
+} from './libs/lib';
 
 export interface UserConfig {
   targetFormat: 'ics' | 'csv' | 'delete-ics' | 'json';
@@ -38,29 +49,54 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
 
   if (ACTION.START_GENERATION === message.type) {
     // Correct URL, wait for content response
-    chrome.runtime.onMessage.addListener(
-      handleContentResponse((data: any) => callback(data)),
-    );
+    // chrome.runtime.onMessage.addListener(
+    //   handleContentResponse((data: any) => callback(data)),
+    // );
     // Execute content script and CSS`
     // chrome.tabs.insertCSS({file: './content.css'}, () => {
-    chrome.tabs.executeScript({file: './content.js'});
+    // chrome.tabs.executeScript({file: './content.js'});
     // });
-    return true;
-  }
-  if (ACTION.CHECK_STATUS === message.type) {
-    // Check current page url
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
-      // console.log('Action is here', tabs[0].url);
-      const url = tabs[0].url;
 
-      // Wrong URL
-      if (!url.match(chrome.i18n.getMessage('FACEBOOK_REQUIRED_REGEXP'))) {
-        sendMessage(new StatusReportAction('FACEBOOK_REQUIRED'));
-        return true;
-      }
+    parsePageForConfig()
+      .subscribe(({language, token}) => {
+        if (!token) {
+          sendMessage(new StatusReportAction('NO_TOKEN_DETECTED'));
+          return;
+        }
 
-      sendMessage(new StatusReportAction('USER_SETTINGS'));
-    });
+        if (!findLanguageSetByLanguage(language)) {
+          sendMessage(new StatusReportAction('NOT_SUPPORTED_LANGUAGE'));
+          return;
+        }
+
+        getBirthdaysList(language, token)
+          .pipe(
+            map(events => {
+              let calendar: CalendarBase<any, any, any>;
+              switch (userConfig.targetFormat) {
+                case 'csv':
+                  calendar = new CalendarCSV();
+                  break;
+                case 'json':
+                  calendar = new CalendarJSON();
+                  break;
+                case 'ics':
+                  calendar = new CalendarICS();
+                  break;
+                case 'delete-ics':
+                  calendar = new CalendarDeleteICS();
+                  break;
+              }
+              return calendar.save(
+                calendar.generateCalendar(Array.from(events.values())),
+              );
+            }),
+          )
+          .subscribe(() => {
+            sendMessage(new StatusReportAction('DONE'));
+          });
+      });
+
     return true;
   }
 });

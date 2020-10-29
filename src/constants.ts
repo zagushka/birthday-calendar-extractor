@@ -42,10 +42,6 @@ export class StatusReportAction extends Action {
   }
 }
 
-export class CheckStatusAction extends Action {
-  type = ACTION.CHECK_STATUS;
-}
-
 export class LogAction extends Action {
   type = ACTION.LOG;
 

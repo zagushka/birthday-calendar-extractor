@@ -12,7 +12,7 @@ import Vue from 'vue';
 import link from '../directives/link';
 import translate from '../directives/translate';
 import { RawEvent } from '../libs/lib';
-import { getTodayBirthdays } from '../libs/storage';
+import { getInfoForBadge } from '../libs/storage';
 
 const TodayBirthdays = Vue.extend({
   name: 'today-bdays',
@@ -21,7 +21,7 @@ const TodayBirthdays = Vue.extend({
     translate,
   },
   created() {
-    getTodayBirthdays()
+    getInfoForBadge()
         .subscribe(({birthdays}) => this.users = birthdays);
   },
   data() {

@@ -1,8 +1,7 @@
 <template>
   <span>
     <TodayBirthdays></TodayBirthdays>
-    <popup-go-to-facebook v-if="status === 'FACEBOOK_REQUIRED'"></popup-go-to-facebook>
-    <popup-change-language v-else-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
+    <popup-change-language v-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
     <popup-done v-else-if="status === 'DONE'"></popup-done>
     <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
     <popup-no-token-detected v-else-if="status === 'NO_TOKEN_DETECTED'"></popup-no-token-detected>
@@ -18,8 +17,7 @@ import PopupNoTokenDetected from "../components/popup.no-token";
 import PopupUserSettings from "../components/popup.user-settings";
 import TodayBirthdays from "../components/today-bdays";
 import translate from "../directives/translate";
-import {ACTION, CheckStatusAction} from "../constants";
-import {sendMessage} from "../libs/lib";
+import {ACTION} from "../constants";
 import {setBadgeColor} from "../libs/badge";
 import {storeLastBadgeClicked} from "../libs/storage";
 
@@ -44,12 +42,10 @@ export default {
         this.status = message.status;
       }
     })
-
-    sendMessage(new CheckStatusAction());
   },
   data() {
     return {
-      status
+      status: 'USER_SETTINGS'
     }
   }
 }
