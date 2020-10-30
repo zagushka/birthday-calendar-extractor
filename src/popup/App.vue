@@ -1,6 +1,7 @@
 <template>
   <span>
     <TodayBirthdays></TodayBirthdays>
+    <hr/>
     <popup-change-language v-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
     <popup-done v-else-if="status === 'DONE'"></popup-done>
     <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
@@ -10,7 +11,6 @@
 
 <script>
 
-import PopupGoToFacebook from "../components/popup.go-to-facebook";
 import PopupChangeLanguage from "../components/popup.change-language";
 import PopupDone from "../components/popup.done";
 import PopupNoTokenDetected from "../components/popup.no-token";
@@ -23,7 +23,6 @@ import {storeLastBadgeClicked} from "../libs/storage";
 
 export default {
   components: {
-    PopupGoToFacebook,
     PopupChangeLanguage,
     PopupDone,
     PopupNoTokenDetected,

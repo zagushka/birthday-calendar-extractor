@@ -1,6 +1,7 @@
 import { map } from 'rxjs/operators';
 import {
   ACTION,
+  ACTIONS_SET,
   StatusReportAction,
 } from './constants';
 import { setupBadges } from './libs/badge';
@@ -17,10 +18,10 @@ import {
 } from './libs/lib';
 
 export interface UserConfig {
-  targetFormat: 'ics' | 'csv' | 'delete-ics' | 'json';
+  targetFormat: ACTIONS_SET;
 }
 
-const userConfig: UserConfig = {targetFormat: 'ics'};
+const userConfig: UserConfig = {targetFormat: ACTIONS_SET.SELECT_FILE_FORMAT_ICS};
 
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
   if (ACTION.STATUS_REPORT !== message.type) {
@@ -48,15 +49,6 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
   }
 
   if (ACTION.START_GENERATION === message.type) {
-    // Correct URL, wait for content response
-    // chrome.runtime.onMessage.addListener(
-    //   handleContentResponse((data: any) => callback(data)),
-    // );
-    // Execute content script and CSS`
-    // chrome.tabs.insertCSS({file: './content.css'}, () => {
-    // chrome.tabs.executeScript({file: './content.js'});
-    // });
-
     parsePageForConfig()
       .subscribe(({language, token}) => {
         if (!token) {
@@ -74,16 +66,16 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
             map(events => {
               let calendar: CalendarBase<any, any, any>;
               switch (userConfig.targetFormat) {
-                case 'csv':
+                case ACTIONS_SET.SELECT_FILE_FORMAT_CSV:
                   calendar = new CalendarCSV();
                   break;
-                case 'json':
+                case ACTIONS_SET.SELECT_FILE_FORMAT_JSON:
                   calendar = new CalendarJSON();
                   break;
-                case 'ics':
+                case ACTIONS_SET.SELECT_FILE_FORMAT_ICS:
                   calendar = new CalendarICS();
                   break;
-                case 'delete-ics':
+                case ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS:
                   calendar = new CalendarDeleteICS();
                   break;
               }

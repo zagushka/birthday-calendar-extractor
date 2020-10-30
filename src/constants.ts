@@ -25,7 +25,7 @@ export class GetUserConfigAction extends Action {
 export class SetUserConfigAction extends Action {
   type = ACTION.USER_CONFIG_SET;
 
-  constructor(public targetFormat: 'ics' | 'csv' | 'delete-ics') {
+  constructor(public targetFormat: ACTIONS_SET) {
     super();
   }
 }
@@ -55,3 +55,33 @@ export const STORAGE_KEY = {
   DATA: chrome.i18n.getMessage('STORAGE_KEY_NAME'),
   BADGE_VISITED: chrome.i18n.getMessage('STORAGE_KEY_BADGE_VISITED'),
 };
+
+export enum ACTIONS_SET {
+  SELECT_BADGE = 'SELECT_REMINDER',
+  SELECT_FILE_FORMAT_ICS = 'SELECT_FILE_FORMAT_ICS',
+  SELECT_FILE_FORMAT_DELETE_ICS = 'SELECT_FILE_FORMAT_DELETE_ICS',
+  SELECT_FILE_FORMAT_CSV = 'SELECT_FILE_FORMAT_CSV',
+  SELECT_FILE_FORMAT_JSON = 'SELECT_FILE_FORMAT_JSON'
+}
+
+export const ACTIONS_DESC: Array<{
+  name: string;
+  description: string;
+}> = [
+  {
+    name: ACTIONS_SET.SELECT_BADGE,
+    description: '',
+  },
+  {
+    name: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
+    description: 'SELECT_ICS_DESCRIPTION',
+  },
+  {
+    name: ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS,
+    description: '',
+  },
+  {
+    name: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
+    description: '',
+  },
+];

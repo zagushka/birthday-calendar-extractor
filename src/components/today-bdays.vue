@@ -1,6 +1,6 @@
 <template>
   <span>
-    <p><strong v-translate="'TODAY_BIRTHDAY_TITLE'"></strong></p>
+    <p><strong v-translate="users.length ? 'TODAY_BIRTHDAY_TITLE' : 'TODAY_NO_BIRTHDAYS_TITLE'"></strong></p>
     <ul>
       <li v-for="user in users" :key="user.href"><a v-link="user.href">{{ user.name }}</a></li>
     </ul>

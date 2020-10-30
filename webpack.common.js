@@ -10,7 +10,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     'background': './background.ts',
-    'content': './content.ts',
+    // 'content': './content.ts',
     'popup/popup': './popup/popup.ts',
   },
   output: {

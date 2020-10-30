@@ -83,6 +83,10 @@
     "message": "Generate Google Calendar - ICS",
     "description": "Label for ics file type radio button"
   },
+  "SELECT_ICS_DESCRIPTION": {
+    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.<br /> Importing from this format is REVERSIBLE and can be undone.",
+    "description": "Description for ics file type radio button"
+  },
   "SELECT_FILE_FORMAT_CSV": {
     "message": "Generate Excel file - CSV",
     "description": "Label for csv file type radio button"
@@ -98,6 +102,10 @@
   "TODAY_BIRTHDAY_TITLE": {
     "message": "Today's Birthdays",
     "description": "Header text above list of birthdays"
+  },
+  "TODAY_NO_BIRTHDAYS_TITLE": {
+    "message": "There are no birthdays today",
+    "description": "Header text above list of birthdays when no birthdays for today"
   },
   "GENERATE": {
     "message": "Generate",

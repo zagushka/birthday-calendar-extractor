@@ -85,6 +85,10 @@
     "message": "Сегодняшние дни рождения",
     "description": "Header text above list of birthdays"
   },
+  "TODAY_NO_BIRTHDAYS_TITLE": {
+    "message": "Сегодня нет именинников",
+    "description": "Header text above list of birthdays when no birthdays for today"
+  },
   "GENERATE": {
     "message": "Создать",
     "description": "Label 'generate' button"
