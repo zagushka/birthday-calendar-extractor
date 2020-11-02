@@ -8,26 +8,49 @@
   >
     <b-tab :title="'TODAY_BIRTHDAY_TITLE' | translatePipe">
       <today-birthdays></today-birthdays>
-      <div class="no-wrap">
-        <b-button size="sm" variant="outline-dark" v-link.close.active="'BY_ME_COFFEE_LINK'"
-                  v-translate="'BY_ME_COFFEE_TITLE'"></b-button>
+      <div class="d-flex justify-content-end">
+        <b-button size="sm"
+                  variant="outline-dark"
+                  v-link.close.active="'BY_ME_COFFEE_LINK'"
+                  v-translate="'BUY_ME_COFFEE_TITLE'"></b-button>
       </div>
     </b-tab>
 
     <b-tab :title="'USER_SETTINGS' | translatePipe">
       <b-overlay :show="waiting">
 
-        <div class="d-flex flex-row" style="width: 500px">
-          <div class="d-flex flex-grow-1 pr-2">
-            <b-embed autoplay loop type="video" aspect="4by3" style="border: 1px solid black;">
-              <source src="/media/badge.mp4" type="video/mp4">
-            </b-embed>
+        <div class="d-flex flex-row" style="width: 500px; min-height: 160px">
+          <div class="d-flex text-info flex-grow-1 mr-2 p-2 border rounded">
+
+            <div class="d-flex flex-grow-1 border"
+                 v-if="actionName === ACTIONS_SET.SELECT_BADGE">
+              <b-embed
+                  autoplay loop
+                  type="video" aspect="4by3">
+                <source src="/media/badge.mp4" type="video/mp4">
+              </b-embed>
+            </div>
+
+            <div v-else-if="actionName === ACTIONS_SET.SELECT_FILE_FORMAT_ICS">
+              {{ 'SELECT_ICS_DESCRIPTION' | translatePipe }}
+            </div>
+
+            <div v-else-if="actionName === ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS">
+              УДАЛИТЬ
+            </div>
+
+            <div v-else-if="actionName === ACTIONS_SET.SELECT_FILE_FORMAT_CSV">
+              CSV
+            </div>
           </div>
 
-          <div class="d-flex align-items-start flex-column">
+          <div class="d-flex align-items-start flex-shrink-0 flex-column ml-auto">
             <b-form-radio-group
                 class="d-flex flex-nowrap flex-column"
-                v-model="actionName" :options="ACTIONS_DESC"></b-form-radio-group>
+                v-model="actionName"
+                @change="updateTarget"
+                :options="ACTIONS_DESC">
+            </b-form-radio-group>
 
             <div class="d-flex flex-nowrap mt-auto align-self-stretch">
               <b-button
@@ -46,15 +69,6 @@
         </div>
 
       </b-overlay>
-    </b-tab>
-    <b-tab title="?">
-      Use the tabs-start slot to place extra tab buttons before the content tab buttons, and use the tabs-end slot to
-      place extra tab buttons after the content tab buttons.
-
-      Note: extra (contentless) tab buttons should be a or have a root element of li and class nav-item for proper
-      rendering and semantic markup.
-
-
     </b-tab>
   </b-tabs>
 </template>
@@ -115,25 +129,22 @@ const PopupUserSettings = Vue.extend({
     translate,
     link,
   },
-  watch: {
-    file_format: (val, oldVal) => {
-      if (val === oldVal) {
-        return;
-      }
-      sendMessage(new SetUserConfigAction(val));
-    },
+  destroyed() {
+
   },
   created() {
     sendMessage(new GetUserConfigAction(), (message) => {
       this.actionName = message.targetFormat;
     });
+
     getLastActiveTab()
         .subscribe(tabIndex => this.tabIndex = tabIndex);
   },
   data: () => {
     return {
+      ACTIONS_SET,
       ACTIONS_DESC,
-      actionName: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
+      actionName: ACTIONS_SET,
       reminder: true,
       waiting: false,
       tabIndex: 0,
@@ -146,6 +157,9 @@ const PopupUserSettings = Vue.extend({
     startGeneration() {
       sendMessage(new StartGenerationAction());
       this.waiting = true;
+    },
+    updateTarget(val: ACTIONS_SET) {
+      sendMessage(new SetUserConfigAction(val));
     },
   },
 });

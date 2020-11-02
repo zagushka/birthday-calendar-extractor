@@ -57,12 +57,12 @@
     "message": "Leave a feedback",
     "description": "Share button"
   },
-  "BY_ME_COFFEE_LINK": {
+  "BUY_ME_COFFEE_LINK": {
     "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
     "description": "Link to donate page"
   },
-  "BY_ME_COFFEE_TITLE": {
-    "message": "By me a coffee",
+  "BUY_ME_COFFEE_TITLE": {
+    "message": "Buy me a coffee",
     "description": "Donate button"
   },
   "NO_TOKEN_DETECTED": {
@@ -92,7 +92,7 @@
     "description": "Label for ics file type radio button"
   },
   "SELECT_ICS_DESCRIPTION": {
-    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.<br /> Importing from this format is REVERSIBLE and can be undone.",
+    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar. Importing from this format is REVERSIBLE and can be undone.",
     "description": "Description for ics file type radio button"
   },
   "SELECT_FILE_FORMAT_CSV": {

@@ -1,10 +1,10 @@
 <template>
-  <span>
+  <div class="m-2" style="min-height: 80px">
     <p v-if="!users.length"><strong v-translate="'TODAY_NO_BIRTHDAYS_TITLE'"></strong></p>
-    <ul style="list-style-type:none;">
+    <ul style="list-style-type:none; margin: 0; padding: 0" class="text-nowrap">
       <li v-for="user in users" :key="user.href"><a v-link="user.href">{{ user.name }}</a></li>
     </ul>
-  </span>
+  </div>
 </template>
 
 <script lang="ts">
