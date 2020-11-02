@@ -1,4 +1,5 @@
 import { DirectiveOptions } from 'vue';
+import translatePipe from '../filters/translate';
 
 const translate: DirectiveOptions = {
   bind: (el, binding, vnode) => {
@@ -12,7 +13,7 @@ const translate: DirectiveOptions = {
     }
 
     // @ts-ignore
-    el.innerHTML = chrome.i18n.getMessage(...data);
+    el.innerHTML = translatePipe(...data);
   },
 };
 
