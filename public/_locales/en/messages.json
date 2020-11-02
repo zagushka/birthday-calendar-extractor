@@ -57,6 +57,14 @@
     "message": "Leave a feedback",
     "description": "Share button"
   },
+  "BY_ME_COFFEE_LINK": {
+    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
+    "description": "Link to donate page"
+  },
+  "BY_ME_COFFEE_TITLE": {
+    "message": "By me a coffee",
+    "description": "Donate button"
+  },
   "NO_TOKEN_DETECTED": {
     "message": "Unable to fetch birthdays data, make sure you are logged in to facebook and try again.",
     "description": "Description for error when no token found."

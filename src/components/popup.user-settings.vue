@@ -2,33 +2,49 @@
 
   <b-tabs
       nav-class="no-wrap"
-      content-class="mt-3"
+      content-class="mt-2"
+      v-model="tabIndex"
+      @activate-tab="updateTabIndex"
   >
     <b-tab :title="'TODAY_BIRTHDAY_TITLE' | translatePipe">
       <today-birthdays></today-birthdays>
+      <div class="no-wrap">
+        <b-button size="sm" variant="outline-dark" v-link.close.active="'BY_ME_COFFEE_LINK'"
+                  v-translate="'BY_ME_COFFEE_TITLE'"></b-button>
+      </div>
     </b-tab>
-    <b-tab :title="'USER_SETTINGS' | translatePipe" active>
+
+    <b-tab :title="'USER_SETTINGS' | translatePipe">
       <b-overlay :show="waiting">
-        <b-container>
-          <b-row>
-            <b-col style="width: 500px">
-              <b-embed autoplay loop type="video" aspect="4by3" style="border: 1px solid black">
-                <source src="/media/badge.mp4" type="video/mp4">
-              </b-embed>
-            </b-col>
-            <b-col>
 
-              <b-form-radio-group v-model="actionName" :options="ACTIONS_DESC"></b-form-radio-group>
+        <div class="d-flex flex-row" style="width: 500px">
+          <div class="d-flex flex-grow-1 pr-2">
+            <b-embed autoplay loop type="video" aspect="4by3" style="border: 1px solid black;">
+              <source src="/media/badge.mp4" type="video/mp4">
+            </b-embed>
+          </div>
 
-              <div class="no-wrap">
-                <b-button size="sm" variant="outline-success" v-on:click="startGeneration()"
-                          v-translate="'GENERATE'"></b-button>
-                <b-button size="sm" variant="outline-dark" v-link.close.active="'LEAVE_FEEDBACK_LINK'"
-                          v-translate="'LEAVE_FEEDBACK_TITLE'"></b-button>
-              </div>
-            </b-col>
-          </b-row>
-        </b-container>
+          <div class="d-flex align-items-start flex-column">
+            <b-form-radio-group
+                class="d-flex flex-nowrap flex-column"
+                v-model="actionName" :options="ACTIONS_DESC"></b-form-radio-group>
+
+            <div class="d-flex flex-nowrap mt-auto align-self-stretch">
+              <b-button
+                  size="sm"
+                  variant="outline-success"
+                  v-on:click="startGeneration()"
+                  v-translate="'GENERATE'"></b-button>
+              <b-button
+                  size="sm"
+                  class="ml-auto"
+                  variant="outline-dark"
+                  v-link.close.active="'LEAVE_FEEDBACK_LINK'"
+                  v-translate="'LEAVE_FEEDBACK_TITLE'"></b-button>
+            </div>
+          </div>
+        </div>
+
       </b-overlay>
     </b-tab>
     <b-tab title="?">
@@ -68,6 +84,10 @@ import link from '../directives/link';
 import translate from '../directives/translate';
 import translatePipe from '../filters/translate';
 import { sendMessage } from '../libs/lib';
+import {
+  getLastActiveTab,
+  storeLastActiveTab,
+} from '../libs/storage';
 import PopupActionDescription from './action-description.vue';
 import TodayBirthdays from './today-bdays.vue';
 import Spinner from './spinner.vue';
@@ -107,6 +127,8 @@ const PopupUserSettings = Vue.extend({
     sendMessage(new GetUserConfigAction(), (message) => {
       this.actionName = message.targetFormat;
     });
+    getLastActiveTab()
+        .subscribe(tabIndex => this.tabIndex = tabIndex);
   },
   data: () => {
     return {
@@ -114,9 +136,13 @@ const PopupUserSettings = Vue.extend({
       actionName: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
       reminder: true,
       waiting: false,
+      tabIndex: 0,
     };
   },
   methods: {
+    updateTabIndex(activatedTabId: number) {
+      storeLastActiveTab(activatedTabId);
+    },
     startGeneration() {
       sendMessage(new StartGenerationAction());
       this.waiting = true;

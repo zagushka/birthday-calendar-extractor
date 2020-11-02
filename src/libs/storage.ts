@@ -34,6 +34,16 @@ export function getLastTimeClickedBadge(): Observable<DateTime> {
 }
 
 /**
+ *
+ */
+export function getLastActiveTab(): Observable<number> {
+  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEY.LAST_ACTIVE_TAB]))()
+    .pipe(
+      map(data => data[STORAGE_KEY.LAST_ACTIVE_TAB]), // Stored raw birthdays
+    );
+}
+
+/**
  * Today's birthday
  */
 export function getTodayBirthdays(): Observable<Array<RawEvent>> {
@@ -99,8 +109,15 @@ export function storeBirthdays(events: Map<string, RawEvent>): Observable<null> 
 
 /**
  * Store data to sessionStorage
- * Made it Observable to easy fit chrome.storage functionality
+ * @TODO Make it Observable
  */
 export function storeLastBadgeClicked() {
   chrome.storage.local.set({[STORAGE_KEY.BADGE_VISITED]: DateTime.local().toMillis()});
+}
+
+/**
+ * Store last active tab
+ */
+export function storeLastActiveTab(tabId: number) {
+  chrome.storage.local.set({[STORAGE_KEY.LAST_ACTIVE_TAB]: tabId});
 }
