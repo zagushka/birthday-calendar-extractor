@@ -1,47 +1,95 @@
 <template>
-  <span>
-    <span :style.visibility="!waiting ? 'visible': 'hidden'">
-      <p><strong v-translate="'USER_SETTINGS'"></strong></p>
 
-      <div class="no-wrap" v-for="action in ACTIONS_SET">
-        <input type="radio" :id="action.name" :name="action.name" :value="action.name" v-model="actionName"/>
-        <label :for="action.name" v-translate="action.name"></label>
-        <span class="do-wrap action-description" v-if="action.name === actionName"
-              v-translate="action.description"></span>
-      </div>
+  <b-tabs
+      nav-class="no-wrap"
+      content-class="mt-3"
+  >
+    <b-tab :title="'TODAY_BIRTHDAY_TITLE' | translatePipe">
+      <today-birthdays></today-birthdays>
+    </b-tab>
+    <b-tab :title="'USER_SETTINGS' | translatePipe" active>
+      <b-overlay :show="waiting">
+        <b-container>
+          <b-row>
+            <b-col style="width: 500px">
+              <b-embed autoplay loop type="video" aspect="4by3" style="border: 1px solid black">
+                <source src="/media/badge.mp4" type="video/mp4">
+              </b-embed>
+            </b-col>
+            <b-col>
 
-      <br/>
-      <div class="no-wrap">
-        <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
-        <a v-link.close.active="'LEAVE_FEEDBACK_LINK'" class="link special"><span
-            v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
-      </div>
-    </span>
-    <Spinner :show="waiting"></Spinner>
-  </span>
+              <b-form-radio-group v-model="actionName" :options="ACTIONS_DESC"></b-form-radio-group>
+
+              <div class="no-wrap">
+                <b-button size="sm" variant="outline-success" v-on:click="startGeneration()"
+                          v-translate="'GENERATE'"></b-button>
+                <b-button size="sm" variant="outline-dark" v-link.close.active="'LEAVE_FEEDBACK_LINK'"
+                          v-translate="'LEAVE_FEEDBACK_TITLE'"></b-button>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-overlay>
+    </b-tab>
+    <b-tab title="?">
+      Use the tabs-start slot to place extra tab buttons before the content tab buttons, and use the tabs-end slot to
+      place extra tab buttons after the content tab buttons.
+
+      Note: extra (contentless) tab buttons should be a or have a root element of li and class nav-item for proper
+      rendering and semantic markup.
+
+
+    </b-tab>
+  </b-tabs>
 </template>
 
 <script lang="ts">
 
+import {
+  BButton,
+  BCol,
+  BContainer,
+  BEmbed,
+  BFormRadioGroup,
+  BOverlay,
+  BRow,
+  BTab,
+  BTabs,
+} from 'bootstrap-vue';
 import Vue from 'vue';
 import {
-  StartGenerationAction,
-  GetUserConfigAction,
-  SetUserConfigAction,
   ACTIONS_DESC,
   ACTIONS_SET,
+  GetUserConfigAction,
+  SetUserConfigAction,
+  StartGenerationAction,
 } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
+import translatePipe from '../filters/translate';
 import { sendMessage } from '../libs/lib';
 import PopupActionDescription from './action-description.vue';
+import TodayBirthdays from './today-bdays.vue';
 import Spinner from './spinner.vue';
 
 const PopupUserSettings = Vue.extend({
   name: 'popup-user-settings',
+  filters: {
+    translatePipe,
+  },
   components: {
     PopupActionDescription,
+    'today-birthdays': TodayBirthdays,
     Spinner,
+    'b-button': BButton,
+    'b-form-radio-group': BFormRadioGroup,
+    'b-overlay': BOverlay,
+    'b-tab': BTab,
+    'b-tabs': BTabs,
+    'b-container': BContainer,
+    'b-row': BRow,
+    'b-col': BCol,
+    'b-embed': BEmbed,
   },
   directives: {
     translate,
@@ -62,7 +110,7 @@ const PopupUserSettings = Vue.extend({
   },
   data: () => {
     return {
-      ACTIONS_SET: ACTIONS_DESC,
+      ACTIONS_DESC,
       actionName: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
       reminder: true,
       waiting: false,
@@ -80,8 +128,12 @@ export default PopupUserSettings;
 </script>
 
 <style type="scss">
+@import '~bootstrap';
+@import '~bootstrap-vue';
+
 .no-wrap {
   white-space: nowrap;
+  flex-wrap: nowrap;
 }
 
 .do-wrap {

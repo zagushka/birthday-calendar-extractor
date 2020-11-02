@@ -80,7 +80,7 @@
     "description": "Header for extraction format selection"
   },
   "SELECT_FILE_FORMAT_ICS": {
-    "message": "Generate Google Calendar - ICS",
+    "message": "export birthdays as ICS file.",
     "description": "Label for ics file type radio button"
   },
   "SELECT_ICS_DESCRIPTION": {
@@ -88,15 +88,15 @@
     "description": "Description for ics file type radio button"
   },
   "SELECT_FILE_FORMAT_CSV": {
-    "message": "Generate Excel file - CSV",
+    "message": "export birthdays as CSV file.",
     "description": "Label for csv file type radio button"
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "Remove ICS from Google Calendar",
+    "message": "delete exported ICS from calendar.",
     "description": "Label for delete-ics file type radio button"
   },
   "SELECT_REMINDER": {
-    "message": "Notify about birthdays",
+    "message": "see birthday notification icon.",
     "description": "Label for checkbox to display today's birthdays."
   },
   "TODAY_BIRTHDAY_TITLE": {

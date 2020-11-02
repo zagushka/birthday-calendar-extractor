@@ -1,7 +1,5 @@
 <template>
   <span>
-    <TodayBirthdays></TodayBirthdays>
-    <hr/>
     <popup-change-language v-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
     <popup-done v-else-if="status === 'DONE'"></popup-done>
     <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
@@ -15,7 +13,6 @@ import PopupChangeLanguage from "../components/popup.change-language";
 import PopupDone from "../components/popup.done";
 import PopupNoTokenDetected from "../components/popup.no-token";
 import PopupUserSettings from "../components/popup.user-settings";
-import TodayBirthdays from "../components/today-bdays";
 import translate from "../directives/translate";
 import {ACTION} from "../constants";
 import {setBadgeColor} from "../libs/badge";
@@ -27,7 +24,6 @@ export default {
     PopupDone,
     PopupNoTokenDetected,
     PopupUserSettings,
-    TodayBirthdays,
   },
   directives: {
     translate,

@@ -1,3 +1,5 @@
+import translatePipe from './filters/translate';
+
 export enum ACTION {
   STATUS_REPORT = 'STATUS_REPORT',
   USER_CONFIG = 'USER_CONFIG',
@@ -65,23 +67,28 @@ export enum ACTIONS_SET {
 }
 
 export const ACTIONS_DESC: Array<{
-  name: string;
+  value: string;
+  text: string;
   description: string;
 }> = [
   {
-    name: ACTIONS_SET.SELECT_BADGE,
+    value: ACTIONS_SET.SELECT_BADGE,
+    text: translatePipe(ACTIONS_SET.SELECT_BADGE),
     description: '',
   },
   {
-    name: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
+    value: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
+    text: translatePipe(ACTIONS_SET.SELECT_FILE_FORMAT_ICS),
     description: 'SELECT_ICS_DESCRIPTION',
   },
   {
-    name: ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS,
+    value: ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS,
+    text: translatePipe(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS),
     description: '',
   },
   {
-    name: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
+    value: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
+    text: translatePipe(ACTIONS_SET.SELECT_FILE_FORMAT_CSV),
     description: '',
   },
 ];
