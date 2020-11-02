@@ -36,11 +36,11 @@
             </div>
 
             <div v-else-if="actionName === ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS">
-              УДАЛИТЬ
+              {{ 'SELECT_DELETE_ICS_DESCRIPTION' | translatePipe }}
             </div>
 
             <div v-else-if="actionName === ACTIONS_SET.SELECT_FILE_FORMAT_CSV">
-              CSV
+              {{ 'FILE_FORMAT_CSV_DESCRIPTION' | translatePipe }}
             </div>
           </div>
 

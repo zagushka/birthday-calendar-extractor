@@ -99,9 +99,17 @@
     "message": "export birthdays as CSV file.",
     "description": "Label for csv file type radio button"
   },
+  "FILE_FORMAT_CSV_DESCRIPTION": {
+    "message": "CSV file format used by Microsoft Excel or Google Sheets. DO NOT USE it to import birthdays to a calendar, ICS format is preferable.",
+    "description": "Description for label for csv file type radio button"
+  },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
     "message": "delete exported ICS from calendar.",
     "description": "Label for delete-ics file type radio button"
+  },
+  "SELECT_DELETE_ICS_DESCRIPTION": {
+    "message": "Special ICS file used to remove previously imported events. Import it to the calendar same way as original ICS import.",
+    "description": "Description for delete-ics file type radio button"
   },
   "SELECT_REMINDER": {
     "message": "see birthday notification icon.",

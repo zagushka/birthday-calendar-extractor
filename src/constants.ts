@@ -85,11 +85,11 @@ export const ACTIONS_DESC: Array<{
   {
     value: ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS,
     text: translatePipe(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS),
-    description: '',
+    description: 'SELECT_DELETE_ICS_DESCRIPTION',
   },
   {
     value: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
     text: translatePipe(ACTIONS_SET.SELECT_FILE_FORMAT_CSV),
-    description: '',
+    description: 'FILE_FORMAT_CSV_DESCRIPTION',
   },
 ];
