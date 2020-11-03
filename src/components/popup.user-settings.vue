@@ -87,6 +87,7 @@ import {
   BTabs,
 } from 'bootstrap-vue';
 import Vue from 'vue';
+import Component from 'vue-class-component';
 import {
   ACTIONS_DESC,
   ACTIONS_SET,
@@ -104,9 +105,8 @@ import {
 } from '../libs/storage';
 import PopupActionDescription from './action-description.vue';
 import TodayBirthdays from './today-bdays.vue';
-import Spinner from './spinner.vue';
 
-const PopupUserSettings = Vue.extend({
+@Component({
   name: 'popup-user-settings',
   filters: {
     translatePipe,
@@ -114,7 +114,6 @@ const PopupUserSettings = Vue.extend({
   components: {
     PopupActionDescription,
     'today-birthdays': TodayBirthdays,
-    Spinner,
     'b-button': BButton,
     'b-form-radio-group': BFormRadioGroup,
     'b-overlay': BOverlay,
@@ -129,9 +128,18 @@ const PopupUserSettings = Vue.extend({
     translate,
     link,
   },
+})
+export default class PopupUserSettings extends Vue {
+  ACTIONS_SET = ACTIONS_SET;
+  ACTIONS_DESC = ACTIONS_DESC;
+  actionName: ACTIONS_SET;
+  waiting = false;
+  tabIndex = 0;
+
   destroyed() {
 
-  },
+  }
+
   created() {
     sendMessage(new GetUserConfigAction(), (message) => {
       this.actionName = message.targetFormat;
@@ -139,32 +147,22 @@ const PopupUserSettings = Vue.extend({
 
     getLastActiveTab()
         .subscribe(tabIndex => this.tabIndex = tabIndex);
-  },
-  data: () => {
-    return {
-      ACTIONS_SET,
-      ACTIONS_DESC,
-      actionName: ACTIONS_SET,
-      reminder: true,
-      waiting: false,
-      tabIndex: 0,
-    };
-  },
-  methods: {
-    updateTabIndex(activatedTabId: number) {
-      storeLastActiveTab(activatedTabId);
-    },
-    startGeneration() {
-      sendMessage(new StartGenerationAction());
-      this.waiting = true;
-    },
-    updateTarget(val: ACTIONS_SET) {
-      sendMessage(new SetUserConfigAction(val));
-    },
-  },
-});
+  }
 
-export default PopupUserSettings;
+  updateTabIndex(activatedTabId: number) {
+    storeLastActiveTab(activatedTabId);
+  }
+
+  startGeneration() {
+    sendMessage(new StartGenerationAction());
+    this.waiting = true;
+  }
+
+  updateTarget(val: ACTIONS_SET) {
+    sendMessage(new SetUserConfigAction(val));
+  };
+}
+
 </script>
 
 <style type="scss">

@@ -7,16 +7,18 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Component from 'vue-class-component';
 import link from '../directives/link';
 import translate from '../directives/translate';
 
-const PopupNoTokenDetected = Vue.extend({
+@Component({
   name: 'popup-no-token-detected',
   directives: {
     translate,
     link,
   },
-});
+})
+export default class PopupNoTokenDetected extends Vue {
 
-export default PopupNoTokenDetected;
+}
 </script>

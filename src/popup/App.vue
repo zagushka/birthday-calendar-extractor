@@ -7,18 +7,19 @@
   </span>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import PopupChangeLanguage from '../components/popup.change-language.vue';
+import PopupDone from '../components/popup.done.vue';
+import PopupNoTokenDetected from '../components/popup.no-token.vue';
+import PopupUserSettings from '../components/popup.user-settings.vue';
+import { ACTION } from '../constants';
+import translate from '../directives/translate';
+import { setBadgeColor } from '../libs/badge';
+import { storeLastBadgeClicked } from '../libs/storage';
 
-import PopupChangeLanguage from "../components/popup.change-language";
-import PopupDone from "../components/popup.done";
-import PopupNoTokenDetected from "../components/popup.no-token";
-import PopupUserSettings from "../components/popup.user-settings";
-import translate from "../directives/translate";
-import {ACTION} from "../constants";
-import {setBadgeColor} from "../libs/badge";
-import {storeLastBadgeClicked} from "../libs/storage";
-
-export default {
+@Component({
   components: {
     PopupChangeLanguage,
     PopupDone,
@@ -28,6 +29,10 @@ export default {
   directives: {
     translate,
   },
+})
+export default class App extends Vue {
+  public status = 'USER_SETTINGS';
+
   created() {
     storeLastBadgeClicked();
     setBadgeColor();
@@ -36,52 +41,11 @@ export default {
       if (ACTION.STATUS_REPORT === message.type) {
         this.status = message.status;
       }
-    })
-  },
-  data() {
-    return {
-      status: 'USER_SETTINGS'
-    }
+    });
   }
 }
 </script>
 
 <style lang="scss">
-p:first-child {
-  margin-top: 0;
-}
 
-.link {
-  box-shadow: inset 0 1px 0 0 #9acc85;
-  background: #74ad5a linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
-  border: 1px solid #3b6e22;
-  /*display: inline-block;*/
-  white-space: nowrap;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: bold;
-  padding: 6px 12px;
-  text-decoration: none;
-
-}
-
-.link:hover {
-  background: #68a54b linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
-}
-
-.link:active {
-  position: relative;
-  top: 1px;
-}
-
-.link.special {
-  box-shadow: inset 0 1px 0 0 #fff;
-  color: #333;
-  background: #eee linear-gradient(to bottom, #eee 5%, #e4e4e3 100%);
-}
-
-.link.special:hover {
-  background: #e4e4e3 linear-gradient(to bottom, #e4e4e3 5%, #eee 100%);
-}
 </style>

@@ -34,10 +34,6 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 setupBadges(); // Setup badges
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
-  // if (ACTION.LOG === message.type) {
-  //   console.log(message.data);
-  //   return;
-  // }
 
   if (ACTION.USER_CONFIG_SET === message.type) {
     userConfig.targetFormat = message.targetFormat;
@@ -78,6 +74,10 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
                 case ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS:
                   calendar = new CalendarDeleteICS();
                   break;
+                case ACTIONS_SET.SELECT_BADGE:
+                  calendar = new CalendarJSON();
+                // Not file generation required, just for storage
+                  return true;
               }
               return calendar.save(
                 calendar.generateCalendar(Array.from(events.values())),

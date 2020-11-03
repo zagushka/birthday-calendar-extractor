@@ -13,12 +13,13 @@ import {
   BListGroupItem,
 } from 'bootstrap-vue';
 import Vue from 'vue';
+import Component from 'vue-class-component';
 import link from '../directives/link';
 import translate from '../directives/translate';
 import { RawEvent } from '../libs/lib';
 import { getInfoForBadge } from '../libs/storage';
 
-const TodayBirthdays = Vue.extend({
+@Component({
   name: 'today-bdays',
   components: {
     'b-list-group': BListGroup,
@@ -28,17 +29,13 @@ const TodayBirthdays = Vue.extend({
     link,
     translate,
   },
+})
+export default class TodayBirthdays extends Vue {
+  users: Array<RawEvent> = [];
+
   created() {
     getInfoForBadge()
         .subscribe(({birthdays}) => this.users = birthdays);
-  },
-  data() {
-    const users: Array<RawEvent> = [];
-    return {
-      users,
-    };
-  },
-});
-
-export default TodayBirthdays;
+  }
+}
 </script>

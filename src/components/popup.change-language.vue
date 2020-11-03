@@ -8,23 +8,20 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import link from '../directives/link';
-  import translate from '../directives/translate';
-  import { getLanguagesList } from '../libs/lib';
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import link from '../directives/link';
+import translate from '../directives/translate';
+import { getLanguagesList } from '../libs/lib';
 
-  const PopupChangeLanguage = Vue.extend({
-    name: 'popup-change-language',
-    directives: {
-      translate,
-      link,
-    },
-    data() {
-      return {
-        languages: '<ul><li>' + getLanguagesList().join('<li>') + '</ul>',
-      };
-    },
-  });
-
-  export default PopupChangeLanguage;
+@Component({
+  name: 'popup-change-language',
+  directives: {
+    translate,
+    link,
+  },
+})
+export default class PopupChangeLanguage extends Vue {
+  languages = '<ul><li>' + getLanguagesList().join('<li>') + '</ul>';
+}
 </script>
