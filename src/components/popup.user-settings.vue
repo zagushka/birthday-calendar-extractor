@@ -86,9 +86,15 @@ import {
   BTab,
   BTabs,
 } from 'bootstrap-vue';
+import {
+  bindCallback,
+  forkJoin,
+} from 'rxjs';
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { UserConfig } from '../background';
 import {
+  Action,
   ACTIONS_DESC,
   ACTIONS_SET,
   GetUserConfigAction,
@@ -132,21 +138,21 @@ import TodayBirthdays from './today-bdays.vue';
 export default class PopupUserSettings extends Vue {
   ACTIONS_SET = ACTIONS_SET;
   ACTIONS_DESC = ACTIONS_DESC;
-  actionName: ACTIONS_SET;
-  waiting = false;
-  tabIndex = 0;
-
-  destroyed() {
-
-  }
+  actionName = ACTIONS_SET.SELECT_FILE_FORMAT_CSV;
+  waiting = true;
+  tabIndex = 1;
 
   created() {
-    sendMessage(new GetUserConfigAction(), (message) => {
-      this.actionName = message.targetFormat;
-    });
-
-    getLastActiveTab()
-        .subscribe(tabIndex => this.tabIndex = tabIndex);
+    forkJoin({
+      actionName: bindCallback<Action, UserConfig>(sendMessage)(new GetUserConfigAction()),
+      tabIndex: getLastActiveTab(),
+    })
+        .subscribe(({actionName, tabIndex}) => {
+              this.actionName = actionName.targetFormat;
+              this.tabIndex = tabIndex;
+              this.waiting = false;
+            },
+        );
   }
 
   updateTabIndex(activatedTabId: number) {
