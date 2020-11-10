@@ -1,16 +1,15 @@
 import { DateTime } from 'luxon';
 import {
   bindCallback,
+  forkJoin,
   Observable,
   of,
-  zip,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { STORAGE_KEY } from '../constants';
 import {
   prepareEvent,
   RawEvent,
-
 } from './lib';
 
 const getStorageFactory =
@@ -64,11 +63,10 @@ export function getTodayBirthdays(): Observable<Array<RawEvent>> {
  * Observable with today's birthdays and last time user clicked on badge
  */
 export function getInfoForBadge(): Observable<{ birthdays: Array<RawEvent>; dateVisited: DateTime }> {
-  return zip(
-    getTodayBirthdays(),
-    getLastTimeClickedBadge(),
-  ).pipe(
-    map(([birthdays, dateVisited]) => ({birthdays, dateVisited})),
+  return forkJoin({
+      birthdays: getTodayBirthdays(),
+      dateVisited: getLastTimeClickedBadge(),
+    },
   );
 }
 
