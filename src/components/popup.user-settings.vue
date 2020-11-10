@@ -58,12 +58,7 @@
                   variant="outline-success"
                   v-on:click="startGeneration()"
                   v-translate="'GENERATE'"></b-button>
-              <b-button
-                  size="sm"
-                  class="ml-auto"
-                  variant="outline-dark"
-                  v-link.close.active="'LEAVE_FEEDBACK_LINK'"
-                  v-translate="'LEAVE_FEEDBACK_TITLE'"></b-button>
+              <leave-feedback-button/>
             </div>
           </div>
         </div>
@@ -110,6 +105,7 @@ import {
   storeLastActiveTab,
 } from '../libs/storage';
 import PopupActionDescription from './action-description.vue';
+import LeaveFeedbackButton from './leave-feedback.button.vue';
 import TodayBirthdays from './today-bdays.vue';
 
 @Component({
@@ -118,6 +114,7 @@ import TodayBirthdays from './today-bdays.vue';
     translatePipe,
   },
   components: {
+    LeaveFeedbackButton,
     PopupActionDescription,
     'today-birthdays': TodayBirthdays,
     'b-button': BButton,
@@ -160,7 +157,7 @@ export default class PopupUserSettings extends Vue {
   }
 
   startGeneration() {
-    sendMessage(new StartGenerationAction());
+    sendMessage(new StartGenerationAction(), () => this.waiting = false);
     this.waiting = true;
   }
 

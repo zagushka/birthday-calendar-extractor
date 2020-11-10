@@ -34,7 +34,6 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 setupBadges(); // Setup badges
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
-
   if (ACTION.USER_CONFIG_SET === message.type) {
     userConfig.targetFormat = message.targetFormat;
     return true;
@@ -76,7 +75,7 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
                   break;
                 case ACTIONS_SET.SELECT_BADGE:
                   calendar = new CalendarJSON();
-                // Not file generation required, just for storage
+                  // Not file generation required, just for storage
                   return true;
               }
               return calendar.save(
@@ -86,6 +85,7 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
           )
           .subscribe(() => {
             sendMessage(new StatusReportAction('DONE'));
+            callback();
           });
       });
 
