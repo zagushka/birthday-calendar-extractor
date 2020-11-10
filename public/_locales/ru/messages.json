@@ -11,6 +11,14 @@
     "message": "Вам нужно быть на сайте facebook.<p>Нажмите на линк ниже для перехода и попробуйте снова.",
     "description": "Description in case user is not on a facebook page"
   },
+  "LOG_INTO_FACEBOOK_TITLE": {
+    "message": "Войти в Facebook",
+    "description": "Facebook url."
+  },
+  "LOG_INTO_FACEBOOK_URL": {
+    "message": "https://www.facebook.com/",
+    "description": "Facebook login page."
+  },
   "FACEBOOK_REQUIRED_LINK": {
     "message": "https://www.facebook.com/",
     "description": "Facebook url."
@@ -19,30 +27,34 @@
     "message": "На сайт facebook",
     "description": "Button to facebook title."
   },
+  "NOT_SUPPORTED_LANGUAGE_TITLE": {
+    "message": "Язык Facebook не поддерживается.",
+    "description": "Title for modal in case facebook language is not supported"
+  },
   "NOT_SUPPORTED_LANGUAGE": {
-    "message": "Ваш язык facebook'а не поддерживается. Смените на: $languages$ И нажмите на иконку снова.",
+    "message": "Ваш язык Facebook не поддерживается.<br /> Смените на:<br /> $languages$ <br /> И нажмите на иконку снова.",
     "description": "Description in case facebook language is not supported",
     "placeholders": {
       "languages": {
         "content": "$1",
-        "example": "<ul><li>English (US)<li>English (UK)</ul>"
+        "example": "<span>English (US)</span> <span>English (UK)</span>"
       }
     }
   },
-  "NOT_SUPPORTED_LANGUAGE_LINK": {
+  "CHANGE_FACEBOOK_LANGUAGE_LINK": {
     "message": "https://www.facebook.com/settings?tab=language",
     "description": "Facebook settings page with language set."
   },
-  "NOT_SUPPORTED_LANGUAGE_TITLE": {
+  "CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE": {
     "message": "На страницу смены языка.",
     "description": "Button to facebook settings page title."
   },
   "DONE_DESCRIPTION": {
-    "message": "Ваш календарь готов и может быть экспортирован.<br><br> Пожалуйста оставьте отзыв :о)",
+    "message": "Ваш календарь готов и может быть импортирован.<br> Пожалуйста оставьте отзыв :о)",
     "description": "Description when extraction process successfully finished"
   },
   "DONE_TITLE": {
-    "message": "Генерация завершена!",
+    "message": "Готово!",
     "description": "Title when extraction process successfully finished"
   },
   "LEAVE_FEEDBACK_LINK": {
@@ -54,7 +66,7 @@
     "description": "Share button"
   },
   "NO_TOKEN_DETECTED": {
-    "message": "Не удалось получить данные о днях рождения, удостоверьтесь что вы зашли в facebook и попробуйте снова.",
+    "message": "Не удалось получить данные о днях рождения, удостоверьтесь что вы зашли в Facebook и попробуйте снова.",
     "description": "Description for error when no token found."
   },
   "ERROR_HEADER": {
@@ -66,19 +78,31 @@
     "description": "Header for extraction format selection"
   },
   "SELECT_FILE_FORMAT_ICS": {
-    "message": "Создать Google Calendar - ICS",
+    "message": "экспортировать дни рождения в формат ICS",
     "description": "Label for ics file type radio button"
   },
+  "SELECT_ICS_DESCRIPTION": {
+    "message": "ICS это универсальный формат календарей, используемый в Microsoft Outlook, Google Calendar, и Apple Calendar.",
+    "description": "Description for ics file type radio button"
+  },
   "SELECT_FILE_FORMAT_CSV": {
-    "message": "Создать Excel file - CSV",
+    "message": "экспортировать для Excel - CSV",
     "description": "Label for csv file type radio button"
   },
+  "FILE_FORMAT_CSV_DESCRIPTION": {
+    "message": "CSV формат используется Microsoft Excel или Google Sheets. НЕ ИСПОЛЬЗУЙТЕ этот формат для импорта дней рождений в календари, ICS - предпочтительнее.",
+    "description": "Description for label for csv file type radio button"
+  },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "Удалить из Google Calendar",
+    "message": "удалить импортированные дни рождения из Google Calendar.",
     "description": "Label for delete-ics file type radio button"
   },
+  "SELECT_DELETE_ICS_DESCRIPTION": {
+    "message": "Создает специальный ICS файл для удаления уже импортированных дней рождений из Google Calendar. Импортируйте в тото же календарь, точно также как и ICS файл с днями рождения.",
+    "description": "Description for delete-ics file type radio button"
+  },
   "SELECT_REMINDER": {
-    "message": "Сообщать об именинниках",
+    "message": "показывать именинников в информационной иконке.",
     "description": "Label for checkbox to display today's birthdays."
   },
   "TODAY_BIRTHDAY_TITLE": {

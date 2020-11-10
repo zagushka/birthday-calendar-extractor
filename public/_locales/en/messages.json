@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Birthday Calendar Extractor for Facebook",
+    "message": "Birthday Calendar Exporter for Facebook",
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
@@ -10,6 +10,14 @@
   "FACEBOOK_REQUIRED": {
     "message": "You need to be on a facebook page in order to generate calendar.<p>Please follow the link below and click the icon again.",
     "description": "Description in case user is not on a facebook page"
+  },
+  "LOG_INTO_FACEBOOK_TITLE": {
+    "message": "Log into Facebook",
+    "description": "Facebook url."
+  },
+  "LOG_INTO_FACEBOOK_URL": {
+    "message": "https://www.facebook.com/",
+    "description": "Facebook login page."
   },
   "FACEBOOK_REQUIRED_LINK": {
     "message": "https://www.facebook.com/",
@@ -23,26 +31,30 @@
     "message": "To facebook",
     "description": "Button to Facebook title."
   },
+  "NOT_SUPPORTED_LANGUAGE_TITLE": {
+    "message": "Facebook language is not supported.",
+    "description": "Title for modal in case facebook language is not supported"
+  },
   "NOT_SUPPORTED_LANGUAGE": {
-    "message": "Your facebook language is not supported. Please change it to: $languages$ And click the icon again.",
+    "message": "Your facebook language is not supported.<br /> Please change it to:<br /> $languages$ <br /> And click the icon again.",
     "description": "Description in case facebook language is not supported",
     "placeholders": {
       "languages": {
         "content": "$1",
-        "example": "<ul><li>English (US)<li>English (UK)</ul>"
+        "example": "<span>English (US)</span> <span>English (UK)</span>"
       }
     }
   },
-  "NOT_SUPPORTED_LANGUAGE_LINK": {
+  "CHANGE_FACEBOOK_LANGUAGE_LINK": {
     "message": "https://www.facebook.com/settings?tab=language",
     "description": "Facebook settings page with language set."
   },
-  "NOT_SUPPORTED_LANGUAGE_TITLE": {
+  "CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE": {
     "message": "To facebook settings page.",
     "description": "Button to facebook settings page title."
   },
   "DONE_DESCRIPTION": {
-    "message": "Your calendar is ready for export.<br><br>Please leave a feedback if you found it helpful :o)",
+    "message": "Your calendar is ready for import.<br>Please leave a feedback if you found it helpful :o)",
     "description": "Description when extraction process successfully finished"
   },
   "DONE_TITLE": {
@@ -66,7 +78,7 @@
     "description": "Donate button"
   },
   "NO_TOKEN_DETECTED": {
-    "message": "Unable to fetch birthdays data, make sure you are logged in to facebook and try again.",
+    "message": "Unable to fetch birthdays data, make sure you are logged into Facebook and try again.",
     "description": "Description for error when no token found."
   },
   "ERROR_HEADER": {
@@ -92,7 +104,7 @@
     "description": "Label for ics file type radio button"
   },
   "SELECT_ICS_DESCRIPTION": {
-    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar. Importing from this format is REVERSIBLE and can be undone.",
+    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.",
     "description": "Description for ics file type radio button"
   },
   "SELECT_FILE_FORMAT_CSV": {
@@ -104,11 +116,11 @@
     "description": "Description for label for csv file type radio button"
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "delete exported ICS from calendar.",
+    "message": "delete imported ICS from Google Calendar.",
     "description": "Label for delete-ics file type radio button"
   },
   "SELECT_DELETE_ICS_DESCRIPTION": {
-    "message": "Special ICS file used to remove previously imported events. Import it to the calendar same way as original ICS import.",
+    "message": "Special ICS file used to remove previously imported events from Google Calendar. Import it to the calendar same way as original ICS import.",
     "description": "Description for delete-ics file type radio button"
   },
   "SELECT_REMINDER": {
