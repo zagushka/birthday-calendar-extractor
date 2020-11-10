@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="ACTIONS.SELECT_BADGE === action">
+    <div v-if="ACTIONS.ENABLE_BADGE === action">
       <span v-translate="'SELECT_ICS_DESCRIPTION'"></span>
     </div>
     <div v-else-if="ACTIONS.SELECT_FILE_FORMAT_CSV === action">ICS</div>

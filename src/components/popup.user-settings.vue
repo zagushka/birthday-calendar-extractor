@@ -8,7 +8,9 @@
       @activate-tab="updateTabIndex"
   >
     <b-tab :title="'TODAY_BIRTHDAY_TITLE' | translatePipe">
-      <today-birthdays></today-birthdays>
+      <today-birthdays
+          :update="() => updateTarget(ACTIONS_SET.ENABLE_BADGE)"
+      ></today-birthdays>
       <div class="d-flex justify-content-end">
         <b-button size="sm"
                   variant="outline-dark"
@@ -24,7 +26,7 @@
           <div style="width: 50%" class="d-flex text-info flex-grow-1 mr-2 p-2 border rounded">
 
             <div class="d-flex flex-grow-1 border"
-                 v-if="actionName === ACTIONS_SET.SELECT_BADGE">
+                 v-if="actionName === ACTIONS_SET.ENABLE_BADGE">
               <b-embed
                   autoplay loop
                   type="video" aspect="4by3">
@@ -82,28 +84,21 @@ import {
   BTab,
   BTabs,
 } from 'bootstrap-vue';
-import {
-  bindCallback,
-  forkJoin,
-} from 'rxjs';
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { UserConfig } from '../background';
 import {
-  Action,
   ACTIONS_DESC,
   ACTIONS_SET,
-  GetUserConfigAction,
-  SetUserConfigAction,
   StartGenerationAction,
+  STORAGE_KEYS,
 } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
 import translatePipe from '../filters/translate';
 import { sendMessage } from '../libs/lib';
 import {
-  getLastActiveTab,
-  storeLastActiveTab,
+  retrieveUserSettings,
+  storeUserSettings,
 } from '../libs/storage';
 import PopupActionDescription from './action-description.vue';
 import LeaveFeedbackButton from './leave-feedback.button.vue';
@@ -136,36 +131,36 @@ import TodayBirthdays from './today-bdays.vue';
 export default class PopupUserSettings extends Vue {
   ACTIONS_SET = ACTIONS_SET;
   ACTIONS_DESC = ACTIONS_DESC;
-  actionName = ACTIONS_SET.SELECT_FILE_FORMAT_CSV;
+  actionName: ACTIONS_SET = ACTIONS_SET.SELECT_FILE_FORMAT_ICS;
   waiting = false; // Set true while processing
-  tabIndex = 1; // Tab index to show
+  tabIndex: number = 1; // Tab index to show
   loaded = false; // Do not display tabs before all the data been fetched
 
   created() {
-    forkJoin({
-      actionName: bindCallback<Action, UserConfig>(sendMessage)(new GetUserConfigAction()),
-      tabIndex: getLastActiveTab(),
-    })
-        .subscribe(({actionName, tabIndex}) => {
-              this.actionName = actionName.targetFormat;
-              this.tabIndex = tabIndex;
+    retrieveUserSettings([
+      STORAGE_KEYS.LAST_ACTIVE_TAB,
+      STORAGE_KEYS.LAST_SELECTED_ACTION,
+    ])
+        .subscribe((response) => {
+              this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION] || ACTIONS_SET.SELECT_FILE_FORMAT_ICS;
+              this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB] || 1;
               this.loaded = true;
             },
         );
   }
 
   updateTabIndex(activatedTabId: number) {
-    storeLastActiveTab(activatedTabId);
+    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: activatedTabId});
   }
+
+  updateTarget(val: ACTIONS_SET) {
+    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: val});
+  };
 
   startGeneration() {
     sendMessage(new StartGenerationAction(), () => this.waiting = false);
     this.waiting = true;
   }
-
-  updateTarget(val: ACTIONS_SET) {
-    sendMessage(new SetUserConfigAction(val));
-  };
 }
 
 </script>

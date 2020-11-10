@@ -1,12 +1,24 @@
+import { DateTime } from 'luxon';
 import { CalendarBase } from '../base';
 import {
   PreparedEvent,
   RawEvent,
 } from '../lib';
+import local = chrome.storage.local;
 
 export class CalendarForStorage extends CalendarBase<{}, {}, {}> {
   readonly filename: string;
   readonly fileMimeType: string;
+
+  static decodeEvent([name, ordinal, hrefPartial]: [string, number, string]) {
+    return {
+      name,
+      start: DateTime.local(2020) // use 2020 since date was originally from 2020
+        .set({ordinal}) // Set ordinal of 2020
+        .set({year: DateTime.local().year}), // Convert to current year
+      href: 'https://facebook.com/' + hrefPartial,
+    };
+  }
 
   save(calendarData: string) {
     // Store the data

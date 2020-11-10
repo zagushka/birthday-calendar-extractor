@@ -101,7 +101,7 @@
     "message": "Создает специальный ICS файл для удаления уже импортированных дней рождений из Google Calendar. Импортируйте в тото же календарь, точно также как и ICS файл с днями рождения.",
     "description": "Description for delete-ics file type radio button"
   },
-  "SELECT_REMINDER": {
+  "ENABLE_BADGE": {
     "message": "показывать именинников в информационной иконке.",
     "description": "Label for checkbox to display today's birthdays."
   },

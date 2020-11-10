@@ -35,14 +35,6 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 setupBadges(); // Setup badges
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
-  if (ACTION.USER_CONFIG_SET === message.type) {
-    userConfig.targetFormat = message.targetFormat;
-    return true;
-  }
-  if (ACTION.USER_CONFIG === message.type) {
-    callback(userConfig);
-    return true;
-  }
 
   if (ACTION.START_GENERATION === message.type) {
     parsePageForConfig()
@@ -74,7 +66,7 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
                 case ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS:
                   calendar = new CalendarDeleteICS();
                   break;
-                case ACTIONS_SET.SELECT_BADGE:
+                case ACTIONS_SET.ENABLE_BADGE:
                   calendar = new CalendarForStorage();
                   break;
               }

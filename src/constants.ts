@@ -2,8 +2,6 @@ import translatePipe from './filters/translate';
 
 export enum ACTION {
   STATUS_REPORT = 'STATUS_REPORT',
-  USER_CONFIG = 'USER_CONFIG',
-  USER_CONFIG_SET = 'USER_CONFIG_SET',
   START_GENERATION = 'START_GENERATION',
   CHECK_STATUS = 'CHECK_STATUS',
   LOG = 'LOG',
@@ -18,18 +16,6 @@ export type ApplicationStatus =
 
 export abstract class Action {
   abstract type: ACTION;
-}
-
-export class GetUserConfigAction extends Action {
-  type = ACTION.USER_CONFIG;
-}
-
-export class SetUserConfigAction extends Action {
-  type = ACTION.USER_CONFIG_SET;
-
-  constructor(public targetFormat: ACTIONS_SET) {
-    super();
-  }
 }
 
 export class StartGenerationAction extends Action {
@@ -53,14 +39,17 @@ export class LogAction extends Action {
   }
 }
 
-export const STORAGE_KEY = {
-  DATA: chrome.i18n.getMessage('STORAGE_KEY_NAME'),
-  BADGE_VISITED: chrome.i18n.getMessage('STORAGE_KEY_BADGE_VISITED'),
-  LAST_ACTIVE_TAB: 'last-active-tab'
-};
+export enum STORAGE_KEYS {
+  BIRTHDAYS = 'BIRTHDAYS_FOR_BADGE',
+  BADGE_VISITED = 'BADGE_VISITED',
+  BADGE_ACTIVE = 'BADGE_ACTIVE',
+  LAST_ACTIVE_TAB = 'LAST_ACTIVE_TAB',
+  LAST_SELECTED_ACTION = 'LAST_SELECTED_ACTION',
+}
 
 export enum ACTIONS_SET {
-  SELECT_BADGE = 'SELECT_REMINDER',
+  ENABLE_BADGE = 'ENABLE_BADGE',
+  DISABLE_BADGE = 'DISABLE_BADGE',
   SELECT_FILE_FORMAT_ICS = 'SELECT_FILE_FORMAT_ICS',
   SELECT_FILE_FORMAT_DELETE_ICS = 'SELECT_FILE_FORMAT_DELETE_ICS',
   SELECT_FILE_FORMAT_CSV = 'SELECT_FILE_FORMAT_CSV',
@@ -73,8 +62,8 @@ export const ACTIONS_DESC: Array<{
   description: string;
 }> = [
   {
-    value: ACTIONS_SET.SELECT_BADGE,
-    text: translatePipe(ACTIONS_SET.SELECT_BADGE),
+    value: ACTIONS_SET.ENABLE_BADGE,
+    text: translatePipe(ACTIONS_SET.ENABLE_BADGE),
     description: '',
   },
   {

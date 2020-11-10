@@ -5,12 +5,26 @@ import {
   Observable,
   of,
 } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { STORAGE_KEY } from '../constants';
+import {
+  map,
+  pluck,
+} from 'rxjs/operators';
+import {
+  ACTIONS_SET,
+  STORAGE_KEYS,
+} from '../constants';
 import {
   prepareEvent,
   RawEvent,
 } from './lib';
+
+export interface UserSettings {
+  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
+  [STORAGE_KEYS.BADGE_VISITED]: DateTime;
+  [STORAGE_KEYS.BIRTHDAYS]: any;
+  [STORAGE_KEYS.LAST_ACTIVE_TAB]: number;
+  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+}
 
 const getStorageFactory =
   (keys: string[] | string) => (cb: (items: { [key: string]: any }) => void) => chrome.storage.local.get(keys, cb);
@@ -19,16 +33,16 @@ const getStorageFactory =
  *
  */
 export function getBirthdays(): Observable<Array<RawEvent>> {
-  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEY.DATA]))()
+  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEYS.BIRTHDAYS]))()
     .pipe(
-      map(data => data[STORAGE_KEY.DATA]), // Stored raw birthdays
+      map(data => data[STORAGE_KEYS.BIRTHDAYS]), // Stored raw birthdays
     );
 }
 
 export function getLastTimeClickedBadge(): Observable<DateTime> {
-  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEY.BADGE_VISITED]))()
+  return retrieveUserSettings([STORAGE_KEYS.BADGE_VISITED])
     .pipe(
-      map(data => DateTime.fromMillis(data[STORAGE_KEY.BADGE_VISITED] || 0)),
+      pluck(STORAGE_KEYS.BADGE_VISITED),
     );
 }
 
@@ -36,9 +50,9 @@ export function getLastTimeClickedBadge(): Observable<DateTime> {
  *
  */
 export function getLastActiveTab(): Observable<number> {
-  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEY.LAST_ACTIVE_TAB]))()
+  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEYS.LAST_ACTIVE_TAB]))()
     .pipe(
-      map(data => data[STORAGE_KEY.LAST_ACTIVE_TAB]), // Stored raw birthdays
+      map(data => data[STORAGE_KEYS.LAST_ACTIVE_TAB]), // Stored last active tab
     );
 }
 
@@ -86,7 +100,7 @@ export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
     );
   // try {
   //   const items: Array<[string, RawEvent]> =
-  //     (JSON.parse(sessionStorage.getItem(STORAGE_KEY.DATA)) as Array<RawEvent>)
+  //     (JSON.parse(sessionStorage.getItem(STORAGE_KEYS.BIRTHDAYS)) as Array<RawEvent>)
   //       .map(i => [i.uid, i]);
   //   return of(new Map(items));
   // } catch (e) {
@@ -100,8 +114,8 @@ export function retrieveBirthdays(): Observable<Map<string, RawEvent>> {
  */
 export function storeBirthdays(events: Map<string, RawEvent>): Observable<null> {
   const asArray = Array.from(events.values());
-  // sessionStorage.setItem(STORAGE_KEY.DATA, JSON.stringify(asArray));
-  chrome.storage.local.set({[STORAGE_KEY.DATA]: asArray});
+  // sessionStorage.setItem(STORAGE_KEYS.BIRTHDAYS, JSON.stringify(asArray));
+  chrome.storage.local.set({[STORAGE_KEYS.BIRTHDAYS]: asArray});
   return of(null);
 }
 
@@ -110,12 +124,29 @@ export function storeBirthdays(events: Map<string, RawEvent>): Observable<null> 
  * @TODO Make it Observable
  */
 export function storeLastBadgeClicked() {
-  chrome.storage.local.set({[STORAGE_KEY.BADGE_VISITED]: DateTime.local().toMillis()});
+  storeUserSettings({
+    [STORAGE_KEYS.BADGE_VISITED]: DateTime.local(),
+  });
+  // chrome.storage.local.set({[STORAGE_KEYS.BADGE_VISITED]: DateTime.local().toMillis()});
 }
 
-/**
- * Store last active tab
- */
-export function storeLastActiveTab(tabId: number) {
-  chrome.storage.local.set({[STORAGE_KEY.LAST_ACTIVE_TAB]: tabId});
+export function retrieveUserSettings(keys: Array<string> = null) {
+  return bindCallback<{ [key: string]: any }>(getStorageFactory(keys))()
+    .pipe(
+      map(data => {
+        if (data[STORAGE_KEYS.BADGE_VISITED]) {
+          data[STORAGE_KEYS.BADGE_VISITED] = DateTime.fromMillis(data[STORAGE_KEYS.BADGE_VISITED]);
+        }
+        return data as Partial<UserSettings>;
+      }), // Stored raw birthdays
+    );
+}
+
+export function storeUserSettings(settings: Partial<UserSettings>, callback?: () => void): void {
+  const data: { [key: string]: any } = Object.assign({}, settings);
+
+  if (settings[STORAGE_KEYS.BADGE_VISITED]) {
+    data[STORAGE_KEYS.BADGE_VISITED] = settings[STORAGE_KEYS.BADGE_VISITED].toMillis();
+  }
+  chrome.storage.local.set(data, callback);
 }
