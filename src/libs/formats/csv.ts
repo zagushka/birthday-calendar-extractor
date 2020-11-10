@@ -1,11 +1,11 @@
 import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
-import { CalendarBase } from './base';
+import { CalendarBase } from '../base';
 import {
   arrayToCSVRow,
   PreparedEvent,
   RawEvent,
-} from './lib';
+} from '../lib';
 
 export class CalendarCSV extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.csv';

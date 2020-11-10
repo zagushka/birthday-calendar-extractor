@@ -6,10 +6,11 @@ import {
 } from './constants';
 import { setupBadges } from './libs/badge';
 import { CalendarBase } from './libs/base';
-import { CalendarCSV } from './libs/csv';
-import { CalendarDeleteICS } from './libs/delete-ics';
-import { CalendarICS } from './libs/ics';
-import { CalendarJSON } from './libs/json';
+import { CalendarCSV } from './libs/formats/csv';
+import { CalendarDeleteICS } from './libs/formats/delete-ics';
+import { CalendarForStorage } from './libs/formats/for-storage';
+import { CalendarICS } from './libs/formats/ics';
+import { CalendarJSON } from './libs/formats/json';
 import {
   findLanguageSetByLanguage,
   getBirthdaysList,
@@ -74,9 +75,8 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
                   calendar = new CalendarDeleteICS();
                   break;
                 case ACTIONS_SET.SELECT_BADGE:
-                  calendar = new CalendarJSON();
-                  // Not file generation required, just for storage
-                  return true;
+                  calendar = new CalendarForStorage();
+                  break;
               }
               return calendar.save(
                 calendar.generateCalendar(Array.from(events.values())),

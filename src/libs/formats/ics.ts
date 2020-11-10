@@ -1,10 +1,10 @@
 import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
-import { CalendarBase } from './base';
+import { CalendarBase } from '../base';
 import {
   PreparedEvent,
   RawEvent,
-} from './lib';
+} from '../lib';
 
 
 export class CalendarICS extends CalendarBase<{}, string, string> {

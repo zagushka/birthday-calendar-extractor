@@ -1,5 +1,5 @@
 import { CalendarICS } from './ics';
-import { PreparedEvent } from './lib';
+import { PreparedEvent } from '../lib';
 
 
 export class CalendarDeleteICS extends CalendarICS {
