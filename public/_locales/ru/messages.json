@@ -114,7 +114,7 @@
     "description": "Header text above list of birthdays when no birthdays for today"
   },
   "GENERATE": {
-    "message": "Создать",
+    "message": "Приступить",
     "description": "Label 'generate' button"
   }
 }

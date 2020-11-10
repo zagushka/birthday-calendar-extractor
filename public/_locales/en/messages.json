@@ -136,7 +136,7 @@
     "description": "Header text above list of birthdays when no birthdays for today"
   },
   "GENERATE": {
-    "message": "Generate",
+    "message": "Proceed",
     "description": "Label 'generate' button"
   }
 }

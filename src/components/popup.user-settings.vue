@@ -1,6 +1,7 @@
 <template>
 
   <b-tabs
+      v-if="loaded"
       nav-class="no-wrap"
       content-class="mt-2"
       v-model="tabIndex"
@@ -19,8 +20,8 @@
     <b-tab :title="'USER_SETTINGS' | translatePipe">
       <b-overlay :show="waiting">
 
-        <div class="d-flex flex-row" style="width: 500px; min-height: 160px">
-          <div class="d-flex text-info flex-grow-1 mr-2 p-2 border rounded">
+        <div class="d-flex flex-row" style="width: 600px; min-height: 160px">
+          <div style="width: 50%" class="d-flex text-info flex-grow-1 mr-2 p-2 border rounded">
 
             <div class="d-flex flex-grow-1 border"
                  v-if="actionName === ACTIONS_SET.SELECT_BADGE">
@@ -136,8 +137,9 @@ export default class PopupUserSettings extends Vue {
   ACTIONS_SET = ACTIONS_SET;
   ACTIONS_DESC = ACTIONS_DESC;
   actionName = ACTIONS_SET.SELECT_FILE_FORMAT_CSV;
-  waiting = true;
-  tabIndex = 1;
+  waiting = false; // Set true while processing
+  tabIndex = 1; // Tab index to show
+  loaded = false; // Do not display tabs before all the data been fetched
 
   created() {
     forkJoin({
@@ -147,7 +149,7 @@ export default class PopupUserSettings extends Vue {
         .subscribe(({actionName, tabIndex}) => {
               this.actionName = actionName.targetFormat;
               this.tabIndex = tabIndex;
-              this.waiting = false;
+              this.loaded = true;
             },
         );
   }
