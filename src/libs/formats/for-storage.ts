@@ -1,36 +1,32 @@
 import { DateTime } from 'luxon';
+import { STORAGE_KEYS } from '../../constants';
 import { CalendarBase } from '../base';
 import {
   PreparedEvent,
   RawEvent,
 } from '../lib';
-import local = chrome.storage.local;
+import { storeUserSettings } from '../storage/chrome.storage';
 
-export class CalendarForStorage extends CalendarBase<{}, {}, {}> {
+export class CalendarForStorage extends CalendarBase<{ name: string; start: DateTime; href: string },
+  { name: string; start: DateTime; href: string },
+  Array<{ name: string; start: DateTime; href: string }>> {
   readonly filename: string;
   readonly fileMimeType: string;
 
-  static decodeEvent([name, ordinal, hrefPartial]: [string, number, string]) {
-    return {
-      name,
-      start: DateTime.local(2020) // use 2020 since date was originally from 2020
-        .set({ordinal}) // Set ordinal of 2020
-        .set({year: DateTime.local().year}), // Convert to current year
-      href: 'https://facebook.com/' + hrefPartial,
-    };
-  }
-
-  save(calendarData: string) {
+  save(calendarData: Array<{ name: string; start: DateTime; href: string }>) {
     // Store the data
+    storeUserSettings({
+      [STORAGE_KEYS.BIRTHDAYS]: calendarData,
+      [STORAGE_KEYS.BADGE_ACTIVE]: true,
+    });
   }
 
   formatEvent(event: PreparedEvent) {
-    return [
-      event.name,
-      event.start.ordinal, // Day of the year in 2020
-      // Remove https://facebook.com/ to reduce the size, using indexOf since facebook subdomain can vary
-      event.href.slice(event.href.indexOf('/', 8) + 1), // 8 = 'https://'.length
-    ];
+    return {
+      name: event.name,
+      start: event.start,
+      href: event.href,
+    };
   }
 
   generateCalendar(

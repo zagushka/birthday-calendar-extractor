@@ -17,17 +17,18 @@ export interface CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar>
   formatEvent(event: PreparedEvent): Formatted;
 }
 
-export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE, GC> {
+// tslint:disable-next-line:max-line-length
+export abstract class CalendarBase<Formatted, GeneratedEvent, GeneratedCalendar> implements CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar> {
   abstract readonly filename: string;
   abstract readonly fileMimeType: string;
 
-  abstract save(calendarData: string): void;
+  abstract save(calendarData: GeneratedCalendar): void;
 
-  abstract generateCalendar(events: Array<RawEvent>, fromYear?: number, tillYear?: number): GC;
+  abstract generateCalendar(events: Array<RawEvent>, fromYear?: number, tillYear?: number): GeneratedCalendar;
 
-  abstract generateEvent(event: PreparedEvent): GE;
+  abstract generateEvent(event: PreparedEvent): GeneratedEvent;
 
-  abstract formatEvent(event: PreparedEvent): F;
+  abstract formatEvent(event: PreparedEvent): Formatted;
 
   /**
    * Generate Array of events for required years range
@@ -48,7 +49,7 @@ export abstract class CalendarBase<F, GE, GC> implements CalendarGenerator<F, GE
     return result;
   }
 
-  generateEvents(events: Array<PreparedEvent>): Array<GE> {
+  generateEvents(events: Array<PreparedEvent>): Array<GeneratedEvent> {
     return events.map(e => this.generateEvent(e)); // Generate final events
   }
 }

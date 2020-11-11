@@ -2,6 +2,7 @@ import { map } from 'rxjs/operators';
 import {
   ACTION,
   ACTIONS_SET,
+  StartGenerationAction,
   StatusReportAction,
 } from './constants';
 import { setupBadges } from './libs/badge';
@@ -18,12 +19,6 @@ import {
   sendMessage,
 } from './libs/lib';
 
-export interface UserConfig {
-  targetFormat: ACTIONS_SET;
-}
-
-const userConfig: UserConfig = {targetFormat: ACTIONS_SET.SELECT_FILE_FORMAT_ICS};
-
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
   if (ACTION.STATUS_REPORT !== message.type) {
     return;
@@ -34,8 +29,7 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 
 setupBadges(); // Setup badges
 
-chrome.runtime.onMessage.addListener((message, sender, callback) => {
-
+chrome.runtime.onMessage.addListener((message: StartGenerationAction, sender, callback) => {
   if (ACTION.START_GENERATION === message.type) {
     parsePageForConfig()
       .subscribe(({language, token}) => {
@@ -48,12 +42,11 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
           sendMessage(new StatusReportAction('NOT_SUPPORTED_LANGUAGE'));
           return;
         }
-
         getBirthdaysList(language, token)
           .pipe(
             map(events => {
               let calendar: CalendarBase<any, any, any>;
-              switch (userConfig.targetFormat) {
+              switch (message.format) {
                 case ACTIONS_SET.SELECT_FILE_FORMAT_CSV:
                   calendar = new CalendarCSV();
                   break;

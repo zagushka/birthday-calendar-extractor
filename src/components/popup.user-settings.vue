@@ -68,6 +68,9 @@
 
       </b-overlay>
     </b-tab>
+    <b-tab title="TOOLZ">
+      <toolz/>
+    </b-tab>
   </b-tabs>
 </template>
 
@@ -99,10 +102,11 @@ import { sendMessage } from '../libs/lib';
 import {
   retrieveUserSettings,
   storeUserSettings,
-} from '../libs/storage';
+} from '../libs/storage/chrome.storage';
 import PopupActionDescription from './action-description.vue';
 import LeaveFeedbackButton from './leave-feedback.button.vue';
 import TodayBirthdays from './today-bdays.vue';
+import Toolz from './toolz.vue';
 
 @Component({
   name: 'popup-user-settings',
@@ -110,6 +114,7 @@ import TodayBirthdays from './today-bdays.vue';
     translatePipe,
   },
   components: {
+    Toolz,
     LeaveFeedbackButton,
     PopupActionDescription,
     'today-birthdays': TodayBirthdays,
@@ -142,8 +147,8 @@ export default class PopupUserSettings extends Vue {
       STORAGE_KEYS.LAST_SELECTED_ACTION,
     ])
         .subscribe((response) => {
-              this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION] || ACTIONS_SET.SELECT_FILE_FORMAT_ICS;
-              this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB] || 1;
+              this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION];
+              this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB];
               this.loaded = true;
             },
         );
@@ -158,7 +163,7 @@ export default class PopupUserSettings extends Vue {
   };
 
   startGeneration() {
-    sendMessage(new StartGenerationAction(), () => this.waiting = false);
+    sendMessage(new StartGenerationAction(this.actionName), () => this.waiting = false);
     this.waiting = true;
   }
 }

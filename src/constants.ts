@@ -20,6 +20,10 @@ export abstract class Action {
 
 export class StartGenerationAction extends Action {
   type = ACTION.START_GENERATION;
+
+  constructor(public format: ACTIONS_SET) {
+    super();
+  }
 }
 
 export class StatusReportAction extends Action {

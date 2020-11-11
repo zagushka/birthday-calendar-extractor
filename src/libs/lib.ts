@@ -7,18 +7,15 @@ import {
 import { ajax } from 'rxjs/ajax';
 import {
   map,
-  mapTo,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { Action } from '../constants';
 import {
   languages,
   LanguageSet,
 } from './languages';
-import {
-  retrieveBirthdays,
-  storeBirthdays,
-} from './storage';
+import { TempStorage } from './storage/temp.storage';
 
 export interface RawEvent {
   uid?: string; // User Id, unique id generated from facebook page url
@@ -278,7 +275,7 @@ export function fetchBirthdays(token: string, language: string): Observable<Map<
 }
 
 export function getBirthdaysList(language: string, token: string): Observable<Map<string, RawEvent>> {
-  return retrieveBirthdays()
+  return TempStorage.retrieveBirthdays()
     .pipe(
       switchMap(items => {
         if (items) {
@@ -287,7 +284,7 @@ export function getBirthdaysList(language: string, token: string): Observable<Ma
         // Make full run for the data
         return fetchBirthdays(token, language)
           .pipe(
-            switchMap(r => storeBirthdays(r).pipe(mapTo(r))),
+            tap(TempStorage.storeBirthdays),
           );
       }),
     );

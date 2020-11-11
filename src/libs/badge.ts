@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { getInfoForBadge } from './storage';
+import { getInfoForBadge } from './storage/chrome.storage';
 
 /**
  * Init Badge state:
@@ -32,7 +32,7 @@ export function setupBadges() {
  */
 export function updateBadge(): void {
   getInfoForBadge()
-    .subscribe(({birthdays, dateVisited}) => {
+    .subscribe(({birthdays, dateVisited = DateTime.fromMillis(0)}) => {
       const badgeNumber = birthdays.length ? birthdays.length.toString() : '';
       const badgeColor: string | chrome.browserAction.ColorArray = (dateVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
 

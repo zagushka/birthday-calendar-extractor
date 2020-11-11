@@ -10,20 +10,16 @@
 
 <script lang="ts">
 import {
+  BButton,
   BListGroup,
   BListGroupItem,
-  BButton,
 } from 'bootstrap-vue';
+import { DateTime } from 'luxon';
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { StartGenerationAction } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
-import {
-  RawEvent,
-  sendMessage,
-} from '../libs/lib';
-import { getInfoForBadge } from '../libs/storage';
+import { getInfoForBadge } from '../libs/storage/chrome.storage';
 
 @Component({
   name: 'today-bdays',
@@ -38,7 +34,7 @@ import { getInfoForBadge } from '../libs/storage';
   },
 })
 export default class TodayBirthdays extends Vue {
-  users: Array<RawEvent> = [];
+  users: Array<{ name: string; href: string; start: DateTime }> = [];
 
   created() {
     getInfoForBadge()
@@ -46,7 +42,7 @@ export default class TodayBirthdays extends Vue {
   }
 
   disable() {
-    // sendMessage(new StartGenerationAction(), () => this.waiting = false);
+
   }
 }
 </script>

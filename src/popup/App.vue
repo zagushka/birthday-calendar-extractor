@@ -25,7 +25,7 @@ import PopupUserSettings from '../components/popup.user-settings.vue';
 import { ACTION } from '../constants';
 
 import { setBadgeColor } from '../libs/badge';
-import { storeLastBadgeClicked } from '../libs/storage';
+import { storeLastBadgeClicked } from '../libs/storage/chrome.storage';
 
 const messageHandler = function (this: App, message: any, sender: chrome.runtime.MessageSender, callback: (response?: any) => void) {
   if (ACTION.STATUS_REPORT === message.type) {
