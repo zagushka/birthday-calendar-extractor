@@ -1,12 +1,23 @@
-import { map } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import {
+  map,
+  tap,
+} from 'rxjs/operators';
 import {
   ACTION,
   ACTIONS_SET,
+} from './constants';
+import { updateBadge } from './libs/badge';
+import { CalendarBase } from './libs/base';
+import {
   StartGenerationAction,
   StatusReportAction,
-} from './constants';
-import { setupBadges } from './libs/badge';
-import { CalendarBase } from './libs/base';
+} from './libs/events/actions';
+import { setupAlarms } from './libs/events/alarms';
+import {
+  listenTo,
+  sendMessage,
+} from './libs/events/events';
 import { CalendarCSV } from './libs/formats/csv';
 import { CalendarDeleteICS } from './libs/formats/delete-ics';
 import { CalendarForStorage } from './libs/formats/for-storage';
@@ -16,7 +27,6 @@ import {
   findLanguageSetByLanguage,
   getBirthdaysList,
   parsePageForConfig,
-  sendMessage,
 } from './libs/lib';
 
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
@@ -27,10 +37,21 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
   firstLevelCallback(message.status);
 };
 
-setupBadges(); // Setup badges
+setupAlarms();
 
-chrome.runtime.onMessage.addListener((message: StartGenerationAction, sender, callback) => {
-  if (ACTION.START_GENERATION === message.type) {
+// Update Badge on update badge event or new date alarm
+merge(
+  listenTo(ACTION.UPDATE_BADGE, ACTION.ALARM_NEW_DAY)
+)
+  .pipe(
+    // startWith(true),
+    tap(console.log),
+  )
+  // @TODO WHY .bind ?
+  .subscribe(updateBadge.bind(this));
+
+listenTo<StartGenerationAction>(ACTION.START_GENERATION)
+  .subscribe(({action,callback}) => {
     parsePageForConfig()
       .subscribe(({language, token}) => {
         if (!token) {
@@ -46,7 +67,7 @@ chrome.runtime.onMessage.addListener((message: StartGenerationAction, sender, ca
           .pipe(
             map(events => {
               let calendar: CalendarBase<any, any, any>;
-              switch (message.format) {
+              switch (action.format) {
                 case ACTIONS_SET.SELECT_FILE_FORMAT_CSV:
                   calendar = new CalendarCSV();
                   break;
@@ -75,5 +96,4 @@ chrome.runtime.onMessage.addListener((message: StartGenerationAction, sender, ca
       });
 
     return true;
-  }
-});
+  });

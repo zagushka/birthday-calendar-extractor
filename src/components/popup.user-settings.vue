@@ -92,13 +92,13 @@ import Component from 'vue-class-component';
 import {
   ACTIONS_DESC,
   ACTIONS_SET,
-  StartGenerationAction,
   STORAGE_KEYS,
 } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
 import translatePipe from '../filters/translate';
-import { sendMessage } from '../libs/lib';
+import { StartGenerationAction } from '../libs/events/actions';
+import { sendMessage } from '../libs/events/events';
 import {
   retrieveUserSettings,
   storeUserSettings,

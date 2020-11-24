@@ -4,17 +4,17 @@
     <ul style="list-style-type:none; margin: 0; padding: 0" class="text-nowrap">
       <li v-for="user in users" :key="user.href"><a v-link="user.href">{{ user.name }}</a></li>
     </ul>
-    <b-button @click="disable()">Disable</b-button>
   </div>
 </template>
 
 <script lang="ts">
 import {
-  BButton,
   BListGroup,
   BListGroupItem,
 } from 'bootstrap-vue';
 import { DateTime } from 'luxon';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import link from '../directives/link';
@@ -26,7 +26,6 @@ import { getInfoForBadge } from '../libs/storage/chrome.storage';
   components: {
     BListGroup,
     BListGroupItem,
-    BButton,
   },
   directives: {
     link,
@@ -35,14 +34,17 @@ import { getInfoForBadge } from '../libs/storage/chrome.storage';
 })
 export default class TodayBirthdays extends Vue {
   users: Array<{ name: string; href: string; start: DateTime }> = [];
+  onDestroy$: Subject<boolean> = new Subject();
 
-  created() {
-    getInfoForBadge()
-        .subscribe(({birthdays}) => this.users = birthdays);
+  destroyed() {
+    this.onDestroy$.next(true);
+    this.onDestroy$.complete();
   }
 
-  disable() {
-
+  mounted() {
+    getInfoForBadge()
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(({birthdays}) => this.users = birthdays);
   }
 }
 </script>

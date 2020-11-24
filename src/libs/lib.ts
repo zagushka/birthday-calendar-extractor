@@ -10,7 +10,6 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { Action } from '../constants';
 import {
   languages,
   LanguageSet,
@@ -246,10 +245,6 @@ function fetchBirthdaysPage(url: string): Observable<string> {
       map(r => JSON.parse(r.response.substring(9))),
       map(r => r.domops[0][3].__html),
     );
-}
-
-export function sendMessage(action: Action, callback?: (response: any) => void) {
-  return chrome.runtime.sendMessage(action, callback);
 }
 
 export function fetchBirthdays(token: string, language: string): Observable<Map<string, RawEvent>> {

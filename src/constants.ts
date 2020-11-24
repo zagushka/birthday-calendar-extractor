@@ -1,10 +1,12 @@
 import translatePipe from './filters/translate';
 
 export enum ACTION {
-  STATUS_REPORT = 'STATUS_REPORT',
-  START_GENERATION = 'START_GENERATION',
-  CHECK_STATUS = 'CHECK_STATUS',
-  LOG = 'LOG',
+  STATUS_REPORT,
+  START_GENERATION,
+  UPDATE_BADGE,
+  CHECK_STATUS,
+  LOG,
+  ALARM_NEW_DAY
 }
 
 export type ApplicationStatus =
@@ -13,35 +15,6 @@ export type ApplicationStatus =
   | 'DONE'
   | 'USER_SETTINGS'
   | 'NO_TOKEN_DETECTED';
-
-export abstract class Action {
-  abstract type: ACTION;
-}
-
-export class StartGenerationAction extends Action {
-  type = ACTION.START_GENERATION;
-
-  constructor(public format: ACTIONS_SET) {
-    super();
-  }
-}
-
-export class StatusReportAction extends Action {
-  type = ACTION.STATUS_REPORT;
-
-  constructor(public status: ApplicationStatus) {
-    super();
-  }
-}
-
-export class LogAction extends Action {
-  type = ACTION.LOG;
-
-  constructor(public data: any) {
-    super();
-
-  }
-}
 
 export enum STORAGE_KEYS {
   BIRTHDAYS = 'BIRTHDAYS_FOR_BADGE',

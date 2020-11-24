@@ -48,16 +48,6 @@ export function getLastTimeClickedBadge(): Observable<DateTime> {
 }
 
 /**
- *
- */
-export function getLastActiveTab(): Observable<number> {
-  return bindCallback<{ [key: string]: any }>(getStorageFactory([STORAGE_KEYS.LAST_ACTIVE_TAB]))()
-    .pipe(
-      map(data => data[STORAGE_KEYS.LAST_ACTIVE_TAB]), // Stored last active tab
-    );
-}
-
-/**
  * Today's birthday
  */
 export function getTodayBirthdays(): Observable<Array<{ name: string; href: string; start: DateTime }>> {
@@ -78,6 +68,7 @@ export function getInfoForBadge(): Observable<{
   birthdays: Array<{ name: string; href: string; start: DateTime }>;
   dateVisited: DateTime
 }> {
+
   return forkJoin({
       birthdays: getTodayBirthdays(),
       dateVisited: getLastTimeClickedBadge(),
@@ -93,7 +84,6 @@ export function storeLastBadgeClicked() {
   storeUserSettings({
     [STORAGE_KEYS.BADGE_VISITED]: DateTime.local(),
   });
-  // chrome.storage.local.set({[STORAGE_KEYS.BADGE_VISITED]: DateTime.local().toMillis()});
 }
 
 export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {

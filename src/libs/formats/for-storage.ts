@@ -1,6 +1,11 @@
 import { DateTime } from 'luxon';
-import { STORAGE_KEYS } from '../../constants';
+import {
+  STORAGE_KEYS,
+
+} from '../../constants';
+import { UpdateBadgeAction } from '../events/actions';
 import { CalendarBase } from '../base';
+import { sendMessage } from '../events/events';
 import {
   PreparedEvent,
   RawEvent,
@@ -19,6 +24,7 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
       [STORAGE_KEYS.BIRTHDAYS]: calendarData,
       [STORAGE_KEYS.BADGE_ACTIVE]: true,
     });
+    sendMessage(new UpdateBadgeAction());
   }
 
   formatEvent(event: PreparedEvent) {
