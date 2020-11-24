@@ -1,15 +1,15 @@
 <template>
 
   <b-tabs
-      v-if="loaded"
-      nav-class="no-wrap"
-      content-class="mt-2"
-      v-model="tabIndex"
-      @activate-tab="updateTabIndex"
+    v-if="loaded"
+    nav-class="no-wrap"
+    content-class="mt-2"
+    v-model="tabIndex"
+    @activate-tab="updateTabIndex"
   >
     <b-tab :title="'TODAY_BIRTHDAY_TITLE' | translatePipe">
       <today-birthdays
-          :update="() => updateTarget(ACTIONS_SET.ENABLE_BADGE)"
+        :update="() => updateTarget(ACTIONS_SET.ENABLE_BADGE)"
       ></today-birthdays>
       <div class="d-flex justify-content-end">
         <b-button size="sm"
@@ -28,8 +28,8 @@
             <div class="d-flex flex-grow-1 border"
                  v-if="actionName === ACTIONS_SET.ENABLE_BADGE">
               <b-embed
-                  autoplay loop
-                  type="video" aspect="4by3">
+                autoplay loop
+                type="video" aspect="4by3">
                 <source src="/media/badge.mp4" type="video/mp4">
               </b-embed>
             </div>
@@ -49,18 +49,18 @@
 
           <div class="d-flex align-items-start flex-shrink-0 flex-column ml-auto">
             <b-form-radio-group
-                class="d-flex flex-nowrap flex-column"
-                v-model="actionName"
-                @change="updateTarget"
-                :options="ACTIONS_DESC">
+              class="d-flex flex-nowrap flex-column"
+              v-model="actionName"
+              @change="updateTarget"
+              :options="ACTIONS_DESC">
             </b-form-radio-group>
 
             <div class="d-flex flex-nowrap mt-auto align-self-stretch">
               <b-button
-                  size="sm"
-                  variant="outline-success"
-                  v-on:click="startGeneration()"
-                  v-translate="'GENERATE'"></b-button>
+                size="sm"
+                variant="outline-success"
+                v-on:click="startGeneration()"
+                v-translate="'GENERATE'"></b-button>
               <leave-feedback-button/>
             </div>
           </div>
@@ -146,12 +146,12 @@ export default class PopupUserSettings extends Vue {
       STORAGE_KEYS.LAST_ACTIVE_TAB,
       STORAGE_KEYS.LAST_SELECTED_ACTION,
     ])
-        .subscribe((response) => {
-              this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION];
-              this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB];
-              this.loaded = true;
-            },
-        );
+      .subscribe((response) => {
+          this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION];
+          this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB];
+          this.loaded = true;
+        },
+      );
   }
 
   updateTabIndex(activatedTabId: number) {

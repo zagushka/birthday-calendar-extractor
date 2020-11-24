@@ -36,7 +36,10 @@ import {
   UpdateBadgeAction,
 } from '../libs/events/actions';
 
-import { setBadgeColor } from '../libs/badge';
+import {
+  setBadgeColor,
+  updateBadge,
+} from '../libs/badge';
 import {
   listenTo,
   sendMessage,
@@ -74,12 +77,9 @@ export default class App extends Vue {
 
 
   mounted() {
-    storeLastBadgeClicked();
-    setBadgeColor();
-    chrome.runtime.onMessage.addListener((m) => {
-      console.log(m);
-      sendMessage(new UpdateBadgeAction());
-    });
+    // Mark badge was clicked now and send event later
+    storeLastBadgeClicked()
+      .subscribe(() => sendMessage(new UpdateBadgeAction()));
 
     // Listen to Show modal event on status report
     listenTo<StatusReportAction>(ACTION.STATUS_REPORT)

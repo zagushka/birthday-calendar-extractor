@@ -25,7 +25,8 @@ export const allActions$: Subject<Message<ActionType>> = new Subject();
 merge(
   allChromeMessages$, // Messages
   alChromeAlarms$, // Alarms
-).subscribe(allActions$.next);
+)
+  .subscribe(e => allActions$.next(e));
 
 /**
  * Listen to allMessages$ filtered by actionName

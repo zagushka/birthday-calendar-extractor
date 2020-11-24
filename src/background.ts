@@ -1,7 +1,7 @@
 import { merge } from 'rxjs';
 import {
   map,
-  tap,
+  startWith,
 } from 'rxjs/operators';
 import {
   ACTION,
@@ -44,13 +44,12 @@ merge(
   listenTo(ACTION.UPDATE_BADGE, ACTION.ALARM_NEW_DAY),
 )
   .pipe(
-    // startWith(true),
-    tap(console.log),
+    startWith(true), // Initial Badge setup
   )
   .subscribe(updateBadge);
 
 listenTo<StartGenerationAction>(ACTION.START_GENERATION)
-  .subscribe(({action,callback}) => {
+  .subscribe(({action, callback}) => {
     parsePageForConfig()
       .subscribe(({language, token}) => {
         if (!token) {

@@ -37,9 +37,6 @@ const DEFAULT_USER_SETTINGS: UserSettings = {
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
 };
 
-const getStorageFactory =
-  (keys: string[] | string) => (cb: (items: { [key: string]: any }) => void) => chrome.storage.local.get(keys, cb);
-
 export function getLastTimeClickedBadge(): Observable<DateTime> {
   return retrieveUserSettings([STORAGE_KEYS.BADGE_VISITED])
     .pipe(
@@ -87,7 +84,8 @@ export function storeLastBadgeClicked(): Observable<void> {
 }
 
 export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {
-  return bindCallback<{ [key: string]: any }>(getStorageFactory(keys))()
+  return bindCallback<Array<STORAGE_KEYS>, { [key: string]: any }>(chrome.storage.local.get)
+    .call(chrome.storage.local, keys)
     .pipe(
       map(data => {
         // @TODO Make better default value handler
