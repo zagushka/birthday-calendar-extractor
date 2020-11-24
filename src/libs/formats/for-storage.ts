@@ -23,8 +23,8 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
     storeUserSettings({
       [STORAGE_KEYS.BIRTHDAYS]: calendarData,
       [STORAGE_KEYS.BADGE_ACTIVE]: true,
-    });
-    sendMessage(new UpdateBadgeAction());
+    })
+      .subscribe(() => sendMessage(new UpdateBadgeAction()));
   }
 
   formatEvent(event: PreparedEvent) {

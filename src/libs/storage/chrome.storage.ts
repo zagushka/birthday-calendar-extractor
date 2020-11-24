@@ -80,8 +80,8 @@ export function getInfoForBadge(): Observable<{
  * Store data to sessionStorage
  * @TODO Make it Observable
  */
-export function storeLastBadgeClicked() {
-  storeUserSettings({
+export function storeLastBadgeClicked(): Observable<void> {
+  return storeUserSettings({
     [STORAGE_KEYS.BADGE_VISITED]: DateTime.local(),
   });
 }
@@ -111,7 +111,9 @@ export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {
     );
 }
 
-export function storeUserSettings(settings: Partial<UserSettings>, callback?: () => void): void {
+export function storeUserSettings(settings: Partial<UserSettings>): Observable<void>;
+export function storeUserSettings(settings: Partial<UserSettings>, dontWait: boolean): void;
+export function storeUserSettings(settings: Partial<UserSettings>, dontWait?: boolean) {
   const data: Partial<StoredUserSettings> = {};
 
   if (settings[STORAGE_KEYS.BADGE_VISITED]) {
@@ -127,6 +129,11 @@ export function storeUserSettings(settings: Partial<UserSettings>, callback?: ()
       ],
     );
   }
+  if ('undefined' === typeof dontWait) {
+    return bindCallback(chrome.storage.local.set)
+      .call(chrome.storage.local, Object.assign({}, settings, data));
+  }
+
   chrome.storage.local.set(Object.assign({}, settings, data));
 }
 

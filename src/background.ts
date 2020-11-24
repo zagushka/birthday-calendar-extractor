@@ -41,14 +41,13 @@ setupAlarms();
 
 // Update Badge on update badge event or new date alarm
 merge(
-  listenTo(ACTION.UPDATE_BADGE, ACTION.ALARM_NEW_DAY)
+  listenTo(ACTION.UPDATE_BADGE, ACTION.ALARM_NEW_DAY),
 )
   .pipe(
     // startWith(true),
     tap(console.log),
   )
-  // @TODO WHY .bind ?
-  .subscribe(updateBadge.bind(this));
+  .subscribe(updateBadge);
 
 listenTo<StartGenerationAction>(ACTION.START_GENERATION)
   .subscribe(({action,callback}) => {

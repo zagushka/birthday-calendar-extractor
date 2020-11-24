@@ -155,11 +155,11 @@ export default class PopupUserSettings extends Vue {
   }
 
   updateTabIndex(activatedTabId: number) {
-    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: activatedTabId});
+    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: activatedTabId}, true);
   }
 
   updateTarget(val: ACTIONS_SET) {
-    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: val});
+    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: val}, true);
   };
 
   startGeneration() {
