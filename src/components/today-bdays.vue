@@ -14,12 +14,18 @@ import {
 } from 'bootstrap-vue';
 import { DateTime } from 'luxon';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {
+  startWith,
+  switchMapTo,
+  takeUntil,
+} from 'rxjs/operators';
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { ACTION } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
-import { getInfoForBadge } from '../libs/storage/chrome.storage';
+import { listenTo } from '../libs/events/events';
+import { getBirthdaysForDate } from '../libs/storage/chrome.storage';
 
 @Component({
   name: 'today-bdays',
@@ -42,9 +48,13 @@ export default class TodayBirthdays extends Vue {
   }
 
   mounted() {
-    getInfoForBadge()
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(({birthdays}) => this.users = birthdays);
+    listenTo(ACTION.ALARM_NEW_DAY) // Update when date changes
+        .pipe(
+            takeUntil(this.onDestroy$),
+            startWith(true), // Display on mount
+            switchMapTo(getBirthdaysForDate(DateTime.local())),
+        )
+        .subscribe(users => this.users = users);
   }
 }
 </script>

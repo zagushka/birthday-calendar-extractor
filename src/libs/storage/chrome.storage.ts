@@ -37,6 +37,12 @@ const DEFAULT_USER_SETTINGS: UserSettings = {
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
 };
 
+export interface RestoredBirthdays {
+  name: string;
+  href: string;
+  start: DateTime
+}
+
 export function getLastTimeClickedBadge(): Observable<DateTime> {
   return retrieveUserSettings([STORAGE_KEYS.BADGE_VISITED])
     .pipe(
@@ -47,12 +53,13 @@ export function getLastTimeClickedBadge(): Observable<DateTime> {
 /**
  * Today's birthday
  */
-export function getTodayBirthdays(): Observable<Array<{ name: string; href: string; start: DateTime }>> {
-  const ordinal = DateTime.local().ordinal; // Today's ordinal
+
+export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBirthdays>> {
+  const ordinal = date.ordinal; // Date ordinal
   return retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS])
     .pipe(
       pluck(STORAGE_KEYS.BIRTHDAYS),
-      map((raw: Array<{ name: string; href: string; start: DateTime }>) => {
+      map((raw: Array<RestoredBirthdays>) => {
         return raw.filter(r => r.start.ordinal === ordinal);
       }),
     );
@@ -61,13 +68,13 @@ export function getTodayBirthdays(): Observable<Array<{ name: string; href: stri
 /**
  * Observable with today's birthdays and last time user clicked on badge
  */
-export function getInfoForBadge(): Observable<{
-  birthdays: Array<{ name: string; href: string; start: DateTime }>;
+export function getInfoForBadge(today: DateTime = DateTime.local()): Observable<{
+  birthdays: Array<RestoredBirthdays>;
   dateVisited: DateTime
 }> {
 
   return forkJoin({
-      birthdays: getTodayBirthdays(),
+      birthdays: getBirthdaysForDate(today),
       dateVisited: getLastTimeClickedBadge(),
     },
   );
@@ -75,7 +82,6 @@ export function getInfoForBadge(): Observable<{
 
 /**
  * Store data to sessionStorage
- * @TODO Make it Observable
  */
 export function storeLastBadgeClicked(): Observable<void> {
   return storeUserSettings({
@@ -139,7 +145,7 @@ export function clearStorage() {
   chrome.storage.local.clear();
 }
 
-function decodeEvents(data: Array<[string, number, string]>) {
+function decodeEvents(data: Array<[string, number, string]>): Array<RestoredBirthdays> {
   return data.map(
     ([name, ordinal, hrefPartial]) => ({
       name,
