@@ -1,8 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {VueLoaderPlugin} = require('vue-loader');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {version} = require('./package.json');
 const ejs = require('ejs');
 
@@ -11,14 +10,14 @@ module.exports = {
   entry: {
     'background': './background.ts',
     // 'content': './content.ts',
-    'popup/popup': './popup/popup.ts',
+    'popup/popup': './popup/popup.tsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['.js', '.vue', '.tsx', '.ts'],
+    extensions: ['.js', '.tsx', '.ts'],
   },
   module: {
     rules: [
@@ -26,22 +25,17 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        }
       },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-        sideEffects: true,
-      },
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      //   sideEffects: true,
+      // },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          // MiniCssExtractPlugin.loader,
+          'style-loader', 'css-loader', 'sass-loader'],
         sideEffects: true,
       },
       {
@@ -70,10 +64,9 @@ module.exports = {
     new webpack.DefinePlugin({
       global: 'window',
     }),
-    new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: '[name].css',
+    // }),
     new CopyPlugin({
       patterns: [
         {
@@ -82,7 +75,9 @@ module.exports = {
             ignore: ['**/manifest.json'],
           },
         },
+        // Append variables to popup.html
         {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
+        // Update manifest version from package.json
         {
           from: '../public/manifest.json',
           to: 'manifest.json',
