@@ -1,5 +1,5 @@
 import { DirectiveOptions } from 'vue';
-import translatePipe from '../filters/translate';
+import translateFilter from '../filters/translate';
 
 const translate: DirectiveOptions = {
   bind: (el, binding, vnode) => {
@@ -13,7 +13,7 @@ const translate: DirectiveOptions = {
     }
 
     // @ts-ignore
-    el.innerHTML = translatePipe(...data);
+    el.innerHTML = translateFilter(...data);
   },
 };
 

@@ -29,7 +29,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import link from '../directives/link';
 import translate from '../directives/translate';
-import translatePipe from '../filters/translate';
+import translateFilter from '../filters/translate';
 
 @Component({
   name: 'no-token-detected-modal',
@@ -38,7 +38,7 @@ import translatePipe from '../filters/translate';
     BButton,
   },
   filters: {
-    translatePipe,
+    translatePipe: translateFilter,
   },
   directives: {
     translate,

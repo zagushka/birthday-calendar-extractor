@@ -1,17 +1,23 @@
-import { merge } from 'rxjs';
+import {
+  concat,
+  merge,
+} from 'rxjs';
 import {
   map,
   startWith,
+  switchMapTo,
 } from 'rxjs/operators';
 import {
   ACTION,
   ACTIONS_SET,
+  STORAGE_KEYS,
 } from './constants';
 import { updateBadge } from './libs/badge';
 import { CalendarBase } from './libs/base';
 import {
   StartGenerationAction,
   StatusReportAction,
+  UpdateBadgeAction,
 } from './libs/events/actions';
 import { setupAlarms } from './libs/events/alarms';
 import {
@@ -28,6 +34,7 @@ import {
   getBirthdaysList,
   parsePageForConfig,
 } from './libs/lib';
+import { storeUserSettings } from './libs/storage/chrome.storage';
 
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
   if (ACTION.STATUS_REPORT !== message.type) {
@@ -46,10 +53,23 @@ merge(
   .pipe(
     startWith(true), // Initial Badge setup
   )
-  .subscribe(updateBadge);
+  .subscribe(() => updateBadge());
 
 listenTo<StartGenerationAction>(ACTION.START_GENERATION)
   .subscribe(({action, callback}) => {
+    // Take care of disable badge event
+    if (ACTIONS_SET.DISABLE_BADGE === action.format) {
+      storeUserSettings({
+        [STORAGE_KEYS.BIRTHDAYS]: [],
+        [STORAGE_KEYS.BADGE_ACTIVE]: false,
+      })
+        .subscribe(() => {
+          sendMessage(new UpdateBadgeAction(), true);
+          callback();
+        });
+      return true;
+    }
+
     parsePageForConfig()
       .subscribe(({language, token}) => {
         if (!token) {
@@ -81,6 +101,8 @@ listenTo<StartGenerationAction>(ACTION.START_GENERATION)
                 case ACTIONS_SET.ENABLE_BADGE:
                   calendar = new CalendarForStorage();
                   break;
+                default:
+                  return;
               }
               return calendar.save(
                 calendar.generateCalendar(Array.from(events.values())),

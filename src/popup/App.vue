@@ -17,42 +17,23 @@
 <script lang="ts">
 
 import { Subject } from 'rxjs';
-import {
-  filter,
-  takeUntil,
-} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import ChangeLanguageModal from '../components/change-language.modal.vue';
 import DoneModal from '../components/done.modal.vue';
 import NoTokenDetectedModal from '../components/no-token-detected.modal.vue';
 import PopupUserSettings from '../components/popup.user-settings.vue';
-import {
-  ACTION,
-
-} from '../constants';
+import { ACTION } from '../constants';
 import {
   StatusReportAction,
   UpdateBadgeAction,
 } from '../libs/events/actions';
-
-import {
-  setBadgeColor,
-  updateBadge,
-} from '../libs/badge';
 import {
   listenTo,
   sendMessage,
 } from '../libs/events/events';
 import { storeLastBadgeClicked } from '../libs/storage/chrome.storage';
-
-const showModalHandler = function (this: App, message: any, sender: chrome.runtime.MessageSender, callback: (response?: any) => void) {
-  // Take care of actions with status_report
-  if (ACTION.STATUS_REPORT === message.type) {
-    this.status = message.status;
-    this.showModal(message.status);
-  }
-};
 
 @Component({
   components: {
@@ -77,7 +58,7 @@ export default class App extends Vue {
 
 
   mounted() {
-    // Mark badge was clicked now and send event later
+    // Store Badge is clicked now and send event later
     storeLastBadgeClicked()
       .subscribe(() => sendMessage(new UpdateBadgeAction()));
 

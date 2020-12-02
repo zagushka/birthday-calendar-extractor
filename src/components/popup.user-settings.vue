@@ -1,22 +1,22 @@
 <template>
 
   <b-tabs
-    v-if="loaded"
-    nav-class="no-wrap"
-    content-class="mt-2"
-    v-model="tabIndex"
-    @activate-tab="updateTabIndex"
+      v-if="loaded"
+      nav-class="no-wrap"
+      content-class="mt-2"
+      v-model="tabIndex"
+      @activate-tab="updateTabIndex"
   >
     <b-tab :title="'TODAY_BIRTHDAY_TITLE' | translatePipe">
+
       <today-birthdays
-        :update="() => updateTarget(ACTIONS_SET.ENABLE_BADGE)"
+          :update="() => updateTarget(ACTIONS_SET.ENABLE_BADGE)"
       ></today-birthdays>
-      <div class="d-flex justify-content-end">
-        <b-button size="sm"
-                  variant="outline-dark"
-                  v-link.close.active="'BY_ME_COFFEE_LINK'"
-                  v-translate="'BUY_ME_COFFEE_TITLE'"></b-button>
+
+      <div class="d-flex">
+        <toggle-show-badge-button v-on:set-waiting="setWaiting"/>
       </div>
+
     </b-tab>
 
     <b-tab :title="'USER_SETTINGS' | translatePipe">
@@ -28,8 +28,8 @@
             <div class="d-flex flex-grow-1 border"
                  v-if="actionName === ACTIONS_SET.ENABLE_BADGE">
               <b-embed
-                autoplay loop
-                type="video" aspect="4by3">
+                  autoplay loop
+                  type="video" aspect="4by3">
                 <source src="/media/badge.mp4" type="video/mp4">
               </b-embed>
             </div>
@@ -49,18 +49,18 @@
 
           <div class="d-flex align-items-start flex-shrink-0 flex-column ml-auto">
             <b-form-radio-group
-              class="d-flex flex-nowrap flex-column"
-              v-model="actionName"
-              @change="updateTarget"
-              :options="ACTIONS_DESC">
+                class="d-flex flex-nowrap flex-column"
+                v-model="actionName"
+                @change="updateTarget"
+                :options="ACTIONS_DESC">
             </b-form-radio-group>
 
             <div class="d-flex flex-nowrap mt-auto align-self-stretch">
               <b-button
-                size="sm"
-                variant="outline-success"
-                v-on:click="startGeneration()"
-                v-translate="'GENERATE'"></b-button>
+                  size="sm"
+                  variant="outline-success"
+                  v-on:click="startGeneration()"
+                  v-translate="'GENERATE'"></b-button>
               <leave-feedback-button/>
             </div>
           </div>
@@ -96,7 +96,7 @@ import {
 } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
-import translatePipe from '../filters/translate';
+import translateFilter from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import {
@@ -106,14 +106,16 @@ import {
 import PopupActionDescription from './action-description.vue';
 import LeaveFeedbackButton from './leave-feedback.button.vue';
 import TodayBirthdays from './today-bdays.vue';
+import ToggleShowBadgeButton from './toggle-show-badge.button.vue';
 import Toolz from './toolz.vue';
 
 @Component({
   name: 'popup-user-settings',
   filters: {
-    translatePipe,
+    translatePipe: translateFilter,
   },
   components: {
+    ToggleShowBadgeButton,
     Toolz,
     LeaveFeedbackButton,
     PopupActionDescription,
@@ -146,12 +148,12 @@ export default class PopupUserSettings extends Vue {
       STORAGE_KEYS.LAST_ACTIVE_TAB,
       STORAGE_KEYS.LAST_SELECTED_ACTION,
     ])
-      .subscribe((response) => {
-          this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION];
-          this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB];
-          this.loaded = true;
-        },
-      );
+        .subscribe((response) => {
+              this.actionName = response[STORAGE_KEYS.LAST_SELECTED_ACTION];
+              this.tabIndex = response[STORAGE_KEYS.LAST_ACTIVE_TAB];
+              this.loaded = true;
+            },
+        );
   }
 
   updateTabIndex(activatedTabId: number) {
@@ -163,8 +165,13 @@ export default class PopupUserSettings extends Vue {
   };
 
   startGeneration() {
-    sendMessage(new StartGenerationAction(this.actionName), () => this.waiting = false);
-    this.waiting = true;
+    sendMessage(new StartGenerationAction(this.actionName))
+        .subscribe(() => this.setWaiting(false));
+    this.setWaiting(true);
+  }
+
+  setWaiting(status: boolean) {
+    this.waiting = status;
   }
 }
 

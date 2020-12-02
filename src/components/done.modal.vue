@@ -23,7 +23,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import link from '../directives/link';
 import translate from '../directives/translate';
-import translatePipe from '../filters/translate';
+import translateFilter from '../filters/translate';
 import LeaveFeedbackButton from './leave-feedback.button.vue';
 
 @Component({
@@ -34,7 +34,7 @@ import LeaveFeedbackButton from './leave-feedback.button.vue';
     BButton,
   },
   filters: {
-    translatePipe,
+    translatePipe: translateFilter,
   },
   directives: {
     translate,

@@ -77,6 +77,25 @@
     "message": "Buy me a coffee",
     "description": "Donate button"
   },
+
+  "ACTIVATE_BADGE_DESCRIPTION": {
+    "message": "Activate Descriptions",
+    "description": "Activate badge description"
+  },
+  "ACTIVATE_BADGE_BUTTON_TITLE": {
+    "message": "Activate",
+    "description": "Activate badge button title"
+  },
+
+  "DEACTIVATE_BADGE_DESCRIPTION": {
+    "message": "DeActivate Descriptions",
+    "description": "Deactivate badge description"
+  },
+  "DEACTIVATE_BADGE_BUTTON_TITLE": {
+    "message": "Deactivate",
+    "description": "Deactivate badge button title"
+  },
+
   "NO_TOKEN_DETECTED": {
     "message": "Unable to fetch birthdays data, make sure you are logged into Facebook and try again.",
     "description": "Description for error when no token found."

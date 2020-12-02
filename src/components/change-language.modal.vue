@@ -30,7 +30,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import link from '../directives/link';
 import translate from '../directives/translate';
-import translatePipe from '../filters/translate';
+import translateFilter from '../filters/translate';
 import { getLanguagesList } from '../libs/lib';
 
 @Component({
@@ -41,7 +41,7 @@ import { getLanguagesList } from '../libs/lib';
     BBadge,
   },
   filters: {
-    translatePipe,
+    translatePipe: translateFilter,
   },
   directives: {
     translate,

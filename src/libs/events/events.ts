@@ -1,11 +1,16 @@
 import {
+  bindCallback,
   merge,
   Observable,
   Subject,
 } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import {
+  filter,
+  tap,
+} from 'rxjs/operators';
 
 import { ACTION } from '../../constants';
+import { UserSettings } from '../storage/chrome.storage';
 import {
   Action,
   ActionType,
@@ -36,6 +41,7 @@ export function listenTo<A extends Action>(...args: Array<ACTION>): Observable<M
 
   return allActions$
     .pipe(
+      // @ts-ignore
       filter(a => names.includes(a.action.type)),
     ) as Observable<Message<A>>;
 }
@@ -43,9 +49,21 @@ export function listenTo<A extends Action>(...args: Array<ACTION>): Observable<M
 /**
  * Can be used on both popup and backend
  */
-export function sendMessage(action: Action, callback?: (response?: any) => void): void {
+export function sendMessage<T>(action: Action): Observable<T>;
+export function sendMessage(action: Action, dontWait: boolean): void;
+export function sendMessage<T>(action: Action, dontWait?: boolean) {
   // Mirror for the local needs
-  allActions$.next({action, callback});
+  allActions$.next({
+    action,
+    callback: () => null,
+  });
   // Send message
-  chrome.runtime.sendMessage(action, callback);
+  if ('undefined' === typeof dontWait || false === dontWait) {
+    return bindCallback<any, T>(
+      chrome.runtime.sendMessage,
+    ).call(chrome.runtime.sendMessage, action);
+  }
+
+  return chrome.runtime.sendMessage(action);
+
 }

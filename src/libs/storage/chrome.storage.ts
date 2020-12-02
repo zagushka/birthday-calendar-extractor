@@ -51,18 +51,20 @@ export function getLastTimeClickedBadge(): Observable<DateTime> {
 }
 
 /**
- * Today's birthday
+ * Fetch all birthdays form local storage and filter for today's
  */
 
 export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBirthdays>> {
-  const ordinal = date.ordinal; // Date ordinal
   return retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS])
     .pipe(
       pluck(STORAGE_KEYS.BIRTHDAYS),
-      map((raw: Array<RestoredBirthdays>) => {
-        return raw.filter(r => r.start.ordinal === ordinal);
-      }),
+      map(birthdays => filterBirthdaysForDate(birthdays, date)),
     );
+}
+
+export function filterBirthdaysForDate(birthdays: Array<RestoredBirthdays>, date: DateTime = DateTime.local()): Array<RestoredBirthdays> {
+  const ordinal = date.ordinal;
+  return birthdays.filter(r => r.start.ordinal === ordinal);
 }
 
 /**
@@ -133,7 +135,7 @@ export function storeUserSettings(settings: Partial<UserSettings>, dontWait?: bo
       ],
     );
   }
-  if ('undefined' === typeof dontWait) {
+  if ('undefined' === typeof dontWait || false === dontWait) {
     return bindCallback(chrome.storage.local.set)
       .call(chrome.storage.local, Object.assign({}, settings, data));
   }

@@ -48,7 +48,7 @@ export default class TodayBirthdays extends Vue {
   }
 
   mounted() {
-    listenTo(ACTION.ALARM_NEW_DAY) // Update when date changes
+    listenTo(ACTION.ALARM_NEW_DAY, ACTION.UPDATE_BADGE) // Update when date changes
         .pipe(
             takeUntil(this.onDestroy$),
             startWith(true), // Display on mount
