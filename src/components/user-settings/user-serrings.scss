@@ -1,0 +1,14 @@
+.no-wrap {
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+.do-wrap {
+  white-space: normal;
+}
+
+.action-description {
+  display: block;
+  margin: 0 0 0 25px;
+  padding: 5px 0 0 15px;
+}
