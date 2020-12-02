@@ -1,7 +1,9 @@
-import './App.scss';
 import React from 'react';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import ChangeLanguageModal from '../components/modals/change-language.modal';
+import DoneModal from '../components/modals/done.modal';
+import NoTokenDetectedModal from '../components/modals/no-token-detected.modal';
 import UserSettings from '../components/user-settings/user-settings';
 import { ACTION } from '../constants';
 import {
@@ -13,10 +15,19 @@ import {
   sendMessage,
 } from '../libs/events/events';
 import { storeLastBadgeClicked } from '../libs/storage/chrome.storage';
+import './App.scss';
 
-export default class App extends React.Component<any, any> {
-  public status = 'USER_SETTINGS';
+interface AppState {
+  modal?: string
+}
+
+export default class App extends React.Component<{}, AppState> {
   onDestroy$: Subject<boolean> = new Subject();
+
+  constructor(params: {}) {
+    super(params);
+    this.state = {};
+  }
 
   componentWillUnmount() {
     this.onDestroy$.next(true);
@@ -34,22 +45,20 @@ export default class App extends React.Component<any, any> {
         takeUntil(this.onDestroy$),
       )
       .subscribe(({action}) => {
-        this.status = action.status;
-        this.showModal(action.status);
+        this.setModal(action.status);
       });
   }
 
-  showModal(status: string) {
-    // this.$root.$emit('bv::show::modal', status);
+  setModal(modal: string = null) {
+    this.setState({modal: modal});
   }
 
   render() {
     return <div>
       <UserSettings/>
-      {/*<done-modal/>*/}
-
-      {/*<change-language-modal/>*/}
-      {/*<no-token-detected-modal/>*/}
+      <DoneModal show={'DONE' === this.state.modal} onHide={() => this.setModal()}/>
+      <ChangeLanguageModal show={'NOT_SUPPORTED_LANGUAGE' === this.state.modal} onHide={() => this.setModal()}/>
+      <NoTokenDetectedModal show={'NO_TOKEN_DETECTED' === this.state.modal} onHide={() => this.setModal()}/>
     </div>;
   }
 }
