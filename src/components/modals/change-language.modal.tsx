@@ -12,7 +12,7 @@ export default class ChangeLanguageModal extends React.Component<ModalProps, any
   languages = getLanguagesList().map(e => `<span class="badge badge-info">${e}</span>`).join(' ');
 
   render() {
-    return <Modal.Dialog
+    return <Modal
       size='sm'
       centered
       id='NOT_SUPPORTED_LANGUAGE'
@@ -34,6 +34,6 @@ export default class ChangeLanguageModal extends React.Component<ModalProps, any
 
         <Button size='sm' onClick={this.props.onHide}> Close</Button>
       </Modal.Footer>
-    </Modal.Dialog>;
+    </Modal>;
   }
 }

@@ -21,12 +21,14 @@ interface AppState {
   modal?: string
 }
 
-export default class App extends React.Component<{}, AppState> {
+export default class App extends React.Component<any, AppState> {
   onDestroy$: Subject<boolean> = new Subject();
 
-  constructor(params: {}) {
+  constructor(params: any) {
     super(params);
-    this.state = {};
+    this.state = {
+      modal: null,
+    };
   }
 
   componentWillUnmount() {
@@ -50,7 +52,7 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   setModal(modal: string = null) {
-    this.setState({modal: modal});
+    this.setState({modal});
   }
 
   render() {

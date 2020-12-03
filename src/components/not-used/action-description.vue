@@ -14,7 +14,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import {
   ACTIONS_SET,
-} from '../constants';
+} from '../../constants';
 import handleLink from '../filters/handleLInks';
 import translate from '../directives/translate';
 

@@ -21,9 +21,13 @@ interface TodayBirthdaysState {
 
 export default class TodayBirthdays extends React.Component<any, TodayBirthdaysState> {
   onDestroy$: Subject<boolean> = new Subject();
-  state: TodayBirthdaysState = {
-    users: [],
-  };
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      users: [],
+    };
+  }
 
   componentWillUnmount() {
     this.onDestroy$.next(true);
@@ -42,9 +46,11 @@ export default class TodayBirthdays extends React.Component<any, TodayBirthdaysS
 
   render() {
     return <div className='m-2' style={{minHeight: '80px'}}>
-      <p v-if='!users.length'>
+
+      {this.state.users.length && <p>
         <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>
-      </p>
+      </p>}
+
       <ul className='text-nowrap' style={{listStyleType: 'none', margin: 0, padding: 0}}>
         {this.state.users.map(user => (
           <li key={user.href}>

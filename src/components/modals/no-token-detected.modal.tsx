@@ -9,7 +9,7 @@ import translate from '../../filters/translate';
 
 export default class NoTokenDetectedModal extends React.Component<ModalProps, any> {
   render() {
-    return <Modal.Dialog
+    return <Modal
       size='sm'
       centered
       id='NO_TOKEN_DETECTED'
@@ -30,6 +30,6 @@ export default class NoTokenDetectedModal extends React.Component<ModalProps, an
 
         <Button size='sm' onClick={this.props.onHide}> Close</Button>
       </Modal.Footer>
-    </Modal.Dialog>;
+    </Modal>;
   }
 }

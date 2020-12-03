@@ -13,6 +13,7 @@ import {
 } from '../../libs/storage/chrome.storage';
 import SelectAction from '../select-action';
 import TodayBirthdays from '../today-bdays';
+import ToggleShowBadgeButton from '../toggle-show-badge.button';
 import Toolz from '../toolz';
 import './user-serrings.scss';
 
@@ -24,11 +25,14 @@ interface UserSettingsStore {
 
 export default class UserSettings extends React.Component<any, UserSettingsStore> {
 
-  state: UserSettingsStore = {
-    tabIndex: 'USER_SETTINGS',
-    waiting: false,
-    loaded: false,
-  };
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      tabIndex: 'USER_SETTINGS',
+      waiting: false,
+      loaded: false,
+    };
+  }
 
   componentDidMount() {
     retrieveUserSettings([
@@ -45,10 +49,8 @@ export default class UserSettings extends React.Component<any, UserSettingsStore
 
   render() {
     return <>
-      <Tabs
-        v-if='loaded'
-        nav-class='no-wrap'
-        content-class='mt-2'
+      {this.state.loaded && <Tabs
+        className='no-wrap'
         activeKey={this.state.tabIndex}
         defaultActiveKey={this.state.tabIndex}
         onSelect={(tabIndex) => this.updateTabIndex(tabIndex)}
@@ -59,7 +61,7 @@ export default class UserSettings extends React.Component<any, UserSettingsStore
         >
           <TodayBirthdays/>
           <div className='d-flex'>
-            {/*    <toggle-show-badge-button v-on:set-waiting='setWaiting'/>*/}
+            <ToggleShowBadgeButton onWaiting={(s) => this.setState({waiting: s})}/>
           </div>
         </Tab>
 
@@ -68,14 +70,13 @@ export default class UserSettings extends React.Component<any, UserSettingsStore
           eventKey='USER_SETTINGS'
         >
           {/*<Overlay show={this.waiting}>*/}
-
           <SelectAction/>
           {/*</Overlay>*/}
         </Tab>
         <Tab title='TOOLZ' eventKey='TOOLZ'>
           <Toolz/>
         </Tab>
-      </Tabs>
+      </Tabs>}
     </>;
   }
 }

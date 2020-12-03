@@ -24,10 +24,14 @@ interface SelectActionState {
 }
 
 export default class SelectAction extends React.Component<any, SelectActionState> {
-  state: SelectActionState = {
-    isWaiting: true,
-    action: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
-  };
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isWaiting: true,
+      action: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
+    };
+  }
 
   componentDidMount() {
     retrieveUserSettings([STORAGE_KEYS.LAST_SELECTED_ACTION])

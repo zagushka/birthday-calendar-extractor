@@ -9,7 +9,7 @@ import translate from '../../filters/translate';
 export default class DoneModal extends React.Component<ModalProps, any> {
   // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
   render() {
-    return <Modal.Dialog
+    return <Modal
       size='sm'
       centered
       id='DONE'
@@ -29,6 +29,6 @@ export default class DoneModal extends React.Component<ModalProps, any> {
           onClick={this.props.onHide}
         > Ok</Button>
       </Modal.Footer>
-    </Modal.Dialog>;
+    </Modal>;
   }
 }
