@@ -48,7 +48,7 @@ import {
   sendMessage,
 } from '../libs/events/events';
 import { retrieveUserSettings } from '../libs/storage/chrome.storage';
-import BuyCoffeeButton from './buy-coffee.button.vue';
+import BuyCoffeeButton from './buy-coffee.button.js';
 
 @Component({
   name: 'toggle-show-badge-button',

@@ -17,7 +17,7 @@ export interface UserSettings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
   [STORAGE_KEYS.BADGE_VISITED]: DateTime;
   [STORAGE_KEYS.BIRTHDAYS]: Array<{ name: string; href: string; start: DateTime }>;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: number;
+  [STORAGE_KEYS.LAST_ACTIVE_TAB]: string;
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
 }
 
@@ -135,12 +135,15 @@ export function storeUserSettings(settings: Partial<UserSettings>, dontWait?: bo
       ],
     );
   }
+
+  const final = Object.assign({}, settings, data);
+
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback(chrome.storage.local.set)
-      .call(chrome.storage.local, Object.assign({}, settings, data));
+    return bindCallback<Partial<UserSettings>>(chrome.storage.local.set)
+      .call(chrome.storage.local, final);
   }
 
-  chrome.storage.local.set(Object.assign({}, settings, data));
+  chrome.storage.local.set(final);
 }
 
 export function clearStorage() {
