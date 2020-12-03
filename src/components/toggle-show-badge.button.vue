@@ -41,7 +41,7 @@ import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
-import translateFilter from '../filters/translate';
+import translate from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import {
   listenTo,
@@ -57,7 +57,7 @@ import BuyCoffeeButton from './buy-coffee.button.js';
     BButton,
   },
   filters: {
-    translatePipe: translateFilter,
+    translatePipe: translate,
   },
 })
 export default class ToggleShowBadgeButton extends Vue {

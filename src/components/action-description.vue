@@ -15,7 +15,7 @@ import Component from 'vue-class-component';
 import {
   ACTIONS_SET,
 } from '../constants';
-import link from '../directives/link';
+import handleLInk from '../filters/handleLInks';
 import translate from '../directives/translate';
 
 @Component({
@@ -25,7 +25,7 @@ import translate from '../directives/translate';
   },
   directives: {
     translate,
-    link,
+    link: handleLInks,
   },
 })
 export default class ActionDescription extends Vue {

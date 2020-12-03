@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import translateFilter from '../filters/translate';
+import translate from '../filters/translate';
 
 export default class LeaveFeedbackButton extends React.Component<any, any> {
   render() {
@@ -10,7 +10,7 @@ export default class LeaveFeedbackButton extends React.Component<any, any> {
       variant='outline-dark'
       // v-link.close.active=''LEAVE_FEEDBACK_LINK''
     >
-      {translateFilter('LEAVE_FEEDBACK_TITLE')}
+      {translate('LEAVE_FEEDBACK_TITLE')}
     </Button>;
   }
 }

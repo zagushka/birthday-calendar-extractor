@@ -4,7 +4,7 @@ import {
   Modal,
   ModalProps,
 } from 'react-bootstrap';
-import translateFilter from '../../filters/translate';
+import translate from '../../filters/translate';
 import { getLanguagesList } from '../../libs/lib';
 
 export default class ChangeLanguageModal extends React.Component<ModalProps, any> {
@@ -17,10 +17,10 @@ export default class ChangeLanguageModal extends React.Component<ModalProps, any
       id='NOT_SUPPORTED_LANGUAGE'
     >
       <Modal.Header>
-        {translateFilter('NOT_SUPPORTED_LANGUAGE', this.languages)}
+        {translate('NOT_SUPPORTED_LANGUAGE', this.languages)}
       </Modal.Header>
       <Modal.Body>
-        <p>{translateFilter('NO_TOKEN_DETECTED')}</p>
+        <p>{translate('NO_TOKEN_DETECTED')}</p>
       </Modal.Body>
 
       <Modal.Footer>
@@ -29,7 +29,7 @@ export default class ChangeLanguageModal extends React.Component<ModalProps, any
           className='ml-auto'
           variant='primary'
           // v-link.close.active="'CHANGE_FACEBOOK_LANGUAGE_LINK'"
-        >{translateFilter('CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE')}</Button>
+        >{translate('CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE')}</Button>
 
         <Button size='sm' onClick={this.props.onHide}> Close</Button>
       </Modal.Footer>

@@ -9,7 +9,7 @@ import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
-import translateFilter from '../filters/translate';
+import translate from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import {
@@ -67,7 +67,7 @@ export default class SelectAction extends React.Component<any, SelectActionState
         onSelect={(a) => this.setAction(a as ACTIONS_SET)}
       >
 
-        <Tab title={translateFilter(ACTIONS_SET.ENABLE_BADGE)}
+        <Tab title={translate(ACTIONS_SET.ENABLE_BADGE)}
              eventKey={ACTIONS_SET.ENABLE_BADGE}>
           <div className='d-flex flex-grow-1 border'>
             {/*        <ResponsiveEmbed*/}
@@ -78,19 +78,19 @@ export default class SelectAction extends React.Component<any, SelectActionState
           </div>
         </Tab>
 
-        <Tab title={translateFilter(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}
+        <Tab title={translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}
              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
-          {translateFilter('SELECT_ICS_DESCRIPTION')}
+          {translate('SELECT_ICS_DESCRIPTION')}
         </Tab>
 
-        <Tab title={translateFilter(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}
+        <Tab title={translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}
              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
-          {translateFilter('SELECT_DELETE_ICS_DESCRIPTION')}
+          {translate('SELECT_DELETE_ICS_DESCRIPTION')}
         </Tab>
 
-        <Tab title={translateFilter(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}
+        <Tab title={translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}
              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>
-          {translateFilter('FILE_FORMAT_CSV_DESCRIPTION')}
+          {translate('FILE_FORMAT_CSV_DESCRIPTION')}
         </Tab>
 
       </Tabs>
@@ -101,7 +101,7 @@ export default class SelectAction extends React.Component<any, SelectActionState
           <Button size='sm'
                   variant='outline-success'
                   onClick={this.startGeneration}>
-            {translateFilter('GENERATE')}
+            {translate('GENERATE')}
           </Button>
 
           <LeaveFeedbackButton/>

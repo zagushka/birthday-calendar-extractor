@@ -5,7 +5,7 @@ import {
   ModalProps,
 } from 'react-bootstrap';
 
-import translateFilter from '../../filters/translate';
+import translate from '../../filters/translate';
 
 export default class NoTokenDetectedModal extends React.Component<ModalProps, any> {
   render() {
@@ -15,10 +15,10 @@ export default class NoTokenDetectedModal extends React.Component<ModalProps, an
       id='NO_TOKEN_DETECTED'
     >
       <Modal.Header>
-        {translateFilter('ERROR_HEADER')}
+        {translate('ERROR_HEADER')}
       </Modal.Header>
       <Modal.Body>
-        <p>{translateFilter('NO_TOKEN_DETECTED')}</p>
+        <p>{translate('NO_TOKEN_DETECTED')}</p>
       </Modal.Body>
 
       <Modal.Footer>
@@ -26,7 +26,7 @@ export default class NoTokenDetectedModal extends React.Component<ModalProps, an
           size='sm'
           className='ml-auto'
           variant='primary'
-        >{translateFilter('LOG_INTO_FACEBOOK_TITLE')}</Button>
+        >{translate('LOG_INTO_FACEBOOK_TITLE')}</Button>
 
         <Button size='sm' onClick={this.props.onHide}> Close</Button>
       </Modal.Footer>

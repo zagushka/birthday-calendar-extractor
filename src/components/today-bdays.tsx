@@ -7,7 +7,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 import { ACTION } from '../constants';
-import translateFilter from '../filters/translate';
+import translate from '../filters/translate';
 import { listenTo } from '../libs/events/events';
 import {
   getBirthdaysForDate,
@@ -42,7 +42,7 @@ export default class TodayBirthdays extends React.Component<any, TodayBirthdaysS
   render() {
     return <div className='m-2' style='min-height: 80px'>
       <p v-if='!users.length'>
-        <strong>{translateFilter('TODAY_NO_BIRTHDAYS_TITLE')}</strong>
+        <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>
       </p>
       <ul className='text-nowrap' style='list-style-type:none; margin: 0; padding: 0'>
         {this.state.users.map(user => (
