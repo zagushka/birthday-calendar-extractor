@@ -1,12 +1,13 @@
+import React from 'react';
 import translate from './translate';
 
 interface LinkSettings {
-  close: boolean;
-  active: boolean;
-  substitutions: any;
+  close?: boolean;
+  active?: boolean;
+  substitutions?: any;
 }
 
-const handleLInk = (ev: MouseEvent, rawUrl: string, settings?: LinkSettings) => {
+const handleLink = (ev: React.MouseEvent, rawUrl: string, settings?: LinkSettings) => {
   ev.preventDefault();
   ev.stopPropagation();
   if (!rawUrl.length) {
@@ -28,4 +29,4 @@ const handleLInk = (ev: MouseEvent, rawUrl: string, settings?: LinkSettings) => 
   return false;
 };
 
-export default handleLInk;
+export default handleLink;

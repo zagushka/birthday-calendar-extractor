@@ -4,6 +4,7 @@ import {
   Modal,
   ModalProps,
 } from 'react-bootstrap';
+import handleLink from '../../filters/handleLink';
 import translate from '../../filters/translate';
 import { getLanguagesList } from '../../libs/lib';
 
@@ -28,7 +29,7 @@ export default class ChangeLanguageModal extends React.Component<ModalProps, any
           size='sm'
           className='ml-auto'
           variant='primary'
-          // v-link.close.active="'CHANGE_FACEBOOK_LANGUAGE_LINK'"
+          onClick={(e) => handleLink(e, 'CHANGE_FACEBOOK_LANGUAGE_LINK', {close: true, active: true})}
         >{translate('CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE')}</Button>
 
         <Button size='sm' onClick={this.props.onHide}> Close</Button>

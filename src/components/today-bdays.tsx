@@ -7,6 +7,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 import { ACTION } from '../constants';
+import handleLink from '../filters/handleLink';
 import translate from '../filters/translate';
 import { listenTo } from '../libs/events/events';
 import {
@@ -40,16 +41,14 @@ export default class TodayBirthdays extends React.Component<any, TodayBirthdaysS
   }
 
   render() {
-    return <div className='m-2' style='min-height: 80px'>
+    return <div className='m-2' style={{minHeight: '80px'}}>
       <p v-if='!users.length'>
         <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>
       </p>
-      <ul className='text-nowrap' style='list-style-type:none; margin: 0; padding: 0'>
+      <ul className='text-nowrap' style={{listStyleType: 'none', margin: 0, padding: 0}}>
         {this.state.users.map(user => (
           <li key={user.href}>
-            <a
-              // v-link='user.href'
-            >{user.name}</a>
+            <a onClick={(e) => handleLink(e, user.href)}>{user.name}</a>
           </li>
         ))}
 

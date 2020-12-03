@@ -15,7 +15,7 @@ import Component from 'vue-class-component';
 import {
   ACTIONS_SET,
 } from '../constants';
-import handleLInk from '../filters/handleLInks';
+import handleLink from '../filters/handleLInks';
 import translate from '../directives/translate';
 
 @Component({
