@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Nav,
   Tab,
   Tabs,
 } from 'react-bootstrap';
@@ -39,6 +40,7 @@ export default class SelectAction extends React.Component<any, SelectActionState
         pluck(STORAGE_KEYS.LAST_SELECTED_ACTION),
       )
       .subscribe((action) => {
+        console.log(action);
         this.setState({
           action,
           isWaiting: false,
@@ -47,6 +49,7 @@ export default class SelectAction extends React.Component<any, SelectActionState
   }
 
   setAction(action: ACTIONS_SET) {
+    console.log(action);
     storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: action}, true);
     this.setState({action});
   };
@@ -63,42 +66,47 @@ export default class SelectAction extends React.Component<any, SelectActionState
 
   render() {
     return <div className='d-flex flex-row' style={{width: '600px', minHeight: '160px'}}>
-      <Tabs
-        nav-class='no-wrap'
-        content-class='mt-2'
-        activeKey={this.state.action}
-        defaultActiveKey={this.state.action}
-        onSelect={(a) => this.setAction(a as ACTIONS_SET)}
-      >
+      <Tab.Container defaultActiveKey={this.state.action} onSelect={(e) => this.setAction(e as ACTIONS_SET)}>
+        <Nav variant='pills'>
+          <Nav.Item>
+            <Nav.Link eventKey={ACTIONS_SET.ENABLE_BADGE}>{translate(ACTIONS_SET.ENABLE_BADGE)}</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}</Nav.Link>
+          </Nav.Item>
+        </Nav>
 
-        <Tab title={translate(ACTIONS_SET.ENABLE_BADGE)}
-             eventKey={ACTIONS_SET.ENABLE_BADGE}>
-          <div className='d-flex flex-grow-1 border'>
+        <Tab.Content>
+          <Tab.Pane eventKey={ACTIONS_SET.ENABLE_BADGE}>
+            {/*<div className='d-flex flex-grow-1 border'>*/}
             {/*        <ResponsiveEmbed*/}
             {/*          autoplay loop*/}
             {/*          type='video' aspect='4by3'>*/}
             {/*          <source src='/media/badge.mp4' type='video/mp4'>*/}
             {/*        </ResponsiveEmbed>*/}
-          </div>
-        </Tab>
+            {/*</div>*/}
+          </Tab.Pane>
 
-        <Tab title={translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}
-             eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
-          {translate('SELECT_ICS_DESCRIPTION')}
-        </Tab>
+          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
+            {translate('SELECT_ICS_DESCRIPTION')}
+          </Tab.Pane>
 
-        <Tab title={translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}
-             eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
-          {translate('SELECT_DELETE_ICS_DESCRIPTION')}
-        </Tab>
+          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
+            {translate('SELECT_DELETE_ICS_DESCRIPTION')}
+          </Tab.Pane>
 
-        <Tab title={translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}
-             eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>
-          {translate('FILE_FORMAT_CSV_DESCRIPTION')}
-        </Tab>
+          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>
+            {translate('FILE_FORMAT_CSV_DESCRIPTION')}
+          </Tab.Pane>
+        </Tab.Content>
 
-      </Tabs>
-
+      </Tab.Container>
 
       <div className='d-flex align-items-start flex-shrink-0 flex-column ml-auto'>
         <div className='d-flex flex-nowrap mt-auto align-self-stretch'>

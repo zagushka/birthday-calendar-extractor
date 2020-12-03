@@ -17,13 +17,13 @@ import ToggleShowBadgeButton from '../toggle-show-badge.button';
 import Toolz from '../toolz';
 import './user-serrings.scss';
 
-interface UserSettingsStore {
+interface UserSettingsState {
   tabIndex: string;
   waiting: boolean;// Set true while processing
   loaded: boolean; // Do not display tabs before all the data been fetched
 }
 
-export default class UserSettings extends React.Component<any, UserSettingsStore> {
+export default class UserSettings extends React.Component<any, UserSettingsState> {
 
   constructor(props: any) {
     super(props);

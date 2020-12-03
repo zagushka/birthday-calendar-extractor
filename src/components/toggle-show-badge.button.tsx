@@ -27,11 +27,11 @@ interface ToggleShowBadgeButtonProps {
   onWaiting: (isWaiting: boolean) => void;
 }
 
-interface ToggleShowBadgeButtonStore {
+interface ToggleShowBadgeButtonState {
   isActive: boolean;
 }
 
-export default class ToggleShowBadgeButton extends React.Component<ToggleShowBadgeButtonProps, ToggleShowBadgeButtonStore> {
+export default class ToggleShowBadgeButton extends React.Component<ToggleShowBadgeButtonProps, ToggleShowBadgeButtonState> {
 
   constructor(props: ToggleShowBadgeButtonProps) {
     super(props);
