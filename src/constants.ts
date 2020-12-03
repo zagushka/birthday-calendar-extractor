@@ -1,4 +1,4 @@
-import translateFilter from './filters/translate';
+import translate from './filters/translate';
 
 export enum ACTION {
   STATUS_REPORT,
@@ -40,22 +40,22 @@ export const ACTIONS_DESC: Array<{
 }> = [
   {
     value: ACTIONS_SET.ENABLE_BADGE,
-    text: translateFilter(ACTIONS_SET.ENABLE_BADGE),
+    text: translate(ACTIONS_SET.ENABLE_BADGE),
     description: '',
   },
   {
     value: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
-    text: translateFilter(ACTIONS_SET.SELECT_FILE_FORMAT_ICS),
+    text: translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS),
     description: 'SELECT_ICS_DESCRIPTION',
   },
   {
     value: ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS,
-    text: translateFilter(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS),
+    text: translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS),
     description: 'SELECT_DELETE_ICS_DESCRIPTION',
   },
   {
     value: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
-    text: translateFilter(ACTIONS_SET.SELECT_FILE_FORMAT_CSV),
+    text: translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV),
     description: 'FILE_FORMAT_CSV_DESCRIPTION',
   },
 ];

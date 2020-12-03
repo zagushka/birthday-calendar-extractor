@@ -1,4 +1,4 @@
-import translateFilter from './translate';
+import translate from './translate';
 
 interface LinkSettings {
   close: boolean;
@@ -6,7 +6,7 @@ interface LinkSettings {
   substitutions: any;
 }
 
-const handleLInks = (ev: MouseEvent, rawUrl: string, settings?: LinkSettings) => {
+const handleLInk = (ev: MouseEvent, rawUrl: string, settings?: LinkSettings) => {
   ev.preventDefault();
   ev.stopPropagation();
   if (!rawUrl.length) {
@@ -19,7 +19,7 @@ const handleLInks = (ev: MouseEvent, rawUrl: string, settings?: LinkSettings) =>
     substitutions,
   } = settings;
 
-  const url = translateFilter(rawUrl, substitutions) || rawUrl;
+  const url = translate(rawUrl, substitutions) || rawUrl;
   chrome.tabs.create({url, active});
 
   if (close) {
@@ -28,4 +28,4 @@ const handleLInks = (ev: MouseEvent, rawUrl: string, settings?: LinkSettings) =>
   return false;
 };
 
-export default handleLInks;
+export default handleLInk;

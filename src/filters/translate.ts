@@ -1,6 +1,6 @@
 /**
- * Translate pipe filter
+ * Translate function
  */
-export default function translateFilter(...args: [string, ...any]) {
+export default function translate(...args: [string, ...any]) {
   return chrome.i18n.getMessage(...args) || args[0];
 }
