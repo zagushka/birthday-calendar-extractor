@@ -6,6 +6,7 @@
   "dependencies": {
     "bootstrap": "^4.5.3",
     "file-saver": "^2.0.5",
+    "html-react-parser": "^0.14.2",
     "luxon": "^1.25.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
