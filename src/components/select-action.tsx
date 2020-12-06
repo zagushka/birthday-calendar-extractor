@@ -1,9 +1,8 @@
 import React from 'react';
 import {
   Button,
-  Nav,
+  ListGroup,
   Tab,
-  Tabs,
 } from 'react-bootstrap';
 import { pluck } from 'rxjs/operators';
 import {
@@ -65,60 +64,63 @@ export default class SelectAction extends React.Component<any, SelectActionState
   }
 
   render() {
-    return <div className='d-flex flex-row' style={{width: '600px', minHeight: '160px'}}>
-      <Tab.Container defaultActiveKey={this.state.action} onSelect={(e) => this.setAction(e as ACTIONS_SET)}>
-        <Nav variant='pills'>
-          <Nav.Item>
-            <Nav.Link eventKey={ACTIONS_SET.ENABLE_BADGE}>{translate(ACTIONS_SET.ENABLE_BADGE)}</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}</Nav.Link>
-          </Nav.Item>
-        </Nav>
+    return <>
+      <div className='d-flex flex-row' style={{width: '600px', minHeight: '160px'}}>
 
-        <Tab.Content>
-          <Tab.Pane eventKey={ACTIONS_SET.ENABLE_BADGE}>
-            {/*<div className='d-flex flex-grow-1 border'>*/}
-            {/*        <ResponsiveEmbed*/}
-            {/*          autoplay loop*/}
-            {/*          type='video' aspect='4by3'>*/}
-            {/*          <source src='/media/badge.mp4' type='video/mp4'>*/}
-            {/*        </ResponsiveEmbed>*/}
-            {/*</div>*/}
-          </Tab.Pane>
+        <Tab.Container activeKey={this.state.action} onSelect={(e) => this.setAction(e as ACTIONS_SET)}>
+          <ListGroup className='flex-column no-wrap'>
+            <ListGroup.Item action eventKey={ACTIONS_SET.ENABLE_BADGE}>{translate(ACTIONS_SET.ENABLE_BADGE)}</ListGroup.Item>
 
-          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
-            {translate('SELECT_ICS_DESCRIPTION')}
-          </Tab.Pane>
+            <ListGroup.Item
+              action
+              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
+              {translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}
+            </ListGroup.Item>
 
-          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
-            {translate('SELECT_DELETE_ICS_DESCRIPTION')}
-          </Tab.Pane>
+            <ListGroup.Item action
+                            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
+              {translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}</ListGroup.Item>
+            <ListGroup.Item action
+                            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}</ListGroup.Item>
+          </ListGroup>
 
-          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>
-            {translate('FILE_FORMAT_CSV_DESCRIPTION')}
-          </Tab.Pane>
-        </Tab.Content>
+          <Tab.Content>
+            <Tab.Pane eventKey={ACTIONS_SET.ENABLE_BADGE}>
+              {/*<div className='d-flex flex-grow-1 border'>*/}
+              {/*        <ResponsiveEmbed*/}
+              {/*          autoplay loop*/}
+              {/*          type='video' aspect='4by3'>*/}
+              {/*          <source src='/media/badge.mp4' type='video/mp4'>*/}
+              {/*        </ResponsiveEmbed>*/}
+              {/*</div>*/}
+            </Tab.Pane>
 
-      </Tab.Container>
+            <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
+             - {translate('SELECT_ICS_DESCRIPTION')}-
+            </Tab.Pane>
 
+            <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
+              {translate('SELECT_DELETE_ICS_DESCRIPTION')}
+            </Tab.Pane>
+
+            <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>
+              {translate('FILE_FORMAT_CSV_DESCRIPTION')}
+            </Tab.Pane>
+          </Tab.Content>
+
+        </Tab.Container>
+      </div>
       <div className='d-flex align-items-start flex-shrink-0 flex-column ml-auto'>
-        <div className='d-flex flex-nowrap mt-auto align-self-stretch'>
+        <div className='d-flex flex-nowrap mt-auto align-self-end'>
           <Button size='sm'
                   variant='outline-success'
                   onClick={this.startGeneration}>
             {translate('GENERATE')}
           </Button>
-
+          {' '}
           <LeaveFeedbackButton/>
         </div>
       </div>
-    </div>;
+    </>;
   }
 }
