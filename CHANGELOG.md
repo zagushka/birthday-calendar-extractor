@@ -1,4 +1,7 @@
 ### Changelog
+2.3.6
+- Portuguese added by https://github.com/marciozomb13
+
 2.3.4
 - Added sorting by dates
 - Today birthdays will be saved as for today and not next year to prevent confusion

@@ -18,22 +18,7 @@ Answer: Click on extension icon and select "Remove from Google Calendar". A file
 Question: Is it possible to remove some of the contacts before importing to calendar?
 Answer: There is command line tool you can use: https://github.com/guenter-r/calendar_file_splitter
 
-Changelog
-2.2.0
-- Remove imported events from Google Calendar
-- Export as CSV
-2.1.0
-- Works with both new and old Facebook.
-- Makes ajax requests instead of scrolling birthday page down.
-- Fixed issue with missing persons on month joints.
-2.0.0
-- All the events are recurring now, and will be repeated yearly.
-- Events will appear as 'FREE' instead of 'BUSY'
-1.0.0
-- Bug Fix: When Facebook interface was set to 'English (UK)' calendar generated wrong dates.
-- Supported facebook languages: English (UK), English (US), Русский, Українська, עברית
+Big thanks to:
+- "marciozomb13" ( https://github.com/marciozomb13 ) for adding Portuguese translations.
 
-Things to improve
-It is open source, feel free to check it here: https://github.com/zagushka/birthday-calendar-extractor
-- Option to edit birthdays before generating the calendar file.
-- Direct export to Google Calendar.
+It is open source project, feel free to check it here: https://github.com/zagushka/birthday-calendar-extractor

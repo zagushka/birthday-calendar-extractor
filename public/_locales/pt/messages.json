@@ -11,14 +11,6 @@
     "message": "Você precisa estar em uma página do facebook para poder usar esta extensão.<p>Por favor abra o link e clique no botão da extensão novamente.",
     "description": "Description in case user is not on a facebook page"
   },
-  "FACEBOOK_REQUIRED_LINK": {
-    "message": "https://www.facebook.com/",
-    "description": "Facebook url."
-  },
-  "FACEBOOK_REQUIRED_REGEXP": {
-    "message": "^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com",
-    "description": "Allowed Facebook urls regexp to validate url"
-  },
   "FACEBOOK_REQUIRED_LINK_TITLE": {
     "message": "Abrir Facebook",
     "description": "Button to Facebook title."
@@ -33,10 +25,6 @@
       }
     }
   },
-  "NOT_SUPPORTED_LANGUAGE_LINK": {
-    "message": "https://www.facebook.com/settings?tab=language",
-    "description": "Facebook settings page with language set."
-  },
   "NOT_SUPPORTED_LANGUAGE_TITLE": {
     "message": "Página de configurações do Facebook.",
     "description": "Button to facebook settings page title."
@@ -49,10 +37,6 @@
     "message": "Sucesso!",
     "description": "Title when extraction process successfully finished"
   },
-  "LEAVE_FEEDBACK_LINK": {
-    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
-    "description": "Link to extension store"
-  },
   "LEAVE_FEEDBACK_TITLE": {
     "message": "Deixar uma avaliação",
     "description": "Share button"
@@ -64,10 +48,6 @@
   "ERROR_HEADER": {
     "message": "Aviso!",
     "description": "Error header"
-  },
-  "STORAGE_KEY_NAME": {
-    "message": "birthday-calendar-exporter-for-facebook-temp-storage",
-    "description": "Session storage name"
   },
   "USER_SETTINGS": {
     "message": "Eu desejo",

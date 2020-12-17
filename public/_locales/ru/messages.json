@@ -11,10 +11,6 @@
     "message": "Вам нужно быть на сайте facebook.<p>Нажмите на линк ниже для перехода и попробуйте снова.",
     "description": "Description in case user is not on a facebook page"
   },
-  "FACEBOOK_REQUIRED_LINK": {
-    "message": "https://www.facebook.com/",
-    "description": "Facebook url."
-  },
   "FACEBOOK_REQUIRED_LINK_TITLE": {
     "message": "На сайт facebook",
     "description": "Button to facebook title."
@@ -29,10 +25,6 @@
       }
     }
   },
-  "NOT_SUPPORTED_LANGUAGE_LINK": {
-    "message": "https://www.facebook.com/settings?tab=language",
-    "description": "Facebook settings page with language set."
-  },
   "NOT_SUPPORTED_LANGUAGE_TITLE": {
     "message": "На страницу смены языка.",
     "description": "Button to facebook settings page title."
@@ -44,10 +36,6 @@
   "DONE_TITLE": {
     "message": "Генерация завершена!",
     "description": "Title when extraction process successfully finished"
-  },
-  "LEAVE_FEEDBACK_LINK": {
-    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
-    "description": "Link to extension store"
   },
   "LEAVE_FEEDBACK_TITLE": {
     "message": "Оставить отзыв",
