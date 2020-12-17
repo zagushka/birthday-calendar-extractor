@@ -1,8 +1,17 @@
-import parse from 'html-react-parser';
+import HTMLReactParser from 'html-react-parser';
 
 /**
- * Translate function
+ * Translate function returns RSX element/s
+ * Use in rsx templates
  */
 export default function translate(...args: [string, ...any]) {
-  return parse(chrome.i18n.getMessage(...args) || args[0]);
+  return HTMLReactParser(translateString(...args));
+}
+
+/**
+ * Translate function returns string as a result
+ * Use for string translations with replacements
+ */
+export function translateString(...args: [string, ...any]) {
+  return chrome.i18n.getMessage(...args) || args[0];
 }

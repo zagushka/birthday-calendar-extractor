@@ -1,5 +1,5 @@
 import React from 'react';
-import translate from './translate';
+import { translateString } from './translate';
 
 interface LinkSettings {
   close?: boolean;
@@ -20,7 +20,7 @@ const handleLink = (ev: React.MouseEvent, rawUrl: string, settings?: LinkSetting
     substitutions,
   } = settings;
 
-  const url = translate(rawUrl, substitutions) || rawUrl;
+  const url = translateString(rawUrl, substitutions) || rawUrl;
   chrome.tabs.create({url, active});
 
   if (close) {
