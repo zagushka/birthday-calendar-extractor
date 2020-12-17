@@ -14,7 +14,7 @@
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.126",
+    "@types/chrome": "^0.0.127",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "^26.0.16",
     "@types/luxon": "^1.25.0",

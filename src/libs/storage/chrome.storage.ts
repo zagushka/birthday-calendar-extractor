@@ -43,6 +43,11 @@ export interface RestoredBirthdays {
   start: DateTime
 }
 
+/**
+ * Helper wrapper function to be used with rxjs bindCallback
+ */
+const setWrapper = <T>(parameters: T, callback: () => void) => chrome.storage.local.set(parameters, callback);
+
 export function getLastTimeClickedBadge(): Observable<DateTime> {
   return retrieveUserSettings([STORAGE_KEYS.BADGE_VISITED])
     .pipe(
@@ -139,8 +144,7 @@ export function storeUserSettings(settings: Partial<UserSettings>, dontWait?: bo
   const final = Object.assign({}, settings, data);
 
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback<Partial<UserSettings>>(chrome.storage.local.set)
-      .call(chrome.storage.local, final);
+    return bindCallback<Partial<UserSettings>>(setWrapper)(final);
   }
 
   chrome.storage.local.set(final);

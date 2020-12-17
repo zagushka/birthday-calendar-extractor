@@ -46,6 +46,8 @@ export function listenTo<A extends Action>(...args: Array<ACTION>): Observable<M
     ) as Observable<Message<A>>;
 }
 
+const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => chrome.runtime.sendMessage(parameters, callback);
+
 /**
  * Can be used on both popup and backend
  */
@@ -59,9 +61,7 @@ export function sendMessage<T>(action: Action, dontWait?: boolean) {
   });
   // Send message
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback<any, T>(
-      chrome.runtime.sendMessage,
-    ).call(chrome.runtime.sendMessage, action);
+    return bindCallback<Action, T>(sendMessageWrapper)(action);
   }
 
   return chrome.runtime.sendMessage(action);
