@@ -33,7 +33,7 @@ I suggest creating a new Birthday themed sub-calendar and use it for imports.
 
 
 ### Big Thanks 
-@marciozomb13 for adding Portuguese translations.
+[@marciozomb13](https://github.com/marciozomb13) for adding Portuguese translations.
 
 ### P.S
 It is open source, feel free to check it and contribute here: https://github.com/zagushka/birthday-calendar-extractor
