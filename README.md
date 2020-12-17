@@ -32,9 +32,8 @@ I suggest creating a new Birthday themed sub-calendar and use it for imports.
 | Is it possible to remove some of the contacts before importing to calendar? | There is command line tool you can use: [guenter-r/calendar_file_splitter](https://github.com/guenter-r/calendar_file_splitter) |
 
 
-### Things to improve
-It is open source, feel free to check it here: https://github.com/zagushka/birthday-calendar-extractor
-* Option to edit birthdays before generating the calendar file.
-* Get rid of [luxon](https://moment.github.io/luxon/) to reduce bundle size.
-* Direct export to Google Calendar.
+### Big Thanks 
+@marciozomb13 for adding Portuguese translations.
 
+### P.S
+It is open source, feel free to check it and contribute here: https://github.com/zagushka/birthday-calendar-extractor
