@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import handleLink from '../filters/handleLink';
-import translate from '../filters/translate';
+import { translate } from '../filters/translate';
 
 export default class LeaveFeedbackButton extends React.Component<any, any> {
   render() {

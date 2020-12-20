@@ -5,7 +5,7 @@ import {
   ModalProps,
 } from 'react-bootstrap';
 import handleLink from '../../filters/handleLink';
-import translate from '../../filters/translate';
+import { translate } from '../../filters/translate';
 import { getLanguagesList } from '../../libs/lib';
 
 export default class ChangeLanguageModal extends React.Component<ModalProps, any> {

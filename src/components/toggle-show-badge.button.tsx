@@ -13,7 +13,7 @@ import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
-import translate from '../filters/translate';
+import { translate } from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import {
   listenTo,

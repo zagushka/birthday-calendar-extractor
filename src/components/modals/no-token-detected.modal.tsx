@@ -5,7 +5,7 @@ import {
   ModalProps,
 } from 'react-bootstrap';
 
-import translate from '../../filters/translate';
+import { translate } from '../../filters/translate';
 
 export default class NoTokenDetectedModal extends React.Component<ModalProps, any> {
   render() {

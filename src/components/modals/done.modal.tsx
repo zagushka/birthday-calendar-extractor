@@ -4,7 +4,7 @@ import {
   Modal,
   ModalProps,
 } from 'react-bootstrap';
-import translate from '../../filters/translate';
+import { translate } from '../../filters/translate';
 
 export default class DoneModal extends React.Component<ModalProps, any> {
   // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES

@@ -9,7 +9,7 @@ import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
-import translate from '../filters/translate';
+import { translate } from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import {
@@ -48,7 +48,6 @@ export default class SelectAction extends React.Component<any, SelectActionState
   }
 
   setAction(action: ACTIONS_SET) {
-    console.log(action);
     storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: action}, true);
     this.setState({action});
   };
@@ -67,21 +66,38 @@ export default class SelectAction extends React.Component<any, SelectActionState
     return <>
       <div className='d-flex flex-row' style={{width: '600px', minHeight: '160px'}}>
 
-        <Tab.Container activeKey={this.state.action} onSelect={(e) => this.setAction(e as ACTIONS_SET)}>
+        <Tab.Container
+          activeKey={this.state.action}
+          onSelect={(e) => this.setAction(e as ACTIONS_SET)}
+        >
           <ListGroup className='flex-column no-wrap'>
-            <ListGroup.Item action eventKey={ACTIONS_SET.ENABLE_BADGE}>{translate(ACTIONS_SET.ENABLE_BADGE)}</ListGroup.Item>
+            <ListGroup.Item
+              action
+              eventKey={ACTIONS_SET.ENABLE_BADGE}
+            >
+              {translate(ACTIONS_SET.ENABLE_BADGE)}
+            </ListGroup.Item>
 
             <ListGroup.Item
               action
-              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
+              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}
+            >
               {translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}
             </ListGroup.Item>
 
-            <ListGroup.Item action
-                            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
-              {translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}</ListGroup.Item>
-            <ListGroup.Item action
-                            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>{translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}</ListGroup.Item>
+            <ListGroup.Item
+              action
+              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}
+            >
+              {translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}
+            </ListGroup.Item>
+
+            <ListGroup.Item
+              action
+              eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}
+            >
+              {translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}
+            </ListGroup.Item>
           </ListGroup>
 
           <Tab.Content>
@@ -96,7 +112,7 @@ export default class SelectAction extends React.Component<any, SelectActionState
             </Tab.Pane>
 
             <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
-             - {translate('SELECT_ICS_DESCRIPTION')}-
+              {translate('SELECT_ICS_DESCRIPTION')}
             </Tab.Pane>
 
             <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>

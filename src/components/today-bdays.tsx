@@ -8,7 +8,7 @@ import {
 } from 'rxjs/operators';
 import { ACTION } from '../constants';
 import handleLink from '../filters/handleLink';
-import translate from '../filters/translate';
+import { translate } from '../filters/translate';
 import { listenTo } from '../libs/events/events';
 import {
   getBirthdaysForDate,

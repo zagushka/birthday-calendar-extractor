@@ -6,7 +6,7 @@ import {
 import { pluck } from 'rxjs/operators';
 
 import { STORAGE_KEYS } from '../../constants';
-import translate from '../../filters/translate';
+import { translateString } from '../../filters/translate';
 import {
   retrieveUserSettings,
   storeUserSettings,
@@ -56,7 +56,7 @@ export default class UserSettings extends React.Component<any, UserSettingsState
         onSelect={(tabIndex) => this.updateTabIndex(tabIndex)}
       >
         <Tab
-          title={translate('TODAY_BIRTHDAY_TITLE')}
+          title={translateString('TODAY_BIRTHDAY_TITLE')}
           eventKey='TODAY_BIRTHDAY_TITLE'
         >
           <TodayBirthdays/>
@@ -66,7 +66,7 @@ export default class UserSettings extends React.Component<any, UserSettingsState
         </Tab>
 
         <Tab
-          title={translate('USER_SETTINGS')}
+          title={translateString('USER_SETTINGS')}
           eventKey='USER_SETTINGS'
         >
           {/*<Overlay show={this.waiting}>*/}

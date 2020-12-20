@@ -4,7 +4,7 @@ import HTMLReactParser from 'html-react-parser';
  * Translate function returns RSX element/s
  * Use in rsx templates
  */
-export default function translate(...args: [string, ...any]) {
+export function translate(...args: [string, ...any]) {
   return HTMLReactParser(translateString(...args));
 }
 
