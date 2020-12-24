@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+  FunctionComponent,
+  useEffect,
+  useState,
+} from 'react';
 import { Button } from 'react-bootstrap';
 import { Subject } from 'rxjs';
 import {
@@ -27,81 +31,75 @@ interface ToggleShowBadgeButtonProps {
   onWaiting: (isWaiting: boolean) => void;
 }
 
-interface ToggleShowBadgeButtonState {
-  isActive: boolean;
-}
+const ToggleShowBadgeButton: FunctionComponent<ToggleShowBadgeButtonProps> = (props) => {
+  const {onWaiting} = props;
+  const [isActive, setIsActive] = useState<boolean>(false);
 
-export default class ToggleShowBadgeButton extends React.Component<ToggleShowBadgeButtonProps, ToggleShowBadgeButtonState> {
+  const onDestroy$: Subject<any> = new Subject();
 
-  constructor(props: ToggleShowBadgeButtonProps) {
-    super(props);
-    this.state = {
-      isActive: false,
-    };
-  }
 
-  onDestroy$: Subject<any> = new Subject();
-
-  deactivate() {
-    this.props.onWaiting(true);
+  const deactivate = () => {
+    onWaiting(true);
     sendMessage(new StartGenerationAction(ACTIONS_SET.DISABLE_BADGE))
       .subscribe(() => {
-        this.props.onWaiting(false);
+        onWaiting(false);
       });
-  }
+  };
 
-  activate() {
-    this.props.onWaiting(true);
+  const activate = () => {
+    onWaiting(true);
     sendMessage(new StartGenerationAction(ACTIONS_SET.ENABLE_BADGE))
       .subscribe(() => {
-        this.props.onWaiting(false);
+        onWaiting(false);
       });
-  }
+  };
 
-  componentWillUnmount() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.complete();
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     // Load current status and listen to updates
     listenTo(ACTION.UPDATE_BADGE)
       .pipe(
-        takeUntil(this.onDestroy$),
+        takeUntil(onDestroy$),
         startWith(true),
         switchMapTo(retrieveUserSettings([STORAGE_KEYS.BADGE_ACTIVE])),
         pluck(STORAGE_KEYS.BADGE_ACTIVE),
       )
-      .subscribe(isActive => {
-        this.setState({isActive});
+      .subscribe(active => {
+        setIsActive(active);
       });
-  }
 
-  render() {
-    return <div className='flex-grow-1'>
-      {!this.state.isActive && <div className='flex-row'>
-        Activate in order to see badge with number of birthdays.
-        <div>{translate('ACTIVATE_BADGE_DESCRIPTION')}</div>
-        <div className='d-flex flex-row justify-content-between'>
-          <Button size='sm' variant='outline-dark'
-                  onClick={() => this.activate()}
-          >{translate('ACTIVATE_BADGE_BUTTON_TITLE')}</Button>
-        </div>
+    return () => {
+      onDestroy$.next(true);
+      onDestroy$.complete();
+    };
+  }, []);
+
+
+  return <div className='flex-grow-1'>
+    {!isActive && <div className='flex-row'>
+      Activate in order to see badge with number of birthdays.
+      <div>{translate('ACTIVATE_BADGE_DESCRIPTION')}</div>
+      <div className='d-flex flex-row justify-content-between'>
+        <Button size='sm' variant='outline-dark'
+                onClick={() => activate()}
+        >{translate('ACTIVATE_BADGE_BUTTON_TITLE')}</Button>
       </div>
-      }
+    </div>
+    }
 
-      {this.state.isActive && <div className='flex-column'>
-        <div>{translate('DEACTIVATE_BADGE_DESCRIPTION')}</div>
-        <div className='d-flex flex-row justify-content-between'>
-          <Button size='sm' variant='outline-dark'
-                  onClick={() => this.deactivate()}
-          >{translate('DEACTIVATE_BADGE_BUTTON_TITLE')}
-          </Button>
-        </div>
-
-        <BuyCoffeeButton/>
+    {isActive && <div className='flex-column'>
+      <div>{translate('DEACTIVATE_BADGE_DESCRIPTION')}</div>
+      <div className='d-flex flex-row justify-content-between'>
+        <Button size='sm' variant='outline-dark'
+                onClick={() => deactivate()}
+        >{translate('DEACTIVATE_BADGE_BUTTON_TITLE')}
+        </Button>
       </div>
-      }
-    </div>;
-  }
-}
+
+      <BuyCoffeeButton/>
+    </div>
+    }
+  </div>;
+};
+
+
+export default ToggleShowBadgeButton;

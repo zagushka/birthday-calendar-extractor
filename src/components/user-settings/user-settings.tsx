@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+  FunctionComponent,
+  useEffect,
+  useState,
+} from 'react';
 import {
   Tab,
   Tabs,
@@ -17,66 +21,57 @@ import ToggleShowBadgeButton from '../toggle-show-badge.button';
 import Toolz from '../toolz';
 import './user-serrings.scss';
 
-interface UserSettingsState {
-  tabIndex: string;
-  waiting: boolean;// Set true while processing
-  loaded: boolean; // Do not display tabs before all the data been fetched
-}
+const UserSettings: FunctionComponent = () => {
 
-export default class UserSettings extends React.Component<any, UserSettingsState> {
+  const [tabIndex, setTabIndex] = useState<string>('USER_SETTINGS');
+  const [loaded, setLoaded] = useState<boolean>(false); // Do not display tabs before all the data been fetched
+  const [waiting, setWaiting] = useState<boolean>(false); // Set true while processing
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      tabIndex: 'USER_SETTINGS',
-      waiting: false,
-      loaded: false,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     retrieveUserSettings([
       STORAGE_KEYS.LAST_ACTIVE_TAB,
     ])
       .pipe(pluck(STORAGE_KEYS.LAST_ACTIVE_TAB))
-      .subscribe((tabIndex) => this.setState({tabIndex, loaded: true}));
-  }
+      .subscribe((storedTabIndex) => {
+        setLoaded(true);
+        setTabIndex(storedTabIndex);
+      });
+  });
 
-  updateTabIndex(tabIndex: string) {
-    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: tabIndex}, true);
-    this.setState({tabIndex});
-  }
+  const updateTabIndex = (index: string) => {
+    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: index}, true);
+    setTabIndex(index);
+  };
 
-  render() {
-    return <>
-      {this.state.loaded && <Tabs
-        className='no-wrap'
-        activeKey={this.state.tabIndex}
-        defaultActiveKey={this.state.tabIndex}
-        onSelect={(tabIndex) => this.updateTabIndex(tabIndex)}
+  return <>
+    {loaded && <Tabs
+      className='no-wrap'
+      activeKey={tabIndex}
+      onSelect={updateTabIndex}
+    >
+      <Tab
+        title={translateString('TODAY_BIRTHDAY_TITLE')}
+        eventKey='TODAY_BIRTHDAY_TITLE'
       >
-        <Tab
-          title={translateString('TODAY_BIRTHDAY_TITLE')}
-          eventKey='TODAY_BIRTHDAY_TITLE'
-        >
-          <TodayBirthdays/>
-          <div className='d-flex'>
-            <ToggleShowBadgeButton onWaiting={(s) => this.setState({waiting: s})}/>
-          </div>
-        </Tab>
+        <TodayBirthdays/>
+        <div className='d-flex'>
+          <ToggleShowBadgeButton onWaiting={setWaiting}/>
+        </div>
+      </Tab>
 
-        <Tab
-          title={translateString('USER_SETTINGS')}
-          eventKey='USER_SETTINGS'
-        >
-          {/*<Overlay show={this.waiting}>*/}
-          <SelectAction/>
-          {/*</Overlay>*/}
-        </Tab>
-        <Tab title='TOOLZ' eventKey='TOOLZ'>
-          <Toolz/>
-        </Tab>
-      </Tabs>}
-    </>;
-  }
-}
+      <Tab
+        title={translateString('USER_SETTINGS')}
+        eventKey='USER_SETTINGS'
+      >
+        {/*<Overlay show={this.waiting}>*/}
+        <SelectAction/>
+        {/*</Overlay>*/}
+      </Tab>
+      <Tab title='TOOLZ' eventKey='TOOLZ'>
+        <Toolz/>
+      </Tab>
+    </Tabs>}
+  </>;
+};
+
+export default UserSettings;
