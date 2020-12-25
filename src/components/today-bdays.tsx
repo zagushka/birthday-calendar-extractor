@@ -1,47 +1,36 @@
 import { DateTime } from 'luxon';
 import React, {
   FunctionComponent,
-  useEffect,
-  useState,
+  useContext,
 } from 'react';
-import { Subject } from 'rxjs';
-import {
-  startWith,
-  switchMapTo,
-  takeUntil,
-} from 'rxjs/operators';
-import { ACTION } from '../constants';
+import { Button } from 'react-bootstrap';
+import { TodayUsersContext } from '../context/today-users.context';
 import handleLink from '../filters/handleLink';
 import { translate } from '../filters/translate';
-import { listenTo } from '../libs/events/events';
-import {
-  getBirthdaysForDate,
-  RestoredBirthdays,
-} from '../libs/storage/chrome.storage';
 
 const TodayBirthdays: FunctionComponent = () => {
-  const onDestroy$: Subject<boolean> = new Subject();
-  const [users, setUsers] = useState<Array<RestoredBirthdays>>([]);
+  const {users, isActive, useDate, date} = useContext(TodayUsersContext);
+  console.log('TodayBirthdays UPDATED', users, isActive);
 
-  useEffect(() => {
-    listenTo(ACTION.ALARM_NEW_DAY, ACTION.UPDATE_BADGE) // Update when date changes
-      .pipe(
-        takeUntil(onDestroy$),
-        startWith(true), // Display on mount
-        switchMapTo(getBirthdaysForDate(DateTime.local())),
-      )
-      .subscribe(u => setUsers(u));
+  if (!isActive) {
+    // Show button to activate
+  } else {
+    // Show navigation
+    if (users.length) {
+      // Display list of birthdays today
+    } else {
+      // Display "no birthdays today"
+    }
+    // Show button to deactivate
+  }
 
-    // Before destroy
-    return () => {
-      onDestroy$.next(true);
-      onDestroy$.complete();
-    };
-  }, []);
+  return (<div className='m-2' style={{minHeight: '80px'}}>
 
+    <Button onClick={() => useDate(date.minus({day: 1}))}> &lt; </Button>
+    {date.toLocaleString({weekday: 'short', month: 'short', day: '2-digit'})}
+    <Button onClick={() => useDate(date.plus({day: 1}))}> &gt; </Button>
 
-  return <div className='m-2' style={{minHeight: '80px'}}>
-    {users.length && <p>
+    {!users.length && isActive && <p>
       <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>
     </p>}
 
@@ -51,10 +40,8 @@ const TodayBirthdays: FunctionComponent = () => {
           <a onClick={(e) => handleLink(e, user.href)}>{user.name}</a>
         </li>
       ))}
-
     </ul>
-  </div>;
-
+  </div>);
 };
 
 export default TodayBirthdays;

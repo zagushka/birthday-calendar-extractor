@@ -6,6 +6,7 @@ import DoneModal from '../components/modals/done.modal';
 import NoTokenDetectedModal from '../components/modals/no-token-detected.modal';
 import UserSettings from '../components/user-settings/user-settings';
 import { ACTION } from '../constants';
+import TodayUsersContextProvider from '../context/today-users.context';
 import {
   StatusReportAction,
   UpdateBadgeAction,
@@ -56,11 +57,14 @@ export default class App extends React.Component<any, AppState> {
   }
 
   render() {
-    return <div>
-      <UserSettings/>
-      <DoneModal show={'DONE' === this.state.modal} onHide={() => this.setModal()}/>
-      <ChangeLanguageModal show={'NOT_SUPPORTED_LANGUAGE' === this.state.modal} onHide={() => this.setModal()}/>
-      <NoTokenDetectedModal show={'NO_TOKEN_DETECTED' === this.state.modal} onHide={() => this.setModal()}/>
-    </div>;
+    return (<TodayUsersContextProvider>
+        <div>
+          <UserSettings/>
+          <DoneModal show={'DONE' === this.state.modal} onHide={() => this.setModal()}/>
+          <ChangeLanguageModal show={'NOT_SUPPORTED_LANGUAGE' === this.state.modal} onHide={() => this.setModal()}/>
+          <NoTokenDetectedModal show={'NO_TOKEN_DETECTED' === this.state.modal} onHide={() => this.setModal()}/>
+        </div>
+      </TodayUsersContextProvider>
+    );
   }
 }

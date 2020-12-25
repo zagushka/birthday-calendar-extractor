@@ -1,11 +1,7 @@
-import {
-  concat,
-  merge,
-} from 'rxjs';
+import { merge } from 'rxjs';
 import {
   map,
   startWith,
-  switchMapTo,
 } from 'rxjs/operators';
 import {
   ACTION,
