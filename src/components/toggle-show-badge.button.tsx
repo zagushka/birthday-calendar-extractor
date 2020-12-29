@@ -1,9 +1,9 @@
+import { Button } from '@material-ui/core';
 import React, {
   FunctionComponent,
   useEffect,
   useState,
 } from 'react';
-import { Button } from 'react-bootstrap';
 import { Subject } from 'rxjs';
 import {
   pluck,
@@ -74,32 +74,33 @@ const ToggleShowBadgeButton: FunctionComponent<ToggleShowBadgeButtonProps> = (pr
   }, []);
 
 
-  return <div className='flex-grow-1'>
-    {!isActive && <div className='flex-row'>
-      Activate in order to see badge with number of birthdays.
-      <div>{translate('ACTIVATE_BADGE_DESCRIPTION')}</div>
-      <div className='d-flex flex-row justify-content-between'>
-        <Button size='sm' variant='outline-dark'
-                onClick={() => activate()}
-        >{translate('ACTIVATE_BADGE_BUTTON_TITLE')}</Button>
+  return (
+    <div className='flex-grow-1'>
+      {!isActive && <div className='flex-row'>
+        Activate in order to see badge with number of birthdays.
+        <div>{translate('ACTIVATE_BADGE_DESCRIPTION')}</div>
+        <div className='d-flex flex-row justify-content-between'>
+          <Button
+            onClick={() => activate()}
+          >{translate('ACTIVATE_BADGE_BUTTON_TITLE')}</Button>
+        </div>
       </div>
-    </div>
-    }
+      }
 
-    {isActive && <div className='flex-column'>
-      <div>{translate('DEACTIVATE_BADGE_DESCRIPTION')}</div>
-      <div className='d-flex flex-row justify-content-between'>
-        <Button size='sm' variant='outline-dark'
-                onClick={() => deactivate()}
-        >{translate('DEACTIVATE_BADGE_BUTTON_TITLE')}
-        </Button>
+      {isActive && <div className='flex-column'>
+        <div>{translate('DEACTIVATE_BADGE_DESCRIPTION')}</div>
+        <div className='d-flex flex-row justify-content-between'>
+          <Button
+            onClick={() => deactivate()}
+          >{translate('DEACTIVATE_BADGE_BUTTON_TITLE')}
+          </Button>
+        </div>
+
+        <BuyCoffeeButton/>
       </div>
-
-      <BuyCoffeeButton/>
+      }
     </div>
-    }
-  </div>;
+  );
 };
-
 
 export default ToggleShowBadgeButton;

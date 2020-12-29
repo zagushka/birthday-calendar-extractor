@@ -1,31 +1,53 @@
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  createStyles,
+  makeStyles,
+  Theme,
+  Typography,
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, {
   FunctionComponent,
   useEffect,
   useState,
 } from 'react';
-import {
-  Button,
-  ListGroup,
-  Tab,
-} from 'react-bootstrap';
+
 import { pluck } from 'rxjs/operators';
 import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
-import { translate } from '../filters/translate';
+import {
+  translate,
+  translateString,
+} from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import {
   retrieveUserSettings,
   storeUserSettings,
 } from '../libs/storage/chrome.storage';
-import LeaveFeedbackButton from './leave-feedback.button';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }),
+);
 
 const SelectAction: FunctionComponent = () => {
 
   const [isWaiting, setIsWaiting] = useState<boolean>(true);
   const [selectedAction, setSelectedAction] = useState<ACTIONS_SET>(ACTIONS_SET.SELECT_FILE_FORMAT_CSV);
+
+  const classes = useStyles();
 
   const setAction = (action: ACTIONS_SET) => {
     storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: action}, true);
@@ -49,45 +71,25 @@ const SelectAction: FunctionComponent = () => {
       });
   }, []);
 
-  return <>
-    <div className='d-flex flex-row' style={{width: '600px', minHeight: '160px'}}>
+  return (
+    <>
 
-      <Tab.Container
-        activeKey={selectedAction}
-        onSelect={(e) => setAction(e as ACTIONS_SET)}
-      >
-        <ListGroup className='flex-column no-wrap'>
-          <ListGroup.Item
-            action
-            eventKey={ACTIONS_SET.ENABLE_BADGE}
-          >
-            {translate(ACTIONS_SET.ENABLE_BADGE)}
-          </ListGroup.Item>
+      {/*<Tab.Container*/}
+      {/*  activeKey={selectedAction}*/}
+      {/*  onSelect={(e) => setAction(e as ACTIONS_SET)}*/}
+      {/*>*/}
 
-          <ListGroup.Item
-            action
-            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}
-          >
-            {translate(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}
-          </ListGroup.Item>
-
-          <ListGroup.Item
-            action
-            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}
-          >
-            {translate(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}
-          </ListGroup.Item>
-
-          <ListGroup.Item
-            action
-            eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}
-          >
-            {translate(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}
-          </ListGroup.Item>
-        </ListGroup>
-
-        <Tab.Content>
-          <Tab.Pane eventKey={ACTIONS_SET.ENABLE_BADGE}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon/>}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <Typography className={classes.heading}>{translateString(ACTIONS_SET.ENABLE_BADGE)}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Hi
             {/*<div className='d-flex flex-grow-1 border'>*/}
             {/*        <ResponsiveEmbed*/}
             {/*          autoplay loop*/}
@@ -95,35 +97,68 @@ const SelectAction: FunctionComponent = () => {
             {/*          <source src='/media/badge.mp4' type='video/mp4'>*/}
             {/*        </ResponsiveEmbed>*/}
             {/*</div>*/}
-          </Tab.Pane>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
 
-          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_ICS}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon/>}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <Typography className={classes.heading}>{translateString(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
             {translate('SELECT_ICS_DESCRIPTION')}
-          </Tab.Pane>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
 
-          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon/>}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <Typography className={classes.heading}>{translateString(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
             {translate('SELECT_DELETE_ICS_DESCRIPTION')}
-          </Tab.Pane>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
 
-          <Tab.Pane eventKey={ACTIONS_SET.SELECT_FILE_FORMAT_CSV}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon/>}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <Typography className={classes.heading}>{translateString(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
             {translate('FILE_FORMAT_CSV_DESCRIPTION')}
-          </Tab.Pane>
-        </Tab.Content>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
 
-      </Tab.Container>
-    </div>
-    <div className='d-flex align-items-start flex-shrink-0 flex-column ml-auto'>
-      <div className='d-flex flex-nowrap mt-auto align-self-end'>
-        <Button size='sm'
-                variant='outline-success'
-                onClick={startGeneration}>
-          {translate('GENERATE')}
-        </Button>
-        {' '}
-        <LeaveFeedbackButton/>
-      </div>
-    </div>
-  </>;
+      {/*<div className='d-flex align-items-start flex-shrink-0 flex-column ml-auto'>*/}
+      {/*  <div className='d-flex flex-nowrap mt-auto align-self-end'>*/}
+      {/*    <Button size='sm'*/}
+      {/*            variant='outline-success'*/}
+      {/*            onClick={startGeneration}>*/}
+      {/*      {translate('GENERATE')}*/}
+      {/*    </Button>*/}
+      {/*    {' '}*/}
+      {/*    <LeaveFeedbackButton/>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+    </>
+  );
 };
 
 export default SelectAction;

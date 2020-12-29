@@ -1,34 +1,48 @@
-import React from 'react';
 import {
   Button,
-  Modal,
-  ModalProps,
-} from 'react-bootstrap';
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@material-ui/core';
+import React, { FunctionComponent } from 'react';
 import { translate } from '../../filters/translate';
 
-export default class DoneModal extends React.Component<ModalProps, any> {
-  // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
-  render() {
-    return <Modal
-      size='sm'
-      centered
-      id='DONE'
-    >
-      <Modal.Header>
-        {translate('DONE_TITLE')}
-      </Modal.Header>
-      <Modal.Body>
-        <p>{translate('DONE_DESCRIPTION')}</p>
-      </Modal.Body>
-
-      <Modal.Footer>
-        {/*<leave-feedback-button/>*/}
-        <Button
-          variant='success'
-          size='sm'
-          onClick={this.props.onHide}
-        > Ok</Button>
-      </Modal.Footer>
-    </Modal>;
-  }
+interface DoneModalProps {
+  onHide: () => void;
+  open?: boolean;
 }
+
+const DoneModal: FunctionComponent<DoneModalProps> = (props) => {
+  const {onHide, open = true} = props;
+
+  const handleClose = () => {
+    onHide();
+  };
+
+  // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+    >
+      <DialogTitle id='DONE'> {translate('DONE_TITLE')}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id='alert-dialog-description'>
+          {translate('DONE_DESCRIPTION')}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color='primary'>
+          {translate('LEAVE_FEEDBACK_TITLE')}
+        </Button>
+        <Button onClick={handleClose} color='primary' autoFocus>
+          {translate('CLOSE')}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default DoneModal;

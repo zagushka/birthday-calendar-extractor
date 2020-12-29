@@ -1,7 +1,4 @@
-import {
-  ListGroup,
-  ListGroupItem,
-} from 'react-bootstrap';
+import { Button } from '@material-ui/core';
 import React from 'react';
 import {
   setBadgeColor,
@@ -20,9 +17,9 @@ export default class Toolz extends React.Component<any, any> {
   }
 
   render() {
-    return <ListGroup>
-      <ListGroupItem onClick={this.clearChromeStorage}>Clear Chrome Local Storage</ListGroupItem>
-      <ListGroupItem onClick={this.clearBadge}>Clear Badge</ListGroupItem>
-    </ListGroup>;
+    return <>
+      <Button onClick={this.clearChromeStorage}>Clear Chrome Local Storage</Button>
+      <Button onClick={this.clearBadge}>Clear Badge</Button>
+    </>;
   }
 }
