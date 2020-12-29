@@ -3,6 +3,7 @@ import {
   forkJoin,
   Observable,
   of,
+  throwError,
 } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
@@ -10,6 +11,8 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
+import { ErrorAction } from './events/actions';
+import { sendMessage } from './events/events';
 import {
   languages,
   LanguageSet,
@@ -235,7 +238,19 @@ export function parsePageForConfig() {
   })
     .pipe(
       map(data => data.response),
-      map(page => ({token: extractTokenFromPage(page), language: extractLanguageFromPage(page)})),
+      switchMap(page => {
+        const token = extractTokenFromPage(page);
+        const language = extractLanguageFromPage(page);
+
+        if (!token) {
+          return throwError('NO_TOKEN_DETECTED');
+        }
+
+        if (!findLanguageSetByLanguage(language)) {
+          return throwError('NOT_SUPPORTED_LANGUAGE');
+        }
+        return of({token, language});
+      }),
     );
 }
 

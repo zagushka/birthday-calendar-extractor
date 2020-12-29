@@ -1,7 +1,13 @@
-import { merge } from 'rxjs';
+import {
+  merge,
+  of,
+  zip,
+} from 'rxjs';
 import {
   map,
   startWith,
+  switchMap,
+  tap,
 } from 'rxjs/operators';
 import {
   ACTION,
@@ -11,8 +17,8 @@ import {
 import { updateBadge } from './libs/badge';
 import { CalendarBase } from './libs/base';
 import {
+  ErrorAction,
   StartGenerationAction,
-  StatusReportAction,
   UpdateBadgeAction,
 } from './libs/events/actions';
 import { setupAlarms } from './libs/events/alarms';
@@ -26,14 +32,16 @@ import { CalendarForStorage } from './libs/formats/for-storage';
 import { CalendarICS } from './libs/formats/ics';
 import { CalendarJSON } from './libs/formats/json';
 import {
-  findLanguageSetByLanguage,
   getBirthdaysList,
   parsePageForConfig,
 } from './libs/lib';
-import { storeUserSettings } from './libs/storage/chrome.storage';
+import {
+  storeLastBadgeClicked,
+  storeUserSettings,
+} from './libs/storage/chrome.storage';
 
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
-  if (ACTION.STATUS_REPORT !== message.type) {
+  if (ACTION.ERROR !== message.type) {
     return;
   }
   chrome.runtime.onMessage.removeListener(handleContentResponse(firstLevelCallback));
@@ -42,74 +50,81 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 
 setupAlarms();
 
+// On Badge Click update last time badge clicked
+listenTo(ACTION.BADGE_CLICKED)
+  .pipe(
+    switchMap(() => storeLastBadgeClicked()),
+  )
+  .subscribe(() => {
+    sendMessage(new UpdateBadgeAction());
+  });
+
 // Update Badge on update badge event or new date alarm
 merge(
-  listenTo(ACTION.UPDATE_BADGE, ACTION.ALARM_NEW_DAY),
+  listenTo(ACTION.BADGE_UPDATE, ACTION.ALARM_NEW_DAY),
 )
   .pipe(
     startWith(true), // Initial Badge setup
   )
   .subscribe(() => updateBadge());
 
-listenTo<StartGenerationAction>(ACTION.START_GENERATION)
-  .subscribe(({action, callback}) => {
-    // Take care of disable badge event
-    if (ACTIONS_SET.DISABLE_BADGE === action.format) {
+// Take care of disable badge event
+listenTo<StartGenerationAction>(ACTION.BADGE_NOTIFICATIONS_DISABLE)
+  .pipe(
+    switchMap(message => zip(
+      // Move message forward
+      of(message),
+      // remove from storage
       storeUserSettings({
         [STORAGE_KEYS.BIRTHDAYS]: [],
         [STORAGE_KEYS.BADGE_ACTIVE]: false,
-      })
-        .subscribe(() => {
-          sendMessage(new UpdateBadgeAction(), true);
-          callback();
-        });
-      return true;
-    }
-
-    parsePageForConfig()
-      .subscribe(({language, token}) => {
-        if (!token) {
-          sendMessage(new StatusReportAction('NO_TOKEN_DETECTED'));
-          return;
-        }
-
-        if (!findLanguageSetByLanguage(language)) {
-          sendMessage(new StatusReportAction('NOT_SUPPORTED_LANGUAGE'));
-          return;
-        }
-        getBirthdaysList(language, token)
-          .pipe(
-            map(events => {
-              let calendar: CalendarBase<any, any, any>;
-              switch (action.format) {
-                case ACTIONS_SET.SELECT_FILE_FORMAT_CSV:
-                  calendar = new CalendarCSV();
-                  break;
-                case ACTIONS_SET.SELECT_FILE_FORMAT_JSON:
-                  calendar = new CalendarJSON();
-                  break;
-                case ACTIONS_SET.SELECT_FILE_FORMAT_ICS:
-                  calendar = new CalendarICS();
-                  break;
-                case ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS:
-                  calendar = new CalendarDeleteICS();
-                  break;
-                case ACTIONS_SET.ENABLE_BADGE:
-                  calendar = new CalendarForStorage();
-                  break;
-                default:
-                  return;
-              }
-              return calendar.save(
-                calendar.generateCalendar(Array.from(events.values())),
-              );
-            }),
-          )
-          .subscribe(() => {
-            sendMessage(new StatusReportAction('DONE'));
-            callback();
-          });
-      });
-
-    return true;
+      }),
+    )),
+    tap(([{callback}]) => callback()),
+  )
+  .subscribe(() => {
+    // Update badge it should be clean
+    sendMessage(new UpdateBadgeAction(), true);
   });
+
+listenTo<StartGenerationAction>(ACTION.GENERATION_START)
+  .pipe(
+    switchMap(({action, callback}) =>
+      parsePageForConfig()
+        .pipe(
+          switchMap(({language, token}) => getBirthdaysList(language, token)),
+          map(events => {
+            let calendar: CalendarBase<any, any, any>;
+            switch (action.format) {
+              case ACTIONS_SET.SELECT_FILE_FORMAT_CSV:
+                calendar = new CalendarCSV();
+                break;
+              case ACTIONS_SET.SELECT_FILE_FORMAT_JSON:
+                calendar = new CalendarJSON();
+                break;
+              case ACTIONS_SET.SELECT_FILE_FORMAT_ICS:
+                calendar = new CalendarICS();
+                break;
+              case ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS:
+                calendar = new CalendarDeleteICS();
+                break;
+              case ACTIONS_SET.ENABLE_BADGE:
+                calendar = new CalendarForStorage();
+                break;
+              default:
+                return;
+            }
+            return calendar.save(
+              calendar.generateCalendar(Array.from(events.values())),
+            );
+          }),
+        ),
+    ),
+  )
+  .subscribe(
+    () => {
+      sendMessage(new ErrorAction('DONE'));
+    },
+    (error) => new ErrorAction(error),
+  );
+

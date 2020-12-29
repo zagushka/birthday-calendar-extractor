@@ -62,8 +62,16 @@ export function sendMessage<T>(action: Action, dontWait?: boolean) {
   // Send message
   if ('undefined' === typeof dontWait || false === dontWait) {
     return bindCallback<Action, T>(sendMessageWrapper)(action);
-  }
 
+    // return new Observable(subscriber => {
+    //   console.log('[SEND MESSAGE OBSERVABLE]', action.type);
+    //   chrome.runtime.sendMessage(action, (p) => {
+    //     console.log('[SEND MESSAGE NEXT]', action.type, p);
+    //     subscriber.next(p);
+    //     subscriber.complete();
+    //   });
+    // });
+  }
   return chrome.runtime.sendMessage(action);
 
 }

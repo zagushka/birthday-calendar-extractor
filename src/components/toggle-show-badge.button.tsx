@@ -56,7 +56,7 @@ const ToggleShowBadgeButton: FunctionComponent<ToggleShowBadgeButtonProps> = (pr
 
   useEffect(() => {
     // Load current status and listen to updates
-    listenTo(ACTION.UPDATE_BADGE)
+    listenTo(ACTION.BADGE_UPDATE)
       .pipe(
         takeUntil(onDestroy$),
         startWith(true),

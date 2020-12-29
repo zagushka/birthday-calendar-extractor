@@ -4,10 +4,16 @@ import {
   ApplicationStatus,
 } from '../../constants';
 
-export type ActionType = StartGenerationAction | UpdateBadgeAction | NewDayAction | StatusReportAction | LogAction;
+export type ActionType = StartGenerationAction | UpdateBadgeAction | NewDayAction | ErrorAction | LogAction;
 
 export class Action {
   constructor(public type: ACTION) {
+  }
+}
+
+export class ActionGetFacebookSettings extends Action {
+  constructor() {
+    super(ACTION.GET_FACEBOOK_SETTINGS);
   }
 }
 
@@ -19,19 +25,25 @@ export class NewDayAction extends Action {
 
 export class StartGenerationAction extends Action {
   constructor(public format: ACTIONS_SET) {
-    super(ACTION.START_GENERATION);
+    super(ACTION.GENERATION_START);
   }
 }
 
 export class UpdateBadgeAction extends Action {
   constructor() {
-    super(ACTION.UPDATE_BADGE);
+    super(ACTION.BADGE_UPDATE);
   }
 }
 
-export class StatusReportAction extends Action {
+export class BadgeClickedAction extends Action {
+  constructor() {
+    super(ACTION.BADGE_CLICKED);
+  }
+}
+
+export class ErrorAction extends Action {
   constructor(public status: ApplicationStatus) {
-    super(ACTION.STATUS_REPORT);
+    super(ACTION.ERROR);
   }
 }
 
@@ -44,5 +56,5 @@ export class LogAction extends Action {
 export interface Message<T extends Action> {
   action: T,
   sender?: chrome.runtime.MessageSender,
-  callback?: () => void
+  callback?: (...params: Array<any>) => void
 }

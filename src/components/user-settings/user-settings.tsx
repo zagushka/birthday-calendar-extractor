@@ -10,6 +10,7 @@ import {
 import { pluck } from 'rxjs/operators';
 
 import { STORAGE_KEYS } from '../../constants';
+import TodayUsersContextProvider from '../../context/today-users.context';
 import { translateString } from '../../filters/translate';
 import {
   retrieveUserSettings,
@@ -28,9 +29,7 @@ const UserSettings: FunctionComponent = () => {
   const [waiting, setWaiting] = useState<boolean>(false); // Set true while processing
 
   useEffect(() => {
-    retrieveUserSettings([
-      STORAGE_KEYS.LAST_ACTIVE_TAB,
-    ])
+    retrieveUserSettings([STORAGE_KEYS.LAST_ACTIVE_TAB])
       .pipe(pluck(STORAGE_KEYS.LAST_ACTIVE_TAB))
       .subscribe((storedTabIndex) => {
         setLoaded(true);
@@ -43,7 +42,7 @@ const UserSettings: FunctionComponent = () => {
     setTabIndex(index);
   };
 
-  return <>
+  return <TodayUsersContextProvider>
     {loaded && <Tabs
       className='no-wrap'
       activeKey={tabIndex}
@@ -71,7 +70,7 @@ const UserSettings: FunctionComponent = () => {
         <Toolz/>
       </Tab>
     </Tabs>}
-  </>;
+  </TodayUsersContextProvider>;
 };
 
 export default UserSettings;

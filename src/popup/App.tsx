@@ -1,70 +1,43 @@
-import React from 'react';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+} from 'react';
 import ChangeLanguageModal from '../components/modals/change-language.modal';
 import DoneModal from '../components/modals/done.modal';
 import NoTokenDetectedModal from '../components/modals/no-token-detected.modal';
 import UserSettings from '../components/user-settings/user-settings';
-import { ACTION } from '../constants';
-import TodayUsersContextProvider from '../context/today-users.context';
-import {
-  StatusReportAction,
-  UpdateBadgeAction,
-} from '../libs/events/actions';
-import {
-  listenTo,
-  sendMessage,
-} from '../libs/events/events';
-import { storeLastBadgeClicked } from '../libs/storage/chrome.storage';
+import ErrorsContextProvider, { ErrorsContext } from '../context/errors.context';
+import { BadgeClickedAction } from '../libs/events/actions';
+import { sendMessage } from '../libs/events/events';
 import './App.scss';
 
-interface AppState {
-  modal?: string
-}
+const App: FunctionComponent = () => {
+  const {error, resetError} = useContext(ErrorsContext);
 
-export default class App extends React.Component<any, AppState> {
-  onDestroy$: Subject<boolean> = new Subject();
+  useEffect(() => {
+    // Send notification badge was clicked
+    sendMessage(new BadgeClickedAction(), true);
+  }, []);
 
-  constructor(params: any) {
-    super(params);
-    this.state = {
-      modal: null,
-    };
-  }
+  const content = (() => {
+    switch (error) {
+      case 'DONE':
+        return <DoneModal onHide={() => resetError()}/>;
+      case 'NOT_SUPPORTED_LANGUAGE':
+        return <ChangeLanguageModal onHide={() => resetError()}/>;
+      case 'NO_TOKEN_DETECTED':
+        return <NoTokenDetectedModal onHide={() => resetError()}/>;
+      default:
+        return <UserSettings/>;
+    }
+  })();
 
-  componentWillUnmount() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.complete();
-  }
+  return (
+    <ErrorsContextProvider>
+      {content}
+    </ErrorsContextProvider>
+  );
+};
 
-  componentDidMount() {
-    // Store Badge is clicked now and send event later
-    storeLastBadgeClicked()
-      .subscribe(() => sendMessage(new UpdateBadgeAction()));
-
-    // Listen to Show modal event on status report
-    listenTo<StatusReportAction>(ACTION.STATUS_REPORT)
-      .pipe(
-        takeUntil(this.onDestroy$),
-      )
-      .subscribe(({action}) => {
-        this.setModal(action.status);
-      });
-  }
-
-  setModal(modal: string = null) {
-    this.setState({modal});
-  }
-
-  render() {
-    return (<TodayUsersContextProvider>
-        <div>
-          <UserSettings/>
-          <DoneModal show={'DONE' === this.state.modal} onHide={() => this.setModal()}/>
-          <ChangeLanguageModal show={'NOT_SUPPORTED_LANGUAGE' === this.state.modal} onHide={() => this.setModal()}/>
-          <NoTokenDetectedModal show={'NO_TOKEN_DETECTED' === this.state.modal} onHide={() => this.setModal()}/>
-        </div>
-      </TodayUsersContextProvider>
-    );
-  }
-}
+export default App;

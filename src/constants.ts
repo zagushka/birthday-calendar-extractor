@@ -1,12 +1,15 @@
 import { translateString } from './filters/translate';
 
 export enum ACTION {
-  STATUS_REPORT,
-  START_GENERATION,
-  UPDATE_BADGE,
-  CHECK_STATUS,
+  ERROR,
+  GENERATION_START,
+  BADGE_NOTIFICATIONS_DISABLE,
+  BADGE_NOTIFICATIONS_ENABLE,
+  BADGE_UPDATE,
+  BADGE_CLICKED,
   LOG,
-  ALARM_NEW_DAY
+  ALARM_NEW_DAY,
+  GET_FACEBOOK_SETTINGS
 }
 
 export type ApplicationStatus =
