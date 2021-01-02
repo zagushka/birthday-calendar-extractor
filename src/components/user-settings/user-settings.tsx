@@ -60,10 +60,7 @@ const UserSettings: FunctionComponent = () => {
   const [loaded, setLoaded] = useState<boolean>(true); // Do not display tabs before all the data been fetched
   const [waiting, setWaiting] = useState<boolean>(false); // Set true while processing
 
-  const updateTabIndex = (event: React.ChangeEvent<{}>, index: TABS) => {
-    console.log(index);
-    setTab(index);
-  };
+  const updateTabIndex = (event: React.ChangeEvent<{}>, index: TABS) => setTab(index);
 
   return (
     <TodayUsersContextProvider>

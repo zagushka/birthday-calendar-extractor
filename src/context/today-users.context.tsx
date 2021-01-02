@@ -56,11 +56,9 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
   const deactivate = () => setIsActive(false);
 
   useEffect(() => {
-    console.log('FETCHING');
     // Fetch data
     retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS, STORAGE_KEYS.BADGE_ACTIVE])
       .subscribe((data) => {
-        console.log('FETCHED', data);
         setIsActive(data[STORAGE_KEYS.BADGE_ACTIVE]);
         setAllUsers(data[STORAGE_KEYS.BIRTHDAYS]);
       });
@@ -87,7 +85,6 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('UPDATING USERS', allUsers, isActive, date);
     setUsers(isActive ? filterBirthdaysForDate(allUsers, date) : []);
   }, [allUsers, isActive, date]);
 

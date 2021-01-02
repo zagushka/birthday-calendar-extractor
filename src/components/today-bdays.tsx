@@ -10,10 +10,7 @@ import { translate } from '../filters/translate';
 
 const TodayBirthdays: FunctionComponent = () => {
   const {users, isActive, useDate, date} = useContext(TodayUsersContext);
-  console.log('TodayBirthdays UPDATED', users, isActive);
-
   const {error} = useContext(ErrorsContext);
-  console.log('SettingsContext UPDATED', error);
 
   if (!isActive) {
     // Show button to activate

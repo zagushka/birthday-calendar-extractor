@@ -24,7 +24,6 @@ interface SettingsContextInterface {
 export const SettingsContext = React.createContext<SettingsContextInterface>({
   tab: TABS.CALENDAR_GENERATOR,
   setTab: () => {
-    console.log('PIZDEC');
   },
   action: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
   setAction: () => {
@@ -55,13 +54,11 @@ const SettingsContextProvider: FunctionComponent = (props) => {
   }, []);
 
   const storeAction = (actionToStore: ACTIONS_SET) => {
-    console.log('---', actionToStore);
     storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: actionToStore})
       .subscribe(() => setAction(actionToStore));
   };
 
   const storeTab = (tabToStore: TABS) => {
-    console.log('+++', tabToStore);
     storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: tabToStore})
       .subscribe(() => setTab(tabToStore));
   };
