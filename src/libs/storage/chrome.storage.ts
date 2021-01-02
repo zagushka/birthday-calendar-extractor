@@ -17,15 +17,7 @@ import {
 export interface UserSettings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
   [STORAGE_KEYS.BADGE_VISITED]: DateTime;
-  [STORAGE_KEYS.BIRTHDAYS]: Array<{ name: string; href: string; start: DateTime }>;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
-}
-
-export interface StoredUserSettings {
-  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
-  [STORAGE_KEYS.BADGE_VISITED]: number;
-  [STORAGE_KEYS.BIRTHDAYS]: Array<[string, number, string]>;
+  [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthdays>;
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
 }
@@ -37,6 +29,14 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS.CALENDAR_GENERATOR,
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
 };
+
+export interface StoredUserSettings {
+  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
+  [STORAGE_KEYS.BADGE_VISITED]: number;
+  [STORAGE_KEYS.BIRTHDAYS]: Array<[string, number, string]>;
+  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
+  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+}
 
 export interface RestoredBirthdays {
   name: string;

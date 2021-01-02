@@ -40,14 +40,18 @@ const SettingsContextProvider: FunctionComponent = (props) => {
     // Request initial action and tab states
     retrieveUserSettings([STORAGE_KEYS.LAST_ACTIVE_TAB, STORAGE_KEYS.LAST_SELECTED_ACTION])
       .subscribe((storedSettings) => {
+        const storedAction = storedSettings[STORAGE_KEYS.LAST_SELECTED_ACTION];
+        const storedTab = storedSettings[STORAGE_KEYS.LAST_ACTIVE_TAB];
+
         // Check correct data was stored
-        const fetchedAction = ACTIONS_SET[storedSettings[STORAGE_KEYS.LAST_SELECTED_ACTION]]
-          ? storedSettings[STORAGE_KEYS.LAST_SELECTED_ACTION]
+        const fetchedAction = ACTIONS_SET[storedAction]
+          ? storedAction
           : DEFAULT_USER_SETTINGS[STORAGE_KEYS.LAST_SELECTED_ACTION];
 
-        const fetchedTab = TABS[storedSettings[STORAGE_KEYS.LAST_ACTIVE_TAB]]
-          ? storedSettings[STORAGE_KEYS.LAST_ACTIVE_TAB]
+        const fetchedTab = TABS[storedTab]
+          ? storedTab
           : DEFAULT_USER_SETTINGS[STORAGE_KEYS.LAST_ACTIVE_TAB];
+
         setAction(fetchedAction);
         setTab(fetchedTab);
       });
