@@ -1,13 +1,3 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  createStyles,
-  makeStyles,
-  Theme,
-  Typography,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, {
   FunctionComponent,
   useEffect,
@@ -19,43 +9,22 @@ import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
-import {
-  translate,
-  translateString,
-} from '../filters/translate';
+import { translate } from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import {
   retrieveUserSettings,
   storeUserSettings,
 } from '../libs/storage/chrome.storage';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  }),
-);
+import ActionAccordion from './action-accordion';
 
 const SelectAction: FunctionComponent = () => {
 
   const [isWaiting, setIsWaiting] = useState<boolean>(true);
-  const [selectedAction, setSelectedAction] = useState<ACTIONS_SET>(ACTIONS_SET.SELECT_FILE_FORMAT_CSV);
-
-  const classes = useStyles();
-
-  const setAction = (action: ACTIONS_SET) => {
-    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: action}, true);
-    setSelectedAction(action);
-  };
+  const [action, setAction] = useState<ACTIONS_SET>(ACTIONS_SET.SELECT_FILE_FORMAT_CSV);
 
   const startGeneration = () => {
-    sendMessage(new StartGenerationAction(selectedAction))
+    sendMessage(new StartGenerationAction(action))
       .subscribe(() => setIsWaiting(false));
     setIsWaiting(true);
   };
@@ -67,96 +36,40 @@ const SelectAction: FunctionComponent = () => {
       )
       .subscribe((a) => {
         setIsWaiting(false);
-        setSelectedAction(a);
+        setAction(a);
       });
   }, []);
 
+  const handleChange = (selectedAction: ACTIONS_SET) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    const newAction = isExpanded ? selectedAction : null;
+    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: newAction}, true);
+    setAction(newAction);
+  };
+
   return (
     <>
+      <ActionAccordion action={ACTIONS_SET.ENABLE_BADGE} currentAction={action} onChange={handleChange}>
+        Hi
+        {/*<div className='d-flex flex-grow-1 border'>*/}
+        {/*        <ResponsiveEmbed*/}
+        {/*          autoplay loop*/}
+        {/*          type='video' aspect='4by3'>*/}
+        {/*          <source src='/media/badge.mp4' type='video/mp4'>*/}
+        {/*        </ResponsiveEmbed>*/}
+        {/*</div>*/}
+      </ActionAccordion>
 
-      {/*<Tab.Container*/}
-      {/*  activeKey={selectedAction}*/}
-      {/*  onSelect={(e) => setAction(e as ACTIONS_SET)}*/}
-      {/*>*/}
+      <ActionAccordion action={ACTIONS_SET.SELECT_FILE_FORMAT_ICS} currentAction={action} onChange={handleChange}>
+        {translate('SELECT_ICS_DESCRIPTION')}
+      </ActionAccordion>
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon/>}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography className={classes.heading}>{translateString(ACTIONS_SET.ENABLE_BADGE)}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Hi
-            {/*<div className='d-flex flex-grow-1 border'>*/}
-            {/*        <ResponsiveEmbed*/}
-            {/*          autoplay loop*/}
-            {/*          type='video' aspect='4by3'>*/}
-            {/*          <source src='/media/badge.mp4' type='video/mp4'>*/}
-            {/*        </ResponsiveEmbed>*/}
-            {/*</div>*/}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+      <ActionAccordion action={ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS} currentAction={action} onChange={handleChange}>
+        {translate('SELECT_DELETE_ICS_DESCRIPTION')}
+      </ActionAccordion>
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon/>}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography className={classes.heading}>{translateString(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            {translate('SELECT_ICS_DESCRIPTION')}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon/>}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography className={classes.heading}>{translateString(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            {translate('SELECT_DELETE_ICS_DESCRIPTION')}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon/>}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography className={classes.heading}>{translateString(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            {translate('FILE_FORMAT_CSV_DESCRIPTION')}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      {/*<div className='d-flex align-items-start flex-shrink-0 flex-column ml-auto'>*/}
-      {/*  <div className='d-flex flex-nowrap mt-auto align-self-end'>*/}
-      {/*    <Button size='sm'*/}
-      {/*            variant='outline-success'*/}
-      {/*            onClick={startGeneration}>*/}
-      {/*      {translate('GENERATE')}*/}
-      {/*    </Button>*/}
-      {/*    {' '}*/}
-      {/*    <LeaveFeedbackButton/>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+      <ActionAccordion action={ACTIONS_SET.SELECT_FILE_FORMAT_CSV} currentAction={action} onChange={handleChange}>
+        {translate('FILE_FORMAT_CSV_DESCRIPTION')}
+      </ActionAccordion>
     </>
   );
 };
