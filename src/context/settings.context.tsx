@@ -9,7 +9,7 @@ import {
   TABS,
 } from '../constants';
 import {
-  DEFAULT_USER_SETTINGS,
+  DEFAULT_SETTINGS,
   retrieveUserSettings,
   storeUserSettings,
 } from '../libs/storage/chrome.storage';
@@ -46,11 +46,11 @@ const SettingsContextProvider: FunctionComponent = (props) => {
         // Check correct data was stored
         const fetchedAction = ACTIONS_SET[storedAction]
           ? storedAction
-          : DEFAULT_USER_SETTINGS[STORAGE_KEYS.LAST_SELECTED_ACTION];
+          : DEFAULT_SETTINGS[STORAGE_KEYS.LAST_SELECTED_ACTION];
 
         const fetchedTab = TABS[storedTab]
           ? storedTab
-          : DEFAULT_USER_SETTINGS[STORAGE_KEYS.LAST_ACTIVE_TAB];
+          : DEFAULT_SETTINGS[STORAGE_KEYS.LAST_ACTIVE_TAB];
 
         setAction(fetchedAction);
         setTab(fetchedTab);

@@ -10,7 +10,7 @@ import {
 } from 'rxjs/operators';
 
 import { ACTION } from '../../constants';
-import { UserSettings } from '../storage/chrome.storage';
+import { Settings } from '../storage/chrome.storage';
 import {
   Action,
   ActionType,

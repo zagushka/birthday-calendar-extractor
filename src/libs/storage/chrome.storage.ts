@@ -14,7 +14,7 @@ import {
   TABS,
 } from '../../constants';
 
-export interface UserSettings {
+export interface Settings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
   [STORAGE_KEYS.BADGE_VISITED]: DateTime;
   [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthdays>;
@@ -22,7 +22,7 @@ export interface UserSettings {
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
 }
 
-export const DEFAULT_USER_SETTINGS: UserSettings = {
+export const DEFAULT_SETTINGS: Settings = {
   [STORAGE_KEYS.BADGE_ACTIVE]: false,
   [STORAGE_KEYS.BADGE_VISITED]: DateTime.fromMillis(0),
   [STORAGE_KEYS.BIRTHDAYS]: [],
@@ -30,7 +30,7 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
 };
 
-export interface StoredUserSettings {
+export interface StoredSettings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
   [STORAGE_KEYS.BADGE_VISITED]: number;
   [STORAGE_KEYS.BIRTHDAYS]: Array<[string, number, string]>;
@@ -103,12 +103,12 @@ export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {
     .pipe(
       map(data => {
         // @TODO Make better default value handler
-        const result: Partial<UserSettings> = (keys || Object.keys(DEFAULT_USER_SETTINGS) as Array<STORAGE_KEYS>)
+        const result: Partial<Settings> = (keys || Object.keys(DEFAULT_SETTINGS) as Array<STORAGE_KEYS>)
           .reduce((c, key) => {
             // @ts-ignore
-            c[key] = DEFAULT_USER_SETTINGS[key];
+            c[key] = DEFAULT_SETTINGS[key];
             return c;
-          }, {} as Partial<UserSettings>);
+          }, {} as Partial<Settings>);
 
         if (data[STORAGE_KEYS.BADGE_VISITED]) {
           data[STORAGE_KEYS.BADGE_VISITED] = DateTime.fromMillis(data[STORAGE_KEYS.BADGE_VISITED]);
@@ -118,15 +118,15 @@ export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {
           data[STORAGE_KEYS.BIRTHDAYS] = decodeEvents(data[STORAGE_KEYS.BIRTHDAYS]);
         }
 
-        return Object.assign(result, data as Partial<UserSettings>);
+        return Object.assign(result, data as Partial<Settings>);
       }),
     );
 }
 
-export function storeUserSettings(settings: Partial<UserSettings>): Observable<void>;
-export function storeUserSettings(settings: Partial<UserSettings>, dontWait: boolean): void;
-export function storeUserSettings(settings: Partial<UserSettings>, dontWait?: boolean) {
-  const data: Partial<StoredUserSettings> = {};
+export function storeUserSettings(settings: Partial<Settings>): Observable<void>;
+export function storeUserSettings(settings: Partial<Settings>, dontWait: boolean): void;
+export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolean) {
+  const data: Partial<StoredSettings> = {};
 
   if (settings[STORAGE_KEYS.BADGE_VISITED]) {
     data[STORAGE_KEYS.BADGE_VISITED] = settings[STORAGE_KEYS.BADGE_VISITED].toMillis();
@@ -145,7 +145,7 @@ export function storeUserSettings(settings: Partial<UserSettings>, dontWait?: bo
   const final = Object.assign({}, settings, data);
 
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback<Partial<UserSettings>>(setWrapper)(final);
+    return bindCallback<Partial<Settings>>(setWrapper)(final);
   }
 
   chrome.storage.local.set(final);
