@@ -8,17 +8,13 @@ import {
 import Box from '@material-ui/core/Box';
 import React, {
   FunctionComponent,
-  useEffect,
+  useContext,
   useState,
 } from 'react';
-import { pluck } from 'rxjs/operators';
-import { STORAGE_KEYS } from '../../constants';
+import { TABS } from '../../constants';
+import { SettingsContext } from '../../context/settings.context';
 import TodayUsersContextProvider from '../../context/today-users.context';
 import { translateString } from '../../filters/translate';
-import {
-  retrieveUserSettings,
-  storeUserSettings,
-} from '../../libs/storage/chrome.storage';
 import SelectAction from '../select-action';
 import TodayBirthdays from '../today-bdays';
 import ToggleShowBadgeButton from '../toggle-show-badge.button';
@@ -40,7 +36,6 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const {children, value, index, ...other} = props;
-
   return (
     <div
       role='tabpanel'
@@ -61,22 +56,13 @@ function TabPanel(props: TabPanelProps) {
 const UserSettings: FunctionComponent = () => {
   const classes = useStyles();
 
-  const [tabIndex, setTabIndex] = useState<string>('USER_SETTINGS');
-  const [loaded, setLoaded] = useState<boolean>(false); // Do not display tabs before all the data been fetched
+  const {tab, setTab} = useContext(SettingsContext);
+  const [loaded, setLoaded] = useState<boolean>(true); // Do not display tabs before all the data been fetched
   const [waiting, setWaiting] = useState<boolean>(false); // Set true while processing
 
-  useEffect(() => {
-    retrieveUserSettings([STORAGE_KEYS.LAST_ACTIVE_TAB])
-      .pipe(pluck(STORAGE_KEYS.LAST_ACTIVE_TAB))
-      .subscribe((storedTabIndex) => {
-        setLoaded(true);
-        setTabIndex(storedTabIndex);
-      });
-  });
-
-  const updateTabIndex = (event: React.ChangeEvent<{}>, index: string) => {
-    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: index}, true);
-    setTabIndex(index);
+  const updateTabIndex = (event: React.ChangeEvent<{}>, index: TABS) => {
+    console.log(index);
+    setTab(index);
   };
 
   return (
@@ -84,51 +70,23 @@ const UserSettings: FunctionComponent = () => {
       {loaded &&
       <div className={classes.root}>
         <AppBar position='static'>
-          <Tabs value={tabIndex} onChange={updateTabIndex} aria-label='simple tabs example'>
-            <Tab value={'TODAY_BIRTHDAY_TITLE'} label={translateString('TODAY_BIRTHDAY_TITLE')}/>
-            <Tab value={'USER_SETTINGS'} label={translateString('USER_SETTINGS')}/>
-            <Tab value={'TOOLZ'} label='TOOLZ'/>
+          <Tabs value={tab} onChange={updateTabIndex} aria-label='simple tabs example'>
+            <Tab value={TABS.TODAY_BIRTHDAYS} label={translateString('TODAY_BIRTHDAY_TITLE')}/>
+            <Tab value={TABS.CALENDAR_GENERATOR} label={translateString('USER_SETTINGS')}/>
+            <Tab value={TABS.DEBUG_TOOLS} label='TOOLZ'/>
           </Tabs>
         </AppBar>
-        <TabPanel value={tabIndex} index='TODAY_BIRTHDAY_TITLE'>
+        <TabPanel value={tab} index={TABS.TODAY_BIRTHDAYS}>
           <TodayBirthdays/>
           <ToggleShowBadgeButton onWaiting={setWaiting}/>
         </TabPanel>
-        <TabPanel value={tabIndex} index='USER_SETTINGS'>
+        <TabPanel value={tab} index={TABS.CALENDAR_GENERATOR}>
           <SelectAction/>
         </TabPanel>
-        <TabPanel value={tabIndex} index='TOOLZ'>
+        <TabPanel value={tab} index={TABS.DEBUG_TOOLS}>
           <Toolz/>
         </TabPanel>
       </div>
-
-// <Tabs
-//       className='no-wrap'
-//       activeKey={tabIndex}
-//       onSelect={updateTabIndex}
-//     >
-//       <Tab
-//         title={translateString('TODAY_BIRTHDAY_TITLE')}
-//         eventKey='TODAY_BIRTHDAY_TITLE'
-//       >
-//         <TodayBirthdays/>
-//         <div className='d-flex'>
-//           <ToggleShowBadgeButton onWaiting={setWaiting}/>
-//         </div>
-//       </Tab>
-//
-//       <Tab
-//         title={translateString('USER_SETTINGS')}
-//         eventKey='USER_SETTINGS'
-//       >
-//         {/*<Overlay show={this.waiting}>*/}
-//         <SelectAction/>
-//         {/*</Overlay>*/}
-//       </Tab>
-//       <Tab title='TOOLZ' eventKey='TOOLZ'>
-//         <Toolz/>
-//       </Tab>
-//     </Tabs>
       }
     </TodayUsersContextProvider>
   );

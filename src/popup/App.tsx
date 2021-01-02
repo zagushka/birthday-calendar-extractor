@@ -8,6 +8,7 @@ import DoneModal from '../components/modals/done.modal';
 import NoTokenDetectedModal from '../components/modals/no-token-detected.modal';
 import UserSettings from '../components/user-settings/user-settings';
 import ErrorsContextProvider, { ErrorsContext } from '../context/errors.context';
+import SettingsContextProvider from '../context/settings.context';
 import { BadgeClickedAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import './App.scss';
@@ -34,9 +35,11 @@ const App: FunctionComponent = () => {
   })();
 
   return (
-    <ErrorsContextProvider>
-      {content}
-    </ErrorsContextProvider>
+    <SettingsContextProvider>
+      <ErrorsContextProvider>
+        {content}
+      </ErrorsContextProvider>
+    </SettingsContextProvider>
   );
 };
 

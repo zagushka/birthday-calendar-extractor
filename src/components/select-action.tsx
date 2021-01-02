@@ -1,27 +1,19 @@
 import React, {
   FunctionComponent,
-  useEffect,
+  useContext,
   useState,
 } from 'react';
-
-import { pluck } from 'rxjs/operators';
-import {
-  ACTIONS_SET,
-  STORAGE_KEYS,
-} from '../constants';
+import { ACTIONS_SET } from '../constants';
+import { SettingsContext } from '../context/settings.context';
 import { translate } from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
-import {
-  retrieveUserSettings,
-  storeUserSettings,
-} from '../libs/storage/chrome.storage';
 import ActionAccordion from './action-accordion';
 
 const SelectAction: FunctionComponent = () => {
 
+  const {action, setAction} = useContext(SettingsContext);
   const [isWaiting, setIsWaiting] = useState<boolean>(true);
-  const [action, setAction] = useState<ACTIONS_SET>(ACTIONS_SET.SELECT_FILE_FORMAT_CSV);
 
   const startGeneration = () => {
     sendMessage(new StartGenerationAction(action))
@@ -29,20 +21,8 @@ const SelectAction: FunctionComponent = () => {
     setIsWaiting(true);
   };
 
-  useEffect(() => {
-    retrieveUserSettings([STORAGE_KEYS.LAST_SELECTED_ACTION])
-      .pipe(
-        pluck(STORAGE_KEYS.LAST_SELECTED_ACTION),
-      )
-      .subscribe((a) => {
-        setIsWaiting(false);
-        setAction(a);
-      });
-  }, []);
-
   const handleChange = (selectedAction: ACTIONS_SET) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
     const newAction = isExpanded ? selectedAction : null;
-    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: newAction}, true);
     setAction(newAction);
   };
 
