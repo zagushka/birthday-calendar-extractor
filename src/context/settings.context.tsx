@@ -1,5 +1,6 @@
 import React, {
   FunctionComponent,
+  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -13,6 +14,7 @@ import {
   retrieveUserSettings,
   storeUserSettings,
 } from '../libs/storage/chrome.storage';
+import { LoadingContext } from './loading.context';
 
 interface SettingsContextInterface {
   tab: TABS;
@@ -31,12 +33,16 @@ export const SettingsContext = React.createContext<SettingsContextInterface>({
 });
 
 const SettingsContextProvider: FunctionComponent = (props) => {
+  const {startLoading, stopLoading} = useContext(LoadingContext);
 
   const [action, setAction] = useState<ACTIONS_SET>();
   const [tab, setTab] = useState<TABS>();
 
   // Load initial state here
   useEffect(() => {
+    // Init new loading process flag, since all the app is not waiting for this
+    // I have moved 'SETTINGS' loader indicator to LoadingContextProvider default value
+    // const loadingInstanceName = startLoading('SETTINGS');
     // Request initial action and tab states
     retrieveUserSettings([STORAGE_KEYS.LAST_ACTIVE_TAB, STORAGE_KEYS.LAST_SELECTED_ACTION])
       .subscribe((storedSettings) => {
@@ -54,6 +60,9 @@ const SettingsContextProvider: FunctionComponent = (props) => {
 
         setAction(fetchedAction);
         setTab(fetchedTab);
+
+        // Remove loading flag
+        stopLoading('SETTINGS');
       });
   }, []);
 

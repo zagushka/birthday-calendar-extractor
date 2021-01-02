@@ -9,9 +9,10 @@ import Box from '@material-ui/core/Box';
 import React, {
   FunctionComponent,
   useContext,
-  useState,
+  useEffect,
 } from 'react';
 import { TABS } from '../../constants';
+import { LoadingContext } from '../../context/loading.context';
 import { SettingsContext } from '../../context/settings.context';
 import TodayUsersContextProvider from '../../context/today-users.context';
 import { translateString } from '../../filters/translate';
@@ -56,9 +57,11 @@ function TabPanel(props: TabPanelProps) {
 const UserSettings: FunctionComponent = () => {
   const classes = useStyles();
 
+  const {isLoading} = useContext(LoadingContext);
   const {tab, setTab} = useContext(SettingsContext);
-  const [loaded, setLoaded] = useState<boolean>(true); // Do not display tabs before all the data been fetched
-  const [waiting, setWaiting] = useState<boolean>(false); // Set true while processing
+
+  const loaded = !isLoading('SETTINGS');
+  console.log('LOADEDD', loaded);
 
   const updateTabIndex = (event: React.ChangeEvent<{}>, index: TABS) => setTab(index);
 
@@ -75,7 +78,7 @@ const UserSettings: FunctionComponent = () => {
         </AppBar>
         <TabPanel value={tab} index={TABS.TODAY_BIRTHDAYS}>
           <TodayBirthdays/>
-          <ToggleShowBadgeButton onWaiting={setWaiting}/>
+          <ToggleShowBadgeButton/>
         </TabPanel>
         <TabPanel value={tab} index={TABS.CALENDAR_GENERATOR}>
           <SelectAction/>

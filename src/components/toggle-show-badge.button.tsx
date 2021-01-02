@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, {
   FunctionComponent,
+  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -17,6 +18,7 @@ import {
   ACTIONS_SET,
   STORAGE_KEYS,
 } from '../constants';
+import { LoadingContext } from '../context/loading.context';
 import { translate } from '../filters/translate';
 import { StartGenerationAction } from '../libs/events/actions';
 import {
@@ -26,31 +28,27 @@ import {
 import { retrieveUserSettings } from '../libs/storage/chrome.storage';
 import BuyCoffeeButton from './buy-coffee.button';
 
+const ToggleShowBadgeButton: FunctionComponent = (props) => {
 
-interface ToggleShowBadgeButtonProps {
-  onWaiting: (isWaiting: boolean) => void;
-}
+  const {stopLoading, startLoading} = useContext(LoadingContext);
 
-const ToggleShowBadgeButton: FunctionComponent<ToggleShowBadgeButtonProps> = (props) => {
-  const {onWaiting} = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const onDestroy$: Subject<any> = new Subject();
 
-
   const deactivate = () => {
-    onWaiting(true);
+    const loadingInstanceName = startLoading();
     sendMessage(new StartGenerationAction(ACTIONS_SET.DISABLE_BADGE))
       .subscribe(() => {
-        onWaiting(false);
+        stopLoading(loadingInstanceName);
       });
   };
 
   const activate = () => {
-    onWaiting(true);
+    const loadingInstanceName = startLoading();
     sendMessage(new StartGenerationAction(ACTIONS_SET.ENABLE_BADGE))
       .subscribe(() => {
-        onWaiting(false);
+        stopLoading(loadingInstanceName);
       });
   };
 
