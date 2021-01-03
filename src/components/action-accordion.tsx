@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-interface ActionAccordionInterface {
+export interface ActionAccordionInterface {
   action: ACTIONS_SET;
   currentAction: ACTIONS_SET;
   onChange: (action: ACTIONS_SET) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => void;

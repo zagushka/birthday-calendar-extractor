@@ -25,6 +25,7 @@ export enum STORAGE_KEYS {
   BADGE_ACTIVE = 'BADGE_ACTIVE', // Set true when user wants to see notifications
   LAST_ACTIVE_TAB = 'LAST_ACTIVE_TAB',
   LAST_SELECTED_ACTION = 'LAST_SELECTED_ACTION',
+  WIZARDS = 'WIZARDS',
 }
 
 export enum TABS {

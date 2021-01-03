@@ -13,6 +13,7 @@ import {
   STORAGE_KEYS,
   TABS,
 } from '../../constants';
+import { WizardsSettings } from '../../context/settings.context';
 
 export interface Settings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
@@ -20,6 +21,7 @@ export interface Settings {
   [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthdays>;
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+  [STORAGE_KEYS.WIZARDS]: WizardsSettings;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -28,6 +30,7 @@ export const DEFAULT_SETTINGS: Settings = {
   [STORAGE_KEYS.BIRTHDAYS]: [],
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS.CALENDAR_GENERATOR,
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
+  [STORAGE_KEYS.WIZARDS]: {csv: {format: 'dd/mm'}, ics: {allDayEvent: false, groupEvents: false}},
 };
 
 export interface StoredSettings {
@@ -36,6 +39,7 @@ export interface StoredSettings {
   [STORAGE_KEYS.BIRTHDAYS]: Array<[string, number, string]>;
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+  [STORAGE_KEYS.WIZARDS]: WizardsSettings;
 }
 
 export interface RestoredBirthdays {

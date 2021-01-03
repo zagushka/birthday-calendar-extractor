@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import { Reducer } from 'react';
 
 interface LoaderAction {
@@ -16,27 +17,23 @@ const LoaderReducer: Reducer<LoaderReducerInterface, LoaderAction> = (prevState,
 
   switch (action.type) {
     case 'START':
-      return {
-        loading: true,
-        instances: {
-          ...instances,
-          ...{[name]: (instances[name] || 0) + 1},
-        },
-      };
-
+      return update(prevState, {
+        loading: {$set: true},
+        instances: {[name]: {$apply: (v) => (v || 0) + 1}},
+      });
     case 'STOP':
-      const value = instances[name];
-      const newMap = {...instances};
+      let newState: LoaderReducerInterface;
 
-      if (value > 1) {
-        newMap[name] = value - 1;
+      if (instances[name] > 1) {
+        newState = update(prevState, {instances: {[name]: {$apply: (v) => v - 1}}});
       } else {
-        delete newMap[name];
+        newState = update(prevState, {instances: {$unset: [name]}});
       }
-      return {
-        loading: !!newMap.size,
-        instances: newMap,
-      };
+
+      return update(newState, {
+        loading: {$set: !!Object.keys(newState.instances).length},
+      });
+
     default:
       throw new Error('Should not reach this!');
   }

@@ -16,7 +16,7 @@ import { LoadingContext } from '../../context/loading.context';
 import { SettingsContext } from '../../context/settings.context';
 import TodayUsersContextProvider from '../../context/today-users.context';
 import { translateString } from '../../filters/translate';
-import SelectAction from '../select-action';
+import SelectWizard from '../select-wizard';
 import TodayBirthdays from '../today-bdays';
 import ToggleShowBadgeButton from '../toggle-show-badge.button';
 import Toolz from '../toolz';
@@ -81,7 +81,7 @@ const UserSettings: FunctionComponent = () => {
           <ToggleShowBadgeButton/>
         </TabPanel>
         <TabPanel value={tab} index={TABS.CALENDAR_GENERATOR}>
-          <SelectAction/>
+          <SelectWizard/>
         </TabPanel>
         <TabPanel value={tab} index={TABS.DEBUG_TOOLS}>
           <Toolz/>

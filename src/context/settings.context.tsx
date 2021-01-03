@@ -16,11 +16,25 @@ import {
 } from '../libs/storage/chrome.storage';
 import { LoadingContext } from './loading.context';
 
+export interface IcsSettings {
+  allDayEvent: boolean;
+  groupEvents: boolean;
+}
+
+export interface WizardsSettings {
+  csv: {
+    format: 'dd/mm' | 'mm/dd'
+  };
+  ics: IcsSettings;
+}
+
 interface SettingsContextInterface {
   tab: TABS;
   setTab: (tab: TABS) => void;
   action: ACTIONS_SET;
   setAction: (action: ACTIONS_SET) => void;
+  wizards: WizardsSettings;
+  setWizards: (settings: WizardsSettings) => void;
 }
 
 export const SettingsContext = React.createContext<SettingsContextInterface>({
@@ -30,13 +44,20 @@ export const SettingsContext = React.createContext<SettingsContextInterface>({
   action: ACTIONS_SET.SELECT_FILE_FORMAT_CSV,
   setAction: () => {
   },
+  wizards: {
+    csv: {format: 'dd/mm'},
+    ics: {allDayEvent: false, groupEvents: false},
+  },
+  setWizards: (wizards: WizardsSettings) => {
+  },
 });
 
 const SettingsContextProvider: FunctionComponent = (props) => {
   const {startLoading, stopLoading} = useContext(LoadingContext);
 
-  const [action, setAction] = useState<ACTIONS_SET>();
-  const [tab, setTab] = useState<TABS>();
+  const [stateAction, setStateAction] = useState<ACTIONS_SET>();
+  const [stateTab, setStateTab] = useState<TABS>();
+  const [stateWizards, setStateWizards] = useState<WizardsSettings>();
 
   // Load initial state here
   useEffect(() => {
@@ -44,10 +65,15 @@ const SettingsContextProvider: FunctionComponent = (props) => {
     // I have moved 'SETTINGS' loader indicator to LoadingContextProvider default value
     // const loadingInstanceName = startLoading('SETTINGS');
     // Request initial action and tab states
-    retrieveUserSettings([STORAGE_KEYS.LAST_ACTIVE_TAB, STORAGE_KEYS.LAST_SELECTED_ACTION])
+    retrieveUserSettings([
+      STORAGE_KEYS.LAST_ACTIVE_TAB,
+      STORAGE_KEYS.LAST_SELECTED_ACTION,
+      STORAGE_KEYS.WIZARDS,
+    ])
       .subscribe((storedSettings) => {
         const storedAction = storedSettings[STORAGE_KEYS.LAST_SELECTED_ACTION];
         const storedTab = storedSettings[STORAGE_KEYS.LAST_ACTIVE_TAB];
+        const storedWizards = storedSettings[STORAGE_KEYS.WIZARDS];
 
         // Check correct data was stored
         const fetchedAction = ACTIONS_SET[storedAction]
@@ -58,29 +84,37 @@ const SettingsContextProvider: FunctionComponent = (props) => {
           ? storedTab
           : DEFAULT_SETTINGS[STORAGE_KEYS.LAST_ACTIVE_TAB];
 
-        setAction(fetchedAction);
-        setTab(fetchedTab);
+        setStateAction(fetchedAction);
+        setStateTab(fetchedTab);
+        setStateWizards(storedWizards);
 
         // Remove loading flag
         stopLoading('SETTINGS');
       });
   }, []);
 
-  const storeAction = (actionToStore: ACTIONS_SET) => {
-    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: actionToStore})
-      .subscribe(() => setAction(actionToStore));
+  const storeAction = (action: ACTIONS_SET) => {
+    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: action})
+      .subscribe(() => setStateAction(action));
   };
 
-  const storeTab = (tabToStore: TABS) => {
-    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: tabToStore})
-      .subscribe(() => setTab(tabToStore));
+  const storeTab = (tab: TABS) => {
+    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: tab})
+      .subscribe(() => setStateTab(tab));
+  };
+
+  const storeWizards = (wizards: WizardsSettings) => {
+    storeUserSettings({[STORAGE_KEYS.WIZARDS]: wizards})
+      .subscribe(() => setStateWizards(wizards));
   };
 
   return <SettingsContext.Provider value={{
-    tab,
+    tab: stateTab,
     setTab: storeTab,
-    action,
+    action: stateAction,
     setAction: storeAction,
+    wizards: stateWizards,
+    setWizards: storeWizards,
   }}>
     {props.children}
   </SettingsContext.Provider>;
