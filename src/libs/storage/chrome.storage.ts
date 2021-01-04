@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import { DateTime } from 'luxon';
 import {
   bindCallback,
@@ -11,17 +12,35 @@ import {
 import {
   ACTIONS_SET,
   STORAGE_KEYS,
+  StorageKeyNames,
   TABS,
 } from '../../constants';
 import { WizardsSettings } from '../../context/settings.context';
 
 export interface Settings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
-  [STORAGE_KEYS.BADGE_VISITED]: DateTime;
-  [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthdays>;
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
   [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
   [STORAGE_KEYS.WIZARDS]: WizardsSettings;
+  [STORAGE_KEYS.BADGE_VISITED]: DateTime;
+  [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthday>;
+}
+
+export interface StoredSettings {
+  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
+  [STORAGE_KEYS.BADGE_VISITED]: number;
+  [STORAGE_KEYS.BIRTHDAYS]: Array<StoredBirthday>;
+  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
+  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+  [STORAGE_KEYS.WIZARDS]: WizardsSettings;
+}
+
+export type StoredBirthday = [string, number, string];
+
+export interface RestoredBirthday {
+  name: string;
+  href: string;
+  start: DateTime
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -33,20 +52,6 @@ export const DEFAULT_SETTINGS: Settings = {
   [STORAGE_KEYS.WIZARDS]: {csv: {format: 'dd/mm'}, ics: {allDayEvent: false, groupEvents: false}},
 };
 
-export interface StoredSettings {
-  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
-  [STORAGE_KEYS.BADGE_VISITED]: number;
-  [STORAGE_KEYS.BIRTHDAYS]: Array<[string, number, string]>;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
-  [STORAGE_KEYS.WIZARDS]: WizardsSettings;
-}
-
-export interface RestoredBirthdays {
-  name: string;
-  href: string;
-  start: DateTime
-}
 
 /**
  * Helper wrapper function to be used with rxjs bindCallback
@@ -64,7 +69,7 @@ export function getLastTimeClickedBadge(): Observable<DateTime> {
  * Fetch all birthdays form local storage and filter for today's
  */
 
-export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBirthdays>> {
+export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBirthday>> {
   return retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS])
     .pipe(
       pluck(STORAGE_KEYS.BIRTHDAYS),
@@ -72,7 +77,7 @@ export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBi
     );
 }
 
-export function filterBirthdaysForDate(birthdays: Array<RestoredBirthdays>, date: DateTime = DateTime.local()): Array<RestoredBirthdays> {
+export function filterBirthdaysForDate(birthdays: Array<RestoredBirthday>, date: DateTime = DateTime.local()): Array<RestoredBirthday> {
   const ordinal = date.ordinal;
   return birthdays.filter(r => r.start.ordinal === ordinal);
 }
@@ -81,7 +86,7 @@ export function filterBirthdaysForDate(birthdays: Array<RestoredBirthdays>, date
  * Observable with today's birthdays and last time user clicked on badge
  */
 export function getInfoForBadge(today: DateTime = DateTime.local()): Observable<{
-  birthdays: Array<RestoredBirthdays>;
+  birthdays: Array<RestoredBirthday>;
   dateVisited: DateTime
 }> {
 
@@ -101,28 +106,56 @@ export function storeLastBadgeClicked(): Observable<void> {
   });
 }
 
-export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {
-  return bindCallback<Array<STORAGE_KEYS>, { [key: string]: any }>(chrome.storage.local.get)
+const reviveBirthday = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
+  return {
+    name,
+    start: DateTime.local(2020) // use 2020 since date was originally from 2020
+      .set({ordinal}) // Set ordinal of 2020
+      .set({year: DateTime.local().year}), // Convert to current year
+    href: 'https://facebook.com/' + hrefPartial,
+  };
+};
+
+const decayBirthday = (birthday: RestoredBirthday): StoredBirthday => {
+  return [
+    birthday.name,
+    birthday.start.ordinal, // Day of the year in 2020
+    // Remove https://facebook.com/ to reduce the size, using indexOf since facebook subdomain can vary
+    birthday.href.slice(birthday.href.indexOf('/', 8) + 1), // 8 = 'https://'.length
+  ];
+};
+
+export function retrieveUserSettings(keys: Array<StorageKeyNames> = []) {
+  return bindCallback<Array<StorageKeyNames>, Partial<StoredSettings>>(chrome.storage.local.get)
     .call(chrome.storage.local, keys)
     .pipe(
       map(data => {
-        // @TODO Make better default value handler
-        const result: Partial<Settings> = (keys || Object.keys(DEFAULT_SETTINGS) as Array<STORAGE_KEYS>)
-          .reduce((c, key) => {
-            // @ts-ignore
-            c[key] = DEFAULT_SETTINGS[key];
-            return c;
-          }, {} as Partial<Settings>);
+        return keys
+          // Revive retrieved data
+          .reduce<Partial<Settings>>((accumulator, key) => {
+            switch (key) {
+              case STORAGE_KEYS.BADGE_ACTIVE:
+              case STORAGE_KEYS.LAST_ACTIVE_TAB:
+              case STORAGE_KEYS.LAST_SELECTED_ACTION:
+              case STORAGE_KEYS.WIZARDS: {
+                const value = data[key] || DEFAULT_SETTINGS[key];
+                return update(accumulator, {[key]: {$set: value}});
+              }
 
-        if (data[STORAGE_KEYS.BADGE_VISITED]) {
-          data[STORAGE_KEYS.BADGE_VISITED] = DateTime.fromMillis(data[STORAGE_KEYS.BADGE_VISITED]);
-        }
+              case STORAGE_KEYS.BADGE_VISITED: {
+                const value = data[key] && DateTime.fromMillis(data[key]) || DEFAULT_SETTINGS[key];
+                return update(accumulator, {[key]: {$set: value}});
+              }
 
-        if (data[STORAGE_KEYS.BIRTHDAYS]) {
-          data[STORAGE_KEYS.BIRTHDAYS] = decodeEvents(data[STORAGE_KEYS.BIRTHDAYS]);
-        }
+              case STORAGE_KEYS.BIRTHDAYS: {
+                const value = data[key] && data[key].map((event) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
+                return update(accumulator, {[key]: {$set: value}});
+              }
 
-        return Object.assign(result, data as Partial<Settings>);
+              default:
+                throw new Error(`Should not have ${key} key`);
+            }
+          }, {});
       }),
     );
 }
@@ -130,43 +163,37 @@ export function retrieveUserSettings(keys: Array<STORAGE_KEYS> = null) {
 export function storeUserSettings(settings: Partial<Settings>): Observable<void>;
 export function storeUserSettings(settings: Partial<Settings>, dontWait: boolean): void;
 export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolean) {
-  const data: Partial<StoredSettings> = {};
+  const data =
+    (Object.keys(settings) as Array<StorageKeyNames>)
+      .reduce<Partial<StoredSettings>>((accumulator, key) => {
+        switch (key) {
+          case STORAGE_KEYS.BADGE_ACTIVE:
+          case STORAGE_KEYS.LAST_ACTIVE_TAB:
+          case STORAGE_KEYS.LAST_SELECTED_ACTION:
+          case STORAGE_KEYS.WIZARDS:
+            return update(accumulator, {[key]: {$set: settings[key]}});
 
-  if (settings[STORAGE_KEYS.BADGE_VISITED]) {
-    data[STORAGE_KEYS.BADGE_VISITED] = settings[STORAGE_KEYS.BADGE_VISITED].toMillis();
-  }
+          case STORAGE_KEYS.BADGE_VISITED:
+            return update(accumulator, {[key]: {$set: settings[key].toMillis()}});
 
-  if (settings[STORAGE_KEYS.BIRTHDAYS]) {
-    data[STORAGE_KEYS.BIRTHDAYS] = settings[STORAGE_KEYS.BIRTHDAYS].map((event) => [
-        event.name,
-        event.start.ordinal, // Day of the year in 2020
-        // Remove https://facebook.com/ to reduce the size, using indexOf since facebook subdomain can vary
-        event.href.slice(event.href.indexOf('/', 8) + 1), // 8 = 'https://'.length
-      ],
-    );
-  }
-
-  const final = Object.assign({}, settings, data);
+          case STORAGE_KEYS.BIRTHDAYS:
+            return update(accumulator, {
+              [key]: {
+                $set: settings[key].map((event) => decayBirthday(event)),
+              },
+            });
+          default:
+            throw new Error(`Should not have ${key} key`);
+        }
+      }, {});
 
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback<Partial<Settings>>(setWrapper)(final);
+    return bindCallback<Partial<StoredSettings>>(setWrapper)(data);
   }
 
-  chrome.storage.local.set(final);
+  chrome.storage.local.set(data);
 }
 
 export function clearStorage() {
   chrome.storage.local.clear();
-}
-
-function decodeEvents(data: Array<[string, number, string]>): Array<RestoredBirthdays> {
-  return data.map(
-    ([name, ordinal, hrefPartial]) => ({
-      name,
-      start: DateTime.local(2020) // use 2020 since date was originally from 2020
-        .set({ordinal}) // Set ordinal of 2020
-        .set({year: DateTime.local().year}), // Convert to current year
-      href: 'https://facebook.com/' + hrefPartial,
-    }),
-  );
 }

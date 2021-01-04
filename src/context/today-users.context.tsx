@@ -18,7 +18,7 @@ import { listenTo } from '../libs/events/events';
 import {
   filterBirthdaysForDate,
   getBirthdaysForDate,
-  RestoredBirthdays,
+  RestoredBirthday,
   retrieveUserSettings,
 } from '../libs/storage/chrome.storage';
 
@@ -27,7 +27,7 @@ interface TodayUsersContextInterface {
   activate: () => void;
   deactivate: () => void;
 
-  users: Array<RestoredBirthdays>;
+  users: Array<RestoredBirthday>;
   date: DateTime;
   useDate: (date: DateTime) => void;
 }
@@ -47,8 +47,8 @@ export const TodayUsersContext = React.createContext<TodayUsersContextInterface>
 const TodayUsersContextProvider: FunctionComponent = (props) => {
 
   const [isActive, setIsActive] = useState<boolean>(false); // is Active
-  const [allUsers, setAllUsers] = useState<Array<RestoredBirthdays>>([]);
-  const [users, setUsers] = useState<Array<RestoredBirthdays>>([]);
+  const [allUsers, setAllUsers] = useState<Array<RestoredBirthday>>([]);
+  const [users, setUsers] = useState<Array<RestoredBirthday>>([]);
   const [date, setDate] = useState<DateTime>(DateTime.local());
 
   const setDateHandler = (d: DateTime) => setDate(d);

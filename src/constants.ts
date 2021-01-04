@@ -19,14 +19,17 @@ export type ApplicationStatus =
   | 'USER_SETTINGS'
   | 'NO_TOKEN_DETECTED';
 
-export enum STORAGE_KEYS {
-  BIRTHDAYS = 'BIRTHDAYS_FOR_BADGE',
-  BADGE_VISITED = 'BADGE_VISITED',
-  BADGE_ACTIVE = 'BADGE_ACTIVE', // Set true when user wants to see notifications
-  LAST_ACTIVE_TAB = 'LAST_ACTIVE_TAB',
-  LAST_SELECTED_ACTION = 'LAST_SELECTED_ACTION',
-  WIZARDS = 'WIZARDS',
-}
+export type StorageKeyNames = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
+export type StorageKeys = keyof typeof STORAGE_KEYS;
+
+export const STORAGE_KEYS = {
+  BIRTHDAYS: 'BIRTHDAYS_FOR_BADGE',
+  BADGE_VISITED: 'BADGE_VISITED',
+  BADGE_ACTIVE: 'BADGE_ACTIVE', // Set true when user wants to see notifications
+  LAST_ACTIVE_TAB: 'LAST_ACTIVE_TAB',
+  LAST_SELECTED_ACTION: 'LAST_SELECTED_ACTION',
+  WIZARDS: 'WIZARDS',
+} as const;
 
 export enum TABS {
   TODAY_BIRTHDAYS = 'TODAY_BIRTHDAYS',
