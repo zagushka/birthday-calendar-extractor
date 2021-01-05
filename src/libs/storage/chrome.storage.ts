@@ -140,7 +140,7 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
               case STORAGE_KEYS.LAST_SELECTED_ACTION:
               case STORAGE_KEYS.WIZARDS: {
                 const value = data[key] || DEFAULT_SETTINGS[key];
-                return update(accumulator, {[key]: {$apply: value}});
+                return update(accumulator, {[key]: {$set: value}});
               }
 
               case STORAGE_KEYS.BADGE_VISITED: {
