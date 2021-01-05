@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import {
   pluck,
   startWith,
-  switchMapTo,
+  switchMap,
   takeUntil,
 } from 'rxjs/operators';
 
@@ -58,7 +58,7 @@ const ToggleShowBadgeButton: FunctionComponent = (props) => {
       .pipe(
         takeUntil(onDestroy$),
         startWith(true),
-        switchMapTo(retrieveUserSettings([STORAGE_KEYS.BADGE_ACTIVE])),
+        switchMap(() => retrieveUserSettings([STORAGE_KEYS.BADGE_ACTIVE])),
         pluck(STORAGE_KEYS.BADGE_ACTIVE),
       )
       .subscribe(active => {

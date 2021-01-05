@@ -12,7 +12,7 @@ import {
 import {
   ACTIONS_SET,
   STORAGE_KEYS,
-  StorageKeyNames,
+  StorageKeyValues,
   TABS,
 } from '../../constants';
 import { WizardsSettings } from '../../context/settings.context';
@@ -58,6 +58,14 @@ export const DEFAULT_SETTINGS: Settings = {
  */
 const setWrapper = <T>(parameters: T, callback: () => void) => chrome.storage.local.set(parameters, callback);
 
+/**
+ * Helper wrapper function for local.get to be used with rxjs bindCallback
+ */
+const getWrapper =
+  <K extends Array<keyof StoredSettings>>(keys: K, callback: (items: StoredSettings) => void) => {
+    chrome.storage.local.get(keys, callback as () => any);
+  };
+
 export function getLastTimeClickedBadge(): Observable<DateTime> {
   return retrieveUserSettings([STORAGE_KEYS.BADGE_VISITED])
     .pipe(
@@ -82,20 +90,6 @@ export function filterBirthdaysForDate(birthdays: Array<RestoredBirthday>, date:
   return birthdays.filter(r => r.start.ordinal === ordinal);
 }
 
-/**
- * Observable with today's birthdays and last time user clicked on badge
- */
-export function getInfoForBadge(today: DateTime = DateTime.local()): Observable<{
-  birthdays: Array<RestoredBirthday>;
-  dateVisited: DateTime
-}> {
-
-  return forkJoin({
-      birthdays: getBirthdaysForDate(today),
-      dateVisited: getLastTimeClickedBadge(),
-    },
-  );
-}
 
 /**
  * Store data to sessionStorage
@@ -125,21 +119,28 @@ const decayBirthday = (birthday: RestoredBirthday): StoredBirthday => {
   ];
 };
 
-export function retrieveUserSettings(keys: Array<StorageKeyNames> = []) {
-  return bindCallback<Array<StorageKeyNames>, Partial<StoredSettings>>(chrome.storage.local.get)
-    .call(chrome.storage.local, keys)
+/**
+ * Fetch data from chrome.local storage
+ * It have a bit dirty tricks of typescript "as"... everything just to move one step toward this function to return right Pick from
+ * Settings interface.
+ *
+ * Parameter is the array of STORAGE_KEYS - values to fetch from storage
+ *
+ */
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K): Observable<U> {
+  const r = bindCallback(getWrapper)(keys)
     .pipe(
       map(data => {
-        return keys
+        const result = keys
           // Revive retrieved data
-          .reduce<Partial<Settings>>((accumulator, key) => {
+          .reduce<Settings>((accumulator, key) => {
             switch (key) {
               case STORAGE_KEYS.BADGE_ACTIVE:
               case STORAGE_KEYS.LAST_ACTIVE_TAB:
               case STORAGE_KEYS.LAST_SELECTED_ACTION:
               case STORAGE_KEYS.WIZARDS: {
                 const value = data[key] || DEFAULT_SETTINGS[key];
-                return update(accumulator, {[key]: {$set: value}});
+                return update(accumulator, {[key]: {$apply: value}});
               }
 
               case STORAGE_KEYS.BADGE_VISITED: {
@@ -155,16 +156,20 @@ export function retrieveUserSettings(keys: Array<StorageKeyNames> = []) {
               default:
                 throw new Error(`Should not have ${key} key`);
             }
-          }, {});
+          }, {} as Settings); // <- Dirty trick
+
+        return result;
       }),
     );
+
+  return r as unknown as Observable<U>; // <- Another dirty trick
 }
 
 export function storeUserSettings(settings: Partial<Settings>): Observable<void>;
 export function storeUserSettings(settings: Partial<Settings>, dontWait: boolean): void;
 export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolean) {
   const data =
-    (Object.keys(settings) as Array<StorageKeyNames>)
+    (Object.keys(settings) as Array<StorageKeyValues>)
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
         switch (key) {
           case STORAGE_KEYS.BADGE_ACTIVE:

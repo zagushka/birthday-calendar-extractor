@@ -7,7 +7,7 @@ import React, {
 import { Subject } from 'rxjs';
 import {
   startWith,
-  switchMapTo,
+  switchMap,
   takeUntil,
 } from 'rxjs/operators';
 import {
@@ -71,7 +71,7 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
       .pipe(
         takeUntil(onDestroy$),
         startWith(true), // Display on mount
-        switchMapTo(getBirthdaysForDate(DateTime.local())),
+        switchMap(() => getBirthdaysForDate(DateTime.local())),
       )
       .subscribe(u => {
         // setUsers(u)

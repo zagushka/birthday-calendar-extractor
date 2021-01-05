@@ -19,8 +19,9 @@ export type ApplicationStatus =
   | 'USER_SETTINGS'
   | 'NO_TOKEN_DETECTED';
 
-export type StorageKeyNames = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
-export type StorageKeys = keyof typeof STORAGE_KEYS;
+export type StorageKeysType = typeof STORAGE_KEYS;
+export type StorageKeyNames = keyof typeof STORAGE_KEYS;
+export type StorageKeyValues = typeof STORAGE_KEYS[StorageKeyNames];
 
 export const STORAGE_KEYS = {
   BIRTHDAYS: 'BIRTHDAYS_FOR_BADGE',
