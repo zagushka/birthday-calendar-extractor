@@ -1,4 +1,5 @@
 import { Button } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import React, {
   FunctionComponent,
   useContext,
@@ -18,16 +19,18 @@ const TodayBirthdayWizard: FunctionComponent = () => {
   };
 
   return (
-    <>
+    <Box flexDirection='column' display='flex'>
       <video loop autoPlay={true}>
         <source src='/media/badge.mp4' type='video/mp4'/>
       </video>
-      <p>
+      <Box>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
         ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </p>
-      <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
-    </>
+      </Box>
+      <Box display='flex' justifyContent='flex-end'>
+        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
+      </Box>
+    </Box>
   );
 };
 

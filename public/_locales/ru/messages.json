@@ -78,7 +78,7 @@
     "description": "Header for extraction format selection"
   },
   "SELECT_FILE_FORMAT_ICS": {
-    "message": "экспортировать дни рождения в формат ICS",
+    "message": "Экспортировать дни рождения в формат ICS",
     "description": "Label for ics file type radio button"
   },
   "SELECT_ICS_DESCRIPTION": {
@@ -86,7 +86,7 @@
     "description": "Description for ics file type radio button"
   },
   "SELECT_FILE_FORMAT_CSV": {
-    "message": "экспортировать для Excel - CSV",
+    "message": "Экспортировать для Excel - CSV",
     "description": "Label for csv file type radio button"
   },
   "FILE_FORMAT_CSV_DESCRIPTION": {
@@ -94,7 +94,7 @@
     "description": "Description for label for csv file type radio button"
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "удалить импортированные дни рождения из Google Calendar.",
+    "message": "Удалить импортированные дни рождения из Google Calendar.",
     "description": "Label for delete-ics file type radio button"
   },
   "SELECT_DELETE_ICS_DESCRIPTION": {

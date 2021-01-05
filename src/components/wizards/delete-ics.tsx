@@ -3,9 +3,9 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
-  FormLabel,
   Switch,
 } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import update from 'immutability-helper';
 import React, {
   FunctionComponent,
@@ -38,10 +38,12 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
   };
 
   return (
-    <>
-      {translate('SELECT_DELETE_ICS_DESCRIPTION')}
+    <Box flexDirection='column' display='flex'>
+      <Box pb={1}>
+        {translate('SELECT_DELETE_ICS_DESCRIPTION')}
+      </Box>
       <FormControl size='small' component='fieldset'>
-        <FormLabel component='legend'>Settings</FormLabel>
+        {/*<FormLabel component='legend'>Settings</FormLabel>*/}
         <FormGroup>
           <FormControlLabel control={<Switch size='small' onChange={handleChange('groupEvents')} checked={wizards.ics.groupEvents}/>}
                             label={'One event per day'}/>
@@ -49,8 +51,10 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
                             label={'All day event'}/>
         </FormGroup>
       </FormControl>
-      <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
-    </>
+      <Box display='flex' justifyContent='flex-end'>
+        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
+      </Box>
+    </Box>
   );
 };
 

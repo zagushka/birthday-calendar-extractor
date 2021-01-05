@@ -9,7 +9,6 @@ import Box from '@material-ui/core/Box';
 import React, {
   FunctionComponent,
   useContext,
-  useEffect,
 } from 'react';
 import { TABS } from '../../constants';
 import { LoadingContext } from '../../context/loading.context';

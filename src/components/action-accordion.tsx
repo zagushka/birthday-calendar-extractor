@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { FunctionComponent } from 'react';
 import { ACTIONS_SET } from '../constants';
 import { translateString } from '../filters/translate';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
 
 export interface ActionAccordionInterface {
   action: ACTIONS_SET;
@@ -40,7 +40,6 @@ const ActionAccordion: FunctionComponent<ActionAccordionInterface> = (params) =>
 
   const isExpanded = action === currentAction;
 
-
   return (
     <Accordion expanded={isExpanded}
                onChange={onChange(action)}>
@@ -50,9 +49,9 @@ const ActionAccordion: FunctionComponent<ActionAccordionInterface> = (params) =>
         <Typography className={classes.heading}>{translateString(action)}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>
+        <Box>
           {params.children}
-        </Typography>
+        </Box>
       </AccordionDetails>
     </Accordion>
   );

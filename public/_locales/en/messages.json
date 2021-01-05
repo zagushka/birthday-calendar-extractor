@@ -109,7 +109,7 @@
     "description": "Header for extraction format selection"
   },
   "SELECT_FILE_FORMAT_ICS": {
-    "message": "export birthdays as ICS file.",
+    "message": "Export birthdays as ICS file.",
     "description": "Label for ics file type radio button"
   },
   "SELECT_ICS_DESCRIPTION": {
@@ -117,7 +117,7 @@
     "description": "Description for ics file type radio button"
   },
   "SELECT_FILE_FORMAT_CSV": {
-    "message": "export birthdays as CSV file.",
+    "message": "Export birthdays as CSV file.",
     "description": "Label for csv file type radio button"
   },
   "FILE_FORMAT_CSV_DESCRIPTION": {
@@ -125,7 +125,7 @@
     "description": "Description for label for csv file type radio button"
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "delete imported ICS from Google Calendar.",
+    "message": "Delete imported ICS from Google Calendar.",
     "description": "Label for delete-ics file type radio button"
   },
   "SELECT_DELETE_ICS_DESCRIPTION": {
