@@ -5,6 +5,7 @@ import React, {
   useContext,
 } from 'react';
 import { LoadingContext } from '../../context/loading.context';
+import { translateString } from '../../filters/translate';
 import { enableBadgeNotifications } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 
@@ -27,7 +28,7 @@ const TodayBirthdayWizard: FunctionComponent = () => {
         ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </Box>
       <Box display='flex' justifyContent='flex-end'>
-        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
+        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>{translateString('GENERATE')}</Button>
       </Box>
     </Box>
   );

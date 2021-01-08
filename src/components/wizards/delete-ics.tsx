@@ -16,7 +16,10 @@ import {
   IcsSettings,
   SettingsContext,
 } from '../../context/settings.context';
-import { translate } from '../../filters/translate';
+import {
+  translate,
+  translateString,
+} from '../../filters/translate';
 import { createCalendarDeleteIcs } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 
@@ -30,7 +33,7 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
       createCalendarDeleteIcs({
         groupEvents: wizards.ics.groupEvents,
         allDayEvent: wizards.ics.allDayEvent,
-      })
+      }),
     )
       .subscribe(() => stopLoading(loaderName));
   };
@@ -50,13 +53,13 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
         {/*<FormLabel component='legend'>Settings</FormLabel>*/}
         <FormGroup>
           <FormControlLabel control={<Switch size='small' onChange={handleChange('groupEvents')} checked={wizards.ics.groupEvents}/>}
-                            label={'One event per day'}/>
+                            label={translateString('CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY')}/>
           <FormControlLabel control={<Switch size='small' onChange={handleChange('allDayEvent')} checked={wizards.ics.allDayEvent}/>}
-                            label={'All day event'}/>
+                            label={translateString('CREATE_ICS_SETTINGS_ALL_DAY_EVENTS')}/>
         </FormGroup>
       </FormControl>
       <Box display='flex' justifyContent='flex-end'>
-        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
+        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>{translateString('GENERATE')}</Button>
       </Box>
     </Box>
   );

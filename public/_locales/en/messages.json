@@ -77,7 +77,6 @@
     "message": "Buy me a coffee",
     "description": "Donate button"
   },
-
   "ACTIVATE_BADGE_DESCRIPTION": {
     "message": "Activate Descriptions",
     "description": "Activate badge description"
@@ -86,7 +85,6 @@
     "message": "Activate",
     "description": "Activate badge button title"
   },
-
   "DEACTIVATE_BADGE_DESCRIPTION": {
     "message": "DeActivate Descriptions",
     "description": "Deactivate badge description"
@@ -95,7 +93,6 @@
     "message": "Deactivate",
     "description": "Deactivate badge button title"
   },
-
   "NO_TOKEN_DETECTED": {
     "message": "Unable to fetch birthdays data, make sure you are logged into Facebook and try again.",
     "description": "Description for error when no token found."
@@ -116,6 +113,14 @@
     "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.",
     "description": "Description for ics file type radio button"
   },
+  "CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY": {
+    "message": "One event per day",
+    "description": "Label for `create or delete ics` settings - single event per day"
+  },
+  "CREATE_ICS_SETTINGS_ALL_DAY_EVENTS": {
+    "message": "All day events",
+    "description": "Label for `create or delete ics` settings - all day events"
+  },
   "SELECT_FILE_FORMAT_CSV": {
     "message": "Export birthdays as CSV file.",
     "description": "Label for csv file type radio button"
@@ -123,6 +128,18 @@
   "FILE_FORMAT_CSV_DESCRIPTION": {
     "message": "CSV file format used by Microsoft Excel or Google Sheets. DO NOT USE it to import birthdays to a calendar, ICS format is preferable.",
     "description": "Description for label for csv file type radio button"
+  },
+  "CREATE_CSV_SETTINGS_DATE_FORMAT": {
+    "message": "Date format",
+    "description": "Label for csv settings `date format` label."
+  },
+  "CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH": {
+    "message": "Day/Month",
+    "description": "Label for csv settings `date format` Day/Month label."
+  },
+  "CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY": {
+    "message": "Month/Day",
+    "description": "Label for csv settings `date format` Month/Day label."
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
     "message": "Delete imported ICS from Google Calendar.",
@@ -133,7 +150,7 @@
     "description": "Description for delete-ics file type radio button"
   },
   "ENABLE_BADGE": {
-    "message": "see birthday notification icon.",
+    "message": "See birthday notification icon.",
     "description": "Label for checkbox to display today's birthdays."
   },
   "TODAY_BIRTHDAY_TITLE": {

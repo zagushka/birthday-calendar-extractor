@@ -14,7 +14,10 @@ import React, {
 } from 'react';
 import { LoadingContext } from '../../context/loading.context';
 import { SettingsContext } from '../../context/settings.context';
-import { translate } from '../../filters/translate';
+import {
+  translate,
+  translateString,
+} from '../../filters/translate';
 import { createCalendarCsv } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 
@@ -42,14 +45,20 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
         {translate('FILE_FORMAT_CSV_DESCRIPTION')}
       </Box>
       <FormControl size='small' component='fieldset'>
-        <FormLabel component='legend'>Date Format</FormLabel>
+        <FormLabel component='legend'>{translateString('CREATE_CSV_SETTINGS_DATE_FORMAT')}</FormLabel>
         <RadioGroup row name='date-format' value={wizards.csv.format} onChange={handleChange}>
-          <FormControlLabel value='dd/mm' control={<Radio size='small'/>} label='Day/Month'/>
-          <FormControlLabel value='mm/dd' control={<Radio size='small'/>} label='Month/Day'/>
+          <FormControlLabel
+            value='dd/mm'
+            control={<Radio size='small'/>}
+            label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH')}/>
+          <FormControlLabel
+            value='mm/dd'
+            control={<Radio size='small'/>}
+            label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY')}/>
         </RadioGroup>
       </FormControl>
       <Box display='flex' justifyContent='flex-end'>
-        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>NEXT</Button>
+        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>{translateString('GENERATE')}</Button>
       </Box>
     </Box>
   );
