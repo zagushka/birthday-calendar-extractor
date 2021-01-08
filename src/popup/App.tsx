@@ -10,7 +10,7 @@ import UserSettings from '../components/user-settings/user-settings';
 import ErrorsContextProvider, { ErrorsContext } from '../context/errors.context';
 import LoadingContextProvider from '../context/loading.context';
 import SettingsContextProvider from '../context/settings.context';
-import { BadgeClickedAction } from '../libs/events/actions';
+import { badgeClickedAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 import './App.scss';
 
@@ -19,7 +19,7 @@ const App: FunctionComponent = () => {
 
   useEffect(() => {
     // Send notification badge was clicked
-    sendMessage(new BadgeClickedAction(), true);
+    sendMessage(badgeClickedAction(), true);
   }, []);
 
   const content = (() => {

@@ -7,11 +7,11 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { FunctionComponent } from 'react';
-import { ACTIONS_SET } from '../constants';
+import { WIZARD_NAMES } from '../constants';
 import { translateString } from '../filters/translate';
-import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface ActionAccordionInterface {
-  action: ACTIONS_SET;
-  currentAction: ACTIONS_SET;
-  onChange: (action: ACTIONS_SET) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => void;
+  action: keyof typeof WIZARD_NAMES;
+  currentAction: keyof typeof WIZARD_NAMES;
+  onChange: (action: keyof typeof WIZARD_NAMES) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => void;
 }
 
 const ActionAccordion: FunctionComponent<ActionAccordionInterface> = (params) => {

@@ -4,27 +4,19 @@ import {
   Observable,
   Subject,
 } from 'rxjs';
-import {
-  filter,
-  tap,
-} from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
-import { ACTION } from '../../constants';
-import { Settings } from '../storage/chrome.storage';
-import {
-  Action,
-  ActionType,
-  Message,
-} from './actions';
+import { Message } from './actions';
 import { alChromeAlarms$ } from './alarms';
 import { allChromeMessages$ } from './messages';
+import { ActionTypes } from './types';
 
 /**
  * All actions Observable
  * Messages from listeners and internal sources should be forwarded here.
  */
 
-export const allActions$: Subject<Message<ActionType>> = new Subject();
+export const allActions$: Subject<Message<ActionTypes>> = new Subject();
 // Forward chrome.runtime.onMessage and chrome.alarms.onAlarm events to allMessages$
 // Merged with alarms listener
 merge(
@@ -36,14 +28,11 @@ merge(
 /**
  * Listen to allMessages$ filtered by actionName
  */
-export function listenTo<A extends Action>(...args: Array<ACTION>): Observable<Message<A>> {
-  const names = [...arguments] as Array<ACTION>;
-
+export function listenTo(...types: ActionTypes['type'][]) {
   return allActions$
     .pipe(
-      // @ts-ignore
-      filter(a => names.includes(a.action.type)),
-    ) as Observable<Message<A>>;
+      filter<Message<ActionTypes>>(a => types.includes(a.action.type)),
+    );
 }
 
 const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => chrome.runtime.sendMessage(parameters, callback);
@@ -51,9 +40,9 @@ const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => ch
 /**
  * Can be used on both popup and backend
  */
-export function sendMessage<T>(action: Action): Observable<T>;
-export function sendMessage(action: Action, dontWait: boolean): void;
-export function sendMessage<T>(action: Action, dontWait?: boolean) {
+export function sendMessage<T>(action: ActionTypes): Observable<T>;
+export function sendMessage(action: ActionTypes, dontWait: boolean): void;
+export function sendMessage<T>(action: ActionTypes, dontWait?: boolean) {
   // Mirror for the local needs
   allActions$.next({
     action,
@@ -61,7 +50,7 @@ export function sendMessage<T>(action: Action, dontWait?: boolean) {
   });
   // Send message
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback<Action, T>(sendMessageWrapper)(action);
+    return bindCallback<ActionTypes, T>(sendMessageWrapper)(action);
 
     // return new Observable(subscriber => {
     //   console.log('[SEND MESSAGE OBSERVABLE]', action.type);

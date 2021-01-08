@@ -1,59 +1,97 @@
+import { IcsSettings } from '../../context/settings.context';
 import {
-  ACTION,
-  ACTIONS_SET,
-  ApplicationStatus,
-} from '../../constants';
+  ActionTypes,
+  ALARM_NEW_DAY,
+  AlarmTypes,
+  BADGE_CLICKED,
+  BadgeActionTypes,
+  BadgeNotificationActionTypes,
+  CREATE_CALENDAR_CSV,
+  CREATE_CALENDAR_DELETE_ICS,
+  CREATE_CALENDAR_ICS,
+  CREATE_CALENDAR_JSON,
+  CreateCalendarActionTypes,
+  DISABLE_BADGE_NOTIFICATION,
+  ENABLE_BADGE_NOTIFICATION,
+  NotificationActionTypes,
+  SEND_ERROR,
+  SEND_GENERATION_STATUS,
+  UPDATE_BADGE,
+} from './types';
 
-export type ActionType = StartGenerationAction | UpdateBadgeAction | NewDayAction | ErrorAction | LogAction;
-
-export class Action {
-  constructor(public type: ACTION) {
-  }
+export function sendError(error: string): NotificationActionTypes {
+  return {
+    type: SEND_ERROR,
+    payload: {error},
+  };
 }
 
-export class ActionGetFacebookSettings extends Action {
-  constructor() {
-    super(ACTION.GET_FACEBOOK_SETTINGS);
-  }
+export function sendGenerationStatus(status: string): NotificationActionTypes {
+  return {
+    type: SEND_GENERATION_STATUS,
+    payload: {status},
+  };
 }
 
-export class NewDayAction extends Action {
-  constructor() {
-    super(ACTION.ALARM_NEW_DAY);
-  }
+
+export function enableBadgeNotifications(): BadgeNotificationActionTypes {
+  return {
+    type: ENABLE_BADGE_NOTIFICATION,
+  };
 }
 
-export class StartGenerationAction extends Action {
-  constructor(public format: ACTIONS_SET) {
-    super(ACTION.GENERATION_START);
-  }
+export function disableBadgeNotifications(): BadgeNotificationActionTypes {
+  return {
+    type: DISABLE_BADGE_NOTIFICATION,
+  };
 }
 
-export class UpdateBadgeAction extends Action {
-  constructor() {
-    super(ACTION.BADGE_UPDATE);
-  }
+export function updateBadgeAction(): BadgeActionTypes {
+  return {
+    type: UPDATE_BADGE,
+  };
 }
 
-export class BadgeClickedAction extends Action {
-  constructor() {
-    super(ACTION.BADGE_CLICKED);
-  }
+export function createCalendarCsv(dateFormat: 'dd/mm' | 'mm/dd'): CreateCalendarActionTypes {
+  return {
+    type: CREATE_CALENDAR_CSV,
+    payload: {dateFormat},
+  };
 }
 
-export class ErrorAction extends Action {
-  constructor(public status: ApplicationStatus) {
-    super(ACTION.ERROR);
-  }
+export function createCalendarIcs(settings: IcsSettings): CreateCalendarActionTypes {
+  return {
+    type: CREATE_CALENDAR_ICS,
+    payload: settings,
+  };
 }
 
-export class LogAction extends Action {
-  constructor(public data: any) {
-    super(ACTION.LOG);
-  }
+export function createCalendarDeleteIcs(settings: IcsSettings): CreateCalendarActionTypes {
+  return {
+    type: CREATE_CALENDAR_DELETE_ICS,
+    payload: settings,
+  };
 }
 
-export interface Message<T extends Action> {
+export function createCalendarJson(): CreateCalendarActionTypes {
+  return {
+    type: CREATE_CALENDAR_JSON,
+  };
+}
+
+export function badgeClickedAction(): AlarmTypes {
+  return {
+    type: BADGE_CLICKED,
+  };
+}
+
+export function alarmNewDay(): AlarmTypes {
+  return {
+    type: ALARM_NEW_DAY,
+  };
+}
+
+export interface Message<T extends ActionTypes> {
   action: T,
   sender?: chrome.runtime.MessageSender,
   callback?: (...params: Array<any>) => void

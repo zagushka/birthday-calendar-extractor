@@ -62,7 +62,7 @@ const UserSettings: FunctionComponent = () => {
   const loaded = !isLoading('SETTINGS');
   console.log('LOADEDD', loaded);
 
-  const updateTabIndex = (event: React.ChangeEvent<{}>, index: TABS) => setTab(index);
+  const updateTabIndex = (event: React.ChangeEvent<{}>, index: keyof typeof TABS) => setTab(index);
 
   return (
     <TodayUsersContextProvider>

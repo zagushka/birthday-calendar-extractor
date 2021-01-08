@@ -1,31 +1,31 @@
-import {
-  merge,
-  of,
-  zip,
-} from 'rxjs';
+import { merge } from 'rxjs';
 import {
   map,
   startWith,
   switchMap,
-  tap,
 } from 'rxjs/operators';
-import {
-  ACTION,
-  ACTIONS_SET,
-  STORAGE_KEYS,
-} from './constants';
 import { updateBadge } from './libs/badge';
 import { CalendarBase } from './libs/base';
 import {
-  ErrorAction,
-  StartGenerationAction,
-  UpdateBadgeAction,
+  sendError,
+  updateBadgeAction,
 } from './libs/events/actions';
 import { setupAlarms } from './libs/events/alarms';
 import {
   listenTo,
   sendMessage,
 } from './libs/events/events';
+import {
+  ALARM_NEW_DAY,
+  BADGE_CLICKED,
+  CREATE_CALENDAR_CSV,
+  CREATE_CALENDAR_DELETE_ICS,
+  CREATE_CALENDAR_ICS,
+  CREATE_CALENDAR_JSON,
+  ENABLE_BADGE_NOTIFICATION,
+  SEND_ERROR,
+  UPDATE_BADGE,
+} from './libs/events/types';
 import { CalendarCSV } from './libs/formats/csv';
 import { CalendarDeleteICS } from './libs/formats/delete-ics';
 import { CalendarForStorage } from './libs/formats/for-storage';
@@ -35,13 +35,10 @@ import {
   getBirthdaysList,
   parsePageForConfig,
 } from './libs/lib';
-import {
-  storeLastBadgeClicked,
-  storeUserSettings,
-} from './libs/storage/chrome.storage';
+import { storeLastBadgeClicked } from './libs/storage/chrome.storage';
 
 const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
-  if (ACTION.ERROR !== message.type) {
+  if (SEND_ERROR !== message.type) {
     return;
   }
   chrome.runtime.onMessage.removeListener(handleContentResponse(firstLevelCallback));
@@ -51,17 +48,17 @@ const handleContentResponse = (firstLevelCallback: (data: any) => void) => (mess
 setupAlarms();
 
 // On Badge Click update last time badge clicked
-listenTo(ACTION.BADGE_CLICKED)
+listenTo(BADGE_CLICKED)
   .pipe(
     switchMap(() => storeLastBadgeClicked()),
   )
   .subscribe(() => {
-    sendMessage(new UpdateBadgeAction());
+    sendMessage(updateBadgeAction());
   });
 
 // Update Badge on update badge event or new date alarm
 merge(
-  listenTo(ACTION.BADGE_UPDATE, ACTION.ALARM_NEW_DAY),
+  listenTo(UPDATE_BADGE, ALARM_NEW_DAY),
 )
   .pipe(
     startWith(true), // Initial Badge setup
@@ -69,25 +66,31 @@ merge(
   .subscribe(() => updateBadge());
 
 // Take care of disable badge event
-listenTo<StartGenerationAction>(ACTION.BADGE_NOTIFICATIONS_DISABLE)
-  .pipe(
-    switchMap(message => zip(
-      // Move message forward
-      of(message),
-      // remove from storage
-      storeUserSettings({
-        [STORAGE_KEYS.BIRTHDAYS]: [],
-        [STORAGE_KEYS.BADGE_ACTIVE]: false,
-      }),
-    )),
-    tap(([{callback}]) => callback()),
-  )
-  .subscribe(() => {
-    // Update badge it should be clean
-    sendMessage(new UpdateBadgeAction(), true);
-  });
+// listenTo<StartGenerationAction>(ACTION.BADGE_NOTIFICATIONS_DISABLE)
+//   .pipe(
+//     switchMap(message => zip(
+//       // Move message forward
+//       of(message),
+//       // remove from storage
+//       storeUserSettings({
+//         [STORAGE_KEYS.BIRTHDAYS]: [],
+//         [STORAGE_KEYS.BADGE_ACTIVE]: false,
+//       }),
+//     )),
+//     tap(([{callback}]) => callback()),
+//   )
+//   .subscribe(() => {
+//     // Update badge it should be clean
+//     sendMessage(new UpdateBadgeAction(), true);
+//   });
 
-listenTo<StartGenerationAction>(ACTION.GENERATION_START)
+listenTo(
+  CREATE_CALENDAR_CSV,
+  CREATE_CALENDAR_ICS,
+  CREATE_CALENDAR_DELETE_ICS,
+  CREATE_CALENDAR_JSON,
+  ENABLE_BADGE_NOTIFICATION,
+)
   .pipe(
     switchMap(({action, callback}) =>
       parsePageForConfig()
@@ -95,20 +98,21 @@ listenTo<StartGenerationAction>(ACTION.GENERATION_START)
           switchMap(({language, token}) => getBirthdaysList(language, token)),
           map(events => {
             let calendar: CalendarBase<any, any, any>;
-            switch (action.format) {
-              case ACTIONS_SET.SELECT_FILE_FORMAT_CSV:
+            switch (action.type) {
+              case CREATE_CALENDAR_CSV:
+                action.payload.dateFormat;
                 calendar = new CalendarCSV();
                 break;
-              case ACTIONS_SET.SELECT_FILE_FORMAT_JSON:
+              case CREATE_CALENDAR_JSON:
                 calendar = new CalendarJSON();
                 break;
-              case ACTIONS_SET.SELECT_FILE_FORMAT_ICS:
+              case CREATE_CALENDAR_ICS:
                 calendar = new CalendarICS();
                 break;
-              case ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS:
+              case CREATE_CALENDAR_DELETE_ICS:
                 calendar = new CalendarDeleteICS();
                 break;
-              case ACTIONS_SET.ENABLE_BADGE:
+              case ENABLE_BADGE_NOTIFICATION:
                 calendar = new CalendarForStorage();
                 break;
               default:
@@ -123,8 +127,9 @@ listenTo<StartGenerationAction>(ACTION.GENERATION_START)
   )
   .subscribe(
     () => {
-      sendMessage(new ErrorAction('DONE'));
+      // @TODO REFACTOR
+      sendMessage(sendError('DONE'));
     },
-    (error) => new ErrorAction(error),
+    (error) => sendMessage(sendError(error)),
   );
 

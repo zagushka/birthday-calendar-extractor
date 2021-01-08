@@ -11,8 +11,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { ErrorAction } from './events/actions';
-import { sendMessage } from './events/events';
+
 import {
   languages,
   LanguageSet,

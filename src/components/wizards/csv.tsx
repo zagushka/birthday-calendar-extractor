@@ -12,11 +12,10 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { ACTIONS_SET } from '../../constants';
 import { LoadingContext } from '../../context/loading.context';
 import { SettingsContext } from '../../context/settings.context';
 import { translate } from '../../filters/translate';
-import { StartGenerationAction } from '../../libs/events/actions';
+import { createCalendarCsv } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
@@ -25,7 +24,9 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
 
   const startGeneration = () => {
     const loaderName = startLoading();
-    sendMessage(new StartGenerationAction(ACTIONS_SET.SELECT_FILE_FORMAT_CSV))
+    sendMessage(
+      createCalendarCsv(wizards.csv.format),
+    )
       .subscribe(() => stopLoading(loaderName));
   };
 
@@ -38,7 +39,7 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
   return (
     <Box flexDirection='column' display='flex'>
       <Box pb={1}>
-      {translate('FILE_FORMAT_CSV_DESCRIPTION')}
+        {translate('FILE_FORMAT_CSV_DESCRIPTION')}
       </Box>
       <FormControl size='small' component='fieldset'>
         <FormLabel component='legend'>Date Format</FormLabel>

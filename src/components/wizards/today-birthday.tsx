@@ -4,9 +4,8 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { ACTIONS_SET } from '../../constants';
 import { LoadingContext } from '../../context/loading.context';
-import { StartGenerationAction } from '../../libs/events/actions';
+import { enableBadgeNotifications } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 
 const TodayBirthdayWizard: FunctionComponent = () => {
@@ -14,7 +13,7 @@ const TodayBirthdayWizard: FunctionComponent = () => {
 
   const startGeneration = () => {
     const loaderName = startLoading();
-    sendMessage(new StartGenerationAction(ACTIONS_SET.ENABLE_BADGE))
+    sendMessage(enableBadgeNotifications())
       .subscribe(() => stopLoading(loaderName));
   };
 

@@ -2,7 +2,7 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { ACTIONS_SET } from '../constants';
+import { WIZARD_NAMES } from '../constants';
 import { SettingsContext } from '../context/settings.context';
 import ActionAccordion, { ActionAccordionInterface } from './action-accordion';
 import CsvGeneratorWizard from './wizards/csv';
@@ -13,12 +13,12 @@ import TodayBirthdayWizard from './wizards/today-birthday';
 const SelectWizard: FunctionComponent = () => {
   const {action, setAction} = useContext(SettingsContext);
 
-  const handleChange = (selectedAction: ACTIONS_SET) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+  const handleChange = (selectedAction: keyof typeof WIZARD_NAMES) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
     const newAction = isExpanded ? selectedAction : null;
     setAction(newAction);
   };
 
-  const attributes = (ac: ACTIONS_SET): ActionAccordionInterface => ({
+  const attributes = (ac: keyof typeof WIZARD_NAMES): ActionAccordionInterface => ({
     onChange: handleChange,
     currentAction: action,
     action: ac,
@@ -26,19 +26,19 @@ const SelectWizard: FunctionComponent = () => {
 
   return (
     <>
-      <ActionAccordion {...attributes(ACTIONS_SET.ENABLE_BADGE)} >
+      <ActionAccordion {...attributes(WIZARD_NAMES.ENABLE_BADGE)} >
         <TodayBirthdayWizard/>
       </ActionAccordion>
 
-      <ActionAccordion {...attributes(ACTIONS_SET.SELECT_FILE_FORMAT_ICS)}>
+      <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_ICS)}>
         <IcsGeneratorWizard/>
       </ActionAccordion>
 
-      <ActionAccordion  {...attributes(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS)}>
+      <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_DELETE_ICS)}>
         <DeleteIcsGeneratorWizard/>
       </ActionAccordion>
 
-      <ActionAccordion  {...attributes(ACTIONS_SET.SELECT_FILE_FORMAT_CSV)}>
+      <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}>
         <CsvGeneratorWizard/>
       </ActionAccordion>
     </>

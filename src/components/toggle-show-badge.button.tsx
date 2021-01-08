@@ -13,18 +13,19 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import {
-  ACTION,
-  ACTIONS_SET,
-  STORAGE_KEYS,
-} from '../constants';
+import { STORAGE_KEYS } from '../constants';
 import { LoadingContext } from '../context/loading.context';
 import { translate } from '../filters/translate';
-import { StartGenerationAction } from '../libs/events/actions';
+import {
+  disableBadgeNotifications,
+  enableBadgeNotifications,
+} from '../libs/events/actions';
 import {
   listenTo,
   sendMessage,
 } from '../libs/events/events';
+import { UPDATE_BADGE } from '../libs/events/types';
+
 import { retrieveUserSettings } from '../libs/storage/chrome.storage';
 import BuyCoffeeButton from './buy-coffee.button';
 
@@ -38,7 +39,7 @@ const ToggleShowBadgeButton: FunctionComponent = (props) => {
 
   const deactivate = () => {
     const loadingInstanceName = startLoading();
-    sendMessage(new StartGenerationAction(ACTIONS_SET.DISABLE_BADGE))
+    sendMessage(disableBadgeNotifications())
       .subscribe(() => {
         stopLoading(loadingInstanceName);
       });
@@ -46,7 +47,7 @@ const ToggleShowBadgeButton: FunctionComponent = (props) => {
 
   const activate = () => {
     const loadingInstanceName = startLoading();
-    sendMessage(new StartGenerationAction(ACTIONS_SET.ENABLE_BADGE))
+    sendMessage(enableBadgeNotifications())
       .subscribe(() => {
         stopLoading(loadingInstanceName);
       });
@@ -54,7 +55,7 @@ const ToggleShowBadgeButton: FunctionComponent = (props) => {
 
   useEffect(() => {
     // Load current status and listen to updates
-    listenTo(ACTION.BADGE_UPDATE)
+    listenTo(UPDATE_BADGE)
       .pipe(
         takeUntil(onDestroy$),
         startWith(true),

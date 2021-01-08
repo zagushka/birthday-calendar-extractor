@@ -11,14 +11,13 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { ACTIONS_SET } from '../../constants';
 import { LoadingContext } from '../../context/loading.context';
 import {
   IcsSettings,
   SettingsContext,
 } from '../../context/settings.context';
 import { translate } from '../../filters/translate';
-import { StartGenerationAction } from '../../libs/events/actions';
+import { createCalendarDeleteIcs } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 
 const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
@@ -27,7 +26,12 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
 
   const startGeneration = () => {
     const loaderName = startLoading();
-    sendMessage(new StartGenerationAction(ACTIONS_SET.SELECT_FILE_FORMAT_DELETE_ICS))
+    sendMessage(
+      createCalendarDeleteIcs({
+        groupEvents: wizards.ics.groupEvents,
+        allDayEvent: wizards.ics.allDayEvent,
+      })
+    )
       .subscribe(() => stopLoading(loaderName));
   };
 

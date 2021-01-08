@@ -5,9 +5,8 @@ import React, {
 } from 'react';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ACTION } from '../constants';
-import { ErrorAction } from '../libs/events/actions';
 import { listenTo } from '../libs/events/events';
+import { SEND_ERROR } from '../libs/events/types';
 
 interface ErrorsContextInterface {
   error: string; // error regarding token or not supported language
@@ -31,11 +30,15 @@ const ErrorsContextProvider: FunctionComponent = (props) => {
     const onDestroy$: Subject<boolean> = new Subject();
 
     // Listen to Status Updates and update errors accordingly
-    listenTo<ErrorAction>(ACTION.ERROR)
+    listenTo(SEND_ERROR)
       .pipe(
         takeUntil(onDestroy$),
       )
-      .subscribe(({action}) => setError(action.status));
+      .subscribe(({action}) => {
+        if (SEND_ERROR === action.type) {
+          setError(action.payload.error);
+        }
+      });
 
     return () => {
       onDestroy$.next(true);

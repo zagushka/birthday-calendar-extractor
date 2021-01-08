@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { STORAGE_KEYS } from '../../constants';
 import { CalendarBase } from '../base';
-import { UpdateBadgeAction } from '../events/actions';
+import { updateBadgeAction } from '../events/actions';
 import { sendMessage } from '../events/events';
 import {
   PreparedEvent,
@@ -21,7 +21,7 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
       [STORAGE_KEYS.BIRTHDAYS]: calendarData,
       [STORAGE_KEYS.BADGE_ACTIVE]: true,
     })
-      .subscribe(() => sendMessage(new UpdateBadgeAction(), true));
+      .subscribe(() => sendMessage(updateBadgeAction(), true));
   }
 
   formatEvent(event: PreparedEvent) {

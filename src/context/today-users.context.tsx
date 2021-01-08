@@ -10,11 +10,12 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
-import {
-  ACTION,
-  STORAGE_KEYS,
-} from '../constants';
+import { STORAGE_KEYS } from '../constants';
 import { listenTo } from '../libs/events/events';
+import {
+  ALARM_NEW_DAY,
+  UPDATE_BADGE,
+} from '../libs/events/types';
 import {
   filterBirthdaysForDate,
   getBirthdaysForDate,
@@ -67,7 +68,7 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
   // Update badge icon, move it to background
   useEffect(() => {
     const onDestroy$ = new Subject();
-    listenTo(ACTION.ALARM_NEW_DAY, ACTION.BADGE_UPDATE) // Update when date changes
+    listenTo(UPDATE_BADGE, ALARM_NEW_DAY) // Update when date changes
       .pipe(
         takeUntil(onDestroy$),
         startWith(true), // Display on mount

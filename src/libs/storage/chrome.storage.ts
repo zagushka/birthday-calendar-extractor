@@ -2,7 +2,6 @@ import update from 'immutability-helper';
 import { DateTime } from 'luxon';
 import {
   bindCallback,
-  forkJoin,
   Observable,
 } from 'rxjs';
 import {
@@ -10,17 +9,18 @@ import {
   pluck,
 } from 'rxjs/operators';
 import {
-  ACTIONS_SET,
   STORAGE_KEYS,
   StorageKeyValues,
   TABS,
+  WIZARD_NAMES,
 } from '../../constants';
+
 import { WizardsSettings } from '../../context/settings.context';
 
 export interface Settings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+  [STORAGE_KEYS.LAST_ACTIVE_TAB]: keyof typeof TABS;
+  [STORAGE_KEYS.LAST_SELECTED_ACTION]: keyof typeof WIZARD_NAMES;
   [STORAGE_KEYS.WIZARDS]: WizardsSettings;
   [STORAGE_KEYS.BADGE_VISITED]: DateTime;
   [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthday>;
@@ -30,8 +30,8 @@ export interface StoredSettings {
   [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
   [STORAGE_KEYS.BADGE_VISITED]: number;
   [STORAGE_KEYS.BIRTHDAYS]: Array<StoredBirthday>;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS;
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET;
+  [STORAGE_KEYS.LAST_ACTIVE_TAB]: keyof typeof TABS;
+  [STORAGE_KEYS.LAST_SELECTED_ACTION]: keyof typeof WIZARD_NAMES;
   [STORAGE_KEYS.WIZARDS]: WizardsSettings;
 }
 
@@ -48,7 +48,7 @@ export const DEFAULT_SETTINGS: Settings = {
   [STORAGE_KEYS.BADGE_VISITED]: DateTime.fromMillis(0),
   [STORAGE_KEYS.BIRTHDAYS]: [],
   [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS.CALENDAR_GENERATOR,
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: ACTIONS_SET.SELECT_FILE_FORMAT_ICS,
+  [STORAGE_KEYS.LAST_SELECTED_ACTION]: WIZARD_NAMES.CREATE_ICS,
   [STORAGE_KEYS.WIZARDS]: {csv: {format: 'dd/mm'}, ics: {allDayEvent: false, groupEvents: false}},
 };
 

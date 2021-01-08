@@ -8,18 +8,18 @@ import {
   map,
 } from 'rxjs/operators';
 import {
-  ActionType,
+  alarmNewDay,
   Message,
-  NewDayAction,
 } from './actions';
+import { AlarmTypes } from './types';
 
 
 // Listen to Alarms and get them as Message
-export const alChromeAlarms$: Observable<Message<ActionType>> = bindCallback<chrome.alarms.Alarm>(chrome.alarms.onAlarm.addListener)
+export const alChromeAlarms$: Observable<Message<AlarmTypes>> = bindCallback<chrome.alarms.Alarm>(chrome.alarms.onAlarm.addListener)
   .call(chrome.alarms.onAlarm)
   .pipe(
     filter(alarm => 'new-day-alarm' === alarm.name),
-    map((alarm) => ({action: new NewDayAction()})),
+    map((alarm) => ({action: alarmNewDay()})),
   );
 
 // Setup Alarms
