@@ -17,8 +17,8 @@ export interface CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar>
   formatEvent(event: PreparedEvent): Formatted;
 }
 
-// tslint:disable-next-line:max-line-length
-export abstract class CalendarBase<Formatted, GeneratedEvent, GeneratedCalendar> implements CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar> {
+export abstract class CalendarBase<Formatted, GeneratedEvent, GeneratedCalendar>
+  implements CalendarGenerator<Formatted, GeneratedEvent, GeneratedCalendar> {
   abstract readonly filename: string;
   abstract readonly fileMimeType: string;
 

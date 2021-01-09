@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface ActionAccordionInterface {
-  action: keyof typeof WIZARD_NAMES;
-  currentAction: keyof typeof WIZARD_NAMES;
-  onChange: (action: keyof typeof WIZARD_NAMES) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => void;
+  action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
+  currentAction: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
+  onChange: (action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => void;
 }
 
 const ActionAccordion: FunctionComponent<ActionAccordionInterface> = (params) => {

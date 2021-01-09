@@ -4,13 +4,8 @@ import {
   bindCallback,
   Observable,
 } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
-  map,
-  pluck,
-} from 'rxjs/operators';
-import {
-  STORAGE_KEYS,
-  StorageKeyValues,
   TABS,
   WIZARD_NAMES,
 } from '../../constants';
@@ -18,21 +13,21 @@ import {
 import { WizardsSettings } from '../../context/settings.context';
 
 export interface Settings {
-  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: keyof typeof TABS;
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: keyof typeof WIZARD_NAMES;
-  [STORAGE_KEYS.WIZARDS]: WizardsSettings;
-  [STORAGE_KEYS.BADGE_VISITED]: DateTime;
-  [STORAGE_KEYS.BIRTHDAYS]: Array<RestoredBirthday>;
+  badgeActive: boolean;
+  lastActiveTab: keyof typeof TABS;
+  lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
+  wizardSettings: WizardsSettings;
+  badgeVisited: DateTime;
+  birthdays: Array<RestoredBirthday>;
 }
 
 export interface StoredSettings {
-  [STORAGE_KEYS.BADGE_ACTIVE]: boolean;
-  [STORAGE_KEYS.BADGE_VISITED]: number;
-  [STORAGE_KEYS.BIRTHDAYS]: Array<StoredBirthday>;
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: keyof typeof TABS;
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: keyof typeof WIZARD_NAMES;
-  [STORAGE_KEYS.WIZARDS]: WizardsSettings;
+  badgeActive: boolean;
+  lastActiveTab: keyof typeof TABS;
+  lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
+  wizardSettings: WizardsSettings;
+  badgeVisited: number;
+  birthdays: Array<StoredBirthday>;
 }
 
 export type StoredBirthday = [string, number, string];
@@ -44,12 +39,12 @@ export interface RestoredBirthday {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  [STORAGE_KEYS.BADGE_ACTIVE]: false,
-  [STORAGE_KEYS.BADGE_VISITED]: DateTime.fromMillis(0),
-  [STORAGE_KEYS.BIRTHDAYS]: [],
-  [STORAGE_KEYS.LAST_ACTIVE_TAB]: TABS.CALENDAR_GENERATOR,
-  [STORAGE_KEYS.LAST_SELECTED_ACTION]: WIZARD_NAMES.CREATE_ICS,
-  [STORAGE_KEYS.WIZARDS]: {csv: {format: 'dd/mm'}, ics: {allDayEvent: false, groupEvents: false}},
+  badgeActive: false,
+  badgeVisited: DateTime.fromMillis(0),
+  birthdays: [],
+  lastActiveTab: TABS.CALENDAR_GENERATOR,
+  lastSelectedWizard: WIZARD_NAMES.CREATE_ICS,
+  wizardSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {allDayEvent: false, groupEvents: false}},
 };
 
 
@@ -66,22 +61,14 @@ const getWrapper =
     chrome.storage.local.get(keys, callback as () => any);
   };
 
-export function getLastTimeClickedBadge(): Observable<DateTime> {
-  return retrieveUserSettings([STORAGE_KEYS.BADGE_VISITED])
-    .pipe(
-      pluck(STORAGE_KEYS.BADGE_VISITED),
-    );
-}
-
 /**
  * Fetch all birthdays form local storage and filter for today's
  */
 
 export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBirthday>> {
-  return retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS])
+  return retrieveUserSettings(['birthdays'])
     .pipe(
-      pluck(STORAGE_KEYS.BIRTHDAYS),
-      map(birthdays => filterBirthdaysForDate(birthdays, date)),
+      map(({birthdays}) => filterBirthdaysForDate(birthdays, date)),
     );
 }
 
@@ -96,7 +83,7 @@ export function filterBirthdaysForDate(birthdays: Array<RestoredBirthday>, date:
  */
 export function storeLastBadgeClicked(): Observable<void> {
   return storeUserSettings({
-    [STORAGE_KEYS.BADGE_VISITED]: DateTime.local(),
+    badgeVisited: DateTime.local(),
   });
 }
 
@@ -124,7 +111,7 @@ const decayBirthday = (birthday: RestoredBirthday): StoredBirthday => {
  * It have a bit dirty tricks of typescript "as"... everything just to move one step toward this function to return right Pick from
  * Settings interface.
  *
- * Parameter is the array of STORAGE_KEYS - values to fetch from storage
+ * Parameter is the array of properties names of Settings interface - values to fetch from storage
  *
  */
 export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K): Observable<U> {
@@ -133,22 +120,22 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
       map(data => {
         const result = keys
           // Revive retrieved data
-          .reduce<Settings>((accumulator, key) => {
+          .reduce((accumulator, key) => {
             switch (key) {
-              case STORAGE_KEYS.BADGE_ACTIVE:
-              case STORAGE_KEYS.LAST_ACTIVE_TAB:
-              case STORAGE_KEYS.LAST_SELECTED_ACTION:
-              case STORAGE_KEYS.WIZARDS: {
+              case 'badgeActive':
+              case 'lastActiveTab':
+              case 'lastSelectedWizard':
+              case 'wizardSettings': {
                 const value = data[key] || DEFAULT_SETTINGS[key];
                 return update(accumulator, {[key]: {$set: value}});
               }
 
-              case STORAGE_KEYS.BADGE_VISITED: {
+              case 'badgeVisited': {
                 const value = data[key] && DateTime.fromMillis(data[key]) || DEFAULT_SETTINGS[key];
                 return update(accumulator, {[key]: {$set: value}});
               }
 
-              case STORAGE_KEYS.BIRTHDAYS: {
+              case 'birthdays': {
                 const value = data[key] && data[key].map((event) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
                 return update(accumulator, {[key]: {$set: value}});
               }
@@ -158,7 +145,7 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
             }
           }, {} as Settings); // <- Dirty trick
 
-        return result;
+        return result as unknown as U;
       }),
     );
 
@@ -169,19 +156,19 @@ export function storeUserSettings(settings: Partial<Settings>): Observable<void>
 export function storeUserSettings(settings: Partial<Settings>, dontWait: boolean): void;
 export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolean) {
   const data =
-    (Object.keys(settings) as Array<StorageKeyValues>)
+    (Object.keys(settings) as Array<keyof Settings>)
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
         switch (key) {
-          case STORAGE_KEYS.BADGE_ACTIVE:
-          case STORAGE_KEYS.LAST_ACTIVE_TAB:
-          case STORAGE_KEYS.LAST_SELECTED_ACTION:
-          case STORAGE_KEYS.WIZARDS:
+          case 'badgeActive':
+          case 'lastActiveTab':
+          case 'lastSelectedWizard':
+          case 'wizardSettings':
             return update(accumulator, {[key]: {$set: settings[key]}});
 
-          case STORAGE_KEYS.BADGE_VISITED:
+          case 'badgeVisited':
             return update(accumulator, {[key]: {$set: settings[key].toMillis()}});
 
-          case STORAGE_KEYS.BIRTHDAYS:
+          case 'birthdays':
             return update(accumulator, {
               [key]: {
                 $set: settings[key].map((event) => decayBirthday(event)),

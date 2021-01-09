@@ -100,17 +100,16 @@ listenTo(
             let calendar: CalendarBase<any, any, any>;
             switch (action.type) {
               case CREATE_CALENDAR_CSV:
-                action.payload.dateFormat;
-                calendar = new CalendarCSV();
+                calendar = new CalendarCSV(action.payload);
                 break;
               case CREATE_CALENDAR_JSON:
                 calendar = new CalendarJSON();
                 break;
               case CREATE_CALENDAR_ICS:
-                calendar = new CalendarICS();
+                calendar = new CalendarICS(action.payload);
                 break;
               case CREATE_CALENDAR_DELETE_ICS:
-                calendar = new CalendarDeleteICS();
+                calendar = new CalendarDeleteICS(action.payload);
                 break;
               case ENABLE_BADGE_NOTIFICATION:
                 calendar = new CalendarForStorage();

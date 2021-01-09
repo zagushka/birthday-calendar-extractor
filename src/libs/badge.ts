@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon';
-import { STORAGE_KEYS } from '../constants';
 import {
   filterBirthdaysForDate,
   retrieveUserSettings,
@@ -11,17 +10,17 @@ import {
  */
 export function updateBadge(): void {
   // @TODO Add Check Badge is active
-  retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS, STORAGE_KEYS.BADGE_ACTIVE, STORAGE_KEYS.BADGE_VISITED])
-    .subscribe((settings) => {
+  retrieveUserSettings(['birthdays', 'badgeActive', 'badgeVisited'])
+    .subscribe(({birthdays, badgeVisited, badgeActive}) => {
       // filter only today's birthdays
       let badgeNumber = '';
       let badgeColor: string | chrome.browserAction.ColorArray = [0, 0, 0, 0];
 
       // Update default badge value and color if functionality is active
-      if (settings[STORAGE_KEYS.BADGE_ACTIVE]) {
-        const birthdays = filterBirthdaysForDate(settings[STORAGE_KEYS.BIRTHDAYS], DateTime.local());
-        badgeNumber = birthdays.length ? birthdays.length.toString() : '';
-        badgeColor = (settings[STORAGE_KEYS.BADGE_VISITED].ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
+      if (badgeActive) {
+        const filteredBirthdays = filterBirthdaysForDate(birthdays, DateTime.local());
+        badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
+        badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
       }
 
       setBadgeText(badgeNumber);

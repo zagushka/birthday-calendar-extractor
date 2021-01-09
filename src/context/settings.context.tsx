@@ -5,7 +5,6 @@ import React, {
   useState,
 } from 'react';
 import {
-  STORAGE_KEYS,
   TABS,
   WIZARD_NAMES,
 } from '../constants';
@@ -15,23 +14,27 @@ import {
 } from '../libs/storage/chrome.storage';
 import { LoadingContext } from './loading.context';
 
+export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
+
+export interface CsvSettings {
+  format: CsvDateFormats;
+}
+
 export interface IcsSettings {
   allDayEvent: boolean;
   groupEvents: boolean;
 }
 
 export interface WizardsSettings {
-  csv: {
-    format: 'dd/mm' | 'mm/dd'
-  };
+  csv: CsvSettings;
   ics: IcsSettings;
 }
 
 interface SettingsContextInterface {
   tab: keyof typeof TABS;
   setTab: (tab: keyof typeof TABS) => void;
-  action: keyof typeof WIZARD_NAMES;
-  setAction: (action: keyof typeof WIZARD_NAMES) => void;
+  action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
+  setAction: (action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]) => void;
   wizards: WizardsSettings;
   setWizards: (settings: WizardsSettings) => void;
 }
@@ -44,7 +47,7 @@ export const SettingsContext = React.createContext<SettingsContextInterface>({
   setAction: () => {
   },
   wizards: {
-    csv: {format: 'dd/mm'},
+    csv: {format: 'dd/LL/yyyy'},
     ics: {allDayEvent: false, groupEvents: false},
   },
   setWizards: (wizards: WizardsSettings) => {
@@ -54,7 +57,7 @@ export const SettingsContext = React.createContext<SettingsContextInterface>({
 const SettingsContextProvider: FunctionComponent = (props) => {
   const {startLoading, stopLoading} = useContext(LoadingContext);
 
-  const [stateAction, setStateAction] = useState<keyof typeof WIZARD_NAMES>();
+  const [stateAction, setStateAction] = useState<typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]>();
   const [stateTab, setStateTab] = useState<keyof typeof TABS>();
   const [stateWizards, setStateWizards] = useState<WizardsSettings>();
 
@@ -65,16 +68,15 @@ const SettingsContextProvider: FunctionComponent = (props) => {
     // const loadingInstanceName = startLoading('SETTINGS');
     // Request initial action and tab states
     retrieveUserSettings([
-      STORAGE_KEYS.LAST_ACTIVE_TAB,
-      STORAGE_KEYS.LAST_SELECTED_ACTION,
-      STORAGE_KEYS.WIZARDS,
+      'lastActiveTab',
+      'lastSelectedWizard',
+      'wizardSettings',
     ])
-      .subscribe((storedSettings) => {
-        const storedAction = storedSettings[STORAGE_KEYS.LAST_SELECTED_ACTION];
-        const storedTab = storedSettings[STORAGE_KEYS.LAST_ACTIVE_TAB];
-        const storedWizards = storedSettings[STORAGE_KEYS.WIZARDS];
-
-
+      .subscribe(({
+                    lastActiveTab: storedTab,
+                    wizardSettings: storedWizards,
+                    lastSelectedWizard: storedAction,
+                  }) => {
         setStateAction(storedAction);
         setStateTab(storedTab);
         setStateWizards(storedWizards);
@@ -84,18 +86,18 @@ const SettingsContextProvider: FunctionComponent = (props) => {
       });
   }, []);
 
-  const storeAction = (action: keyof typeof WIZARD_NAMES) => {
-    storeUserSettings({[STORAGE_KEYS.LAST_SELECTED_ACTION]: action})
+  const storeAction = (action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]) => {
+    storeUserSettings({lastSelectedWizard: action})
       .subscribe(() => setStateAction(action));
   };
 
   const storeTab = (tab: keyof typeof TABS) => {
-    storeUserSettings({[STORAGE_KEYS.LAST_ACTIVE_TAB]: tab})
+    storeUserSettings({lastActiveTab: tab})
       .subscribe(() => setStateTab(tab));
   };
 
   const storeWizards = (wizards: WizardsSettings) => {
-    storeUserSettings({[STORAGE_KEYS.WIZARDS]: wizards})
+    storeUserSettings({wizardSettings: wizards})
       .subscribe(() => setStateWizards(wizards));
   };
 

@@ -10,7 +10,6 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
-import { STORAGE_KEYS } from '../constants';
 import { listenTo } from '../libs/events/events';
 import {
   ALARM_NEW_DAY,
@@ -58,10 +57,10 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
 
   useEffect(() => {
     // Fetch data
-    retrieveUserSettings([STORAGE_KEYS.BIRTHDAYS, STORAGE_KEYS.BADGE_ACTIVE])
-      .subscribe((data) => {
-        setIsActive(data[STORAGE_KEYS.BADGE_ACTIVE]);
-        setAllUsers(data[STORAGE_KEYS.BIRTHDAYS]);
+    retrieveUserSettings(['birthdays', 'badgeActive'])
+      .subscribe(({birthdays, badgeActive}) => {
+        setIsActive(badgeActive);
+        setAllUsers(birthdays);
       });
   }, []);
 

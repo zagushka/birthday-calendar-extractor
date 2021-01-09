@@ -13,7 +13,10 @@ import React, {
   useContext,
 } from 'react';
 import { LoadingContext } from '../../context/loading.context';
-import { SettingsContext } from '../../context/settings.context';
+import {
+  CsvDateFormats,
+  SettingsContext,
+} from '../../context/settings.context';
 import {
   translate,
   translateString,
@@ -34,7 +37,7 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = (event.target as HTMLInputElement).value as 'dd/mm' | 'mm/dd';
+    const value = (event.target as HTMLInputElement).value as CsvDateFormats;
     const newState = update(wizards, {csv: {format: {$set: value}}});
     setWizards(newState);
   };
@@ -48,11 +51,11 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
         <FormLabel component='legend'>{translateString('CREATE_CSV_SETTINGS_DATE_FORMAT')}</FormLabel>
         <RadioGroup row name='date-format' value={wizards.csv.format} onChange={handleChange}>
           <FormControlLabel
-            value='dd/mm'
+            value='dd/LL/yyyy'
             control={<Radio size='small'/>}
             label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH')}/>
           <FormControlLabel
-            value='mm/dd'
+            value='LL/dd/yyyy'
             control={<Radio size='small'/>}
             label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY')}/>
         </RadioGroup>

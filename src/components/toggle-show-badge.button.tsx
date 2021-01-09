@@ -7,13 +7,10 @@ import React, {
 } from 'react';
 import { Subject } from 'rxjs';
 import {
-  pluck,
   startWith,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
-
-import { STORAGE_KEYS } from '../constants';
 import { LoadingContext } from '../context/loading.context';
 import { translate } from '../filters/translate';
 import {
@@ -59,11 +56,10 @@ const ToggleShowBadgeButton: FunctionComponent = (props) => {
       .pipe(
         takeUntil(onDestroy$),
         startWith(true),
-        switchMap(() => retrieveUserSettings([STORAGE_KEYS.BADGE_ACTIVE])),
-        pluck(STORAGE_KEYS.BADGE_ACTIVE),
+        switchMap(() => retrieveUserSettings(['badgeActive'])),
       )
-      .subscribe(active => {
-        setIsActive(active);
+      .subscribe(({badgeActive}) => {
+        setIsActive(badgeActive);
       });
 
     return () => {

@@ -1,4 +1,7 @@
-import { IcsSettings } from '../../context/settings.context';
+import {
+  CsvDateFormats,
+  IcsSettings,
+} from '../../context/settings.context';
 import {
   ActionTypes,
   ALARM_NEW_DAY,
@@ -52,10 +55,10 @@ export function updateBadgeAction(): BadgeActionTypes {
   };
 }
 
-export function createCalendarCsv(dateFormat: 'dd/mm' | 'mm/dd'): CreateCalendarActionTypes {
+export function createCalendarCsv(format: CsvDateFormats): CreateCalendarActionTypes {
   return {
     type: CREATE_CALENDAR_CSV,
-    payload: {dateFormat},
+    payload: {format},
   };
 }
 

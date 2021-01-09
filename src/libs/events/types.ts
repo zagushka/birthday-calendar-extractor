@@ -1,5 +1,9 @@
 // ACTIONS
-import { IcsSettings } from '../../context/settings.context';
+import {
+  CsvDateFormats,
+  CsvSettings,
+  IcsSettings,
+} from '../../context/settings.context';
 
 export const SEND_ERROR = 'SEND_ERROR'; // Send error message
 export const SEND_GENERATION_STATUS = 'SEND_GENERATION_STATUS'; // Send result of generation process
@@ -52,7 +56,7 @@ export type BadgeActionTypes = UpdateBadgeAction;
 
 interface CreateCalendarCsvAction {
   type: typeof CREATE_CALENDAR_CSV;
-  payload: { dateFormat: 'dd/mm' | 'mm/dd' };
+  payload: CsvSettings;
 }
 
 interface CreateCalendarIcsAction {

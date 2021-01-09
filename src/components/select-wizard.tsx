@@ -13,12 +13,13 @@ import TodayBirthdayWizard from './wizards/today-birthday';
 const SelectWizard: FunctionComponent = () => {
   const {action, setAction} = useContext(SettingsContext);
 
-  const handleChange = (selectedAction: keyof typeof WIZARD_NAMES) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-    const newAction = isExpanded ? selectedAction : null;
-    setAction(newAction);
-  };
+  const handleChange = (selectedAction: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]) =>
+    (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+      const newAction = isExpanded ? selectedAction : null;
+      setAction(newAction);
+    };
 
-  const attributes = (ac: keyof typeof WIZARD_NAMES): ActionAccordionInterface => ({
+  const attributes = (ac: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]): ActionAccordionInterface => ({
     onChange: handleChange,
     currentAction: action,
     action: ac,
