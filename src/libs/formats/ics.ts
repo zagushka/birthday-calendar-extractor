@@ -8,6 +8,30 @@ import {
   RawEvent,
 } from '../lib';
 
+interface IcsEvent {
+  start: string;
+  end: string;
+  stamp: string;
+  uid: string;
+  description: string;
+  summary: string;
+}
+
+function generateIcsEvent(event: IcsEvent) {
+  return `BEGIN:VEVENT
+DTSTART;VALUE=DATE:${event.start}
+DTEND;VALUE=DATE:${event.end}
+RRULE:FREQ=YEARLY
+DTSTAMP:${event.stamp}
+UID:${event.uid}
+DESCRIPTION:${event.description}
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:${event.summary}
+TRANSP:TRANSPARENT
+END:VEVENT`;
+}
+
 export class CalendarICS extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.ics';
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
@@ -26,14 +50,12 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
      * The date with local time form is simply a DATE-TIME value that does not contain the UTC designator nor does it reference a time zone.
      * For example, the following represents January 18, 1998, at 11 PM:
      *
-     * 19980118T230000
-     * 1998 01 18 T23 00 00
      */
     return {
       name: event.name,
-      start: event.start.toFormat('yyyyLLdd\'T\'HHmmss'),
-      end: event.start.plus({days: 1}).toFormat('yyyyLLdd\'T\'HHmmss'),
-      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
+      start: event.start.toFormat('yyyyLLdd'),
+      end: event.start.plus({days: 1}).toFormat('yyyyLLdd'),
+      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss\'Z\''),
       href: event.href,
       uid: event.uid,
     };
@@ -58,23 +80,29 @@ ${this.generateEvents(preparedEvents).join('\n')}
 END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 
+  generateEvents(events: Array<PreparedEvent>): Array<string> {
+    const grouped =
+      events.reduce((ac, event) => {
+        if (!ac.has(event.start)) {
+          ac.set(event.start, []);
+        }
+        ac.set(event.start, [...ac.get(event.start), event]);
+        return ac;
+      }, new Map<DateTime, Array<PreparedEvent>>());
+
+    return events.map(e => this.generateEvent(e)); // Generate final events
+  }
+
   generateEvent(event: PreparedEvent) {
     const formattedEvent = this.formatEvent(event);
-    return `BEGIN:VEVENT
-DTSTART;VALUE=DATE:${formattedEvent.start}
-DTEND;VALUE=DATE:${formattedEvent.end}
-RRULE:FREQ=YEARLY
-DTSTAMP:${formattedEvent.stamp}
-UID:${formattedEvent.uid}
-X-GOOGLE-CALENDAR-CONTENT-DISPLAY:chip
-DESCRIPTION:This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!
-SEQUENCE:0
-STATUS:CONFIRMED
-` +
+    return generateIcsEvent({
+      start: formattedEvent.start,
+      end: formattedEvent.end,
+      stamp: formattedEvent.stamp,
+      uid: formattedEvent.uid,
       // There is unicode cake character before event.name, you may not see it in you editor
-      `SUMMARY:🎂 ${formattedEvent.name}
-TRANSP:TRANSPARENT
-END:VEVENT`;
+      summary: `🎂 ${formattedEvent.name}`,
+      description: `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`,
+    });
   }
 }
-
