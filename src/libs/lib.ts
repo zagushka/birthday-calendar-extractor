@@ -19,17 +19,17 @@ import {
 import { TempStorage } from './storage/temp.storage';
 
 export interface RawEvent {
-  uid?: string; // User Id, unique id generated from facebook page url
+  uid?: string;
   name: string;
   month: number;
   day: number;
   href: string;
-  ignored: boolean;
-  changeTime?: number;
+  ignored?: boolean; // For future needs, if I want to allow to filter the birthdays later
+  changeTime?: number; // For future needs, if I want to allow to filter the birthdays later
 }
 
 export interface PreparedEvent {
-  uid: string;
+  uid: string; // User Id, unique id generated from facebook page url
   name: string;
   start: DateTime;
   end: DateTime;
@@ -69,6 +69,27 @@ export function prepareEvent(event: RawEvent, year: number): PreparedEvent {
     href: event.href,
     uid: window.btoa(event.href),
   };
+}
+
+/**
+ * Generate Array of events for required years range
+ * RawEvent is not connected to any year, so we convert it to PreparedEvent and assign the year
+ */
+export function generatePreparedEventsForYears(events: Array<RawEvent>, year: number, tillYear: number): Array<PreparedEvent> {
+  const result: Array<PreparedEvent> = [];
+
+  do {
+    events.forEach(event => {
+      const preparedEvent = prepareEvent(event, year);
+      if (preparedEvent) {
+        result.push(preparedEvent);
+      }
+    });
+    year++;
+    // Generate for all required years
+  } while (tillYear >= year);
+
+  return result;
 }
 
 export function weekDates(): { [name: number]: DateTime } {
@@ -136,6 +157,11 @@ function extractCardWithWeek(src: string, pattern: RegExp, languageSet: Language
   };
 }
 
+/**
+ * RawEvent have basic information extracted from parsed html, such as
+ * href, user name, birthday day and month
+ * uid is generated from href, since it is unique
+ */
 function generateRawEvents(data: Array<{ href: string; user: string }>, languageSet: LanguageSet): Array<RawEvent> {
   return data.map(item => {
     const card = extractCardWithDate(item.user, languageSet.pattern) ||
@@ -143,8 +169,8 @@ function generateRawEvents(data: Array<{ href: string; user: string }>, language
 
     if (card && item.href.length) {
       return Object.assign(card, {
-        ignored: false,
-        changeTime: 0,
+        // ignored: false,
+        // changeTime: 0,
         href: item.href,
         uid: window.btoa(item.href),
       });

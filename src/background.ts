@@ -1,11 +1,10 @@
-import { merge } from 'rxjs';
 import {
   map,
   startWith,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { updateBadge } from './libs/badge';
-import { CalendarBase } from './libs/base';
 import {
   sendError,
   updateBadgeAction,
@@ -22,8 +21,8 @@ import {
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_ICS,
   CREATE_CALENDAR_JSON,
+  DISABLE_BADGE_NOTIFICATION,
   ENABLE_BADGE_NOTIFICATION,
-  SEND_ERROR,
   UPDATE_BADGE,
 } from './libs/events/types';
 import { CalendarCSV } from './libs/formats/csv';
@@ -35,15 +34,10 @@ import {
   getBirthdaysList,
   parsePageForConfig,
 } from './libs/lib';
-import { storeLastBadgeClicked } from './libs/storage/chrome.storage';
-
-const handleContentResponse = (firstLevelCallback: (data: any) => void) => (message: any) => {
-  if (SEND_ERROR !== message.type) {
-    return;
-  }
-  chrome.runtime.onMessage.removeListener(handleContentResponse(firstLevelCallback));
-  firstLevelCallback(message.status);
-};
+import {
+  storeLastBadgeClicked,
+  storeUserSettings,
+} from './libs/storage/chrome.storage';
 
 setupAlarms();
 
@@ -57,32 +51,27 @@ listenTo(BADGE_CLICKED)
   });
 
 // Update Badge on update badge event or new date alarm
-merge(
-  listenTo(UPDATE_BADGE, ALARM_NEW_DAY),
-)
+listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
   .pipe(
     startWith(true), // Initial Badge setup
   )
   .subscribe(() => updateBadge());
 
 // Take care of disable badge event
-// listenTo<StartGenerationAction>(ACTION.BADGE_NOTIFICATIONS_DISABLE)
-//   .pipe(
-//     switchMap(message => zip(
-//       // Move message forward
-//       of(message),
-//       // remove from storage
-//       storeUserSettings({
-//         [STORAGE_KEYS.BIRTHDAYS]: [],
-//         [STORAGE_KEYS.BADGE_ACTIVE]: false,
-//       }),
-//     )),
-//     tap(([{callback}]) => callback()),
-//   )
-//   .subscribe(() => {
-//     // Update badge it should be clean
-//     sendMessage(new UpdateBadgeAction(), true);
-//   });
+listenTo(DISABLE_BADGE_NOTIFICATION)
+  .pipe(
+    switchMap(({action, callback}) => {
+      // remove from storage
+      return storeUserSettings({
+        birthdays: [],
+        badgeActive: false,
+      })
+    }),
+  )
+  .subscribe(() => {
+    // Update badge it should be clean
+    sendMessage(updateBadgeAction(), true);
+  });
 
 listenTo(
   CREATE_CALENDAR_CSV,
@@ -97,30 +86,33 @@ listenTo(
         .pipe(
           switchMap(({language, token}) => getBirthdaysList(language, token)),
           map(events => {
-            let calendar: CalendarBase<any, any, any>;
+            const rawEvents = Array.from(events.values());
             switch (action.type) {
-              case CREATE_CALENDAR_CSV:
-                calendar = new CalendarCSV(action.payload);
-                break;
-              case CREATE_CALENDAR_JSON:
-                calendar = new CalendarJSON();
-                break;
-              case CREATE_CALENDAR_ICS:
-                calendar = new CalendarICS(action.payload);
-                break;
-              case CREATE_CALENDAR_DELETE_ICS:
-                calendar = new CalendarDeleteICS(action.payload);
-                break;
-              case ENABLE_BADGE_NOTIFICATION:
-                calendar = new CalendarForStorage();
-                break;
+              case CREATE_CALENDAR_CSV: {
+                const calendar = new CalendarCSV(action.payload);
+                return calendar.save(calendar.generateCalendar(rawEvents));
+              }
+              case CREATE_CALENDAR_JSON: {
+                const calendar = new CalendarJSON();
+                return calendar.save(calendar.generateCalendar(rawEvents));
+              }
+              case CREATE_CALENDAR_ICS: {
+                const calendar = new CalendarICS(action.payload);
+                return calendar.save(calendar.generateCalendar(rawEvents));
+              }
+              case CREATE_CALENDAR_DELETE_ICS: {
+                const calendar = new CalendarDeleteICS(action.payload);
+                return calendar.save(calendar.generateCalendar(rawEvents));
+              }
+              case ENABLE_BADGE_NOTIFICATION: {
+                const calendar = new CalendarForStorage();
+                return calendar.save(calendar.generateCalendar(rawEvents));
+              }
               default:
-                return;
+                throw new Error('Should not be here');
             }
-            return calendar.save(
-              calendar.generateCalendar(Array.from(events.values())),
-            );
           }),
+          tap(() => callback()),
         ),
     ),
   )

@@ -1,26 +1,15 @@
 import { DateTime } from 'luxon';
-import {
-  bindCallback,
-  Observable,
-} from 'rxjs';
-import {
-  filter,
-  map,
-} from 'rxjs/operators';
-import {
-  alarmNewDay,
-  Message,
-} from './actions';
-import { AlarmTypes } from './types';
+import { alarmNewDay } from './actions';
+import { sendMessage } from './events';
 
+const onAlarmListener = (alarm: chrome.alarms.Alarm) => {
+  if ('new-day-alarm' === alarm.name) {
+    sendMessage(alarmNewDay());
+  }
+};
 
-// Listen to Alarms and get them as Message
-export const alChromeAlarms$: Observable<Message<AlarmTypes>> = bindCallback<chrome.alarms.Alarm>(chrome.alarms.onAlarm.addListener)
-  .call(chrome.alarms.onAlarm)
-  .pipe(
-    filter(alarm => 'new-day-alarm' === alarm.name),
-    map((alarm) => ({action: alarmNewDay()})),
-  );
+// Alarms should forward their events via `sendMessage`
+chrome.alarms.onAlarm.addListener(onAlarmListener);
 
 // Setup Alarms
 export function setupAlarms() {

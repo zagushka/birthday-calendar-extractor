@@ -1,13 +1,11 @@
 import {
   bindCallback,
-  merge,
   Observable,
   Subject,
 } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { Message } from './actions';
-import { alChromeAlarms$ } from './alarms';
 import { allChromeMessages$ } from './messages';
 import { ActionTypes } from './types';
 
@@ -15,15 +13,9 @@ import { ActionTypes } from './types';
  * All actions Observable
  * Messages from listeners and internal sources should be forwarded here.
  */
-
 export const allActions$: Subject<Message<ActionTypes>> = new Subject();
-// Forward chrome.runtime.onMessage and chrome.alarms.onAlarm events to allMessages$
-// Merged with alarms listener
-merge(
-  allChromeMessages$, // Messages
-  alChromeAlarms$, // Alarms
-)
-  .subscribe(e => allActions$.next(e));
+// Forward chrome.runtime.onMessage
+allChromeMessages$.subscribe(e => allActions$.next(e));
 
 /**
  * Listen to allMessages$ filtered by actionName

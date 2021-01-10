@@ -1,6 +1,5 @@
 // ACTIONS
 import {
-  CsvDateFormats,
   CsvSettings,
   IcsSettings,
 } from '../../context/settings.context';
@@ -96,19 +95,6 @@ export type ActionTypes =
   | BadgeActionTypes
   | CreateCalendarActionTypes
   | AlarmTypes;
-
-
-// export const ACTION = {
-//   ERROR: '_ERROR',
-//   GENERATION_START: '_GENERATION_START',
-//   BADGE_NOTIFICATIONS_DISABLE: '_BADGE_NOTIFICATIONS_DISABLE',
-//   BADGE_NOTIFICATIONS_ENABLE: '_BADGE_NOTIFICATIONS_ENABLE',
-//   BADGE_UPDATE: '_BADGE_UPDATE',
-//   BADGE_CLICKED: '_BADGE_CLICKED',
-//   LOG: '_LOG',
-//   ALARM_NEW_DAY: '_ALARM_NEW_DAY',
-//   GET_FACEBOOK_SETTINGS: '_GET_FACEBOOK_SETTINGS',
-// } as const;
 
 export type ApplicationStatus =
   'FACEBOOK_REQUIRED'

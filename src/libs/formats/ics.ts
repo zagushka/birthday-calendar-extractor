@@ -1,15 +1,20 @@
 import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
+import { IcsSettings } from '../../context/settings.context';
 import { CalendarBase } from '../base';
 import {
+  generatePreparedEventsForYears,
   PreparedEvent,
   RawEvent,
 } from '../lib';
 
-
 export class CalendarICS extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.ics';
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
+
+  constructor(public settings: IcsSettings) {
+    super();
+  }
 
   save(calendarData: string) {
     const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
@@ -40,7 +45,7 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
     tillYear: number = 2020,
   ) {
 
-    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear)
+    const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // Sort incrementally
       .sort((a, b) => a.start.toSeconds() - b.start.toSeconds());
 

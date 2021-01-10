@@ -60,7 +60,6 @@ const UserSettings: FunctionComponent = () => {
   const {tab, setTab} = useContext(SettingsContext);
 
   const loaded = !isLoading('SETTINGS');
-  console.log('LOADEDD', loaded);
 
   const updateTabIndex = (event: React.ChangeEvent<{}>, index: keyof typeof TABS) => setTab(index);
 

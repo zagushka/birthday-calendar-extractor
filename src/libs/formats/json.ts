@@ -2,6 +2,7 @@ import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from '../base';
 import {
+  generatePreparedEventsForYears,
   PreparedEvent,
   RawEvent,
 } from '../lib';
@@ -28,7 +29,7 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {
-    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear);
+    const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear);
     return JSON.stringify(this.generateEvents(preparedEvents));
   }
 

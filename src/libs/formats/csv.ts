@@ -1,25 +1,37 @@
 import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
+import { CsvSettings } from '../../context/settings.context';
 import { CalendarBase } from '../base';
 import {
   arrayToCSVRow,
+  generatePreparedEventsForYears,
   PreparedEvent,
   RawEvent,
 } from '../lib';
 
+interface CsvFormattedEvent {
+  name: string;
+  start: string;
+  href: string;
+}
+
 export class CalendarCSV extends CalendarBase<{}, string, string> {
   readonly filename: string = 'birthday-calendar.csv';
   readonly fileMimeType: string = 'text/csv; charset=UTF-8';
+
+  constructor(public settings: CsvSettings) {
+    super();
+  }
 
   save(calendarData: string) {
     const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
     FileSaver.saveAs(blob, this.filename, {autoBom: true});
   }
 
-  formatEvent(event: PreparedEvent) {
+  formatEvent(event: PreparedEvent): CsvFormattedEvent {
     return {
       name: event.name,
-      start: event.start.toFormat('LL/dd/yyyy'), // 05/30/2020,
+      start: event.start.toFormat(this.settings.format), // 05/30/2020,
       href: event.href,
     };
   }
@@ -34,7 +46,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
      * Prepare Events
      */
     const currentDateTime = DateTime.utc().set({hour: 0, second: 0, minute: 0, millisecond: 0});
-    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear)
+    const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // csv requires past birthdays to be converted to future
       .map(event => {
         event.start = event.start < currentDateTime ? event.start.plus({year: 1}) : event.start;

@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import { STORAGE_KEYS } from '../../constants';
 import { CalendarBase } from '../base';
 import { updateBadgeAction } from '../events/actions';
 import { sendMessage } from '../events/events';
 import {
+  generatePreparedEventsForYears,
   PreparedEvent,
   RawEvent,
 } from '../lib';
@@ -18,8 +18,8 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
   save(calendarData: Array<{ name: string; start: DateTime; href: string }>) {
     // Store the data
     storeUserSettings({
-      [STORAGE_KEYS.BIRTHDAYS]: calendarData,
-      [STORAGE_KEYS.BADGE_ACTIVE]: true,
+      birthdays: calendarData,
+      badgeActive: true,
     })
       .subscribe(() => sendMessage(updateBadgeAction(), true));
   }
@@ -37,7 +37,7 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
     fromYear: number = 2020, // Use 2020 (leap year)
     tillYear: number = 2020, // Same year
   ) {
-    const preparedEvents = this.generatePreparedEventsForYears(events, fromYear, tillYear);
+    const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear);
     return this.generateEvents(preparedEvents);
   }
 

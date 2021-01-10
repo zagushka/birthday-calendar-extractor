@@ -36,7 +36,6 @@ export function sendGenerationStatus(status: string): NotificationActionTypes {
   };
 }
 
-
 export function enableBadgeNotifications(): BadgeNotificationActionTypes {
   return {
     type: ENABLE_BADGE_NOTIFICATION,
