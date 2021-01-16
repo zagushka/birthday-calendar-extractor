@@ -4,20 +4,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Subject } from 'rxjs';
-import {
-  startWith,
-  switchMap,
-  takeUntil,
-} from 'rxjs/operators';
-import { listenTo } from '../libs/events/events';
-import {
-  ALARM_NEW_DAY,
-  UPDATE_BADGE,
-} from '../libs/events/types';
 import {
   filterBirthdaysForDate,
-  getBirthdaysForDate,
   RestoredBirthday,
   retrieveUserSettings,
 } from '../libs/storage/chrome.storage';
@@ -62,26 +50,6 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
         setIsActive(badgeActive);
         setAllUsers(birthdays);
       });
-  }, []);
-
-  // Update badge icon, move it to background
-  useEffect(() => {
-    const onDestroy$ = new Subject();
-    listenTo(UPDATE_BADGE, ALARM_NEW_DAY) // Update when date changes
-      .pipe(
-        takeUntil(onDestroy$),
-        startWith(true), // Display on mount
-        switchMap(() => getBirthdaysForDate(DateTime.local())),
-      )
-      .subscribe(u => {
-        // setUsers(u)
-      });
-
-    // Before destroy
-    return () => {
-      onDestroy$.next(true);
-      onDestroy$.complete();
-    };
   }, []);
 
   useEffect(() => {
