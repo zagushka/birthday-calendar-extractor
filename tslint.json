@@ -66,7 +66,7 @@
     "no-var-requires": false,
     "object-literal-key-quotes": [
       true,
-      "consistent"
+      "as-needed"
     ],
     "object-literal-sort-keys": false,
     "object-literal-shorthand": [
