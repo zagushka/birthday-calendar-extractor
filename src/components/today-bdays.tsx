@@ -1,10 +1,16 @@
 import {
   Button,
+  Divider,
+  IconButton,
   List,
   ListItem,
   makeStyles,
   Theme,
 } from '@material-ui/core';
+import {
+  ChevronLeft,
+  ChevronRight,
+} from '@material-ui/icons';
 import { DateTime } from 'luxon';
 import React, {
   FunctionComponent,
@@ -15,16 +21,17 @@ import React, {
   useRef,
   useState,
 } from 'react';
+
+import {
+  ListChildComponentProps,
+  ListOnScrollProps,
+  VariableSizeList,
+} from 'react-window';
 import { ErrorsContext } from '../context/errors.context';
 import { TodayUsersContext } from '../context/today-users.context';
 import handleLink from '../filters/handleLink';
 import { translate } from '../filters/translate';
 import { RestoredBirthday } from '../libs/storage/chrome.storage';
-
-import {
-  VariableSizeList,
-  ListChildComponentProps,
-} from 'react-window';
 
 const useStyles = makeStyles((theme: Theme) => ({
   item: {
@@ -45,7 +52,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 12,
     marginBottom: 10,
     display: 'inline-block',
-    color: theme.palette.action.active,
+    // color: theme.palette.action.active,
+    color: '#5f6368',
     fontFamily: theme.typography.fontFamily,
     fontWeight: theme.typography.fontWeightMedium,
     lineHeight: '16px',
@@ -54,6 +62,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: 0,
   },
 }));
+
+const dayHeaderHeight = 38;
+const userRowHeight = 32;
 
 const handleClick = (href: string) => (e: React.MouseEvent) => handleLink(e, href);
 
@@ -72,14 +83,23 @@ const DayRow: NamedExoticComponent<ListChildComponentProps> = memo(({data, index
   );
 });
 
+interface FollowingDatesInterface {
+  index: number;
+  date: number;
+}
+
+interface UserMapInterface {
+  users: Array<[number, Array<RestoredBirthday>]>;
+  usersMap: Array<{ offset: number; ordinal: number; height: number }>;
+}
+
 const TodayBirthdays: FunctionComponent = () => {
-  const {users, isActive} = useContext(TodayUsersContext);
+  const {users: rawUsers, isActive} = useContext(TodayUsersContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
 
-  // tslint:disable-next-line:max-line-length
-  const [groupedUsers, setGroupedUsers] = useState<{ users: Array<[number, Array<RestoredBirthday>]>; itemsMap: Array<{ ordinal: number; height: number }> }>({
+  const [users, setUsers] = useState<UserMapInterface>({
     users: [],
-    itemsMap: [],
+    usersMap: [],
   });
 
   const listRef = useRef<VariableSizeList>();
@@ -87,12 +107,10 @@ const TodayBirthdays: FunctionComponent = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    const dayHeaderHeight = 38;
-    const userRowHeight = 32;
     // Prepare birthdays
     const grouped =
       Array.from(
-        users
+        rawUsers
           // Sort birthdays by user name
           .sort((a, b) => a.name.localeCompare(b.name))
           // create Map with birthday date as a key (unix time stamp) and array of users as value
@@ -103,23 +121,36 @@ const TodayBirthdays: FunctionComponent = () => {
         // Sort days
         .sort((a, b) => a[0] - b[0]);
 
+    const itemsMap = grouped.reduce((acc, [day, items]) => {
+      return acc.concat({
+        // Map ordinal of the day to its index in final array
+        ordinal: DateTime.fromMillis(day).ordinal,
+        // Calculate the height for each day
+        height: dayHeaderHeight + items.length * userRowHeight,
+        // Offset of the index
+        offset: acc.length ? (acc[acc.length - 1].offset + acc[acc.length - 1].height) : 0,
+      });
+    }, []);
 
-    const itemsMap = grouped.map(([day, items]) => ({
-      // Map ordinal of the day to its index in final array
-      ordinal: DateTime.fromMillis(day).ordinal,
-      // Lets calculate the height for each day
-      height: dayHeaderHeight + items.length * userRowHeight,
-    }));
+    setUsers({users: grouped, usersMap: itemsMap});
 
-    setGroupedUsers({users: grouped, itemsMap});
+  }, [rawUsers]);
 
-  }, [users]);
+  // useEffect(() => {
+  //   if (dayIndex) {
+  //     // listRef.current.scrollToItem(dayIndex, 'start');
+  //     listRef.current.scrollTo(users.usersMap[dayIndex].offset + dayHeaderHeight);
+  //   }
+  // }, [dayIndex]);
 
   useEffect(() => {
-    if (dayIndex) {
-      listRef.current.scrollToItem(dayIndex, 'start');
+    // Find next closest day for today
+    const current = DateTime.local().ordinal;
+    const nextClosestIndex = users.usersMap.findIndex(({ordinal}) => ordinal >= current);
+    if (~nextClosestIndex) {
+      updateDayIndex(nextClosestIndex);
     }
-  }, [dayIndex]);
+  }, [users]);
 
   const {error} = useContext(ErrorsContext);
 
@@ -127,7 +158,7 @@ const TodayBirthdays: FunctionComponent = () => {
     // Show button to activate
   } else {
     // Show navigation
-    if (users.length) {
+    if (rawUsers.length) {
       // Display list of birthdays today
     } else {
       // Display "no birthdays today"
@@ -135,27 +166,61 @@ const TodayBirthdays: FunctionComponent = () => {
     // Show button to deactivate
   }
 
-  return (<div className='m-2' style={{minHeight: '80px'}}>
+  const updateDayIndex = (index?: number) => {
+    if ('undefined' === typeof index) {
+      // No index provided, set index close to today
+      const todayOrdinal = DateTime.local().ordinal;
+      index = users.usersMap.findIndex(({ordinal}) => ordinal >= todayOrdinal);
+    } else if (index < 0) {
+      // Small index, set index to the the end
+      index = users.users.length - 1;
+    } else if (index >= users.users.length) {
+      // Index is too big, start over
+      index = 0;
+    }
+    // Scroll to required position
+    listRef.current.scrollTo(users.usersMap[index].offset + dayHeaderHeight);
+  };
 
-    {!!groupedUsers.users.length && <>
-      <Button onClick={() => setDayIndex(dayIndex - 1 < 0 ? groupedUsers.users.length - 1 : dayIndex - 1)}> &lt; </Button>
-      {DateTime.fromMillis(groupedUsers.users[dayIndex][0]).toLocaleString({weekday: 'short', month: 'short', day: '2-digit'})}
-      <Button onClick={() => setDayIndex(dayIndex + 1 === groupedUsers.users.length ? 0 : dayIndex + 1)}> &gt; </Button>
-    </>}
+  const scrollHandler = ({scrollOffset, scrollUpdateWasRequested}: ListOnScrollProps) => {
+    const index = users.usersMap.findIndex(item => item.offset + item.height >= scrollOffset);
+    setDayIndex(index);
+  };
 
-    {!users.length && isActive && <p>
-      <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>
-    </p>}
-    <VariableSizeList
-      itemSize={i => groupedUsers.itemsMap[i].height}
-      itemData={groupedUsers.users}
-      ref={listRef}
-      height={400}
-      width={300}
-      itemCount={groupedUsers.users.length}>
-      {DayRow}
-    </VariableSizeList>
-  </div>);
+  return (
+    <div style={{minHeight: '80px'}}>
+      {!!users.users.length && <>
+        <div className={classes.day}>
+          {DateTime.fromMillis(users.users[dayIndex][0]).toLocaleString({weekday: 'short', month: 'short', day: 'numeric'})}
+        </div>
+        <div className={''}>
+          <Button onClick={() => updateDayIndex()}>Today</Button>
+          <IconButton size={'small'} onClick={() => updateDayIndex(dayIndex - 1)}>
+            <ChevronLeft/>
+          </IconButton>
+          <IconButton size={'small'} onClick={() => updateDayIndex(dayIndex + 1)}>
+            <ChevronRight/>
+          </IconButton>
+        </div>
+      </>}
+
+      {/*{!rawUsers.length && isActive && <p>*/}
+      {/*  <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>*/}
+      {/*</p>}*/}
+      <Divider/>
+      {!!users.users.length && <VariableSizeList
+        itemSize={i => users.usersMap[i].height}
+        itemData={users.users}
+        ref={listRef}
+        height={400}
+        onScroll={scrollHandler}
+        width={300}
+        itemCount={users.users.length}>
+        {DayRow}
+      </VariableSizeList>
+      }
+    </div>
+  );
 };
 
 export default TodayBirthdays;

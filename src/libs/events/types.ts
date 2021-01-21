@@ -17,6 +17,9 @@ export const CREATE_CALENDAR_DELETE_ICS = 'CREATE_CALENDAR_DELETE_ICS';
 export const CREATE_CALENDAR_CSV = 'CREATE_CALENDAR_CSV';
 export const CREATE_CALENDAR_JSON = 'CREATE_CALENDAR_JSON';
 
+export const BIRTHDAYS_START_EXTRACTION = 'BIRTHDAYS_START_EXTRACTION';
+export const BIRTHDAYS_EXTRACTION_COMPLETE = 'BIRTHDAYS_EXTRACTION_COMPLETE';
+
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
 export const SEND_LOG = 'SEND_LOG';
@@ -53,6 +56,16 @@ interface UpdateBadgeAction {
 
 export type BadgeActionTypes = UpdateBadgeAction;
 
+interface BirthdaysStartExtractionAction {
+  type: typeof BIRTHDAYS_START_EXTRACTION;
+}
+
+interface BirthdaysExtractionCompleteAction {
+  type: typeof BIRTHDAYS_EXTRACTION_COMPLETE;
+}
+
+export type BirthdaysExtractionActionTypes = BirthdaysStartExtractionAction | BirthdaysExtractionCompleteAction;
+
 interface CreateCalendarCsvAction {
   type: typeof CREATE_CALENDAR_CSV;
   payload: CsvSettings;
@@ -76,6 +89,7 @@ export type CreateCalendarActionTypes =
   CreateCalendarCsvAction
   | CreateCalendarIcsAction
   | CreateCalendarDeleteIcsAction
+  | BirthdaysExtractionActionTypes
   | CreateCalendarJsonAction;
 
 // @TODO Check this is suitable to AlarmTypes

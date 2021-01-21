@@ -1,6 +1,9 @@
 import { DateTime } from 'luxon';
 import { CalendarBase } from '../base';
-import { updateBadgeAction } from '../events/actions';
+import {
+  BirthdaysExtractionComplete,
+  updateBadgeAction,
+} from '../events/actions';
 import { sendMessage } from '../events/events';
 import {
   generatePreparedEventsForYears,
@@ -21,7 +24,10 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
       birthdays: calendarData,
       badgeActive: true,
     })
-      .subscribe(() => sendMessage(updateBadgeAction(), true));
+      .subscribe(() => {
+        sendMessage(updateBadgeAction(), true);
+        sendMessage(BirthdaysExtractionComplete(), true);
+      });
   }
 
   formatEvent(event: PreparedEvent) {

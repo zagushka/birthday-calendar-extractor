@@ -7,7 +7,7 @@ interface LinkSettings {
   substitutions?: any;
 }
 
-const handleLink = (ev: React.MouseEvent, rawUrl: string, settings?: LinkSettings) => {
+const handleLink = (ev: React.MouseEvent, rawUrl: string, settings: LinkSettings = {}) => {
   ev.preventDefault();
   ev.stopPropagation();
   if (!rawUrl.length) {

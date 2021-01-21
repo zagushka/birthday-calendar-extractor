@@ -13,8 +13,9 @@ import React, {
 import { TABS } from '../../constants';
 import { LoadingContext } from '../../context/loading.context';
 import { SettingsContext } from '../../context/settings.context';
-import TodayUsersContextProvider from '../../context/today-users.context';
+import TodayUsersContextProvider, { TodayUsersContext } from '../../context/today-users.context';
 import { translateString } from '../../filters/translate';
+import { ActivateBadge } from '../activate';
 import SelectWizard from '../select-wizard';
 import TodayBirthdays from '../today-bdays';
 import ToggleShowBadgeButton from '../toggle-show-badge.button';
@@ -58,13 +59,15 @@ const UserSettings: FunctionComponent = () => {
 
   const {isLoading} = useContext(LoadingContext);
   const {tab, setTab} = useContext(SettingsContext);
+  const {isActive} = useContext(TodayUsersContext);
 
   const loaded = !isLoading('SETTINGS');
 
   const updateTabIndex = (event: React.ChangeEvent<{}>, index: keyof typeof TABS) => setTab(index);
 
   return (
-    <TodayUsersContextProvider>
+    <>
+      {!isActive && <ActivateBadge/>}
       {loaded &&
       <div className={classes.root}>
         <AppBar position='static'>
@@ -86,7 +89,7 @@ const UserSettings: FunctionComponent = () => {
         </TabPanel>
       </div>
       }
-    </TodayUsersContextProvider>
+    </>
   );
 };
 

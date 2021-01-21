@@ -17,6 +17,7 @@ import {
 import {
   ALARM_NEW_DAY,
   BADGE_CLICKED,
+  BIRTHDAYS_START_EXTRACTION,
   CREATE_CALENDAR_CSV,
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_ICS,
@@ -78,7 +79,7 @@ listenTo(
   CREATE_CALENDAR_ICS,
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_JSON,
-  ENABLE_BADGE_NOTIFICATION,
+  BIRTHDAYS_START_EXTRACTION,
 )
   .pipe(
     switchMap(({action, callback}) =>
@@ -104,7 +105,7 @@ listenTo(
                 const calendar = new CalendarDeleteICS(action.payload);
                 return calendar.save(calendar.generateCalendar(rawEvents));
               }
-              case ENABLE_BADGE_NOTIFICATION: {
+              case BIRTHDAYS_START_EXTRACTION: {
                 const calendar = new CalendarForStorage();
                 return calendar.save(calendar.generateCalendar(rawEvents));
               }

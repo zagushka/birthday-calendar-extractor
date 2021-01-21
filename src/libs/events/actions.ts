@@ -9,6 +9,9 @@ import {
   BADGE_CLICKED,
   BadgeActionTypes,
   BadgeNotificationActionTypes,
+  BIRTHDAYS_EXTRACTION_COMPLETE,
+  BIRTHDAYS_START_EXTRACTION,
+  BirthdaysExtractionActionTypes,
   CREATE_CALENDAR_CSV,
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_ICS,
@@ -90,6 +93,18 @@ export function badgeClickedAction(): AlarmTypes {
 export function alarmNewDay(): AlarmTypes {
   return {
     type: ALARM_NEW_DAY,
+  };
+}
+
+export function BirthdaysStartExtraction(): BirthdaysExtractionActionTypes {
+  return {
+    type: BIRTHDAYS_START_EXTRACTION,
+  };
+}
+
+export function BirthdaysExtractionComplete(): BirthdaysExtractionActionTypes {
+  return {
+    type: BIRTHDAYS_EXTRACTION_COMPLETE,
   };
 }
 
