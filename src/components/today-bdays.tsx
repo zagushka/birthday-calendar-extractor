@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   IconButton,
@@ -10,17 +11,21 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
+  Close,
+  SaveAlt,
 } from '@material-ui/icons';
 import { DateTime } from 'luxon';
 import React, {
   FunctionComponent,
   memo,
   NamedExoticComponent,
+  useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from 'react';
+import Scrollbars from 'react-custom-scrollbars';
 
 import {
   ListChildComponentProps,
@@ -30,7 +35,6 @@ import {
 import { ErrorsContext } from '../context/errors.context';
 import { TodayUsersContext } from '../context/today-users.context';
 import handleLink from '../filters/handleLink';
-import { translate } from '../filters/translate';
 import { RestoredBirthday } from '../libs/storage/chrome.storage';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -51,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 16,
     marginTop: 12,
     marginBottom: 10,
-    display: 'inline-block',
+    // display: 'inline-block',
     // color: theme.palette.action.active,
     color: '#5f6368',
     fontFamily: theme.typography.fontFamily,
@@ -60,6 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   list: {
     padding: 0,
+    width: 'calc(100% - 16px) !important',
   },
 }));
 
@@ -67,6 +72,36 @@ const dayHeaderHeight = 38;
 const userRowHeight = 32;
 
 const handleClick = (href: string) => (e: React.MouseEvent) => handleLink(e, href);
+
+interface CustomScrollbarsProps {
+  onScroll: any;
+  forwardedRef: any;
+  style: any;
+}
+
+const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({onScroll, forwardedRef, style, children}) => {
+  const refSetter = useCallback(scrollbarsRef => {
+    if (scrollbarsRef) {
+      forwardedRef(scrollbarsRef.view);
+    } else {
+      forwardedRef(null);
+    }
+  }, []);
+
+  return (
+    <Scrollbars
+      ref={refSetter}
+      style={{...style, overflow: 'hidden'}}
+      onScroll={onScroll}
+    >
+      {children}
+    </Scrollbars>
+  );
+};
+
+const CustomScrollbarsVirtualList = React.forwardRef<unknown, CustomScrollbarsProps>((props, ref) => (
+  <CustomScrollbars {...props} forwardedRef={ref}/>
+));
 
 const DayRow: NamedExoticComponent<ListChildComponentProps> = memo(({data, index, style}) => {
   const classes = useStyles();
@@ -82,11 +117,6 @@ const DayRow: NamedExoticComponent<ListChildComponentProps> = memo(({data, index
     </List>
   );
 });
-
-interface FollowingDatesInterface {
-  index: number;
-  date: number;
-}
 
 interface UserMapInterface {
   users: Array<[number, Array<RestoredBirthday>]>;
@@ -136,13 +166,6 @@ const TodayBirthdays: FunctionComponent = () => {
 
   }, [rawUsers]);
 
-  // useEffect(() => {
-  //   if (dayIndex) {
-  //     // listRef.current.scrollToItem(dayIndex, 'start');
-  //     listRef.current.scrollTo(users.usersMap[dayIndex].offset + dayHeaderHeight);
-  //   }
-  // }, [dayIndex]);
-
   useEffect(() => {
     // Find next closest day for today
     const current = DateTime.local().ordinal;
@@ -179,7 +202,7 @@ const TodayBirthdays: FunctionComponent = () => {
       index = 0;
     }
     // Scroll to required position
-    listRef.current.scrollTo(users.usersMap[index].offset + dayHeaderHeight);
+    listRef.current.scrollTo(users.usersMap[index].offset + dayHeaderHeight - 10);
   };
 
   const scrollHandler = ({scrollOffset, scrollUpdateWasRequested}: ListOnScrollProps) => {
@@ -188,39 +211,69 @@ const TodayBirthdays: FunctionComponent = () => {
   };
 
   return (
-    <div style={{minHeight: '80px'}}>
+    <Box style={{minHeight: '80px'}}>
       {!!users.users.length && <>
-        <div className={classes.day}>
-          {DateTime.fromMillis(users.users[dayIndex][0]).toLocaleString({weekday: 'short', month: 'short', day: 'numeric'})}
-        </div>
-        <div className={''}>
-          <Button onClick={() => updateDayIndex()}>Today</Button>
+        <Box p={1} display='flex' alignItems='center' className={classes.day}>
+
+          <Box>
+            {DateTime.fromMillis(users.users[dayIndex][0]).toLocaleString({weekday: 'short', month: 'short', day: 'numeric'})}
+          </Box>
+
+          <Box flexGrow={1}/>
+
+          <IconButton
+            size='small'
+            onClick={() => window.close()}>
+            <Close/>
+          </IconButton>
+        </Box>
+
+        <Divider/>
+
+        <Box p={1} pl={0} display='flex'>
+          <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
+
           <IconButton size={'small'} onClick={() => updateDayIndex(dayIndex - 1)}>
             <ChevronLeft/>
           </IconButton>
+
           <IconButton size={'small'} onClick={() => updateDayIndex(dayIndex + 1)}>
             <ChevronRight/>
           </IconButton>
-        </div>
+
+          <Box flexGrow={1}/>
+
+          <Button
+            size='small'
+            color='primary'
+            onClick={() => window.close()}
+            endIcon={<SaveAlt/>}
+          >
+            Save
+          </Button>
+
+        </Box>
       </>}
 
-      {/*{!rawUsers.length && isActive && <p>*/}
-      {/*  <strong>{translate('TODAY_NO_BIRTHDAYS_TITLE')}</strong>*/}
-      {/*</p>}*/}
       <Divider/>
-      {!!users.users.length && <VariableSizeList
-        itemSize={i => users.usersMap[i].height}
-        itemData={users.users}
-        ref={listRef}
-        height={400}
-        onScroll={scrollHandler}
-        width={300}
-        itemCount={users.users.length}>
-        {DayRow}
-      </VariableSizeList>
+      {!!users.users.length &&
+      <Box p={2} pt={0} pr={0}>
+        <VariableSizeList
+          itemSize={i => users.usersMap[i].height}
+          itemData={users.users}
+          ref={listRef}
+          height={400}
+          onScroll={scrollHandler}
+          width={'100%'}
+          outerElementType={CustomScrollbarsVirtualList}
+          itemCount={users.users.length}>
+          {DayRow}
+        </VariableSizeList>
+      </Box>
       }
-    </div>
+    </Box>
   );
 };
+
 
 export default TodayBirthdays;
