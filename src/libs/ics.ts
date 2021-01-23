@@ -26,9 +26,9 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
      */
     return {
       name: event.name,
-      start: event.start.toFormat('yyyyLLdd'),
-      end: event.start.plus({days: 1}).toFormat('yyyyLLdd'),
-      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss\'Z\''),
+      start: event.start.toFormat('yyyyLLdd\'T\'HHmmss'),
+      end: event.start.plus({days: 1}).toFormat('yyyyLLdd\'T\'HHmmss'),
+      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss'),
       href: event.href,
       uid: event.uid,
     };
