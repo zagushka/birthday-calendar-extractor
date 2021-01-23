@@ -46,7 +46,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box py={1} px={1}>
+        <Box>
           {children}
         </Box>
       )}
@@ -70,13 +70,13 @@ const UserSettings: FunctionComponent = () => {
       {!isActive && <ActivateBadge/>}
       {loaded &&
       <div className={classes.root}>
-        <AppBar position='static'>
-          <Tabs value={tab} onChange={updateTabIndex} aria-label='simple tabs example'>
-            <Tab value={TABS.TODAY_BIRTHDAYS} label={translateString('TODAY_BIRTHDAY_TITLE')}/>
-            <Tab value={TABS.CALENDAR_GENERATOR} label={translateString('USER_SETTINGS')}/>
-            <Tab value={TABS.DEBUG_TOOLS} label='TOOLZ'/>
-          </Tabs>
-        </AppBar>
+        {/*<AppBar position='static'>*/}
+        {/*  <Tabs value={tab} onChange={updateTabIndex} aria-label='simple tabs example'>*/}
+        {/*    <Tab value={TABS.TODAY_BIRTHDAYS} label={translateString('TODAY_BIRTHDAY_TITLE')}/>*/}
+        {/*    <Tab value={TABS.CALENDAR_GENERATOR} label={translateString('USER_SETTINGS')}/>*/}
+        {/*    <Tab value={TABS.DEBUG_TOOLS} label='TOOLZ'/>*/}
+        {/*  </Tabs>*/}
+        {/*</AppBar>*/}
         <TabPanel value={tab} index={TABS.TODAY_BIRTHDAYS}>
           <TodayBirthdays/>
           <ToggleShowBadgeButton/>
