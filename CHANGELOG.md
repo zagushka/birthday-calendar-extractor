@@ -1,4 +1,7 @@
 ### Changelog
+2.3.7
+- Fixed issue with all day events: https://github.com/zagushka/birthday-calendar-extractor/issues/10
+
 2.3.6
 - Portuguese added by https://github.com/marciozomb13
 
