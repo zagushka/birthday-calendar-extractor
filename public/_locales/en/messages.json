@@ -88,5 +88,13 @@
   "GENERATE": {
     "message": "Generate",
     "description": "Label 'generate' button"
+  },
+  "BUY_ME_COFFEE_TITLE": {
+    "message": "☕ Buy me a coffee",
+    "description": "Title Buy me a coffee."
+  },
+  "BUY_ME_COFFEE_LINK": {
+    "message": "https://www.buymeacoffee.com/zagushka",
+    "description": "Link to buy me a coffee"
   }
 }
