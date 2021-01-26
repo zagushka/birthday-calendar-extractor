@@ -28,6 +28,7 @@
         <div class="rect4"></div>
         <div class="rect5"></div>
       </div>
+      {{ status }}
     </div>
 
   </span>
@@ -39,6 +40,7 @@ import {
   StartGenerationAction,
   GetUserConfigAction,
   SetUserConfigAction,
+  ACTION,
 } from '../constants';
 import link from '../directives/link';
 import translate from '../directives/translate';
@@ -59,6 +61,22 @@ const PopupUserSettings = Vue.extend({
     },
   },
   created() {
+    chrome.runtime.onMessage.addListener((message, sender, callback) => {
+      if (ACTION.GENERATION_FLOW_STATUS === message.type) {
+        switch (message.status) {
+          case 'next':
+            this.status = message.message;
+            break;
+          case 'complete':
+            this.status = '';
+            break;
+          case 'error':
+            this.status = 'message.message';
+            break;
+        }
+      }
+    });
+
     sendMessage(new GetUserConfigAction(), (message) => {
       this.file_format = message.targetFormat;
     });
@@ -67,6 +85,7 @@ const PopupUserSettings = Vue.extend({
     return {
       file_format: 'ics',
       waiting: false,
+      status: '',
     };
   },
   methods: {
@@ -93,11 +112,12 @@ export default PopupUserSettings;
   width: 100%;
   height: 100vh;
   z-index: 1000;
+  text-align: center;
 }
 
 /** https://github.com/tobiasahlin/SpinKit **/
 .spinner {
-  margin: calc(50vh - 20px) auto;
+  margin: calc(50vh - 40px) auto;
   width: 50px;
   height: 40px;
   text-align: center;
