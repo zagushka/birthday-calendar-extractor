@@ -18,6 +18,7 @@
       <div class="no-wrap">
         <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
         <a v-link="'LEAVE_FEEDBACK_LINK'" class="link special"><span v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
+        <a v-link="'https://github.com/zagushka/birthday-calendar-extractor/issues'" class="link special"><span>🐞</span></a>
       </div>
     </span>
     <div id="spinner-container" v-show="waiting">
