@@ -68,5 +68,9 @@
   "GENERATE": {
     "message": "Создать",
     "description": "Label 'generate' button"
+  },
+  "BUY_ME_COFFEE_TITLE": {
+    "message": "☕ Угостить меня кофе",
+    "description": "Title Buy me a coffee."
   }
 }

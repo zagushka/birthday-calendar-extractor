@@ -5,6 +5,7 @@ export enum ACTION {
   START_GENERATION = 'START_GENERATION',
   CHECK_STATUS = 'CHECK_STATUS',
   LOG = 'LOG',
+  GENERATION_FLOW_STATUS = 'GENERATION_FLOW_STATUS'
 }
 
 export type ApplicationStatus =
@@ -12,7 +13,8 @@ export type ApplicationStatus =
   | 'NOT_SUPPORTED_LANGUAGE'
   | 'DONE'
   | 'USER_SETTINGS'
-  | 'NO_TOKEN_DETECTED';
+  | 'NO_TOKEN_DETECTED'
+  | 'UNKNOWN_ERROR';
 
 export abstract class Action {
   abstract type: ACTION;
@@ -37,7 +39,15 @@ export class StartGenerationAction extends Action {
 export class StatusReportAction extends Action {
   type = ACTION.STATUS_REPORT;
 
-  constructor(public status: ApplicationStatus) {
+  constructor(public status: ApplicationStatus, public message?: any) {
+    super();
+  }
+}
+
+export class GenerationFlowStatus extends Action {
+  type = ACTION.GENERATION_FLOW_STATUS;
+
+  constructor(public status: string, public message?: string) {
     super();
   }
 }

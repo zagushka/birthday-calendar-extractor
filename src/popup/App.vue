@@ -3,6 +3,7 @@
   <popup-change-language v-else-if="status === 'NOT_SUPPORTED_LANGUAGE'"></popup-change-language>
   <popup-done v-else-if="status === 'DONE'"></popup-done>
   <popup-user-settings v-else-if="status === 'USER_SETTINGS'"></popup-user-settings>
+  <popup-general-error :message="message" v-else-if="status === 'UNKNOWN_ERROR'"></popup-general-error>
   <popup-no-token-detected v-else-if="status === 'NO_TOKEN_DETECTED'"></popup-no-token-detected>
 </template>
 
@@ -16,6 +17,7 @@ import PopupUserSettings from "../components/popup.user-settings";
 import translate from "../directives/translate";
 import {ACTION, CheckStatusAction} from "../constants";
 import {sendMessage} from "../libs/lib";
+import PopupGeneralError from "../components/popup.general-error";
 
 export default {
   components: {
@@ -23,7 +25,8 @@ export default {
     PopupChangeLanguage,
     PopupDone,
     PopupNoTokenDetected,
-    PopupUserSettings
+    PopupUserSettings,
+    PopupGeneralError
   },
   directives: {
     translate,
@@ -32,6 +35,7 @@ export default {
     chrome.runtime.onMessage.addListener((message, sender, callback) => {
       if (ACTION.STATUS_REPORT === message.type) {
         this.status = message.status;
+        this.message = btoa(JSON.stringify(message.message));
       }
     })
 
@@ -39,7 +43,8 @@ export default {
   },
   data() {
     return {
-      status
+      status: '',
+      message: ''
     }
   }
 }

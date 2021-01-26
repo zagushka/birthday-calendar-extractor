@@ -1,16 +1,27 @@
 import { DateTime } from 'luxon';
 import {
-  forkJoin,
+  concat,
   Observable,
   of,
+  Subject,
+  throwError,
 } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
+  catchError,
+  delay,
   map,
   mapTo,
+  retry,
+  scan,
   switchMap,
+  tap,
+  toArray,
 } from 'rxjs/operators';
-import { Action } from '../constants';
+import {
+  Action,
+  GenerationFlowStatus,
+} from '../constants';
 import {
   languages,
   LanguageSet,
@@ -226,6 +237,10 @@ function extractTokenFromPage(page: string): string {
  * return {language, token}
  */
 export function parsePageForConfig() {
+  sendMessage(new GenerationFlowStatus(
+    'next',
+    `Checking for a facebook login.`,
+  ));
   return ajax({
     url: 'https://www.facebook.com',
     headers: {
@@ -244,6 +259,7 @@ function fetchBirthdaysPage(url: string): Observable<string> {
     .pipe(
       map(r => JSON.parse(r.response.substring(9))),
       map(r => r.domops[0][3].__html),
+      retry(1),
     );
 }
 
@@ -285,10 +301,35 @@ export function fetchBirthdays(token: string, language: string): Observable<Map<
 
   const requests = loopDates()
     .map(date => 'https://www.facebook.com/async/birthdays/?date=' + date + '&__a=1&fb_dtsg_ag=' + token)
-    .map(fetchBirthdaysPage);
+    .map(fetchBirthdaysPage)
+    .map((r) => r.pipe(tap(() => messages.next(null))));
 
-  return forkJoin(requests)
+  const messages = new Subject();
+  messages
     .pipe(
+      scan((curr) => ++curr, 0),
+    )
+    .subscribe(
+      (count) => {
+        sendMessage(new GenerationFlowStatus(
+          'next',
+          `Executed ${count.toString()} of ${requests.length.toString()} requests.`,
+        ));
+      },
+      error => {
+        sendMessage(new GenerationFlowStatus(
+          'error',
+          `Error: ${error}`,
+        ));
+      },
+      () => {
+        sendMessage(new GenerationFlowStatus('complete'));
+      },
+    );
+
+  return concat(...requests)
+    .pipe(
+      toArray(),
       map(
         responses => {
           const nonUniques: Array<[string, RawEvent]> = responses
@@ -296,9 +337,14 @@ export function fetchBirthdays(token: string, language: string): Observable<Map<
             .map(items => generateRawEvents(items, languageSet))
             .flat()
             .map(i => [i.uid, i]);
-
+          messages.complete();
           return new Map(nonUniques); // All non-uniques are removed
         }),
+      catchError((err) => {
+        messages.error(err);
+        messages.complete();
+        return throwError(err);
+      }),
     );
 }
 
@@ -307,7 +353,16 @@ export function getBirthdaysList(language: string, token: string): Observable<Ma
     .pipe(
       switchMap(items => {
         if (items) {
-          return of(items);
+          return of(items)
+            .pipe(
+              tap(() => {
+                sendMessage(new GenerationFlowStatus(
+                  'next',
+                  `Using cached data.`,
+                ));
+              }),
+              delay(3000),
+            );
         }
         // Make full run for the data
         return fetchBirthdays(token, language)

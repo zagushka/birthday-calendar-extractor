@@ -6,6 +6,7 @@ import {
 } from 'rxjs/operators';
 import { UserConfig } from './background';
 import {
+  GenerationFlowStatus,
   GetUserConfigAction,
   StatusReportAction,
 } from './constants';
@@ -51,16 +52,23 @@ parsePageForConfig()
                   calendar = new CalendarDeleteICS();
                   break;
               }
+
+              sendMessage(new GenerationFlowStatus(
+                'next',
+                `Fetched all the data. Combining.`,
+              ));
+
               return calendar.save(
-                calendar.generateCalendar(Array.from(events.values()))
+                calendar.generateCalendar(Array.from(events.values())),
               );
             }),
           ),
         ),
       )
-      .subscribe(() => {
-        sendMessage(new StatusReportAction('DONE'));
-      });
+      .subscribe(
+        () => sendMessage(new StatusReportAction('DONE')),
+        error => sendMessage(new StatusReportAction('UNKNOWN_ERROR', error)),
+      );
   });
 
 
