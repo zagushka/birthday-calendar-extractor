@@ -1,8 +1,5 @@
 import {
-  AppBar,
   makeStyles,
-  Tab,
-  Tabs,
   Theme,
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
@@ -13,12 +10,10 @@ import React, {
 import { TABS } from '../../constants';
 import { LoadingContext } from '../../context/loading.context';
 import { SettingsContext } from '../../context/settings.context';
-import TodayUsersContextProvider, { TodayUsersContext } from '../../context/today-users.context';
-import { translateString } from '../../filters/translate';
+import { TodayUsersContext } from '../../context/today-users.context';
 import { ActivateBadge } from '../activate';
+import BirthdaysList from '../birthdays-list/birthdays-list';
 import SelectWizard from '../select-wizard';
-import TodayBirthdays from '../today-bdays';
-import ToggleShowBadgeButton from '../toggle-show-badge.button';
 import Toolz from '../toolz';
 import './user-serrings.scss';
 
@@ -78,8 +73,8 @@ const UserSettings: FunctionComponent = () => {
         {/*  </Tabs>*/}
         {/*</AppBar>*/}
         <TabPanel value={tab} index={TABS.TODAY_BIRTHDAYS}>
-          <TodayBirthdays/>
-          <ToggleShowBadgeButton/>
+          <BirthdaysList/>
+          {/*<ToggleShowBadgeButton/>*/}
         </TabPanel>
         <TabPanel value={tab} index={TABS.CALENDAR_GENERATOR}>
           <SelectWizard/>
