@@ -24,6 +24,7 @@ import {
   VariableSizeList,
 } from 'react-window';
 import { TodayUsersContext } from '../../context/today-users.context';
+import { closeWindowHandler } from '../../libs/tools';
 import { useBirthdaysListStyles } from './birthdays-list.styles';
 import {
   asShortDate,
@@ -34,8 +35,6 @@ import {
 } from './birthdays-list.tools';
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
 import { DayRow } from './day-row';
-
-const closeWindow = () => window.close();
 
 const BirthdaysList: FunctionComponent = () => {
   const {users: rawUsers, isActive} = useContext(TodayUsersContext);
@@ -67,17 +66,13 @@ const BirthdaysList: FunctionComponent = () => {
     }
   }, [users]);
 
-  if (!isActive) {
-    // Show button to activate
+  // Show navigation
+  if (rawUsers.length) {
+    // Display list of birthdays today
   } else {
-    // Show navigation
-    if (rawUsers.length) {
-      // Display list of birthdays today
-    } else {
-      // Display "no birthdays today"
-    }
-    // Show button to deactivate
+    // Display "no birthdays today"
   }
+  // Show button to deactivate
 
   /**
    * Scroll the list to the closest element closest to index + delta parameter
@@ -118,7 +113,7 @@ const BirthdaysList: FunctionComponent = () => {
           <Box flexGrow={1}/>
           <IconButton
             size='small'
-            onClick={closeWindow}>
+            onClick={closeWindowHandler}>
             <Close/>
           </IconButton>
         </Box>
