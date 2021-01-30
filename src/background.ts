@@ -83,9 +83,8 @@ listenTo(
 )
   .pipe(
     switchMap(({action, callback}) =>
-      parsePageForConfig()
+      getBirthdaysList()
         .pipe(
-          switchMap(({language, token}) => getBirthdaysList(language, token)),
           map(events => {
             const rawEvents = Array.from(events.values());
             switch (action.type) {

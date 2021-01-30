@@ -6,8 +6,8 @@ import {
   arrayToCSVRow,
   generatePreparedEventsForYears,
   PreparedEvent,
-  RawEvent,
 } from '../lib';
+import { RestoredBirthday } from '../storage/chrome.storage';
 
 interface CsvFormattedEvent {
   name: string;
@@ -37,7 +37,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
   }
 
   generateCalendar(
-    events: Array<RawEvent>,
+    events: Array<RestoredBirthday>,
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {

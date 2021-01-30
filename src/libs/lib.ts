@@ -8,25 +8,25 @@ import {
 import { ajax } from 'rxjs/ajax';
 import {
   map,
+  mapTo,
   switchMap,
   tap,
 } from 'rxjs/operators';
+import {
+  BirthdaysExtractionComplete,
+  updateBadgeAction,
+} from './events/actions';
+import { sendMessage } from './events/events';
 
 import {
   languages,
   LanguageSet,
 } from './languages';
-import { TempStorage } from './storage/temp.storage';
-
-export interface RawEvent {
-  uid?: string;
-  name: string;
-  month: number;
-  day: number;
-  href: string;
-  ignored?: boolean; // For future needs, if I want to allow to filter the birthdays later
-  changeTime?: number; // For future needs, if I want to allow to filter the birthdays later
-}
+import {
+  RestoredBirthday,
+  retrieveUserSettings,
+  storeUserSettings,
+} from './storage/chrome.storage';
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url
@@ -50,12 +50,13 @@ export function arrayToCSVRow(notEscaped: Array<string>): string {
  * * Generate uid from user href
  * * convert to the form suitable for further usage
  */
-export function prepareEvent(event: RawEvent, year: number): PreparedEvent {
+export function prepareEvent(event: RestoredBirthday, year: number): PreparedEvent {
+  // @TODO Check RestoredBirthday start, is it local, is it utc? Cause in output formats it should be utc
   // Take care of leap year
   // Since all coming birthdays are from 2020 (leap year) 02/29 can occur
-  // So in order to prevent the error, I create the date from 2020 and change the year later
-  // luxon knows to handle this and change 29 to 28 if needed
-  const start = DateTime.utc(2020, event.month, event.day).set({year: year});
+  // I change the year to required and
+  // luxon knows to handle leap years and change 29 to 28 for Feb if needed
+  const start = event.start.set({year: year});
 
   // Wrong date
   if (!start.isValid) {
@@ -75,7 +76,7 @@ export function prepareEvent(event: RawEvent, year: number): PreparedEvent {
  * Generate Array of events for required years range
  * RawEvent is not connected to any year, so we convert it to PreparedEvent and assign the year
  */
-export function generatePreparedEventsForYears(events: Array<RawEvent>, year: number, tillYear: number): Array<PreparedEvent> {
+export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, year: number, tillYear: number): Array<PreparedEvent> {
   const result: Array<PreparedEvent> = [];
 
   do {
@@ -158,22 +159,20 @@ function extractCardWithWeek(src: string, pattern: RegExp, languageSet: Language
 }
 
 /**
- * RawEvent have basic information extracted from parsed html, such as
- * href, user name, birthday day and month
- * uid is generated from href, since it is unique
+ * RestoredBirthday have basic information extracted from parsed html, such as
+ * href, user name, and birthdate in 2020
  */
-function generateRawEvents(data: Array<{ href: string; user: string }>, languageSet: LanguageSet): Array<RawEvent> {
+function generateBirthdaysFromRaw(data: Array<{ href: string; user: string }>, languageSet: LanguageSet): Array<RestoredBirthday> {
   return data.map(item => {
     const card = extractCardWithDate(item.user, languageSet.pattern) ||
       extractCardWithWeek(item.user, languageSet.weekdays_pattern, languageSet);
 
     if (card && item.href.length) {
-      return Object.assign(card, {
-        // ignored: false,
-        // changeTime: 0,
+      return {
+        name: card.name,
+        start: DateTime.local(2020, card.month, card.day),
         href: item.href,
-        uid: window.btoa(item.href),
-      });
+      };
     }
   });
 }
@@ -253,7 +252,7 @@ function extractTokenFromPage(page: string): string {
  *
  * return {language, token}
  */
-export function parsePageForConfig() {
+export function parsePageForConfig(): Observable<{ token: string; language: string }> {
   return ajax({
     url: 'https://www.facebook.com',
     headers: {
@@ -287,7 +286,7 @@ function fetchBirthdaysPage(url: string): Observable<string> {
     );
 }
 
-export function fetchBirthdays(token: string, language: string): Observable<Map<string, RawEvent>> {
+export function fetchBirthdays(token: string, language: string): Observable<Array<RestoredBirthday>> {
   const languageSet = findLanguageSetByLanguage(language);
 
   const requests = loopDates()
@@ -298,28 +297,43 @@ export function fetchBirthdays(token: string, language: string): Observable<Map<
     .pipe(
       map(
         responses => {
-          const nonUniques: Array<[string, RawEvent]> = responses
+          const nonUniques: Array<[string, RestoredBirthday]> = responses
             .map(extractBirthdayDataFromHtml)
-            .map(items => generateRawEvents(items, languageSet))
+            .map(items => generateBirthdaysFromRaw(items, languageSet))
             .flat()
-            .map(i => [i.uid, i]);
+            .map(i => [i.href, i]);
 
-          return new Map(nonUniques); // All non-uniques are removed
+          return Array.from(new Map(nonUniques).values()); // All non-uniques are removed
         }),
     );
 }
 
-export function getBirthdaysList(language: string, token: string): Observable<Map<string, RawEvent>> {
-  return TempStorage.retrieveBirthdays()
+export function getBirthdaysList(): Observable<Array<RestoredBirthday>> {
+  return retrieveUserSettings(['birthdays', 'badgeActive'])
     .pipe(
-      switchMap(items => {
-        if (items) {
-          return of(items);
+      switchMap(({birthdays, badgeActive}) => {
+        if (badgeActive) {
+          // Using cached version
+          return of(birthdays);
         }
+
         // Make full run for the data
-        return fetchBirthdays(token, language)
+        // First of all check for the token and language
+        return parsePageForConfig()
           .pipe(
-            tap(TempStorage.storeBirthdays),
+            // Fetch the data from facebook
+            switchMap(({token, language}) => fetchBirthdays(token, language)),
+            // Store fetched data for further usage
+            switchMap(data => storeUserSettings({birthdays: data, badgeActive: true})
+              .pipe(
+                mapTo(data),
+                tap(() => {
+                  // Tell to tha app new data was fetched and request to update the badge
+                  sendMessage(updateBadgeAction(), true);
+                  sendMessage(BirthdaysExtractionComplete(), true);
+                }),
+              ),
+            ),
           );
       }),
     );

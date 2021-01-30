@@ -4,8 +4,8 @@ import { CalendarBase } from '../base';
 import {
   generatePreparedEventsForYears,
   PreparedEvent,
-  RawEvent,
 } from '../lib';
+import { RestoredBirthday } from '../storage/chrome.storage';
 
 export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   readonly filename: string = 'birthday-calendar.json';
@@ -25,7 +25,7 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   }
 
   generateCalendar(
-    events: Array<RawEvent>,
+    events: Array<RestoredBirthday>,
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {

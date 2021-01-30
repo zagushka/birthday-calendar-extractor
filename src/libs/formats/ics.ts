@@ -5,8 +5,8 @@ import { CalendarBase } from '../base';
 import {
   generatePreparedEventsForYears,
   PreparedEvent,
-  RawEvent,
 } from '../lib';
+import { RestoredBirthday } from '../storage/chrome.storage';
 
 interface IcsEvent {
   start: string;
@@ -62,7 +62,7 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
   }
 
   generateCalendar(
-    events: Array<RawEvent>,
+    events: Array<RestoredBirthday>,
     fromYear: number = 2020, // Since all the events are recurring I generate them for leap year 2020
     tillYear: number = 2020,
   ) {

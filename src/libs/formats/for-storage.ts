@@ -8,9 +8,11 @@ import { sendMessage } from '../events/events';
 import {
   generatePreparedEventsForYears,
   PreparedEvent,
-  RawEvent,
 } from '../lib';
-import { storeUserSettings } from '../storage/chrome.storage';
+import {
+  RestoredBirthday,
+  storeUserSettings,
+} from '../storage/chrome.storage';
 
 export class CalendarForStorage extends CalendarBase<{ name: string; start: DateTime; href: string },
   { name: string; start: DateTime; href: string },
@@ -39,7 +41,7 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
   }
 
   generateCalendar(
-    events: Array<RawEvent>,
+    events: Array<RestoredBirthday>,
     fromYear: number = 2020, // Use 2020 (leap year)
     tillYear: number = 2020, // Same year
   ) {
