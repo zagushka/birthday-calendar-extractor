@@ -7,14 +7,16 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { TABS } from '../../constants';
+
+import {
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import { LoadingContext } from '../../context/loading.context';
-import { SettingsContext } from '../../context/settings.context';
 import { TodayUsersContext } from '../../context/today-users.context';
-import { ActivateBadge } from '../activate';
 import BirthdaysList from '../birthdays-list/birthdays-list';
-import SelectWizard from '../select-wizard';
-import Toolz from '../toolz';
+import { FirstScan } from '../first-scan';
 import './user-serrings.scss';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -51,38 +53,23 @@ function TabPanel(props: TabPanelProps) {
 
 const UserSettings: FunctionComponent = () => {
   const classes = useStyles();
-
   const {isLoading} = useContext(LoadingContext);
-  const {tab, setTab} = useContext(SettingsContext);
   const {isActive} = useContext(TodayUsersContext);
-
   const loaded = !isLoading('SETTINGS');
-
-  const updateTabIndex = (event: React.ChangeEvent<{}>, index: keyof typeof TABS) => setTab(index);
 
   return (
     <>
-      {!isActive && <ActivateBadge/>}
       {loaded &&
-      <div className={classes.root}>
-        {/*<AppBar position='static'>*/}
-        {/*  <Tabs value={tab} onChange={updateTabIndex} aria-label='simple tabs example'>*/}
-        {/*    <Tab value={TABS.TODAY_BIRTHDAYS} label={translateString('TODAY_BIRTHDAY_TITLE')}/>*/}
-        {/*    <Tab value={TABS.CALENDAR_GENERATOR} label={translateString('USER_SETTINGS')}/>*/}
-        {/*    <Tab value={TABS.DEBUG_TOOLS} label='TOOLZ'/>*/}
-        {/*  </Tabs>*/}
-        {/*</AppBar>*/}
-        <TabPanel value={tab} index={TABS.TODAY_BIRTHDAYS}>
-          <BirthdaysList/>
-          {/*<ToggleShowBadgeButton/>*/}
-        </TabPanel>
-        <TabPanel value={tab} index={TABS.CALENDAR_GENERATOR}>
-          <SelectWizard/>
-        </TabPanel>
-        <TabPanel value={tab} index={TABS.DEBUG_TOOLS}>
-          <Toolz/>
-        </TabPanel>
-      </div>
+      <Switch>
+        <Route path='/error'>
+        </Route>
+        <Route path='/activate'>
+          {!isActive ? <Redirect to='/'/> : <FirstScan/>}
+        </Route>
+        <Route path='/'>
+          {!isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
+        </Route>
+      </Switch>
       }
     </>
   );

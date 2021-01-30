@@ -6,7 +6,6 @@ import {
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  TABS,
   WIZARD_NAMES,
 } from '../../constants';
 
@@ -14,7 +13,6 @@ import { WizardsSettings } from '../../context/settings.context';
 
 export interface Settings {
   badgeActive: boolean;
-  lastActiveTab: keyof typeof TABS;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: DateTime;
@@ -23,7 +21,6 @@ export interface Settings {
 
 export interface StoredSettings {
   badgeActive: boolean;
-  lastActiveTab: keyof typeof TABS;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: number;
@@ -42,7 +39,6 @@ export const DEFAULT_SETTINGS: Settings = {
   badgeActive: false,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],
-  lastActiveTab: TABS.CALENDAR_GENERATOR,
   lastSelectedWizard: WIZARD_NAMES.CREATE_ICS,
   wizardSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {allDayEvent: false, groupEvents: false}},
 };
@@ -123,7 +119,6 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
           .reduce((accumulator, key) => {
             switch (key) {
               case 'badgeActive':
-              case 'lastActiveTab':
               case 'lastSelectedWizard':
               case 'wizardSettings': {
                 const value = data[key] || DEFAULT_SETTINGS[key];
@@ -160,7 +155,6 @@ export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolea
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
         switch (key) {
           case 'badgeActive':
-          case 'lastActiveTab':
           case 'lastSelectedWizard':
           case 'wizardSettings':
             return update(accumulator, {[key]: {$set: settings[key]}});
