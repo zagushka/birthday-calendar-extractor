@@ -17,7 +17,7 @@ import {
 import {
   ALARM_NEW_DAY,
   BADGE_CLICKED,
-  BIRTHDAYS_START_EXTRACTION,
+  BIRTHDAYS_START_SCAN,
   CREATE_CALENDAR_CSV,
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_ICS,
@@ -27,10 +27,12 @@ import {
 } from './libs/events/types';
 import { CalendarCSV } from './libs/formats/csv';
 import { CalendarDeleteICS } from './libs/formats/delete-ics';
-import { CalendarForStorage } from './libs/formats/for-storage';
 import { CalendarICS } from './libs/formats/ics';
 import { CalendarJSON } from './libs/formats/json';
-import { getBirthdaysList } from './libs/lib';
+import {
+  forceBirthdaysScan,
+  getBirthdaysList,
+} from './libs/lib';
 import {
   storeLastBadgeClicked,
   storeUserSettings,
@@ -62,7 +64,7 @@ listenTo(DISABLE_BADGE_NOTIFICATION)
       return storeUserSettings({
         birthdays: [],
         badgeActive: false,
-      })
+      });
     }),
   )
   .subscribe(() => {
@@ -70,12 +72,27 @@ listenTo(DISABLE_BADGE_NOTIFICATION)
     sendMessage(updateBadgeAction(), true);
   });
 
+// Tell to tha app new data was fetched and request to update the badge
+// Should be done via local storage update
+// sendMessage(updateBadgeAction(), true);
+
+listenTo(BIRTHDAYS_START_SCAN)
+  .pipe(
+    // Update local storage, set isScanning true
+    switchMap(() => storeUserSettings({isScanning: true})),
+    // Start Scan
+    forceBirthdaysScan,
+  )
+  .subscribe((birthdays) => {
+    // Update local storage, set isScanning false
+    storeUserSettings({isScanning: false});
+  });
+
 listenTo(
   CREATE_CALENDAR_CSV,
   CREATE_CALENDAR_ICS,
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_JSON,
-  BIRTHDAYS_START_EXTRACTION,
 )
   .pipe(
     switchMap(({action, callback}) =>
@@ -98,10 +115,6 @@ listenTo(
               }
               case CREATE_CALENDAR_DELETE_ICS: {
                 const calendar = new CalendarDeleteICS(action.payload);
-                return calendar.save(calendar.generateCalendar(rawEvents));
-              }
-              case BIRTHDAYS_START_EXTRACTION: {
-                const calendar = new CalendarForStorage();
                 return calendar.save(calendar.generateCalendar(rawEvents));
               }
               default:

@@ -12,10 +12,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import {
-  BirthdaysExtractionComplete,
-  updateBadgeAction,
-} from './events/actions';
+import { BirthdaysScanComplete } from './events/actions';
 import { sendMessage } from './events/events';
 
 import {
@@ -308,6 +305,28 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
     );
 }
 
+/**
+ * Make new full scan of the birthdays data
+ * Store fetched data to local storage
+ */
+export function forceBirthdaysScan() {
+  // First of all check for the token and language
+  return parsePageForConfig()
+    .pipe(
+      // Fetch the data from facebook
+      switchMap(({token, language}) => fetchBirthdays(token, language)),
+      // Store fetched data for further usage
+      switchMap(data => storeUserSettings({birthdays: data, badgeActive: true})
+        .pipe(
+          mapTo(data),
+          tap(() => {
+            sendMessage(BirthdaysScanComplete(), true);
+          }),
+        ),
+      ),
+    );
+}
+
 export function getBirthdaysList(): Observable<Array<RestoredBirthday>> {
   return retrieveUserSettings(['birthdays', 'badgeActive'])
     .pipe(
@@ -318,23 +337,7 @@ export function getBirthdaysList(): Observable<Array<RestoredBirthday>> {
         }
 
         // Make full run for the data
-        // First of all check for the token and language
-        return parsePageForConfig()
-          .pipe(
-            // Fetch the data from facebook
-            switchMap(({token, language}) => fetchBirthdays(token, language)),
-            // Store fetched data for further usage
-            switchMap(data => storeUserSettings({birthdays: data, badgeActive: true})
-              .pipe(
-                mapTo(data),
-                tap(() => {
-                  // Tell to tha app new data was fetched and request to update the badge
-                  sendMessage(updateBadgeAction(), true);
-                  sendMessage(BirthdaysExtractionComplete(), true);
-                }),
-              ),
-            ),
-          );
+        return forceBirthdaysScan();
       }),
     );
 }

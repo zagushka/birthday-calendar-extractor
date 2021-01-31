@@ -9,8 +9,8 @@ import {
   BADGE_CLICKED,
   BadgeActionTypes,
   BadgeNotificationActionTypes,
-  BIRTHDAYS_EXTRACTION_COMPLETE,
-  BIRTHDAYS_START_EXTRACTION,
+  BIRTHDAYS_SCAN_COMPLETE,
+  BIRTHDAYS_START_SCAN,
   BirthdaysExtractionActionTypes,
   CREATE_CALENDAR_CSV,
   CREATE_CALENDAR_DELETE_ICS,
@@ -98,15 +98,15 @@ export function alarmNewDay(): AlarmTypes {
   };
 }
 
-export function BirthdaysStartExtraction(): BirthdaysExtractionActionTypes {
+export function BirthdaysStartScan(): BirthdaysExtractionActionTypes {
   return {
-    type: BIRTHDAYS_START_EXTRACTION,
+    type: BIRTHDAYS_START_SCAN,
   };
 }
 
-export function BirthdaysExtractionComplete(): BirthdaysExtractionActionTypes {
+export function BirthdaysScanComplete(): BirthdaysExtractionActionTypes {
   return {
-    type: BIRTHDAYS_EXTRACTION_COMPLETE,
+    type: BIRTHDAYS_SCAN_COMPLETE,
   };
 }
 

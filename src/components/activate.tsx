@@ -4,14 +4,14 @@ import React, {
   useContext,
 } from 'react';
 import { LoadingContext } from '../context/loading.context';
-import { BirthdaysStartExtraction } from '../libs/events/actions';
+import { BirthdaysStartScan } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
 
 export const ActivateBadge: FunctionComponent = () => {
   const {startLoading, isLoading} = useContext(LoadingContext);
   const handleClick = () => {
     // startLoading('WAITING_FOR_BADGE_TO_BE_ENABLED');
-    sendMessage(BirthdaysStartExtraction(), true);
+    sendMessage(BirthdaysStartScan(), true);
   };
   return (
     <>

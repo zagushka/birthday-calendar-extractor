@@ -17,8 +17,8 @@ export const CREATE_CALENDAR_DELETE_ICS = 'CREATE_CALENDAR_DELETE_ICS';
 export const CREATE_CALENDAR_CSV = 'CREATE_CALENDAR_CSV';
 export const CREATE_CALENDAR_JSON = 'CREATE_CALENDAR_JSON';
 
-export const BIRTHDAYS_START_EXTRACTION = 'BIRTHDAYS_START_EXTRACTION';
-export const BIRTHDAYS_EXTRACTION_COMPLETE = 'BIRTHDAYS_EXTRACTION_COMPLETE';
+export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_EXTRACTION';
+export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_EXTRACTION_COMPLETE';
 
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
@@ -57,11 +57,11 @@ interface UpdateBadgeAction {
 export type BadgeActionTypes = UpdateBadgeAction;
 
 interface BirthdaysStartExtractionAction {
-  type: typeof BIRTHDAYS_START_EXTRACTION;
+  type: typeof BIRTHDAYS_START_SCAN;
 }
 
 interface BirthdaysExtractionCompleteAction {
-  type: typeof BIRTHDAYS_EXTRACTION_COMPLETE;
+  type: typeof BIRTHDAYS_SCAN_COMPLETE;
 }
 
 export type BirthdaysExtractionActionTypes = BirthdaysStartExtractionAction | BirthdaysExtractionCompleteAction;

@@ -6,9 +6,7 @@ import {
   Subscriber,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  WIZARD_NAMES,
-} from '../../constants';
+import { WIZARD_NAMES } from '../../constants';
 
 import { WizardsSettings } from '../../context/settings.context';
 import AreaName = chrome.storage.AreaName;

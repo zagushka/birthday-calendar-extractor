@@ -10,11 +10,16 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { Link } from 'react-router-dom';
 import { TodayUsersContext } from '../context/today-users.context';
+import { BirthdaysStartScan } from '../libs/events/actions';
+import { sendMessage } from '../libs/events/events';
 import { closeWindowHandler } from '../libs/tools';
 import { useBirthdaysListStyles } from './birthdays-list/birthdays-list.styles';
 import { ScanLog } from './scan-log';
+
+const startScanHandler = () => {
+  sendMessage(BirthdaysStartScan(), true);
+};
 
 export const FirstScan: FunctionComponent = () => {
   const classes = useBirthdaysListStyles();
@@ -46,8 +51,7 @@ export const FirstScan: FunctionComponent = () => {
             <Button
               color={'secondary'}
               size={'large'}
-              component={Link}
-              to='/scan'
+              onClick={startScanHandler}
             >
               <PlayCircleOutlineIcon fontSize={'large'}/> Start
             </Button>
