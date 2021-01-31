@@ -22,7 +22,7 @@ export const BIRTHDAYS_EXTRACTION_COMPLETE = 'BIRTHDAYS_EXTRACTION_COMPLETE';
 
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
-export const SEND_LOG = 'SEND_LOG';
+export const SCAN_LOG = 'SCAN_LOG';
 
 // NOTIFICATIONS
 export const BADGE_CLICKED = 'BADGE_CLICKED';
@@ -103,12 +103,21 @@ interface AlarmNewDay {
 
 export type AlarmTypes = AlarmNewDay | BadgeClicked;
 
+
+export interface ScanLogAction {
+  type: typeof SCAN_LOG;
+  payload: { log: string };
+}
+
+
 export type ActionTypes =
   NotificationActionTypes
   | BadgeNotificationActionTypes
   | BadgeActionTypes
   | CreateCalendarActionTypes
-  | AlarmTypes;
+  | AlarmTypes
+  | ScanLogAction
+  ;
 
 export type ApplicationStatus =
   'FACEBOOK_REQUIRED'

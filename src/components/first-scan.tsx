@@ -10,20 +10,15 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { LoadingContext } from '../context/loading.context';
-import { BirthdaysStartExtraction } from '../libs/events/actions';
-import { sendMessage } from '../libs/events/events';
+import { Link } from 'react-router-dom';
+import { TodayUsersContext } from '../context/today-users.context';
 import { closeWindowHandler } from '../libs/tools';
 import { useBirthdaysListStyles } from './birthdays-list/birthdays-list.styles';
+import { ScanLog } from './scan-log';
 
 export const FirstScan: FunctionComponent = () => {
-  const {startLoading, isLoading} = useContext(LoadingContext);
   const classes = useBirthdaysListStyles();
-
-  const handleClick = () => {
-    startLoading('WAITING_FOR_BADGE_TO_BE_ENABLED');
-    sendMessage(BirthdaysStartExtraction(), true);
-  };
+  const {isScanning} = useContext(TodayUsersContext);
 
   return (
     <Box style={{minHeight: 200}}>
@@ -42,13 +37,22 @@ export const FirstScan: FunctionComponent = () => {
            alignItems={'center'}
            justifyContent={'center'}
            px={2}
-           style={{height: 200}}
+           style={{minHeight: 200}}
       >
-        <Box>Scan your Facebook friends birthdays.</Box>
+        {isScanning ? <ScanLog/> :
+          <>
+            <Box>Scan your Facebook friends birthdays.</Box>
 
-        <Button color={'secondary'} size={'large'} onClick={handleClick}>
-          <PlayCircleOutlineIcon fontSize={'large'}/> Start
-        </Button>
+            <Button
+              color={'secondary'}
+              size={'large'}
+              component={Link}
+              to='/scan'
+            >
+              <PlayCircleOutlineIcon fontSize={'large'}/> Start
+            </Button>
+          </>
+        }
       </Box>
     </Box>
   );

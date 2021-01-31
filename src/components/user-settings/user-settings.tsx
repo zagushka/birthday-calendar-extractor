@@ -1,8 +1,3 @@
-import {
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import React, {
   FunctionComponent,
   useContext,
@@ -19,40 +14,7 @@ import BirthdaysList from '../birthdays-list/birthdays-list';
 import { FirstScan } from '../first-scan';
 import './user-serrings.scss';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const {children, value, index, ...other} = props;
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={index}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
-
 const UserSettings: FunctionComponent = () => {
-  const classes = useStyles();
   const {isLoading} = useContext(LoadingContext);
   const {isActive} = useContext(TodayUsersContext);
   const loaded = !isLoading('SETTINGS');

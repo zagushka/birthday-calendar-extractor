@@ -23,7 +23,6 @@ import {
   CREATE_CALENDAR_ICS,
   CREATE_CALENDAR_JSON,
   DISABLE_BADGE_NOTIFICATION,
-  ENABLE_BADGE_NOTIFICATION,
   UPDATE_BADGE,
 } from './libs/events/types';
 import { CalendarCSV } from './libs/formats/csv';
@@ -31,10 +30,7 @@ import { CalendarDeleteICS } from './libs/formats/delete-ics';
 import { CalendarForStorage } from './libs/formats/for-storage';
 import { CalendarICS } from './libs/formats/ics';
 import { CalendarJSON } from './libs/formats/json';
-import {
-  getBirthdaysList,
-  parsePageForConfig,
-} from './libs/lib';
+import { getBirthdaysList } from './libs/lib';
 import {
   storeLastBadgeClicked,
   storeUserSettings,
