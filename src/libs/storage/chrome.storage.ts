@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import {
   bindCallback,
   Observable,
+  Subscriber,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -10,9 +11,12 @@ import {
 } from '../../constants';
 
 import { WizardsSettings } from '../../context/settings.context';
+import AreaName = chrome.storage.AreaName;
+import StorageChange = chrome.storage.StorageChange;
 
 export interface Settings {
   badgeActive: boolean;
+  isScanning: boolean;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: DateTime;
@@ -21,6 +25,7 @@ export interface Settings {
 
 export interface StoredSettings {
   badgeActive: boolean;
+  isScanning: boolean;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: number;
@@ -37,6 +42,7 @@ export interface RestoredBirthday {
 
 export const DEFAULT_SETTINGS: Settings = {
   badgeActive: false,
+  isScanning: false,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],
   lastSelectedWizard: WIZARD_NAMES.CREATE_ICS,
@@ -57,22 +63,10 @@ const getWrapper =
     chrome.storage.local.get(keys, callback as () => any);
   };
 
-/**
- * Fetch all birthdays form local storage and filter for today's
- */
-
-export function getBirthdaysForDate(date: DateTime): Observable<Array<RestoredBirthday>> {
-  return retrieveUserSettings(['birthdays'])
-    .pipe(
-      map(({birthdays}) => filterBirthdaysForDate(birthdays, date)),
-    );
-}
-
 export function filterBirthdaysForDate(birthdays: Array<RestoredBirthday>, date: DateTime = DateTime.local()): Array<RestoredBirthday> {
   const ordinal = date.ordinal;
   return birthdays.filter(r => r.start.ordinal === ordinal);
 }
-
 
 /**
  * Store data to sessionStorage
@@ -103,6 +97,74 @@ const decayBirthday = (birthday: RestoredBirthday): StoredBirthday => {
 };
 
 /**
+ * Callback function for chrome.storage.onChanged.addListener
+ * listen to `local` AreaName
+ * emits only for keys in `keyof Settings` types list
+ */
+const userSettingsListenerFunction =
+  (subscriber: Subscriber<Partial<Settings>>) => (changes: { [key: string]: StorageChange }, areaName: AreaName) => {
+    if ('local' !== areaName) {
+      return;
+    }
+
+    const result = (Object.keys(changes) as Array<keyof Settings>)
+      .reduce((accumulator, key) => {
+        const {newValue} = changes[key];
+        const value = reviveSettingsField(key, newValue);
+        if (undefined !== typeof value) {
+          return update(accumulator, {[key]: {$set: value}});
+        }
+        return accumulator;
+      }, {} as Settings); // <- Dirty trick)
+
+    // Emit next value
+    subscriber.next(result);
+  };
+
+/**
+ * Listen to UserSettings changes, only changed values emitted
+ */
+export function listenToUserSettings(): Observable<Partial<Settings>> {
+  return new Observable(subscriber => {
+    // Create Listener function
+    const listenerFunction = userSettingsListenerFunction(subscriber);
+
+    // Listen to the changes
+    chrome.storage.onChanged.addListener(listenerFunction);
+
+    // Return unsubscribe function
+    return () => chrome.storage.onChanged.removeListener(listenerFunction);
+  });
+}
+
+/**
+ * Revive fetched from the storage data field
+ *
+ */
+const reviveSettingsField = (key: keyof Settings, value: any): any => {
+  switch (key) {
+    case 'badgeActive':
+    case 'isScanning':
+    case 'lastSelectedWizard':
+    case 'wizardSettings': {
+      return value || DEFAULT_SETTINGS[key];
+    }
+
+    case 'badgeVisited': {
+      return value && DateTime.fromMillis(value) || DEFAULT_SETTINGS[key];
+    }
+
+    case 'birthdays': {
+      return value && value.map((event: StoredBirthday) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
+    }
+
+    default:
+      return undefined;
+  }
+};
+
+
+/**
  * Fetch data from chrome.local storage
  * It have a bit dirty tricks of typescript "as"... everything just to move one step toward this function to return right Pick from
  * Settings interface.
@@ -117,28 +179,13 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
         const result = keys
           // Revive retrieved data
           .reduce((accumulator, key) => {
-            switch (key) {
-              case 'badgeActive':
-              case 'lastSelectedWizard':
-              case 'wizardSettings': {
-                const value = data[key] || DEFAULT_SETTINGS[key];
-                return update(accumulator, {[key]: {$set: value}});
-              }
-
-              case 'badgeVisited': {
-                const value = data[key] && DateTime.fromMillis(data[key]) || DEFAULT_SETTINGS[key];
-                return update(accumulator, {[key]: {$set: value}});
-              }
-
-              case 'birthdays': {
-                const value = data[key] && data[key].map((event) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
-                return update(accumulator, {[key]: {$set: value}});
-              }
-
-              default:
-                throw new Error(`Should not have ${key} key`);
+            const storedValue = data[key];
+            const value = reviveSettingsField(key, storedValue);
+            if (undefined !== typeof value) {
+              return update(accumulator, {[key]: {$set: value}});
             }
-          }, {} as Settings); // <- Dirty trick
+            return accumulator;
+          }, {} as Settings);
 
         return result as unknown as U;
       }),
