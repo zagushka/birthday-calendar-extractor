@@ -17,12 +17,12 @@ export const CREATE_CALENDAR_DELETE_ICS = 'CREATE_CALENDAR_DELETE_ICS';
 export const CREATE_CALENDAR_CSV = 'CREATE_CALENDAR_CSV';
 export const CREATE_CALENDAR_JSON = 'CREATE_CALENDAR_JSON';
 
-export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_EXTRACTION';
-export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_EXTRACTION_COMPLETE';
+export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_SCAN';
+export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_SCAN_COMPLETE';
 
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
-export const SCAN_LOG = 'SCAN_LOG';
+export const SEND_SCAN_LOG = 'SEND_SCAN_LOG';
 
 // NOTIFICATIONS
 export const BADGE_CLICKED = 'BADGE_CLICKED';
@@ -104,8 +104,8 @@ interface AlarmNewDay {
 export type AlarmTypes = AlarmNewDay | BadgeClicked;
 
 
-export interface ScanLogAction {
-  type: typeof SCAN_LOG;
+export interface SendScanLogAction {
+  type: typeof SEND_SCAN_LOG;
   payload: { log: string };
 }
 
@@ -116,7 +116,7 @@ export type ActionTypes =
   | BadgeActionTypes
   | CreateCalendarActionTypes
   | AlarmTypes
-  | ScanLogAction
+  | SendScanLogAction
   ;
 
 export type ApplicationStatus =

@@ -10,14 +10,14 @@ import {
  */
 export function updateBadge(): void {
   // @TODO Add Check Badge is active
-  retrieveUserSettings(['birthdays', 'badgeActive', 'badgeVisited'])
-    .subscribe(({birthdays, badgeVisited, badgeActive}) => {
+  retrieveUserSettings(['birthdays', 'activated', 'badgeVisited'])
+    .subscribe(({birthdays, badgeVisited, activated}) => {
       // filter only today's birthdays
       let badgeNumber = '';
       let badgeColor: string | chrome.browserAction.ColorArray = [0, 0, 0, 0];
 
       // Update default badge value and color if functionality is active
-      if (badgeActive) {
+      if (activated) {
         const filteredBirthdays = filterBirthdaysForDate(birthdays, DateTime.local());
         badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
         badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];

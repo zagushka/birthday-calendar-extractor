@@ -56,10 +56,10 @@ const ToggleShowBadgeButton: FunctionComponent = (props) => {
       .pipe(
         takeUntil(onDestroy$),
         startWith(true),
-        switchMap(() => retrieveUserSettings(['badgeActive'])),
+        switchMap(() => retrieveUserSettings(['activated'])),
       )
-      .subscribe(({badgeActive}) => {
-        setIsActive(badgeActive);
+      .subscribe(({activated}) => {
+        setIsActive(activated);
       });
 
     return () => {

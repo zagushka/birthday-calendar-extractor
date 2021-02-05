@@ -8,19 +8,21 @@ import React, {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { listenTo } from '../libs/events/events';
-import { SCAN_LOG } from '../libs/events/types';
+import { SEND_SCAN_LOG } from '../libs/events/types';
 
 export const ScanLog: FunctionComponent = () => {
   const [log, setLog] = useState<Array<string>>([]);
 
   useEffect(() => {
+    console.log('INIT IT');
     const onDestroy$ = new Subject<boolean>();
     // Start listening to scan logs
-    listenTo(SCAN_LOG)
+    listenTo(SEND_SCAN_LOG)
       .pipe(takeUntil(onDestroy$))
       .subscribe(({action}) => {
-        if (SCAN_LOG === action.type) {
-          setLog(update(log, {$push: [action.payload.log]}));
+        console.log('SCANNED', action);
+        if (SEND_SCAN_LOG === action.type) {
+          setLog(currentLog => update(currentLog, {$push: [action.payload.log]}));
         }
       });
 
@@ -42,7 +44,7 @@ export const ScanLog: FunctionComponent = () => {
       <Box>Scan Log</Box>
       <Box>
         <ul>
-          {log.map((row) => <li>{row}</li>)}
+          {log.map((row, index) => <li key={index}>{row}</li>)}
         </ul>
       </Box>
     </Box>

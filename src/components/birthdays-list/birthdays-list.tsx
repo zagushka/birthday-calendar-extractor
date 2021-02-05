@@ -3,6 +3,7 @@ import {
   Button,
   Divider,
   IconButton,
+  Tooltip,
 } from '@material-ui/core';
 import {
   ChevronLeft,
@@ -10,6 +11,8 @@ import {
   Close,
   SaveAlt,
 } from '@material-ui/icons';
+import RepeatIcon from '@material-ui/icons/Repeat';
+
 import { DateTime } from 'luxon';
 import React, {
   FunctionComponent,
@@ -18,6 +21,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   ListOnScrollProps,
@@ -25,7 +29,10 @@ import {
 } from 'react-window';
 import { TodayUsersContext } from '../../context/today-users.context';
 import { closeWindowHandler } from '../../libs/tools';
-import { useBirthdaysListStyles } from './birthdays-list.styles';
+import {
+  useBirthdaysListStyles,
+  useTooltipStyles,
+} from './birthdays-list.styles';
 import {
   asShortDate,
   DAY_HEADER_HEIGHT,
@@ -36,8 +43,9 @@ import {
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
 import { DayRow } from './day-row';
 
+
 const BirthdaysList: FunctionComponent = () => {
-  const {users: rawUsers, isActive} = useContext(TodayUsersContext);
+  const {users: rawUsers} = useContext(TodayUsersContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
 
   const [users, setUsers] = useState<UserMapInterface>({
@@ -47,6 +55,7 @@ const BirthdaysList: FunctionComponent = () => {
 
   const listRef = useRef<VariableSizeList>();
   const classes = useBirthdaysListStyles();
+  const tooltipClasses = useTooltipStyles();
 
   useEffect(() => {
     // Prepare birthdays
@@ -65,14 +74,6 @@ const BirthdaysList: FunctionComponent = () => {
       updateDayIndex(nextClosestIndex);
     }
   }, [users]);
-
-  // Show navigation
-  if (rawUsers.length) {
-    // Display list of birthdays today
-  } else {
-    // Display "no birthdays today"
-  }
-  // Show button to deactivate
 
   /**
    * Scroll the list to the closest element closest to index + delta parameter
@@ -137,12 +138,26 @@ const BirthdaysList: FunctionComponent = () => {
           <Button
             size='small'
             color='primary'
-            onClick={() => window.close()}
+            variant={'outlined'}
+            component={Link}
+            to={'/export'}
             endIcon={<SaveAlt/>}
           >
-            Save
+            Export
           </Button>
 
+          <Tooltip title='Scan birthdays again' arrow classes={tooltipClasses}>
+            <IconButton
+              size='small'
+              color='primary'
+              area-label='more actions'
+              aria-haspopup='true'
+              component={Link}
+              to={'/activate'}
+            >
+              <RepeatIcon/>
+            </IconButton>
+          </Tooltip>
         </Box>
       </>}
 
@@ -154,7 +169,7 @@ const BirthdaysList: FunctionComponent = () => {
           itemSize={i => users.usersMap[i].height}
           itemData={users.userGroups}
           ref={listRef}
-          height={400}
+          height={450}
           onScroll={scrollHandler}
           width={'100%'}
           outerElementType={CustomScrollbarsVirtualList}

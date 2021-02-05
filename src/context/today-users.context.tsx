@@ -37,16 +37,16 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
     const onDestroy$ = new Subject();
 
     concat(
-      retrieveUserSettings(['birthdays', 'badgeActive', 'isScanning']), // Get initial settings
+      retrieveUserSettings(['birthdays', 'activated', 'scanning']), // Get initial settings
       listenToUserSettings().pipe(takeUntil(onDestroy$)), // Listen to UserSettings changes
     )
       .subscribe((updates) => {
         (Object.keys(updates) as Array<keyof Settings>)
           .forEach((key) => {
             switch (key) {
-              case 'isScanning':
+              case 'scanning':
                 return setIsScanning(updates[key]);
-              case 'badgeActive':
+              case 'activated':
                 return setIsActive(updates[key]);
               case 'birthdays':
                 return setUsers(updates[key]);

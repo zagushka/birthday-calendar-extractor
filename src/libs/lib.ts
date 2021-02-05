@@ -1,18 +1,25 @@
 import { DateTime } from 'luxon';
 import {
-  forkJoin,
+  concat,
   Observable,
   of,
+  Subject,
   throwError,
 } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
+  catchError,
   map,
   mapTo,
+  scan,
   switchMap,
   tap,
+  toArray,
 } from 'rxjs/operators';
-import { BirthdaysScanComplete } from './events/actions';
+import {
+  BirthdaysScanComplete,
+  SendScanLog,
+} from './events/actions';
 import { sendMessage } from './events/events';
 
 import {
@@ -250,6 +257,7 @@ function extractTokenFromPage(page: string): string {
  * return {language, token}
  */
 export function parsePageForConfig(): Observable<{ token: string; language: string }> {
+  sendMessage(SendScanLog('CHECKING FOR FACEBOOK LOGIN AND LANGUAGE'), true);
   return ajax({
     url: 'https://www.facebook.com',
     headers: {
@@ -264,12 +272,15 @@ export function parsePageForConfig(): Observable<{ token: string; language: stri
         const language = extractLanguageFromPage(page);
 
         if (!token) {
+          sendMessage(SendScanLog('ERROR: NO FACEBOOK LOGIN DETECTED'), true);
           return throwError('NO_TOKEN_DETECTED');
         }
 
         if (!findLanguageSetByLanguage(language)) {
+          sendMessage(SendScanLog('ERROR: DETECTED NOT SUPPORTED LANGUAGE'), true);
           return throwError('NOT_SUPPORTED_LANGUAGE');
         }
+        sendMessage(SendScanLog('FACEBOOK LOGIN AND LANGUAGE ARE FINE'), true);
         return of({token, language});
       }),
     );
@@ -284,16 +295,38 @@ function fetchBirthdaysPage(url: string): Observable<string> {
 }
 
 export function fetchBirthdays(token: string, language: string): Observable<Array<RestoredBirthday>> {
+  sendMessage(SendScanLog('PREPARING REQUESTS'), true);
+
   const languageSet = findLanguageSetByLanguage(language);
 
   const requests = loopDates()
     .map(date => 'https://www.facebook.com/async/birthdays/?date=' + date + '&__a=1&fb_dtsg_ag=' + token)
-    .map(fetchBirthdaysPage);
+    .map(fetchBirthdaysPage)
+    .map((r) => r.pipe(tap(() => messages.next(null))));
 
-  return forkJoin(requests)
+  const messages = new Subject();
+  messages
     .pipe(
+      scan((curr) => ++curr, 0),
+    )
+    .subscribe(
+      (count) => {
+        sendMessage(SendScanLog(`Executed ${count.toString()} of ${requests.length.toString()} requests.`), true);
+      },
+      error => {
+        sendMessage(SendScanLog(`Error: ${error}`), true);
+      },
+      () => {
+        sendMessage(SendScanLog(`REQUESTS DONE`), true);
+      },
+    );
+
+  return concat(...requests)
+    .pipe(
+      toArray(),
       map(
         responses => {
+          sendMessage(SendScanLog(`EXTRACTING BIRTHDAYS DATA`), true);
           const nonUniques: Array<[string, RestoredBirthday]> = responses
             .map(extractBirthdayDataFromHtml)
             .map(items => generateBirthdaysFromRaw(items, languageSet))
@@ -302,6 +335,11 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
 
           return Array.from(new Map(nonUniques).values()); // All non-uniques are removed
         }),
+      catchError((err) => {
+        messages.error(err);
+        messages.complete();
+        return throwError(err);
+      }),
     );
 }
 
@@ -316,22 +354,24 @@ export function forceBirthdaysScan() {
       // Fetch the data from facebook
       switchMap(({token, language}) => fetchBirthdays(token, language)),
       // Store fetched data for further usage
-      switchMap(data => storeUserSettings({birthdays: data, badgeActive: true})
-        .pipe(
-          mapTo(data),
-          tap(() => {
-            sendMessage(BirthdaysScanComplete(), true);
-          }),
-        ),
-      ),
+      switchMap(data => {
+        sendMessage(SendScanLog(`STORING FETCHED BIRTHDAYS`), true);
+        return storeUserSettings({birthdays: data, activated: true})
+          .pipe(
+            mapTo(data),
+            tap(() => {
+              sendMessage(BirthdaysScanComplete(), true);
+            }),
+          );
+      }),
     );
 }
 
 export function getBirthdaysList(): Observable<Array<RestoredBirthday>> {
-  return retrieveUserSettings(['birthdays', 'badgeActive'])
+  return retrieveUserSettings(['birthdays', 'activated'])
     .pipe(
-      switchMap(({birthdays, badgeActive}) => {
-        if (badgeActive) {
+      switchMap(({birthdays, activated}) => {
+        if (activated) {
           // Using cached version
           return of(birthdays);
         }

@@ -1,4 +1,6 @@
+import { of } from 'rxjs';
 import {
+  catchError,
   map,
   startWith,
   switchMap,
@@ -7,6 +9,7 @@ import {
 import { updateBadge } from './libs/badge';
 import {
   sendError,
+  SendScanLog,
   updateBadgeAction,
 } from './libs/events/actions';
 import { setupAlarms } from './libs/events/alarms';
@@ -63,7 +66,7 @@ listenTo(DISABLE_BADGE_NOTIFICATION)
       // remove from storage
       return storeUserSettings({
         birthdays: [],
-        badgeActive: false,
+        activated: false,
       });
     }),
   )
@@ -76,17 +79,33 @@ listenTo(DISABLE_BADGE_NOTIFICATION)
 // Should be done via local storage update
 // sendMessage(updateBadgeAction(), true);
 
+storeUserSettings({scanning: false}, true);
+
 listenTo(BIRTHDAYS_START_SCAN)
   .pipe(
-    // Update local storage, set isScanning true
-    switchMap(() => storeUserSettings({isScanning: true})),
+    // Update local storage, set scanning true
+    switchMap(() => {
+      sendMessage(SendScanLog('MARKED "SCAN IS RUNNING"'), true);
+      return storeUserSettings({scanning: true});
+    }),
     // Start Scan
-    forceBirthdaysScan,
+    switchMap(() => forceBirthdaysScan()),
+    catchError(() => {
+      // Send error
+      sendMessage(SendScanLog('SOMETHING JUST FUCKED UP'), true);
+      return of([]);
+    }),
   )
-  .subscribe((birthdays) => {
-    // Update local storage, set isScanning false
-    storeUserSettings({isScanning: false});
-  });
+  .subscribe(
+    (birthdays) => {
+      sendMessage(SendScanLog('MARKED "SCAN IS FINISHED"'), true);
+      storeUserSettings({scanning: false}, true);
+    },
+    () => {
+      sendMessage(SendScanLog('MARKED "SCAN IS FAILED"'), true);
+      storeUserSettings({scanning: false}, true);
+    },
+  );
 
 listenTo(
   CREATE_CALENDAR_CSV,

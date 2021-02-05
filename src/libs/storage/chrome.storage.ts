@@ -13,8 +13,8 @@ import AreaName = chrome.storage.AreaName;
 import StorageChange = chrome.storage.StorageChange;
 
 export interface Settings {
-  badgeActive: boolean;
-  isScanning: boolean;
+  activated: boolean;
+  scanning: boolean;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: DateTime;
@@ -22,8 +22,8 @@ export interface Settings {
 }
 
 export interface StoredSettings {
-  badgeActive: boolean;
-  isScanning: boolean;
+  activated: boolean;
+  scanning: boolean;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: number;
@@ -39,8 +39,8 @@ export interface RestoredBirthday {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  badgeActive: false,
-  isScanning: false,
+  activated: false,
+  scanning: false,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],
   lastSelectedWizard: WIZARD_NAMES.CREATE_ICS,
@@ -141,8 +141,8 @@ export function listenToUserSettings(): Observable<Partial<Settings>> {
  */
 const reviveSettingsField = (key: keyof Settings, value: any): any => {
   switch (key) {
-    case 'badgeActive':
-    case 'isScanning':
+    case 'activated':
+    case 'scanning':
     case 'lastSelectedWizard':
     case 'wizardSettings': {
       return value || DEFAULT_SETTINGS[key];
@@ -199,7 +199,8 @@ export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolea
     (Object.keys(settings) as Array<keyof Settings>)
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
         switch (key) {
-          case 'badgeActive':
+          case 'activated':
+          case 'scanning':
           case 'lastSelectedWizard':
           case 'wizardSettings':
             return update(accumulator, {[key]: {$set: settings[key]}});

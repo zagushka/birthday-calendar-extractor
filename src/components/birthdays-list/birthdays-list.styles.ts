@@ -31,3 +31,15 @@ export const useBirthdaysListStyles = makeStyles((theme: Theme) => ({
     width: 'calc(100% - 16px) !important',
   },
 }));
+
+export const useTooltipStyles = makeStyles((theme: Theme) => ({
+  // arrow: {
+  //   color: theme.palette.common.black,
+  // },
+  tooltipPlacementBottom: {
+    marginTop: 8
+  },
+  // tooltip: {
+  //   backgroundColor: theme.palette.common.black,
+  // },
+}));

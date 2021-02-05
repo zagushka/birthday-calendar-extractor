@@ -20,8 +20,8 @@ import {
   DISABLE_BADGE_NOTIFICATION,
   ENABLE_BADGE_NOTIFICATION,
   NotificationActionTypes,
-  SCAN_LOG,
-  ScanLogAction,
+  SEND_SCAN_LOG,
+  SendScanLogAction,
   SEND_ERROR,
   SEND_GENERATION_STATUS,
   UPDATE_BADGE,
@@ -110,9 +110,9 @@ export function BirthdaysScanComplete(): BirthdaysExtractionActionTypes {
   };
 }
 
-export function ScanLog(log: string): ScanLogAction {
+export function SendScanLog(log: string): SendScanLogAction {
   return {
-    type: SCAN_LOG,
+    type: SEND_SCAN_LOG,
     payload: {log},
   };
 }
