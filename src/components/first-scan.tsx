@@ -1,24 +1,14 @@
 import {
-  Button,
   createStyles,
-  Divider,
-  IconButton,
   makeStyles,
   Theme,
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { green } from '@material-ui/core/colors';
-import clsx from 'clsx';
-import {
-  Close,
-  PlayArrow,
-  PlayCircleFilled,
-} from '@material-ui/icons';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import update from 'immutability-helper';
 import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
+import { PlayArrow } from '@material-ui/icons';
 import ReplayIcon from '@material-ui/icons/Replay';
+import clsx from 'clsx';
 
 import React, {
   FunctionComponent,
@@ -35,9 +25,7 @@ import {
   sendMessage,
 } from '../libs/events/events';
 import { SEND_SCAN_LOG } from '../libs/events/types';
-import { closeWindowHandler } from '../libs/tools';
-import { useBirthdaysListStyles } from './birthdays-list/birthdays-list.styles';
-import { ScanLog } from './scan-log';
+import Layout from './layout/layout';
 
 const startScanHandler = () => {
   sendMessage(BirthdaysStartScan(), true);
@@ -117,23 +105,18 @@ export const FirstScan: FunctionComponent = () => {
   }, []);
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.header}>
+    <Layout.Wrapper>
+      <Layout.Header navigation={'back'}>
         <Box>First Scan</Box>
-        <Box flexGrow={1}/>
-        <IconButton size='small' onClick={closeWindowHandler}>
-          <Close/>
-        </IconButton>
-      </Box>
+      </Layout.Header>
 
-      <Divider/>
-
-      <Box flexDirection={'column'}
-           display={'flex'}
-           alignItems={'center'}
-           justifyContent={'center'}
-           px={2}
-           style={{minHeight: 200}}
+      <Layout.Content
+        // flexDirection={'column'}
+        //    display={'flex'}
+        //    alignItems={'center'}
+        //    justifyContent={'center'}
+        //    px={2}
+        //    style={{minHeight: 200}}
       >
         isScanning {isScanning.toString()} : isActive {isActive.toString()}
         {isScanning ? <Box>Scanning</Box> :
@@ -151,7 +134,7 @@ export const FirstScan: FunctionComponent = () => {
           </>
         }
         <Box>{log}</Box>
-      </Box>
-    </Box>
+      </Layout.Content>
+    </Layout.Wrapper>
   );
 };

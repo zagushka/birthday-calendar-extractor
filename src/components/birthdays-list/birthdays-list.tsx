@@ -8,7 +8,6 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
-  Close,
   SaveAlt,
 } from '@material-ui/icons';
 import RepeatIcon from '@material-ui/icons/Repeat';
@@ -28,7 +27,7 @@ import {
   VariableSizeList,
 } from 'react-window';
 import { TodayUsersContext } from '../../context/today-users.context';
-import { closeWindowHandler } from '../../libs/tools';
+import Layout from '../layout/layout';
 import {
   useBirthdaysListStyles,
   useTooltipStyles,
@@ -106,79 +105,84 @@ const BirthdaysList: FunctionComponent = () => {
   };
 
   return (
-    <Box style={{minHeight: '80px'}}>
-      {!!users.userGroups.length && <>
-        {/*Top Part of the list*/}
-        <Box p={1} display='flex' alignItems='center' className={classes.day}>
-          <Box>{asShortDate(users.userGroups[dayIndex][0])}</Box>
-          <Box flexGrow={1}/>
-          <IconButton
-            size='small'
-            onClick={closeWindowHandler}>
-            <Close/>
-          </IconButton>
-        </Box>
+    <Layout.Wrapper>
+      {/*Top Part of the list*/}
+      <Layout.Header>
+        <Box>{users.userGroups[dayIndex] ? asShortDate(users.userGroups[dayIndex][0]) : ''}</Box>
+      </Layout.Header>
 
-        <Divider/>
+      {/*Navigation with today, next and previous day buttons*/}
+      <Box p={1} pl={0} display='flex'>
+        <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
 
-        {/*Navigation with today, next and previous day buttons*/}
-        <Box p={1} pl={0} display='flex'>
-          <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
+        <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
+          <ChevronLeft/>
+        </IconButton>
 
-          <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
-            <ChevronLeft/>
-          </IconButton>
-
-          <IconButton size={'small'} onClick={() => updateDayIndex(1)}>
-            <ChevronRight/>
-          </IconButton>
-
-          <Box flexGrow={1}/>
-
-          <Button
-            size='small'
-            color='primary'
-            variant={'outlined'}
-            component={Link}
-            to={'/export'}
-            endIcon={<SaveAlt/>}
-          >
-            Export
-          </Button>
-
-          <Tooltip title='Scan birthdays again' arrow classes={tooltipClasses}>
-            <IconButton
-              size='small'
-              color='primary'
-              area-label='more actions'
-              aria-haspopup='true'
-              component={Link}
-              to={'/activate'}
-            >
-              <RepeatIcon/>
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </>}
+        <IconButton size={'small'} onClick={() => updateDayIndex(1)}>
+          <ChevronRight/>
+        </IconButton>
+      </Box>
 
       <Divider/>
-      {/*Scroll with list of birthdays*/}
-      {!!users.userGroups.length &&
-      <Box p={2} pt={0} pr={0}>
+
+      <Layout.Content>
+        {/*Scroll with list of birthdays*/}
+        {!!users.userGroups.length &&
         <VariableSizeList
           itemSize={i => users.usersMap[i].height}
           itemData={users.userGroups}
           ref={listRef}
-          height={450}
+          // height={450}
+          height={438}
           onScroll={scrollHandler}
           width={'100%'}
           outerElementType={CustomScrollbarsVirtualList}
           itemCount={users.userGroups.length}>
           {DayRow}
         </VariableSizeList>
-      </Box>
-      }
-    </Box>
+        }
+      </Layout.Content>
+      <Layout.Footer display={'flex'} justifyContent={'flex-start'}>
+        <Box>
+          <Button
+            size='small'
+            color='primary'
+            variant={'contained'}
+            component={Link}
+            to={'/export'}
+            startIcon={<SaveAlt/>}
+          >
+            Export
+          </Button>
+        </Box>
+        <Box pl={1}>
+          <Button
+            size='small'
+            // color='primary'
+            variant={'contained'}
+            component={Link}
+            to={'/activate'}
+            startIcon={<RepeatIcon/>}
+          >
+            Scan
+          </Button>
+        </Box>
+
+        {/*<Tooltip title='Scan birthdays again' arrow classes={tooltipClasses}>*/}
+        {/*  <IconButton*/}
+        {/*    size='small'*/}
+        {/*    color='primary'*/}
+        {/*    area-label='more actions'*/}
+        {/*    aria-haspopup='true'*/}
+        {/*    component={Link}*/}
+        {/*    to={'/activate'}*/}
+        {/*  >*/}
+        {/*    <RepeatIcon/>*/}
+        {/*  </IconButton>*/}
+        {/*</Tooltip>*/}
+      </Layout.Footer>
+    </Layout.Wrapper>
   );
 };
 
