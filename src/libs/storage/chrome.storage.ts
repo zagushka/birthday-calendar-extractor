@@ -145,7 +145,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case 'scanning':
     case 'lastSelectedWizard':
     case 'wizardSettings': {
-      return value || DEFAULT_SETTINGS[key];
+      return value ?? DEFAULT_SETTINGS[key];
     }
 
     case 'badgeVisited': {
