@@ -13,5 +13,9 @@ export function translate(...args: [string, ...any]) {
  * Use for string translations with replacements
  */
 export function translateString(...args: [string, ...any]) {
-  return chrome.i18n.getMessage(...args) || args[0];
+  try {
+    return chrome.i18n.getMessage(...args) || args[0];
+  } catch (e) {
+    return args[0];
+  }
 }
