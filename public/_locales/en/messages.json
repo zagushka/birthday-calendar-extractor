@@ -96,5 +96,9 @@
   "BUY_ME_COFFEE_LINK": {
     "message": "https://www.buymeacoffee.com/zagushka",
     "description": "Link to buy me a coffee"
+  },
+  "BEFORE_SHARE_LINKS": {
+    "message": "Did it work fine? Was it useful? Glad I could help. You can support me to!",
+    "description": "Did it work fine? Was it useful? Glad I could help. You can support me to!"
   }
 }

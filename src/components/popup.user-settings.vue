@@ -15,11 +15,22 @@
         <label for="format_csv" v-translate="'SELECT_FILE_FORMAT_CSV'"></label>
       </div>
       <br/>
-      <div class="no-wrap">
+      <div class="no-wrap" style="display: flex; justify-content: space-between;">
         <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
-        <a v-link="'LEAVE_FEEDBACK_LINK'" class="link special"><span v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
-        <a v-link="'https://github.com/zagushka/birthday-calendar-extractor/issues'" class="link special"><span>🐞</span></a>
+        <a v-link="'https://github.com/zagushka/birthday-calendar-extractor/issues'"
+           class="link special"><span>🐞</span></a>
       </div>
+
+      <hr/>
+
+      <p v-translate="'BEFORE_SHARE_LINKS'"></p>
+      <div style="display: flex; flex-direction: column;">
+        <a v-link="'LEAVE_FEEDBACK_LINK'" class="link special"><span v-translate="'LEAVE_FEEDBACK_TITLE'"></span></a>
+        <a v-link="'BUY_ME_COFFEE_LINK'" class="link"><span v-translate="'BUY_ME_COFFEE_TITLE'"></span></a>
+      </div>
+
+
+
     </span>
     <div id="spinner-container" v-show="waiting">
       <div class="spinner">
