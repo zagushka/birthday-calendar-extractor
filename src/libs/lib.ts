@@ -16,6 +16,7 @@ import {
   tap,
   toArray,
 } from 'rxjs/operators';
+import { translateString } from '../filters/translate';
 import {
   BirthdaysScanComplete,
   SendScanLog,
@@ -46,6 +47,13 @@ export interface PreparedEvent {
 export function arrayToCSVRow(notEscaped: Array<string>): string {
   return JSON.stringify(notEscaped).slice(1, -1);
 }
+
+export const sendScanLog = (...args: [string, ...any]) => {
+  sendMessage(
+    SendScanLog(translateString(...args)),
+    true,
+  );
+};
 
 /**
  * Convert RawEvent to PreparedEvent
@@ -257,7 +265,7 @@ function extractTokenFromPage(page: string): string {
  * return {language, token}
  */
 export function parsePageForConfig(): Observable<{ token: string; language: string }> {
-  sendMessage(SendScanLog('CHECKING FOR FACEBOOK LOGIN AND LANGUAGE'), true);
+  sendScanLog('SCAN_LOG_CHECK_LOGIN');
   return ajax({
     url: 'https://www.facebook.com',
     headers: {
@@ -272,15 +280,15 @@ export function parsePageForConfig(): Observable<{ token: string; language: stri
         const language = extractLanguageFromPage(page);
 
         if (!token) {
-          sendMessage(SendScanLog('ERROR: NO FACEBOOK LOGIN DETECTED'), true);
+          sendScanLog('SCAN_LOG_CHECK_LOGIN_ERROR_LOGIN');
           return throwError('NO_TOKEN_DETECTED');
         }
 
         if (!findLanguageSetByLanguage(language)) {
-          sendMessage(SendScanLog('ERROR: DETECTED NOT SUPPORTED LANGUAGE'), true);
+          sendScanLog('SCAN_LOG_CHECK_LOGIN_ERROR_LANGUAGE');
           return throwError('NOT_SUPPORTED_LANGUAGE');
         }
-        sendMessage(SendScanLog('FACEBOOK LOGIN AND LANGUAGE ARE FINE'), true);
+        sendScanLog('SCAN_LOG_CHECK_SUCCESS');
         return of({token, language});
       }),
     );
@@ -290,12 +298,19 @@ function fetchBirthdaysPage(url: string): Observable<string> {
   return ajax({url, responseType: 'text'})
     .pipe(
       map(r => JSON.parse(r.response.substring(9))),
-      map(r => r.domops[0][3].__html),
+      switchMap(r => {
+        if (r.error) {
+          return throwError(
+            translateString('SCAN_LOG_REQUEST_FACEBOOK_ERROR', r.errorSummary),
+          );
+        }
+        return of(r.domops[0][3].__html);
+      }),
     );
 }
 
 export function fetchBirthdays(token: string, language: string): Observable<Array<RestoredBirthday>> {
-  sendMessage(SendScanLog('PREPARING REQUESTS'), true);
+  sendScanLog('SCAN_LOG_PREPARING_REQUESTS');
 
   const languageSet = findLanguageSetByLanguage(language);
 
@@ -311,13 +326,16 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
     )
     .subscribe(
       (count) => {
-        sendMessage(SendScanLog(`Executed ${count.toString()} of ${requests.length.toString()} requests.`), true);
+        sendScanLog(
+          'SCAN_LOG_REQUEST_WITH_NUMBER',
+          `${count}/${requests.length}`,
+        );
       },
       error => {
-        sendMessage(SendScanLog(`Error: ${error}`), true);
+        // sendMessage(SendScanLog(`Error: ${error}`), true);
       },
       () => {
-        sendMessage(SendScanLog(`REQUESTS DONE`), true);
+        sendScanLog('SCAN_LOG_REQUESTS_DONE');
       },
     );
 
@@ -326,7 +344,7 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
       toArray(),
       map(
         responses => {
-          sendMessage(SendScanLog(`EXTRACTING BIRTHDAYS DATA`), true);
+          sendScanLog('SCAN_LOG_EXTRACTING_BIRTHDAYS_DATA');
           const nonUniques: Array<[string, RestoredBirthday]> = responses
             .map(extractBirthdayDataFromHtml)
             .map(items => generateBirthdaysFromRaw(items, languageSet))
@@ -355,7 +373,7 @@ export function forceBirthdaysScan() {
       switchMap(({token, language}) => fetchBirthdays(token, language)),
       // Store fetched data for further usage
       switchMap(data => {
-        sendMessage(SendScanLog(`STORING FETCHED BIRTHDAYS`), true);
+        sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS');
         return storeUserSettings({birthdays: data, activated: true})
           .pipe(
             mapTo(data),

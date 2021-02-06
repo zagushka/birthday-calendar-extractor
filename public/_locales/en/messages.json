@@ -164,5 +164,63 @@
   "GENERATE": {
     "message": "Proceed",
     "description": "Label 'generate' button"
+  },
+  "SCAN_LOG_PROCESS_STARTED": {
+    "message": "Birthday scan has been initiated.",
+    "description": "Message send the moment scan process has been initiated."
+  },
+  "SCAN_LOG_CHECK_LOGIN": {
+    "message": "Checking for Facebook login and language.",
+    "description": "Message send before checking facebook login and language."
+  },
+  "SCAN_LOG_CHECK_LOGIN_ERROR_LOGIN": {
+    "message": "No Facebook login detected.",
+    "description": "Error message send when user is not logged in to Facebook."
+  },
+  "SCAN_LOG_CHECK_LOGIN_ERROR_LANGUAGE": {
+    "message": "Not supported Facebook language detected.",
+    "description": "Error message send not supported facebook login detected."
+  },
+  "SCAN_LOG_CHECK_SUCCESS": {
+    "message": "Facebook login and language are fine.",
+    "description": "Message when facebook login and language are fine."
+  },
+  "SCAN_LOG_REQUEST_FACEBOOK_ERROR": {
+    "message": "Facebook blocked request with message '$message$'.",
+    "description": "Error when failed to fetch birthdays data while making request to Facebook.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_PREPARING_REQUESTS": {
+    "message": "Preparing to make requests.",
+    "description": "Message that script preparing to execute requests to facebook."
+  },
+  "SCAN_LOG_REQUEST_WITH_NUMBER": {
+    "message": "Executed $index$ requests.",
+    "description": "Scan message with each request to facebook.",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_REQUESTS_DONE": {
+    "message": "All the requests to Facebook were successfully executed.",
+    "description": "Message send when all request to facebook been successfully executed."
+  },
+  "SCAN_LOG_EXTRACTING_BIRTHDAYS_DATA": {
+    "message": "Extracting birthdays from fetched data.",
+    "description": "Message send before extraction of the birthdays process started."
+  },
+  "SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS": {
+    "message": "Storing extracted data for further usage.",
+    "description": "Message send before storing extracted birthdays to local storage."
+  },
+  "SCAN_LOG_PROCESS_DONE": {
+    "message": "Birthday scan is finished.",
+    "description": "Message send after extraction process is done."
   }
 }
