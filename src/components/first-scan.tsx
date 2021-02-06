@@ -1,13 +1,20 @@
 import {
+  Button,
+  CircularProgress,
   createStyles,
   makeStyles,
   Theme,
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import { green } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import { PlayArrow } from '@material-ui/icons';
-import ReplayIcon from '@material-ui/icons/Replay';
+import {
+  green,
+  red,
+} from '@material-ui/core/colors';
+import {
+  Done,
+  Error,
+  PlayArrow,
+} from '@material-ui/icons';
 import clsx from 'clsx';
 
 import React, {
@@ -44,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     wrapper: {
       margin: theme.spacing(1),
       position: 'relative',
+      alignSelf: 'center',
     },
     buttonSuccess: {
       backgroundColor: green[500],
@@ -51,12 +59,11 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: green[700],
       },
     },
-    fabProgress: {
-      color: green[500],
-      position: 'absolute',
-      top: -6,
-      left: -6,
-      zIndex: 1,
+    buttonFail: {
+      backgroundColor: red[500],
+      '&:hover': {
+        backgroundColor: red[700],
+      },
     },
     buttonProgress: {
       color: green[500],
@@ -72,19 +79,26 @@ const useStyles = makeStyles((theme: Theme) =>
 export const FirstScan: FunctionComponent = () => {
   const classes = useStyles();
 
-  const {isScanning, isActive} = useContext(TodayUsersContext);
+  const {isScanning, isScanSucceed, isActive} = useContext(TodayUsersContext);
   const [log, setLog] = useState<string>();
-  const [isDone, setIsDone] = useState<boolean>(isScanning);
-
-  useEffect(() => {
-    if (!isScanning) {
-      setIsDone(true);
-    }
-  }, [isScanning, isActive]);
+  const [success, setSuccess] = useState<boolean>();
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: isScanning,
+    [classes.buttonSuccess]: success && isScanSucceed,
+    [classes.buttonFail]: success && !isScanSucceed,
   });
+
+  useEffect(() => {
+    if ('undefined' === typeof success && !isScanning) {
+      setSuccess(false);
+      return;
+    }
+
+    if (!isScanning) {
+      setSuccess(true);
+    }
+
+  }, [isScanning]);
 
   useEffect(() => {
     const onDestroy$ = new Subject<boolean>();
@@ -110,29 +124,28 @@ export const FirstScan: FunctionComponent = () => {
         <Box>First Scan</Box>
       </Layout.Header>
 
-      <Layout.Content
-        // flexDirection={'column'}
-        //    display={'flex'}
-        //    alignItems={'center'}
-        //    justifyContent={'center'}
-        //    px={2}
-        //    style={{minHeight: 200}}
-      >
-        isScanning {isScanning.toString()} : isActive {isActive.toString()}
-        {isScanning ? <Box>Scanning</Box> :
-          <>
-            <Box>Scan your Facebook friends birthdays.</Box>
+      <Layout.Content>
+        isScanning {isScanning.toString()}<br/>
+        isActive {isActive.toString()}<br/>
+        success {success?.toString()}<br/>
+        isScanSucceed {isScanSucceed?.toString()}<br/>
 
-            <Fab
-              aria-label='save'
-              color='primary'
-              onClick={startScanHandler}
-              disabled={isScanning}
-            >
-              {isScanning ? <ReplayIcon/> : <PlayArrow/>}
-            </Fab>
-          </>
-        }
+        <Box>Scan your Facebook friends birthdays.</Box>
+
+        <div className={classes.wrapper}>
+          <Button
+            variant='contained'
+            color='primary'
+            className={buttonClassname}
+            disabled={isScanning}
+            onClick={startScanHandler}
+            startIcon={success ? (isScanSucceed ? <Done/> : <Error/>) : <PlayArrow/>}
+          >
+            Start scan
+          </Button>
+          {isScanning && <CircularProgress size={24} className={classes.buttonProgress}/>}
+        </div>
+
         <Box>{log}</Box>
       </Layout.Content>
     </Layout.Wrapper>

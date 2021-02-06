@@ -5,7 +5,9 @@ import {
 
 export const useLayoutStyles = makeStyles((theme: Theme) => ({
   root: {
-    minHeight: 200,
+    minHeight: 300,
+    display: 'flex',
+    flexDirection: 'column',
   },
   header: {
     alignItems: 'center',
@@ -21,7 +23,10 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
     // padding: '0 0 16px 16px', // p={2} pt={0} pr={0}
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
+    flexGrow: 1,
   },
-  footer: {},
+  footer: {
+    flexShrink: 1,
+  },
 }));
