@@ -35,6 +35,7 @@ import { CalendarJSON } from './libs/formats/json';
 import {
   forceBirthdaysScan,
   getBirthdaysList,
+  sendScanLog,
 } from './libs/lib';
 import {
   storeLastBadgeClicked,
@@ -82,30 +83,25 @@ listenTo(DISABLE_BADGE_NOTIFICATION)
 storeUserSettings({scanning: false}, true);
 
 listenTo(BIRTHDAYS_START_SCAN)
-  .pipe(
+  .subscribe(() => {
+    sendScanLog('SCAN_LOG_PROCESS_STARTED');
     // Update local storage, set scanning true
-    switchMap(() => {
-      sendMessage(SendScanLog('MARKED "SCAN IS RUNNING"'), true);
-      return storeUserSettings({scanning: true});
-    }),
-    // Start Scan
-    switchMap(() => forceBirthdaysScan()),
-    catchError(() => {
-      // Send error
-      sendMessage(SendScanLog('SOMETHING JUST FUCKED UP'), true);
-      return of([]);
-    }),
-  )
-  .subscribe(
-    (birthdays) => {
-      sendMessage(SendScanLog('MARKED "SCAN IS FINISHED"'), true);
-      storeUserSettings({scanning: false}, true);
-    },
-    () => {
-      sendMessage(SendScanLog('MARKED "SCAN IS FAILED"'), true);
-      storeUserSettings({scanning: false}, true);
-    },
-  );
+    storeUserSettings({scanning: true})
+      .pipe(
+        // Force scan
+        switchMap(() => forceBirthdaysScan()),
+      )
+      .subscribe(
+        (birthdays) => {
+          sendScanLog('SCAN_LOG_PROCESS_DONE');
+          storeUserSettings({scanning: false, scanSuccess: true}, true);
+        },
+        error => {
+          sendMessage(SendScanLog(error), true);
+          storeUserSettings({scanning: false, scanSuccess: false}, true);
+        },
+      );
+  });
 
 listenTo(
   CREATE_CALENDAR_CSV,
@@ -136,8 +132,6 @@ listenTo(
                 const calendar = new CalendarDeleteICS(action.payload);
                 return calendar.save(calendar.generateCalendar(rawEvents));
               }
-              default:
-                throw new Error('Should not be here');
             }
           }),
           tap(() => callback()),

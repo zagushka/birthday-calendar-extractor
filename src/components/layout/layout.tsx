@@ -8,11 +8,7 @@ import {
   ArrowBack,
   Close,
 } from '@material-ui/icons';
-import React, {
-  FunctionComponent,
-  useEffect,
-  useState,
-} from 'react';
+import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { closeWindowHandler } from '../../libs/tools';
 import { useLayoutStyles } from './layout.styles';
@@ -39,18 +35,19 @@ const BackButton = () => {
 
 export const LayoutHeader: FunctionComponent<LayoutHeaderProps> = ({children, navigation = 'close'}) => {
   const classes = useLayoutStyles();
-  const [button, setButton] = useState<JSX.Element>(CloseButton);
 
-  useEffect(() => {
-    switch (navigation) {
-      case 'back':
-        return setButton(BackButton);
-      case 'close':
-        return setButton(CloseButton);
-      default:
-        return setButton(null);
-    }
-  }, [navigation]);
+  let button: JSX.Element;
+
+  switch (navigation) {
+    case 'back':
+      button = <BackButton/>;
+      break;
+    case 'close':
+      button = CloseButton;
+      break;
+    default:
+      button = null;
+  }
 
 
   return (<>
