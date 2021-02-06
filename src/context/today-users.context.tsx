@@ -18,26 +18,29 @@ import {
 interface TodayUsersContextInterface {
   isActive: boolean;
   isScanning: boolean;
+  isScanSucceed: boolean;
   users: Array<RestoredBirthday>;
 }
 
 export const TodayUsersContext = React.createContext<TodayUsersContextInterface>({
   isActive: false,
   isScanning: false,
+  isScanSucceed: true,
   users: [],
 });
 
 const TodayUsersContextProvider: FunctionComponent = (props) => {
 
   const [isActive, setIsActive] = useState<boolean>(false); // is Active
-  const [isScanning, setIsScanning] = useState<boolean>(false); // is Active
+  const [isScanning, setIsScanning] = useState<boolean>(false); // is Scanning in process
+  const [isScanSucceed, setIsScanSucceed] = useState<boolean>(true); // Flag to mark failed or successful scan
   const [users, setUsers] = useState<Array<RestoredBirthday>>([]);
 
   useEffect(() => {
     const onDestroy$ = new Subject();
 
     concat(
-      retrieveUserSettings(['birthdays', 'activated', 'scanning']), // Get initial settings
+      retrieveUserSettings(['birthdays', 'activated', 'scanning', 'scanSuccess']), // Get initial settings
       listenToUserSettings().pipe(takeUntil(onDestroy$)), // Listen to UserSettings changes
     )
       .subscribe((updates) => {
@@ -46,6 +49,8 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
             switch (key) {
               case 'scanning':
                 return setIsScanning(updates[key]);
+              case 'scanSuccess':
+                return setIsScanSucceed(updates[key]);
               case 'activated':
                 return setIsActive(updates[key]);
               case 'birthdays':
@@ -63,6 +68,7 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
   return <TodayUsersContext.Provider value={{
     isActive,
     isScanning,
+    isScanSucceed,
     users,
   }}>
     {props.children}

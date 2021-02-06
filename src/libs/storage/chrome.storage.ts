@@ -15,6 +15,7 @@ import StorageChange = chrome.storage.StorageChange;
 export interface Settings {
   activated: boolean;
   scanning: boolean;
+  scanSuccess: boolean;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: DateTime;
@@ -24,6 +25,7 @@ export interface Settings {
 export interface StoredSettings {
   activated: boolean;
   scanning: boolean;
+  scanSuccess: boolean;
   lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: number;
@@ -41,6 +43,7 @@ export interface RestoredBirthday {
 export const DEFAULT_SETTINGS: Settings = {
   activated: false,
   scanning: false,
+  scanSuccess: true,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],
   lastSelectedWizard: WIZARD_NAMES.CREATE_ICS,
@@ -143,6 +146,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
   switch (key) {
     case 'activated':
     case 'scanning':
+    case 'scanSuccess':
     case 'lastSelectedWizard':
     case 'wizardSettings': {
       return value ?? DEFAULT_SETTINGS[key];
@@ -201,6 +205,7 @@ export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolea
         switch (key) {
           case 'activated':
           case 'scanning':
+          case 'scanSuccess':
           case 'lastSelectedWizard':
           case 'wizardSettings':
             return update(accumulator, {[key]: {$set: settings[key]}});

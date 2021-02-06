@@ -1,6 +1,4 @@
-import { of } from 'rxjs';
 import {
-  catchError,
   map,
   startWith,
   switchMap,
@@ -92,7 +90,7 @@ listenTo(BIRTHDAYS_START_SCAN)
         switchMap(() => forceBirthdaysScan()),
       )
       .subscribe(
-        (birthdays) => {
+        birthdays => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
           storeUserSettings({scanning: false, scanSuccess: true}, true);
         },
