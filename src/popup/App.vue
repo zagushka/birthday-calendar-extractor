@@ -59,7 +59,7 @@ p:first-child {
   box-shadow: inset 0 1px 0 0 #9acc85;
   background: #74ad5a linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
   border: 1px solid #3b6e22;
-  /*display: inline-block;*/
+  display: inline-block;
   white-space: nowrap;
   cursor: pointer;
   color: #ffffff;
@@ -67,7 +67,8 @@ p:first-child {
   font-weight: bold;
   padding: 6px 12px;
   text-decoration: none;
-
+  margin-top: 4px;
+  margin-left: 2px;
 }
 
 .link:hover {
@@ -84,6 +85,7 @@ p:first-child {
   color: #333;
   background: #eee linear-gradient(to bottom, #eee 5%, #e4e4e3 100%);
 }
+
 .link.special:hover {
   background: #e4e4e3 linear-gradient(to bottom, #e4e4e3 5%, #eee 100%);
 }
