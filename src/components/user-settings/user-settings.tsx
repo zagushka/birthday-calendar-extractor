@@ -12,7 +12,6 @@ import { LoadingContext } from '../../context/loading.context';
 import { TodayUsersContext } from '../../context/today-users.context';
 import BirthdaysList from '../birthdays-list/birthdays-list';
 import { FirstScan } from '../first-scan';
-import './user-serrings.scss';
 import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
@@ -32,8 +31,11 @@ const UserSettings: FunctionComponent = () => {
         <Route path='/export'>
           {isActive ? <SelectWizard/> : <Redirect to='/activate'/>}
         </Route>
-        <Route path='/'>
+        <Route exact path='/'>
           {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
+        </Route>
+        <Route>
+          <Redirect to='/'/>
         </Route>
       </Switch>
       }

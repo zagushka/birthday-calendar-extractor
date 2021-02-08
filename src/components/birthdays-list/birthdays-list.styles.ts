@@ -5,16 +5,16 @@ import {
 
 export const useBirthdaysListStyles = makeStyles((theme: Theme) => ({
   item: {
-    color: '#fff',
+    color: theme.palette.info.contrastText,
     borderRadius: 4,
-    marginBottom: 8,
-    paddingLeft: 8,
+    marginBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
     paddingTop: 6,
-    backgroundColor: theme.palette.action.active,
+    backgroundColor: theme.palette.info.dark,
     fontFamily: theme.typography.fontFamily,
     fontWeight: theme.typography.fontWeightBold,
     '&:hover': {
-      backgroundColor: theme.palette.action.active,
+      backgroundColor: theme.palette.info.dark,
     },
   },
   day: {
@@ -30,16 +30,4 @@ export const useBirthdaysListStyles = makeStyles((theme: Theme) => ({
     padding: 0,
     width: 'calc(100% - 16px) !important',
   },
-}));
-
-export const useTooltipStyles = makeStyles((theme: Theme) => ({
-  // arrow: {
-  //   color: theme.palette.common.black,
-  // },
-  tooltipPlacementBottom: {
-    marginTop: 8
-  },
-  // tooltip: {
-  //   backgroundColor: theme.palette.common.black,
-  // },
 }));

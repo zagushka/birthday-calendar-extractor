@@ -19,6 +19,9 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
     lineHeight: '16px',
   },
+  buttonActive: {
+    color: theme.palette.primary.main,
+  },
   content: {
     // padding: '0 0 16px 16px', // p={2} pt={0} pr={0}
     display: 'flex',
@@ -29,4 +32,17 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
   footer: {
     flexShrink: 1,
   },
+}));
+
+
+export const useTooltipStyles = makeStyles((theme: Theme) => ({
+  // arrow: {
+  //   color: theme.palette.common.black,
+  // },
+  tooltipPlacementBottom: {
+    marginTop: 8
+  },
+  // tooltip: {
+  //   backgroundColor: theme.palette.common.black,
+  // },
 }));

@@ -2,65 +2,104 @@ import {
   Box,
   Divider,
   IconButton,
+  Tooltip,
 } from '@material-ui/core';
 import { BoxProps } from '@material-ui/core/Box/Box';
 import {
-  ArrowBack,
-  Close,
+  EventNote,
+  GetApp,
+  Repeat,
 } from '@material-ui/icons';
 import React, { FunctionComponent } from 'react';
-import { useHistory } from 'react-router-dom';
-import { closeWindowHandler } from '../../libs/tools';
-import { useLayoutStyles } from './layout.styles';
+import { NavLink } from 'react-router-dom';
+import {
+  useLayoutStyles,
+  useTooltipStyles,
+} from './layout.styles';
 
-export interface LayoutHeaderProps {
-  navigation?: 'back' | 'close' | 'none';
+interface ButtonWithTooltipProps {
+  name?: buttonTypes;
+  disabled?: boolean;
+  button: JSX.Element;
+  to: string;
+  tooltip: string;
 }
 
-const CloseButton = <IconButton
-  size='small'
-  onClick={closeWindowHandler}>
-  <Close/>
-</IconButton>;
+const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
+  ({button, to, tooltip, disabled = false}) => {
+    const classes = useLayoutStyles();
+    const tooltipStyles = useTooltipStyles();
+    return (
+      <Tooltip title={tooltip} arrow classes={tooltipStyles}>
+        <IconButton
+          size='small'
+          activeClassName={classes.buttonActive}
+          exact
+          disabled={disabled}
+          component={NavLink}
+          to={to}
+        >
+          {button}
+        </IconButton>
+      </Tooltip>
+    );
+  };
 
-const BackButton = () => {
-  const history = useHistory();
+type buttonTypes = 'export' | 'birthdays' | 'activate';
 
-  return (<IconButton
-    size='small'
-    onClick={() => history.goBack()}>
-    <ArrowBack/>
-  </IconButton>);
+type ButtonsListType<T> = {
+  [key in buttonTypes]?: T
 };
 
-export const LayoutHeader: FunctionComponent<LayoutHeaderProps> = ({children, navigation = 'close'}) => {
-  const classes = useLayoutStyles();
+const ButtonList: Array<ButtonWithTooltipProps> = [
+  {
+    name: 'export',
+    button: <GetApp/>,
+    to: '/export',
+    tooltip: 'Export Your Birthdays Here',
+  },
+  {
+    name: 'birthdays',
+    button: <EventNote/>,
+    to: '/',
+    tooltip: 'Calendar with birthdays',
+  },
+  {
+    name: 'activate',
+    button: <Repeat/>,
+    to: '/activate',
+    tooltip: 'Scan birthdays',
+  },
+];
 
-  let button: JSX.Element;
+interface LayoutHeaderProps {
+  disabledButtons?: ButtonsListType<boolean>;
+}
 
-  switch (navigation) {
-    case 'back':
-      button = <BackButton/>;
-      break;
-    case 'close':
-      button = CloseButton;
-      break;
-    default:
-      button = null;
-  }
+export const LayoutHeader: FunctionComponent<LayoutHeaderProps> =
+  ({children, disabledButtons = {}}) => {
+    const classes = useLayoutStyles();
 
+    return (<>
+      <Box className={classes.header} alignItems={'center'}>
+        <Box>
+          {children}
+        </Box>
+        <Box flexGrow={1}/>
 
-  return (<>
-    <Box className={classes.header} alignItems={'center'}>
-      <Box>
-        {children}
+        {ButtonList
+          // .filter(button => !!disabledButtons[button.name])
+          .map(button => <ButtonWithTooltip
+            key={button.name}
+            disabled={!!disabledButtons[button.name]}
+            {...button}
+          />)
+        }
+
       </Box>
-      <Box flexGrow={1}/>
-      {button}
-    </Box>
-    <Divider/>
-  </>);
-};
+      <Divider/>
+    </>);
+  };
 
 export interface LayoutContentProps {
   direction?: 'vertical' | 'horizontal'

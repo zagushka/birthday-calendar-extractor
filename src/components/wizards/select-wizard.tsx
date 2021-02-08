@@ -9,7 +9,6 @@ import Layout from '../layout/layout';
 import CsvGeneratorWizard from './csv';
 import DeleteIcsGeneratorWizard from './delete-ics';
 import IcsGeneratorWizard from './ics';
-import TodayBirthdayWizard from './today-birthday';
 
 const SelectWizard: FunctionComponent = () => {
   const {action, setAction} = useContext(SettingsContext);
@@ -28,7 +27,7 @@ const SelectWizard: FunctionComponent = () => {
 
   return (
     <Layout.Wrapper>
-      <Layout.Header navigation={'back'}>
+      <Layout.Header>
         Select export format
       </Layout.Header>
       <Layout.Content p={1}>

@@ -3,14 +3,13 @@ import {
   Button,
   Divider,
   IconButton,
-  Tooltip,
 } from '@material-ui/core';
 import {
   ChevronLeft,
   ChevronRight,
-  SaveAlt,
+  GetApp,
+  Repeat,
 } from '@material-ui/icons';
-import RepeatIcon from '@material-ui/icons/Repeat';
 
 import { DateTime } from 'luxon';
 import React, {
@@ -28,10 +27,7 @@ import {
 } from 'react-window';
 import { TodayUsersContext } from '../../context/today-users.context';
 import Layout from '../layout/layout';
-import {
-  useBirthdaysListStyles,
-  useTooltipStyles,
-} from './birthdays-list.styles';
+import { useBirthdaysListStyles } from './birthdays-list.styles';
 import {
   asShortDate,
   DAY_HEADER_HEIGHT,
@@ -44,7 +40,7 @@ import { DayRow } from './day-row';
 
 
 const BirthdaysList: FunctionComponent = () => {
-  const {users: rawUsers} = useContext(TodayUsersContext);
+  const {users: rawUsers, isScanning} = useContext(TodayUsersContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
 
   const [users, setUsers] = useState<UserMapInterface>({
@@ -54,7 +50,6 @@ const BirthdaysList: FunctionComponent = () => {
 
   const listRef = useRef<VariableSizeList>();
   const classes = useBirthdaysListStyles();
-  const tooltipClasses = useTooltipStyles();
 
   useEffect(() => {
     // Prepare birthdays
@@ -107,7 +102,7 @@ const BirthdaysList: FunctionComponent = () => {
   return (
     <Layout.Wrapper>
       {/*Top Part of the list*/}
-      <Layout.Header>
+      <Layout.Header disabledButtons={{export: isScanning}}>
         <Box>{users.userGroups[dayIndex] ? asShortDate(users.userGroups[dayIndex][0]) : ''}</Box>
       </Layout.Header>
 
@@ -151,7 +146,7 @@ const BirthdaysList: FunctionComponent = () => {
             variant={'contained'}
             component={Link}
             to={'/export'}
-            startIcon={<SaveAlt/>}
+            startIcon={<GetApp/>}
           >
             Export
           </Button>
@@ -159,28 +154,15 @@ const BirthdaysList: FunctionComponent = () => {
         <Box pl={1}>
           <Button
             size='small'
-            // color='primary'
             variant={'contained'}
             component={Link}
             to={'/activate'}
-            startIcon={<RepeatIcon/>}
+            startIcon={<Repeat/>}
           >
             Scan
           </Button>
         </Box>
 
-        {/*<Tooltip title='Scan birthdays again' arrow classes={tooltipClasses}>*/}
-        {/*  <IconButton*/}
-        {/*    size='small'*/}
-        {/*    color='primary'*/}
-        {/*    area-label='more actions'*/}
-        {/*    aria-haspopup='true'*/}
-        {/*    component={Link}*/}
-        {/*    to={'/activate'}*/}
-        {/*  >*/}
-        {/*    <RepeatIcon/>*/}
-        {/*  </IconButton>*/}
-        {/*</Tooltip>*/}
       </Layout.Footer>
     </Layout.Wrapper>
   );
