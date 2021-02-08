@@ -123,7 +123,8 @@ export const FirstScan: FunctionComponent = () => {
         {/*Upper part*/}
         <Box display={'flex'} textAlign={'center'} alignItems={'flex-end'} flexGrow={1} justifyContent={'center'}>
           Scan your Facebook friends birthdays.
-          Already Existing birthdays will be preserved replaced.
+          Already Existing birthdays will be preserved.
+          Once scanned your birthdays can be exported as calendar any time.
         </Box>
 
         {/*Button*/}
