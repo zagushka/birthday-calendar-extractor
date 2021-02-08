@@ -2,7 +2,6 @@ import {
   map,
   startWith,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import { updateBadge } from './libs/badge';
 import {
@@ -44,14 +43,14 @@ setupAlarms();
 
 // On Badge Click update last time badge clicked
 listenTo(BADGE_CLICKED)
-  .pipe(
-    switchMap(() => storeLastBadgeClicked()),
-  )
   .subscribe(() => {
-    sendMessage(updateBadgeAction());
+    storeLastBadgeClicked()
+      .subscribe(() => {
+        sendMessage(updateBadgeAction(), true);
+      });
   });
 
-// Update Badge on update badge event or new date alarm
+// Update Badge on badge update request or new date alarm
 listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
   .pipe(
     startWith(true), // Initial Badge setup
@@ -60,18 +59,15 @@ listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
 
 // Take care of disable badge event
 listenTo(DISABLE_BADGE_NOTIFICATION)
-  .pipe(
-    switchMap(({action, callback}) => {
-      // remove from storage
-      return storeUserSettings({
-        birthdays: [],
-        activated: false,
-      });
-    }),
-  )
   .subscribe(() => {
-    // Update badge it should be clean
-    sendMessage(updateBadgeAction(), true);
+    storeUserSettings({
+      birthdays: [],
+      activated: false,
+    })
+      .subscribe(() => {
+        // Update badge it should be clean
+        sendMessage(updateBadgeAction(), true);
+      });
   });
 
 // Tell to tha app new data was fetched and request to update the badge
@@ -107,40 +103,40 @@ listenTo(
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_JSON,
 )
-  .pipe(
-    switchMap(({action, callback}) =>
-      getBirthdaysList()
-        .pipe(
-          map(events => {
-            const rawEvents = Array.from(events.values());
-            switch (action.type) {
-              case CREATE_CALENDAR_CSV: {
-                const calendar = new CalendarCSV(action.payload);
-                return calendar.save(calendar.generateCalendar(rawEvents));
-              }
-              case CREATE_CALENDAR_JSON: {
-                const calendar = new CalendarJSON();
-                return calendar.save(calendar.generateCalendar(rawEvents));
-              }
-              case CREATE_CALENDAR_ICS: {
-                const calendar = new CalendarICS(action.payload);
-                return calendar.save(calendar.generateCalendar(rawEvents));
-              }
-              case CREATE_CALENDAR_DELETE_ICS: {
-                const calendar = new CalendarDeleteICS(action.payload);
-                return calendar.save(calendar.generateCalendar(rawEvents));
-              }
+  .subscribe(({action, callback}) => {
+    // Start
+    getBirthdaysList()
+      .pipe(
+        map(events => {
+          const rawEvents = Array.from(events.values());
+          switch (action.type) {
+            case CREATE_CALENDAR_CSV: {
+              const calendar = new CalendarCSV(action.payload);
+              return calendar.save(calendar.generateCalendar(rawEvents));
             }
-          }),
-          tap(() => callback()),
-        ),
-    ),
-  )
-  .subscribe(
-    () => {
-      // @TODO REFACTOR
-      sendMessage(sendError('DONE'));
-    },
-    (error) => sendMessage(sendError(error)),
-  );
+            case CREATE_CALENDAR_JSON: {
+              const calendar = new CalendarJSON();
+              return calendar.save(calendar.generateCalendar(rawEvents));
+            }
+            case CREATE_CALENDAR_ICS: {
+              const calendar = new CalendarICS(action.payload);
+              return calendar.save(calendar.generateCalendar(rawEvents));
+            }
+            case CREATE_CALENDAR_DELETE_ICS: {
+              const calendar = new CalendarDeleteICS(action.payload);
+              return calendar.save(calendar.generateCalendar(rawEvents));
+            }
+          }
+        }),
+      )
+      .subscribe(
+        // @TODO REFACTOR
+        () => sendMessage(sendError('DONE')),
+        (error) => {
+          sendMessage(sendError(error));
+          callback();
+        },
+        () => callback(),
+      );
+  });
 
