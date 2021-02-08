@@ -5,6 +5,7 @@ import {
   of,
   Subject,
   throwError,
+  zip,
 } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
@@ -370,18 +371,30 @@ export function forceBirthdaysScan() {
   return parsePageForConfig()
     .pipe(
       // Fetch the data from facebook
-      switchMap(({token, language}) => fetchBirthdays(token, language)),
+      switchMap(({token, language}) => zip(fetchBirthdays(token, language), retrieveUserSettings(['birthdays', 'activated']))),
+
+      // Merge with stored birthdays
+      map(([birthdays, {birthdays: oldBirthdays, activated}]) => {
+        // Merge old birthdays and new birthdays converted to arrays for Map'ping
+        const nonUniques: Array<[string, RestoredBirthday]> =
+          birthdays.map<[string, RestoredBirthday]>(b => [b.href, b])
+            .concat(oldBirthdays.map(b => [b.href, b]));
+
+        // Map  birthdays to remove duplicates, older values survive
+        return Array.from(new Map(nonUniques).values());
+      }),
+
       // Store fetched data for further usage
-      switchMap(data => {
+      switchMap(combinedBirthdays => {
         sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS');
-        return storeUserSettings({birthdays: data, activated: true})
+        return storeUserSettings({birthdays: combinedBirthdays, activated: true})
           .pipe(
-            mapTo(data),
-            tap(() => {
-              sendMessage(BirthdaysScanComplete(), true);
-            }),
+            mapTo(combinedBirthdays),
           );
       }),
+
+      // Send message `scan is complete`
+      tap(() => sendMessage(BirthdaysScanComplete(), true)),
     );
 }
 
@@ -394,8 +407,8 @@ export function getBirthdaysList(): Observable<Array<RestoredBirthday>> {
           return of(birthdays);
         }
 
-        // Make full run for the data
-        return forceBirthdaysScan();
+        // We should never reach this line
+        return throwError('SCAN BIRTHDAYS FIRST');
       }),
     );
 }

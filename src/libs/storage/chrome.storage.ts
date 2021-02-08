@@ -37,7 +37,7 @@ export type StoredBirthday = [string, number, string];
 export interface RestoredBirthday {
   name: string;
   href: string;
-  start: DateTime
+  start: DateTime;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
