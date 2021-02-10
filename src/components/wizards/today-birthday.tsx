@@ -5,7 +5,7 @@ import React, {
   useContext,
 } from 'react';
 import { LoadingContext } from '../../context/loading.context';
-import { translateString } from '../../filters/translate';
+import { translateString } from '../../filters/translateString';
 import { enableBadgeNotifications } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 

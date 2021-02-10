@@ -17,7 +17,7 @@ import {
   tap,
   toArray,
 } from 'rxjs/operators';
-import { translateString } from '../filters/translate';
+import { translateString } from '../filters/translateString';
 import {
   BirthdaysScanComplete,
   SendScanLog,
@@ -49,9 +49,9 @@ export function arrayToCSVRow(notEscaped: Array<string>): string {
   return JSON.stringify(notEscaped).slice(1, -1);
 }
 
-export const sendScanLog = (...args: [string, ...any]) => {
+export const sendScanLog = (str: string, reps: Array<string> = []) => {
   sendMessage(
-    SendScanLog(translateString(...args)),
+    SendScanLog(translateString(str, reps)),
     true,
   );
 };
@@ -329,7 +329,7 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
       (count) => {
         sendScanLog(
           'SCAN_LOG_REQUEST_WITH_NUMBER',
-          `${count}/${requests.length}`,
+          [`${count}/${requests.length}`],
         );
       },
       error => {

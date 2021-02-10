@@ -21,7 +21,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.127",
+    "@types/chrome": "^0.0.129",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "^26.0.16",
     "@types/luxon": "^1.25.0",
@@ -31,6 +31,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-window": "^1.8.2",
     "@types/uuid": "^8.3.0",
+    "chrome-types": "0.0.15",
     "copy-webpack-plugin": "^6.3.2",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.1",

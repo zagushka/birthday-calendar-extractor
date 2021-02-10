@@ -1,5 +1,5 @@
 import React from 'react';
-import { translateString } from './translate';
+import { translateString } from './translateString';
 
 interface LinkSettings {
   close?: boolean;

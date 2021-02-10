@@ -34,7 +34,7 @@ const ChangeLanguageModal: FunctionComponent<ChangeLanguageModalProps> = (props)
       <DialogTitle id='NOT_SUPPORTED_LANGUAGE'> {translate('NO_TOKEN_DETECTED')}</DialogTitle>
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
-          {translate('NOT_SUPPORTED_LANGUAGE', languages)}
+          {translate('NOT_SUPPORTED_LANGUAGE', [languages])}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

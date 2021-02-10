@@ -29,9 +29,11 @@ export function updateBadge(): void {
 }
 
 export function setBadgeColor(color: string | chrome.browserAction.ColorArray = [0, 0, 0, 0]) {
-  chrome.browserAction.setBadgeBackgroundColor({color});
+  // @ts-ignore
+  chrome.action.setBadgeBackgroundColor({color});
 }
 
 export function setBadgeText(text: string) {
-  chrome.browserAction.setBadgeText({text});
+  // @ts-ignore
+  chrome.action.setBadgeText({text});
 }

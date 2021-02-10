@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { FunctionComponent } from 'react';
 import { WIZARD_NAMES } from '../constants';
-import { translateString } from '../filters/translate';
+import { translateString } from '../filters/translateString';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

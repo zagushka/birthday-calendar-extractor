@@ -18,8 +18,9 @@ import {
 } from '../../context/settings.context';
 import {
   translate,
-  translateString,
+
 } from '../../filters/translate';
+import { translateString } from '../../filters/translateString';
 import { createCalendarIcs } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
 

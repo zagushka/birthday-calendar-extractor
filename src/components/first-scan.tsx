@@ -99,7 +99,7 @@ export const FirstScan: FunctionComponent = () => {
       .pipe(takeUntil(onDestroy$))
       .subscribe(({action}) => {
         if (SEND_SCAN_LOG === action.type) {
-          setLog(action.payload.log);
+          setLog(action.payload.log.toString());
         }
       });
 
@@ -111,6 +111,8 @@ export const FirstScan: FunctionComponent = () => {
   }, []);
 
   const activeButtons = {birthdays: !isActive, export: !isActive || isScanning};
+
+  console.log('FINE HERE', isScanning, isActive, log);
 
   return (
     <Layout.Wrapper>

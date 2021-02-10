@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        { "header": "origin", "operation": "set", "value": "https://www.facebook.com" },
+        { "header": "referer", "operation": "set", "value": "https://www.facebook.com/events/birthdays" }
+      ]
+    },
+    "condition": { "domain": "facebook.com", "resourceTypes": ["main_frame"] }
+  }
+]
