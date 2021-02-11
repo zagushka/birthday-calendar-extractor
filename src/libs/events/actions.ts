@@ -20,9 +20,9 @@ import {
   DISABLE_BADGE_NOTIFICATION,
   ENABLE_BADGE_NOTIFICATION,
   EXECUTED_SCRIPT_CONTEXT_RESPONSE,
-  EXECUTED_SCRIPT_USER_TOKEN_RESPONSE,
+  EXECUTED_SCRIPT_CONTEXT_ERROR,
   ExecutedScriptContextResponseAction,
-  ExecutedScriptUserTokenResponseAction,
+  ExecutedScriptUserContextErrorAction,
   NotificationActionTypes,
   RawScannedUser,
   SEND_ERROR,
@@ -132,12 +132,12 @@ export function ExecutedScriptContextResponse(responseId: string, users: Array<R
   };
 }
 
-export function ExecutedScriptUserTokenResponse(responseId: string, token: string): ExecutedScriptUserTokenResponseAction {
+export function ExecutedScriptUserContextError(responseId: string, error: string): ExecutedScriptUserContextErrorAction {
   return {
-    type: EXECUTED_SCRIPT_USER_TOKEN_RESPONSE,
+    type: EXECUTED_SCRIPT_CONTEXT_ERROR,
     payload: {
       responseId,
-      token,
+      error,
     },
   };
 }

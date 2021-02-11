@@ -21,7 +21,7 @@ export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_SCAN';
 export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_SCAN_COMPLETE';
 
 export const EXECUTED_SCRIPT_CONTEXT_RESPONSE = 'EXECUTED_SCRIPT_CONTEXT_RESPONSE';
-export const EXECUTED_SCRIPT_USER_TOKEN_RESPONSE = 'EXECUTED_SCRIPT_USER_TOKEN_RESPONSE';
+export const EXECUTED_SCRIPT_CONTEXT_ERROR = 'EXECUTED_SCRIPT_CONTEXT_ERROR';
 
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
@@ -132,15 +132,15 @@ export interface ExecutedScriptContextResponseAction {
   }
 }
 
-export interface ExecutedScriptUserTokenResponseAction {
-  type: typeof EXECUTED_SCRIPT_USER_TOKEN_RESPONSE;
+export interface ExecutedScriptUserContextErrorAction {
+  type: typeof EXECUTED_SCRIPT_CONTEXT_ERROR;
   payload: {
     responseId: string;
-    token: string;
+    error: string;
   }
 }
 
-type ExecutedScriptTypes = ExecutedScriptContextResponseAction | ExecutedScriptUserTokenResponseAction;
+type ExecutedScriptTypes = ExecutedScriptContextResponseAction | ExecutedScriptUserContextErrorAction;
 
 export type ActionTypes =
   NotificationActionTypes
