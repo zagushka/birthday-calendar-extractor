@@ -32,6 +32,8 @@ import { CalendarICS } from './libs/formats/ics';
 import { CalendarJSON } from './libs/formats/json';
 import {
   forceBirthdaysScan,
+  forceBirthdaysScanNew,
+  forceUserBirthdaysScanFromContext,
   getBirthdaysList,
   sendScanLog,
 } from './libs/lib';
@@ -80,7 +82,7 @@ listenTo(BIRTHDAYS_START_SCAN)
     storeUserSettings({scanning: true})
       .pipe(
         // Force scan
-        switchMap(() => forceBirthdaysScan()),
+        switchMap(() => forceBirthdaysScanNew()),
       )
       .subscribe(
         birthdays => {

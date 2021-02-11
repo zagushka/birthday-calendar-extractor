@@ -10,20 +10,37 @@ import {
 import { ajax } from 'rxjs/ajax';
 import {
   catchError,
+  filter,
   map,
   mapTo,
   scan,
   switchMap,
+  take,
   tap,
+  timeout,
   toArray,
 } from 'rxjs/operators';
-import { fetchUserFriendsBirthdayInfoFromContext } from '../context';
+import { FACEBOOK_REQUIRED_REGEXP } from '../constants';
+import {
+  fetchUserFriendsBirthdayInfoFromContext,
+  fetchUserTokenFromContext,
+} from '../context';
 import { translateString } from '../filters/translateString';
 import {
   BirthdaysScanComplete,
   SendScanLog,
 } from './events/actions';
-import { sendMessage } from './events/events';
+import {
+  listenTo,
+  sendMessage,
+} from './events/events';
+import {
+  EXECUTED_SCRIPT_CONTEXT_RESPONSE,
+  EXECUTED_SCRIPT_USER_TOKEN_RESPONSE,
+  ExecutedScriptContextResponseAction,
+  ExecutedScriptUserTokenResponseAction,
+  RawScannedUser,
+} from './events/types';
 
 import {
   languages,
@@ -51,10 +68,8 @@ export function arrayToCSVRow(notEscaped: Array<string>): string {
 }
 
 export const sendScanLog = (str: string, reps: Array<string> = []) => {
-  sendMessage(
-    SendScanLog(translateString(str, reps)),
-    true,
-  );
+  console.log(str, reps);
+  sendMessage(SendScanLog(str, reps), true);
 };
 
 /**
@@ -189,6 +204,14 @@ function generateBirthdaysFromRaw(data: Array<{ href: string; user: string }>, l
       };
     }
   });
+}
+
+function scannedUserToRestoredBirthday(raw: RawScannedUser): RestoredBirthday {
+  return {
+    name: raw.name,
+    start: DateTime.local(2020, raw.birthdate.month, raw.birthdate.day),
+    href: raw.id,
+  };
 }
 
 export function decode(str: string) {
@@ -363,33 +386,145 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
     );
 }
 
-export function forceUserBirthdaysScanFromContext() {
-  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-    const currTab = tabs[0];
-    // check currTab.url is a Facebook page
+function isOnFacebookPage(url: string): boolean {
+  return !!url.match(FACEBOOK_REQUIRED_REGEXP);
+}
 
-    if (currTab) { // Sanity check
+export function forceUserBirthdaysScanFromContext(): Observable<Array<RawScannedUser>> {
+  return new Observable((subscriber) => {
+
+    /**
+     * Listen to response from page context response
+     * It should come with unique responseId
+     */
+    const waitForResponse = (responseId: string) => {
+      return listenTo(EXECUTED_SCRIPT_CONTEXT_RESPONSE)
+        .pipe(
+          filter(({action}) => (action as ExecutedScriptContextResponseAction).payload.responseId === responseId),
+          timeout(10000), // Wait up to 10 seconds till context page response
+          take(1),
+        )
+        .subscribe(({action}) => {
+          if (EXECUTED_SCRIPT_CONTEXT_RESPONSE === action.type) {
+            subscriber.next(action.payload.users);
+          }
+          subscriber.complete();
+        });
+    };
+
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      const currTab = tabs[0];
+
+      // check currTab.url is a Facebook page
+      if (!currTab || !isOnFacebookPage(currTab.url)) {
+        subscriber.error('Facebook page required!');
+        return;
+      }
+
       // @ts-ignore
       chrome.scripting.executeScript({
           // @ts-ignore
           target: {tabId: currTab.id},
-          function: fetchUserFriendsBirthdayInfoFromContext(),
+          function: fetchUserFriendsBirthdayInfoFromContext,
         },
-        (injectionResults: Array<any>) => {
-          for (const {result} of injectionResults) {
-            if (result.type === 'web-reply') {
-              const listener = (action: any) => {
-
-                chrome.runtime.onMessage.removeListener(listener);
-              };
-
-              chrome.runtime.onMessage.addListener(listener);
-            }
-            console.log('Frame Title: ', result);
-          }
+        (response: Array<{ result: any }>) => {
+          // Working with a single tab, use the firs array element
+          waitForResponse(response[0].result);
         });
-    }
+
+    });
   });
+}
+
+//
+// export function getUserTokenFromContext(): Observable<{ token: string }> {
+//   return new Observable((subscriber) => {
+//     /**
+//      * Listen to response from page context response
+//      * It should come with unique responseId
+//      */
+//     const waitForResponse = (responseId: string) => {
+//       return listenTo(EXECUTED_SCRIPT_USER_TOKEN_RESPONSE)
+//         .pipe(
+//           filter(({action}) => (action as ExecutedScriptUserTokenResponseAction).payload.responseId === responseId),
+//           timeout(10000), // Wait up to 10 seconds till context page response
+//           take(1),
+//         )
+//         .subscribe(({action}) => {
+//           if (EXECUTED_SCRIPT_USER_TOKEN_RESPONSE === action.type) {
+//             const token = action.payload.token;
+//
+//             if (!token) {
+//               sendScanLog('SCAN_LOG_CHECK_LOGIN_ERROR_LOGIN');
+//               subscriber.error('NO_TOKEN_DETECTED');
+//             }
+//
+//             sendScanLog('SCAN_LOG_CHECK_SUCCESS');
+//             subscriber.next({token});
+//           }
+//           subscriber.complete();
+//         });
+//     };
+//
+//     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+//       const currTab = tabs[0];
+//
+//       // check currTab.url is a Facebook page
+//       if (!currTab || !isOnFacebookPage(currTab.url)) {
+//         subscriber.error('Facebook page required!');
+//         return;
+//       }
+//
+//       // @ts-ignore
+//       chrome.scripting.executeScript({
+//           // @ts-ignore
+//           target: {tabId: currTab.id},
+//           function: fetchUserTokenFromContext,
+//         },
+//         (response: Array<{ result: any }>) => {
+//           // Working with a single tab, use the firs array element
+//           waitForResponse(response[0].result);
+//         });
+//
+//     });
+//   });
+// }
+
+/**
+ * Make new full scan of the birthdays data
+ * Store fetched data to local storage
+ */
+export function forceBirthdaysScanNew() {
+  // First of all check for the token and language
+  // Fetch the data from facebook
+  return forceUserBirthdaysScanFromContext()
+    .pipe(
+      map(rawUsers => rawUsers.map(scannedUserToRestoredBirthday)),
+      switchMap((users) => zip(of(users), retrieveUserSettings(['birthdays', 'activated']))),
+
+      // Merge with stored birthdays
+      map(([birthdays, {birthdays: oldBirthdays, activated}]) => {
+        // Merge old birthdays and new birthdays converted to arrays for Map'ping
+        const nonUniques: Array<[string, RestoredBirthday]> =
+          birthdays.map<[string, RestoredBirthday]>(b => [b.href, b])
+            .concat(oldBirthdays.map(b => [b.href, b]));
+
+        // Map  birthdays to remove duplicates, older values survive
+        return Array.from(new Map(nonUniques).values());
+      }),
+
+      // Store fetched data for further usage
+      switchMap(combinedBirthdays => {
+        sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS');
+        return storeUserSettings({birthdays: combinedBirthdays, activated: true})
+          .pipe(
+            mapTo(combinedBirthdays),
+          );
+      }),
+
+      // Send message `scan is complete`
+      tap(() => sendMessage(BirthdaysScanComplete(), true)),
+    );
 }
 
 /**
@@ -400,6 +535,10 @@ export function forceBirthdaysScan() {
   // First of all check for the token and language
   return parsePageForConfig()
     .pipe(
+      catchError(e => {
+        console.log('ACH', e);
+        return throwError(e);
+      }),
       // Fetch the data from facebook
       switchMap(({token, language}) => zip(fetchBirthdays(token, language), retrieveUserSettings(['birthdays', 'activated']))),
 

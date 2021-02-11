@@ -19,11 +19,16 @@ import {
   CreateCalendarActionTypes,
   DISABLE_BADGE_NOTIFICATION,
   ENABLE_BADGE_NOTIFICATION,
+  EXECUTED_SCRIPT_CONTEXT_RESPONSE,
+  EXECUTED_SCRIPT_USER_TOKEN_RESPONSE,
+  ExecutedScriptContextResponseAction,
+  ExecutedScriptUserTokenResponseAction,
   NotificationActionTypes,
-  SEND_SCAN_LOG,
-  SendScanLogAction,
+  RawScannedUser,
   SEND_ERROR,
   SEND_GENERATION_STATUS,
+  SEND_SCAN_LOG,
+  SendScanLogAction,
   UPDATE_BADGE,
 } from './types';
 
@@ -110,10 +115,30 @@ export function BirthdaysScanComplete(): BirthdaysExtractionActionTypes {
   };
 }
 
-export function SendScanLog(log: string): SendScanLogAction {
+export function SendScanLog(messageName: string, substitutions?: Array<string>): SendScanLogAction {
   return {
     type: SEND_SCAN_LOG,
-    payload: {log},
+    payload: {messageName, substitutions},
+  };
+}
+
+export function ExecutedScriptContextResponse(responseId: string, users: Array<RawScannedUser>): ExecutedScriptContextResponseAction {
+  return {
+    type: EXECUTED_SCRIPT_CONTEXT_RESPONSE,
+    payload: {
+      responseId,
+      users,
+    },
+  };
+}
+
+export function ExecutedScriptUserTokenResponse(responseId: string, token: string): ExecutedScriptUserTokenResponseAction {
+  return {
+    type: EXECUTED_SCRIPT_USER_TOKEN_RESPONSE,
+    payload: {
+      responseId,
+      token,
+    },
   };
 }
 

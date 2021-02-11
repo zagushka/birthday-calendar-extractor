@@ -20,6 +20,9 @@ export const CREATE_CALENDAR_JSON = 'CREATE_CALENDAR_JSON';
 export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_SCAN';
 export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_SCAN_COMPLETE';
 
+export const EXECUTED_SCRIPT_CONTEXT_RESPONSE = 'EXECUTED_SCRIPT_CONTEXT_RESPONSE';
+export const EXECUTED_SCRIPT_USER_TOKEN_RESPONSE = 'EXECUTED_SCRIPT_USER_TOKEN_RESPONSE';
+
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
 export const SEND_SCAN_LOG = 'SEND_SCAN_LOG';
@@ -103,12 +106,41 @@ interface AlarmNewDay {
 
 export type AlarmTypes = AlarmNewDay | BadgeClicked;
 
-
 export interface SendScanLogAction {
   type: typeof SEND_SCAN_LOG;
-  payload: { log: string };
+  payload: {
+    messageName: string;
+    substitutions?: Array<string>;
+  };
 }
 
+export interface RawScannedUser {
+  birthdate: {
+    day: number;
+    month: number;
+    year: number;
+  };
+  name: string;
+  id: string;
+}
+
+export interface ExecutedScriptContextResponseAction {
+  type: typeof EXECUTED_SCRIPT_CONTEXT_RESPONSE;
+  payload: {
+    responseId: string;
+    users: Array<RawScannedUser>;
+  }
+}
+
+export interface ExecutedScriptUserTokenResponseAction {
+  type: typeof EXECUTED_SCRIPT_USER_TOKEN_RESPONSE;
+  payload: {
+    responseId: string;
+    token: string;
+  }
+}
+
+type ExecutedScriptTypes = ExecutedScriptContextResponseAction | ExecutedScriptUserTokenResponseAction;
 
 export type ActionTypes =
   NotificationActionTypes
@@ -117,6 +149,7 @@ export type ActionTypes =
   | CreateCalendarActionTypes
   | AlarmTypes
   | SendScanLogAction
+  | ExecutedScriptTypes
   ;
 
 export type ApplicationStatus =

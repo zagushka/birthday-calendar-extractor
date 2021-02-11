@@ -99,7 +99,7 @@ export const FirstScan: FunctionComponent = () => {
       .pipe(takeUntil(onDestroy$))
       .subscribe(({action}) => {
         if (SEND_SCAN_LOG === action.type) {
-          setLog(action.payload.log.toString());
+          setLog(action.payload.messageName.toString());
         }
       });
 
