@@ -8,21 +8,7 @@
     "activeTab",
     "storage",
     "alarms",
-    "scripting",
-    "tabs",
-    "webRequest",
-    "declarativeNetRequest",
-    "declarativeNetRequestFeedback"
-  ],
-  "declarative_net_request": {
-    "rule_resources": [{
-      "id": "ruleset_1",
-      "enabled": true,
-      "path": "rules.json"
-    }]
-  },
-  "host_permissions": [
-    "*://*.facebook.com/*"
+    "scripting"
   ],
   "icons": {
     "16": "icons/icon.16.png",

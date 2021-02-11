@@ -17,6 +17,7 @@ import {
   tap,
   toArray,
 } from 'rxjs/operators';
+import { fetchUserFriendsBirthdayInfoFromContext } from '../context';
 import { translateString } from '../filters/translateString';
 import {
   BirthdaysScanComplete,
@@ -360,6 +361,35 @@ export function fetchBirthdays(token: string, language: string): Observable<Arra
         return throwError(err);
       }),
     );
+}
+
+export function forceUserBirthdaysScanFromContext() {
+  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+    const currTab = tabs[0];
+    // check currTab.url is a Facebook page
+
+    if (currTab) { // Sanity check
+      // @ts-ignore
+      chrome.scripting.executeScript({
+          // @ts-ignore
+          target: {tabId: currTab.id},
+          function: fetchUserFriendsBirthdayInfoFromContext(),
+        },
+        (injectionResults: Array<any>) => {
+          for (const {result} of injectionResults) {
+            if (result.type === 'web-reply') {
+              const listener = (action: any) => {
+
+                chrome.runtime.onMessage.removeListener(listener);
+              };
+
+              chrome.runtime.onMessage.addListener(listener);
+            }
+            console.log('Frame Title: ', result);
+          }
+        });
+    }
+  });
 }
 
 /**
