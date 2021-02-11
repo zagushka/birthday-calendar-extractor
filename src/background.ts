@@ -3,7 +3,6 @@ import {
   startWith,
   switchMap,
 } from 'rxjs/operators';
-import { fetchUserFriendsBirthdayInfoFromContext } from './context';
 import { updateBadge } from './libs/badge';
 import {
   sendError,
@@ -32,8 +31,6 @@ import { CalendarICS } from './libs/formats/ics';
 import { CalendarJSON } from './libs/formats/json';
 import {
   forceBirthdaysScan,
-  forceBirthdaysScanNew,
-  forceUserBirthdaysScanFromContext,
   getBirthdaysList,
   sendScanLog,
 } from './libs/lib';
@@ -82,7 +79,7 @@ listenTo(BIRTHDAYS_START_SCAN)
     storeUserSettings({scanning: true})
       .pipe(
         // Force scan
-        switchMap(() => forceBirthdaysScanNew()),
+        switchMap(() => forceBirthdaysScan()),
       )
       .subscribe(
         birthdays => {
