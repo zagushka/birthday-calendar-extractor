@@ -112,8 +112,8 @@ export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, 
 function scannedUserToRestoredBirthday(raw: RawScannedUser): RestoredBirthday {
   return {
     name: raw.name,
-    start: DateTime.local(2020, raw.birthdate.month, raw.birthdate.day),
-    href: raw.id,
+    start: DateTime.local(2020, raw.birthdate.month, raw.birthdate.day).set({year: DateTime.local().year}),
+    href: 'https://facebook.com/' + raw.id,
   };
 }
 
@@ -195,7 +195,7 @@ export function forceBirthdaysScan() {
             .concat(oldBirthdays.map(b => [b.href, b]));
 
         // Map  birthdays to remove duplicates, older values survive
-        return Array.from(new Map(nonUniques).values());
+        return Array.from((new Map(nonUniques)).values());
       }),
 
       // Store fetched data for further usage
