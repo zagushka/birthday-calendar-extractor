@@ -1,17 +1,24 @@
 export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
-  // const responseId = uuidv4();
   const responseId = Math.random().toString();
 
   /**
-   * Parse provided html page and extract async_get_token
+   * Parse provided html page and extract token
    */
   function extractTokenFromPage(page: string): string {
-    const pattern = new RegExp('.*async_get_token":"(.*?)"', 'm');
+    const pattern = new RegExp('.*"token":"(.*?)"', 'm');
     const result = pattern.exec(page);
     return result && result[1];
   }
 
-  fetch('https://www.facebook.com')
+  /**
+   * Make request to facebook.com in order to receive html with vital information such as
+   * token
+   */
+  fetch('https://www.facebook.com', {
+    'headers': {
+      'accept': 'text/html',
+    },
+  })
     .then(r => r.text())
     .then(page => {
       const token = extractTokenFromPage(page);
@@ -19,8 +26,10 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
       // No token found, report an error, quit
       if ('string' !== typeof token) {
         // chrome.runtime.sendMessage({type: 'EXECUTED_SCRIPT_USER_TOKEN_NOT_FOUND', payload: {responseId}});
+        // sendScanLog('SCAN_LOG_CHECK_LOGIN_ERROR_LOGIN');
         return Promise.reject('EXECUTED_SCRIPT_USER_TOKEN_NOT_FOUND');
       }
+      // sendScanLog('SCAN_LOG_CHECK_SUCCESS');
       return token;
     })
 
@@ -52,32 +61,9 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         // Fake ExecutedScriptContextResponse since the function is not accessible from here
         chrome.runtime.sendMessage({type: 'EXECUTED_SCRIPT_CONTEXT_RESPONSE', payload: {responseId, users: result}});
       },
-      (reason) => {
-        chrome.runtime.sendMessage({type: 'EXECUTED_SCRIPT_CONTEXT_RESPONSE', payload: {responseId, reason}});
+      (error) => {
+        chrome.runtime.sendMessage({type: 'EXECUTED_SCRIPT_CONTEXT_ERROR', payload: {responseId, reason: error}});
       },
     );
   return responseId;
 };
-
-export function fetchUserTokenFromContext(): string {
-  const responseId = Math.random().toString();
-
-  /**
-   * Parse provided html page and extract async_get_token
-   */
-  function extractTokenFromPage(page: string): string {
-    const pattern = new RegExp('.*async_get_token":"(.*?)"', 'm');
-    const result = pattern.exec(page);
-    return result && result[1];
-  }
-
-  fetch('https://www.facebook.com')
-    .then(r => r.text())
-    .then(page => {
-      const token = extractTokenFromPage(page);
-      // Fake ExecutedScriptUserTokenResponse since the function is not accessible from here
-      chrome.runtime.sendMessage({type: 'EXECUTED_SCRIPT_USER_TOKEN_RESPONSE', payload: {responseId, token}});
-    });
-
-  return responseId;
-}
