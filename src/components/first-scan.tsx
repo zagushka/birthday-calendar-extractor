@@ -26,6 +26,7 @@ import React, {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TodayUsersContext } from '../context/today-users.context';
+import { translateString } from '../filters/translateString';
 import { BirthdaysStartScan } from '../libs/events/actions';
 import {
   listenTo,
@@ -99,7 +100,7 @@ export const FirstScan: FunctionComponent = () => {
       .pipe(takeUntil(onDestroy$))
       .subscribe(({action}) => {
         if (SEND_SCAN_LOG === action.type) {
-          setLog(action.payload.messageName.toString());
+          setLog(translateString(action.payload.messageName, action.payload.substitutions));
         }
       });
 
@@ -111,8 +112,6 @@ export const FirstScan: FunctionComponent = () => {
   }, []);
 
   const activeButtons = {birthdays: !isActive, export: !isActive || isScanning};
-
-  console.log('FINE HERE', isScanning, isActive, log);
 
   return (
     <Layout.Wrapper>

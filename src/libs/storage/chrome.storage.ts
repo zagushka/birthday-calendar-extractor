@@ -13,6 +13,7 @@ import AreaName = chrome.storage.AreaName;
 import StorageChange = chrome.storage.StorageChange;
 
 export interface Settings {
+  error: [string, Array<string>] | null;
   activated: boolean;
   scanning: boolean;
   scanSuccess: boolean;
@@ -23,6 +24,7 @@ export interface Settings {
 }
 
 export interface StoredSettings {
+  error: [string, Array<string>] | null;
   activated: boolean;
   scanning: boolean;
   scanSuccess: boolean;
@@ -41,6 +43,7 @@ export interface RestoredBirthday {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
+  error: null,
   activated: false,
   scanning: false,
   scanSuccess: true,
@@ -144,6 +147,7 @@ export function listenToUserSettings(): Observable<Partial<Settings>> {
  */
 const reviveSettingsField = (key: keyof Settings, value: any): any => {
   switch (key) {
+    case 'error':
     case 'activated':
     case 'scanning':
     case 'scanSuccess':
@@ -203,6 +207,7 @@ export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolea
     (Object.keys(settings) as Array<keyof Settings>)
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
         switch (key) {
+          case 'error':
           case 'activated':
           case 'scanning':
           case 'scanSuccess':

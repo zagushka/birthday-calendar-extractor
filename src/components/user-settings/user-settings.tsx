@@ -16,7 +16,7 @@ import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
   const {isLoading} = useContext(LoadingContext);
-  const {isActive} = useContext(TodayUsersContext);
+  const {isActive, error} = useContext(TodayUsersContext);
   const loaded = !isLoading('SETTINGS');
 
   return (
@@ -24,6 +24,7 @@ const UserSettings: FunctionComponent = () => {
       {loaded &&
       <Switch>
         <Route path='/error'>
+          {!error ? <Redirect to={'/'}/> : ''}
         </Route>
         <Route path='/activate'>
           <FirstScan/>
@@ -42,5 +43,6 @@ const UserSettings: FunctionComponent = () => {
     </>
   );
 };
+;
 
 export default UserSettings;
