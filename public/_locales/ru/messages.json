@@ -74,7 +74,7 @@
     "description": "Title Buy me a coffee."
   },
   "BEFORE_SHARE_LINKS": {
-    "message": "Сработало как надо? Это полезно? Я рад, что смог вам помочь. Поддержите меня!",
-    "description": "Did it work fine? Was it useful? Glad I could help. You can support me to!"
+    "message": "Поддержите меня!",
+    "description": "Message before support buttons."
   }
 }

@@ -98,7 +98,7 @@
     "description": "Link to buy me a coffee"
   },
   "BEFORE_SHARE_LINKS": {
-    "message": "Did it work fine? Was it useful? Glad I could help. You can support me to!",
-    "description": "Did it work fine? Was it useful? Glad I could help. You can support me to!"
+    "message": "Support me.",
+    "description": "Message before support buttons."
   }
 }

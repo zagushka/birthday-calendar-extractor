@@ -17,11 +17,14 @@
       <br/>
       <div class="no-wrap" style="display: flex; justify-content: space-between;">
         <a v-on:click="startGeneration()" class="link"><span v-translate="'GENERATE'"></span></a>
-        <a v-link="'https://github.com/zagushka/birthday-calendar-extractor/issues'"
-           class="link special"><span>🐞</span></a>
+<!--        <a v-link="'https://github.com/zagushka/birthday-calendar-extractor/issues'"-->
+<!--           class="link special"><span>🐞</span></a>-->
       </div>
 
-      <hr/>
+<!--      <hr/>-->
+
+      <br/>
+      <br/>
 
       <p v-translate="'BEFORE_SHARE_LINKS'"></p>
       <div style="display: flex; flex-direction: column;">
