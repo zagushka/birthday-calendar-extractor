@@ -112,10 +112,11 @@ export const FirstScan: FunctionComponent = () => {
   }, []);
 
   const activeButtons = {birthdays: !isActive, export: !isActive || isScanning};
+  const activeTooltips = {export: isActive && success};
 
   return (
     <Layout.Wrapper>
-      <Layout.Header disabledButtons={activeButtons}>
+      <Layout.Header disabledButtons={activeButtons} tooltipButtons={activeTooltips}>
         <Box>Scan Birthdays</Box>
       </Layout.Header>
 
