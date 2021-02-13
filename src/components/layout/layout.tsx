@@ -10,7 +10,11 @@ import {
   GetApp,
   Repeat,
 } from '@material-ui/icons';
-import React, { FunctionComponent } from 'react';
+import React, {
+  FunctionComponent,
+  useEffect,
+  useState,
+} from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   useLayoutStyles,
@@ -19,6 +23,7 @@ import {
 
 interface ButtonWithTooltipProps {
   name?: buttonTypes;
+  defaultOpen?: boolean;
   disabled?: boolean;
   button: JSX.Element;
   to: string;
@@ -26,11 +31,28 @@ interface ButtonWithTooltipProps {
 }
 
 const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
-  ({button, to, tooltip, disabled = false}) => {
+  ({
+     button,
+     to,
+     tooltip,
+     defaultOpen = false,
+     disabled = false,
+   }) => {
     const classes = useLayoutStyles();
     const tooltipStyles = useTooltipStyles();
+    const [open, setOpen] = useState<boolean>(defaultOpen);
+
+    useEffect(() => {
+      console.log(defaultOpen, 'CHANGED');
+      setOpen(defaultOpen);
+    }, [defaultOpen]);
+
     return (
-      <Tooltip title={tooltip} arrow classes={tooltipStyles}>
+      <Tooltip title={tooltip} arrow classes={tooltipStyles}
+               open={open}
+               onClose={() => setOpen(false)}
+               onOpen={() => setOpen(true)}
+      >
         <IconButton
           size='small'
           activeClassName={classes.buttonActive}
@@ -74,10 +96,15 @@ const ButtonList: Array<ButtonWithTooltipProps> = [
 
 interface LayoutHeaderProps {
   disabledButtons?: ButtonsListType<boolean>;
+  tooltipButtons?: ButtonsListType<boolean>;
 }
 
 export const LayoutHeader: FunctionComponent<LayoutHeaderProps> =
-  ({children, disabledButtons = {}}) => {
+  ({
+     children,
+     disabledButtons = {},
+     tooltipButtons = {},
+   }) => {
     const classes = useLayoutStyles();
 
     return (<>
@@ -92,6 +119,7 @@ export const LayoutHeader: FunctionComponent<LayoutHeaderProps> =
           .map(button => <ButtonWithTooltip
             key={button.name}
             disabled={!!disabledButtons[button.name]}
+            defaultOpen={!!tooltipButtons[button.name]}
             {...button}
           />)
         }
