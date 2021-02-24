@@ -1,26 +1,4 @@
 {
-  "NOT_SUPPORTED_LANGUAGE_TITLE": {
-    "message": "Язык Facebook не поддерживается.",
-    "description": "Title for modal in case facebook language is not supported"
-  },
-  "NOT_SUPPORTED_LANGUAGE": {
-    "message": "Ваш язык Facebook не поддерживается.<br /> Смените на:<br /> $languages$ <br /> И нажмите на иконку снова.",
-    "description": "Description in case facebook language is not supported",
-    "placeholders": {
-      "languages": {
-        "content": "$1",
-        "example": "<span>English (US)</span> <span>English (UK)</span>"
-      }
-    }
-  },
-  "CHANGE_FACEBOOK_LANGUAGE_LINK": {
-    "message": "https://www.facebook.com/settings?tab=language",
-    "description": "Facebook settings page with language set."
-  },
-  "CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE": {
-    "message": "На страницу смены языка.",
-    "description": "Button to facebook settings page title."
-  },
   "DONE_DESCRIPTION": {
     "message": "Ваш календарь готов и может быть импортирован.<br> Пожалуйста оставьте отзыв :о)",
     "description": "Description when extraction process successfully finished"
@@ -29,45 +7,9 @@
     "message": "Готово!",
     "description": "Title when extraction process successfully finished"
   },
-  "LEAVE_FEEDBACK_LINK": {
-    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
-    "description": "Link to extension store"
-  },
-  "LEAVE_FEEDBACK_TITLE": {
-    "message": "Оставить отзыв",
-    "description": "Share button"
-  },
   "ERROR_HEADER": {
     "message": "Внимание!",
     "description": "Error header"
-  },
-  "USER_SETTINGS": {
-    "message": "Я хочу",
-    "description": "Header for extraction format selection"
-  },
-  "SELECT_FILE_FORMAT_ICS": {
-    "message": "Экспортировать дни рождения в формат ICS",
-    "description": "Label for ics file type radio button"
-  },
-  "SELECT_ICS_DESCRIPTION": {
-    "message": "ICS это универсальный формат календарей, используемый в Microsoft Outlook, Google Calendar, и Apple Calendar.",
-    "description": "Description for ics file type radio button"
-  },
-  "SELECT_FILE_FORMAT_CSV": {
-    "message": "Экспортировать для Excel - CSV",
-    "description": "Label for csv file type radio button"
-  },
-  "FILE_FORMAT_CSV_DESCRIPTION": {
-    "message": "CSV формат используется Microsoft Excel или Google Sheets. НЕ ИСПОЛЬЗУЙТЕ этот формат для импорта дней рождений в календари, ICS - предпочтительнее.",
-    "description": "Description for label for csv file type radio button"
-  },
-  "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "Удалить импортированные дни рождения из Google Calendar.",
-    "description": "Label for delete-ics file type radio button"
-  },
-  "SELECT_DELETE_ICS_DESCRIPTION": {
-    "message": "Создает специальный ICS файл для удаления уже импортированных дней рождений из Google Calendar. Импортируйте в тото же календарь, точно также как и ICS файл с днями рождения.",
-    "description": "Description for delete-ics file type radio button"
   },
   "ENABLE_BADGE": {
     "message": "показывать именинников в информационной иконке.",

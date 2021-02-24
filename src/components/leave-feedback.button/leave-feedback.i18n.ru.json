@@ -1,0 +1,10 @@
+{
+  "LEAVE_FEEDBACK_LINK": {
+    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
+    "description": "Link to extension store"
+  },
+  "LEAVE_FEEDBACK_TITLE": {
+    "message": "Оставить отзыв",
+    "description": "Share button"
+  }
+}

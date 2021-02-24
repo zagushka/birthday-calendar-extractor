@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import handleLink from '../filters/handleLink';
-import { translate } from '../filters/translate';
+import handleLink from '../../filters/handleLink';
+import { translate } from '../../filters/translate';
 
 const BuyCoffeeButton: FunctionComponent = () => {
   return (

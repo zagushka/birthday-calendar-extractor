@@ -6,9 +6,9 @@ import { WIZARD_NAMES } from '../../constants';
 import { SettingsContext } from '../../context/settings.context';
 import ActionAccordion, { ActionAccordionInterface } from '../action-accordion';
 import Layout from '../layout/layout';
-import CsvGeneratorWizard from './csv';
-import DeleteIcsGeneratorWizard from './delete-ics';
-import IcsGeneratorWizard from './ics';
+import CsvGeneratorWizard from './csv/csv';
+import DeleteIcsGeneratorWizard from './delete-ics/delete-ics';
+import IcsGeneratorWizard from './ics/ics';
 
 const SelectWizard: FunctionComponent = () => {
   const {action, setAction} = useContext(SettingsContext);

@@ -11,27 +11,24 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { LoadingContext } from '../../context/loading.context';
+import { LoadingContext } from '../../../context/loading.context';
 import {
   IcsSettings,
   SettingsContext,
-} from '../../context/settings.context';
-import {
-  translate,
+} from '../../../context/settings.context';
+import { translate } from '../../../filters/translate';
+import { translateString } from '../../../filters/translateString';
+import { createCalendarDeleteIcs } from '../../../libs/events/actions';
+import { sendMessage } from '../../../libs/events/events';
 
-} from '../../filters/translate';
-import { translateString } from '../../filters/translateString';
-import { createCalendarIcs } from '../../libs/events/actions';
-import { sendMessage } from '../../libs/events/events';
-
-const IcsGeneratorWizard: FunctionComponent = (props) => {
+const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
   const {startLoading, stopLoading} = useContext(LoadingContext);
   const {wizards, setWizards} = useContext(SettingsContext);
 
   const startGeneration = () => {
     const loaderName = startLoading();
     sendMessage(
-      createCalendarIcs({
+      createCalendarDeleteIcs({
         groupEvents: wizards.ics.groupEvents,
         allDayEvent: wizards.ics.allDayEvent,
       }),
@@ -48,7 +45,7 @@ const IcsGeneratorWizard: FunctionComponent = (props) => {
   return (
     <Box flexDirection='column' display='flex'>
       <Box pb={1}>
-        {translate('SELECT_ICS_DESCRIPTION')}
+        {translate('SELECT_DELETE_ICS_DESCRIPTION')}
       </Box>
       <FormControl size='small' component='fieldset'>
         {/*<FormLabel component='legend'>Settings</FormLabel>*/}
@@ -66,4 +63,4 @@ const IcsGeneratorWizard: FunctionComponent = (props) => {
   );
 };
 
-export default IcsGeneratorWizard;
+export default DeleteIcsGeneratorWizard;

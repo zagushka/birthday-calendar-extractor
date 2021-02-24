@@ -1,0 +1,10 @@
+{
+  "BUY_ME_COFFEE_LINK": {
+    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
+    "description": "Link to donate page"
+  },
+  "BUY_ME_COFFEE_TITLE": {
+    "message": "Buy me a coffee",
+    "description": "Donate button"
+  }
+}

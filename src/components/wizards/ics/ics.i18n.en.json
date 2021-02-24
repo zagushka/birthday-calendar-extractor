@@ -1,0 +1,18 @@
+{
+  "SELECT_FILE_FORMAT_ICS": {
+    "message": "Export birthdays as ICS file.",
+    "description": "Label for ics file type radio button"
+  },
+  "SELECT_ICS_DESCRIPTION": {
+    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.",
+    "description": "Description for ics file type radio button"
+  },
+  "CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY": {
+    "message": "One event per day",
+    "description": "Label for `create or delete ics` settings - single event per day"
+  },
+  "CREATE_ICS_SETTINGS_ALL_DAY_EVENTS": {
+    "message": "All day events",
+    "description": "Label for `create or delete ics` settings - all day events"
+  }
+}

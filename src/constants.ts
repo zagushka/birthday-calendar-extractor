@@ -6,5 +6,4 @@ export const WIZARD_NAMES = {
   CREATE_JSON: 'CREATE_JSON',
 } as const;
 
-// Temporary using it as a const, while i18n is not accessible from background.js
 export const FACEBOOK_REQUIRED_REGEXP = '^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com';

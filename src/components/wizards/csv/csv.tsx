@@ -12,18 +12,15 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { LoadingContext } from '../../context/loading.context';
+import { LoadingContext } from '../../../context/loading.context';
 import {
   CsvDateFormats,
   SettingsContext,
-} from '../../context/settings.context';
-import {
-  translate,
-
-} from '../../filters/translate';
-import { translateString } from '../../filters/translateString';
-import { createCalendarCsv } from '../../libs/events/actions';
-import { sendMessage } from '../../libs/events/events';
+} from '../../../context/settings.context';
+import { translate } from '../../../filters/translate';
+import { translateString } from '../../../filters/translateString';
+import { createCalendarCsv } from '../../../libs/events/actions';
+import { sendMessage } from '../../../libs/events/events';
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
   const {startLoading, stopLoading} = useContext(LoadingContext);

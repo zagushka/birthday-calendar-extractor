@@ -1,30 +1,4 @@
 {
-  "FACEBOOK_REQUIRED_REGEXP": {
-    "message": "^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com",
-    "description": "Allowed Facebook urls regexp to validate url"
-  },
-  "NOT_SUPPORTED_LANGUAGE_TITLE": {
-    "message": "Facebook language is not supported.",
-    "description": "Title for modal in case facebook language is not supported"
-  },
-  "NOT_SUPPORTED_LANGUAGE": {
-    "message": "Your facebook language is not supported.<br /> Please change it to:<br /> $languages$ <br /> And click the icon again.",
-    "description": "Description in case facebook language is not supported",
-    "placeholders": {
-      "languages": {
-        "content": "$1",
-        "example": "<span>English (US)</span> <span>English (UK)</span>"
-      }
-    }
-  },
-  "CHANGE_FACEBOOK_LANGUAGE_LINK": {
-    "message": "https://www.facebook.com/settings?tab=language",
-    "description": "Facebook settings page with language set."
-  },
-  "CHANGE_FACEBOOK_LANGUAGE_LINK_TITLE": {
-    "message": "To facebook settings page.",
-    "description": "Button to facebook settings page title."
-  },
   "DONE_DESCRIPTION": {
     "message": "Your calendar is ready for import.<br>Please leave a feedback if you found it helpful :o)",
     "description": "Description when extraction process successfully finished"
@@ -33,89 +7,9 @@
     "message": "Success!",
     "description": "Title when extraction process successfully finished"
   },
-  "LEAVE_FEEDBACK_LINK": {
-    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
-    "description": "Link to extension store"
-  },
-  "LEAVE_FEEDBACK_TITLE": {
-    "message": "Leave a feedback",
-    "description": "Share button"
-  },
-  "BUY_ME_COFFEE_LINK": {
-    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
-    "description": "Link to donate page"
-  },
-  "BUY_ME_COFFEE_TITLE": {
-    "message": "Buy me a coffee",
-    "description": "Donate button"
-  },
-  "ACTIVATE_BADGE_DESCRIPTION": {
-    "message": "Activate Descriptions",
-    "description": "Activate badge description"
-  },
-  "ACTIVATE_BADGE_BUTTON_TITLE": {
-    "message": "Activate",
-    "description": "Activate badge button title"
-  },
-  "DEACTIVATE_BADGE_DESCRIPTION": {
-    "message": "DeActivate Descriptions",
-    "description": "Deactivate badge description"
-  },
-  "DEACTIVATE_BADGE_BUTTON_TITLE": {
-    "message": "Deactivate",
-    "description": "Deactivate badge button title"
-  },
   "ERROR_HEADER": {
     "message": "Warning!",
     "description": "Error header"
-  },
-  "USER_SETTINGS": {
-    "message": "I Want to",
-    "description": "Header for extraction format selection"
-  },
-  "SELECT_FILE_FORMAT_ICS": {
-    "message": "Export birthdays as ICS file.",
-    "description": "Label for ics file type radio button"
-  },
-  "SELECT_ICS_DESCRIPTION": {
-    "message": "ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.",
-    "description": "Description for ics file type radio button"
-  },
-  "CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY": {
-    "message": "One event per day",
-    "description": "Label for `create or delete ics` settings - single event per day"
-  },
-  "CREATE_ICS_SETTINGS_ALL_DAY_EVENTS": {
-    "message": "All day events",
-    "description": "Label for `create or delete ics` settings - all day events"
-  },
-  "SELECT_FILE_FORMAT_CSV": {
-    "message": "Export birthdays as CSV file.",
-    "description": "Label for csv file type radio button"
-  },
-  "FILE_FORMAT_CSV_DESCRIPTION": {
-    "message": "CSV file format used by Microsoft Excel or Google Sheets. DO NOT USE it to import birthdays to a calendar, ICS format is preferable.",
-    "description": "Description for label for csv file type radio button"
-  },
-  "CREATE_CSV_SETTINGS_DATE_FORMAT": {
-    "message": "Date format",
-    "description": "Label for csv settings `date format` label."
-  },
-  "CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH": {
-    "message": "Day/Month",
-    "description": "Label for csv settings `date format` Day/Month label."
-  },
-  "CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY": {
-    "message": "Month/Day",
-    "description": "Label for csv settings `date format` Month/Day label."
-  },
-  "SELECT_FILE_FORMAT_DELETE_ICS": {
-    "message": "Delete imported ICS from Google Calendar.",
-    "description": "Label for delete-ics file type radio button"
-  },
-  "SELECT_DELETE_ICS_DESCRIPTION": {
-    "message": "Special ICS file used to remove previously imported events from Google Calendar. Import it to the calendar same way as original ICS import.",
-    "description": "Description for delete-ics file type radio button"
   },
   "ENABLE_BADGE": {
     "message": "See birthday notification icon.",
@@ -132,63 +26,5 @@
   "GENERATE": {
     "message": "Proceed",
     "description": "Label 'generate' button"
-  },
-  "SCAN_LOG_PROCESS_STARTED": {
-    "message": "Birthday scan has been initiated.",
-    "description": "Message send the moment scan process has been initiated."
-  },
-  "SCAN_LOG_PROCESS_DONE": {
-    "message": "Birthday scan is finished.",
-    "description": "Message send after extraction process is done."
-  },
-  "SCAN_LOG_CHECK_LOGIN": {
-    "message": "Checking for Facebook login and language.",
-    "description": "Message send before checking facebook login and language."
-  },
-  "SCAN_LOG_CHECK_LOGIN_ERROR_LOGIN": {
-    "message": "No Facebook login detected.",
-    "description": "Error message send when user is not logged in to Facebook."
-  },
-  "SCAN_LOG_CHECK_LOGIN_ERROR_LANGUAGE": {
-    "message": "Not supported Facebook language detected.",
-    "description": "Error message send not supported facebook login detected."
-  },
-  "SCAN_LOG_CHECK_SUCCESS": {
-    "message": "Facebook login and language are fine.",
-    "description": "Message when facebook login and language are fine."
-  },
-  "SCAN_LOG_REQUEST_FACEBOOK_ERROR": {
-    "message": "Facebook blocked request with message '$message$'.",
-    "description": "Error when failed to fetch birthdays data while making request to Facebook.",
-    "placeholders": {
-      "message": {
-        "content": "$1"
-      }
-    }
-  },
-  "SCAN_LOG_PREPARING_REQUESTS": {
-    "message": "Preparing to make requests.",
-    "description": "Message that script preparing to execute requests to facebook."
-  },
-  "SCAN_LOG_REQUEST_WITH_NUMBER": {
-    "message": "Executed $index$ requests.",
-    "description": "Scan message with each request to facebook.",
-    "placeholders": {
-      "index": {
-        "content": "$1"
-      }
-    }
-  },
-  "SCAN_LOG_REQUESTS_DONE": {
-    "message": "All the requests to Facebook were successfully executed.",
-    "description": "Message send when all request to facebook been successfully executed."
-  },
-  "SCAN_LOG_EXTRACTING_BIRTHDAYS_DATA": {
-    "message": "Extracting birthdays from fetched data.",
-    "description": "Message send before extraction of the birthdays process started."
-  },
-  "SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS": {
-    "message": "Storing extracted data for further usage.",
-    "description": "Message send before storing extracted birthdays to local storage."
   }
 }

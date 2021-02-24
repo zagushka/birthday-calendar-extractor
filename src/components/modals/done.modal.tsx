@@ -1,37 +1,17 @@
 import {
-  Button,
-  createStyles,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  makeStyles,
-  Theme,
 } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
 import React, { FunctionComponent } from 'react';
-import handleLink from '../../filters/handleLink';
 import { translate } from '../../filters/translate';
-import { translateString } from '../../filters/translateString';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  success: {
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700],
-    },
-  },
-}));
+import LeaveFeedbackButton from '../leave-feedback.button/leave-feedback.button';
 
 const handleClose = () => storeUserSettings({modal: null}, true);
-const handleClick = (href: string) => (e: React.MouseEvent) => {
-  handleLink(e, href, {close: true, active: true});
-  handleClose();
-};
-const DoneModal: FunctionComponent = (props) => {
 
-  const classes = useStyles();
+const DoneModal: FunctionComponent = (props) => {
 
   // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
   return (
@@ -46,14 +26,7 @@ const DoneModal: FunctionComponent = (props) => {
       </DialogContent>
 
       <DialogActions>
-        <Button size='small'
-                color='primary'
-                variant='contained'
-                className={classes.success}
-                onClick={handleClick(translateString('LEAVE_FEEDBACK_LINK'))}
-        >
-          {translateString('LEAVE_FEEDBACK_TITLE')}
-        </Button>
+        <LeaveFeedbackButton onClick={handleClose}/>
       </DialogActions>
 
     </Dialog>
