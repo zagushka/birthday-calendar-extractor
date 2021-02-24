@@ -86,6 +86,7 @@ listenTo(BIRTHDAYS_START_SCAN)
       .subscribe({
         next: () => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
+          sendMessage(updateBadgeAction(), true);
           storeUserSettings({scanning: false, scanSuccess: true}, true);
         },
         error: (error: ScanErrorPayload) => {
