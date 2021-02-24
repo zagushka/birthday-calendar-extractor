@@ -1,0 +1,14 @@
+{
+  "SCAN_ERROR_NO_TOKEN_DETECTED": {
+    "message": "Не удалось получить данные о днях рождения, удостоверьтесь что вы зашли в Facebook и попробуйте снова.",
+    "description": "Description for error when no token found."
+  },
+  "LOG_INTO_FACEBOOK_TITLE": {
+    "message": "Войти в Facebook",
+    "description": "Facebook url."
+  },
+  "LOG_INTO_FACEBOOK_URL": {
+    "message": "https://www.facebook.com/",
+    "description": "Facebook login page."
+  }
+}

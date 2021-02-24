@@ -18,7 +18,7 @@ import {
 } from '../../libs/events/executed-script.types';
 import DefaultErrorModal from './default-error.modal';
 import FacebookRequiredModal from './facebook-required/facebook-required';
-import NoTokenDetectedModal from './no-token-detected.modal';
+import NoTokenDetectedModal from './no-token-detected/no-token-detected';
 
 const SwitchModals: FunctionComponent = (props) => {
 

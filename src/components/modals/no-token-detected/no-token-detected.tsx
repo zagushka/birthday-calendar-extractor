@@ -6,10 +6,10 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import handleLink from '../../filters/handleLink';
-import { translate } from '../../filters/translate';
-import { translateString } from '../../filters/translateString';
-import { storeUserSettings } from '../../libs/storage/chrome.storage';
+import handleLink from '../../../filters/handleLink';
+import { translate } from '../../../filters/translate';
+import { translateString } from '../../../filters/translateString';
+import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 
 const handleClose = () => storeUserSettings({modal: null}, true);
 const handleClick = (href: string) => (e: React.MouseEvent) => {

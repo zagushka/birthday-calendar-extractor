@@ -1,12 +1,4 @@
 {
-  "LOG_INTO_FACEBOOK_TITLE": {
-    "message": "Log into Facebook",
-    "description": "Facebook url."
-  },
-  "LOG_INTO_FACEBOOK_URL": {
-    "message": "https://www.facebook.com/",
-    "description": "Facebook login page."
-  },
   "FACEBOOK_REQUIRED_REGEXP": {
     "message": "^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com",
     "description": "Allowed Facebook urls regexp to validate url"
@@ -72,10 +64,6 @@
   "DEACTIVATE_BADGE_BUTTON_TITLE": {
     "message": "Deactivate",
     "description": "Deactivate badge button title"
-  },
-  "SCAN_ERROR_NO_TOKEN_DETECTED": {
-    "message": "Unable to fetch birthdays data, make sure you are logged into Facebook and try again.",
-    "description": "Description for error when no token found."
   },
   "ERROR_HEADER": {
     "message": "Warning!",

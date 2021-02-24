@@ -1,12 +1,4 @@
 {
-  "LOG_INTO_FACEBOOK_TITLE": {
-    "message": "Войти в Facebook",
-    "description": "Facebook url."
-  },
-  "LOG_INTO_FACEBOOK_URL": {
-    "message": "https://www.facebook.com/",
-    "description": "Facebook login page."
-  },
   "NOT_SUPPORTED_LANGUAGE_TITLE": {
     "message": "Язык Facebook не поддерживается.",
     "description": "Title for modal in case facebook language is not supported"
@@ -44,10 +36,6 @@
   "LEAVE_FEEDBACK_TITLE": {
     "message": "Оставить отзыв",
     "description": "Share button"
-  },
-  "SCAN_ERROR_NO_TOKEN_DETECTED": {
-    "message": "Не удалось получить данные о днях рождения, удостоверьтесь что вы зашли в Facebook и попробуйте снова.",
-    "description": "Description for error when no token found."
   },
   "ERROR_HEADER": {
     "message": "Внимание!",
