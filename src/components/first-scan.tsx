@@ -33,6 +33,8 @@ import {
   sendMessage,
 } from '../libs/events/events';
 import { SEND_SCAN_LOG } from '../libs/events/types';
+import { getFacebookTab } from '../libs/birthdays-scan';
+import { storeUserSettings } from '../libs/storage/chrome.storage';
 import Layout from './layout/layout';
 
 const startScanHandler = () => {
@@ -104,6 +106,12 @@ export const FirstScan: FunctionComponent = () => {
         }
       });
 
+    // Check this is a facebook page and display modal error
+    getFacebookTab()
+      .subscribe({
+        error: error => storeUserSettings({modal: error}, true),
+      });
+
     // Stop listening to scan logs
     return () => {
       onDestroy$.next(true);
@@ -112,7 +120,7 @@ export const FirstScan: FunctionComponent = () => {
   }, []);
 
   const activeButtons = {birthdays: !isActive, export: !isActive || isScanning};
-  const activeTooltips = {export: isActive && success};
+  const activeTooltips = {export: isActive && success && isScanSucceed};
 
   return (
     <Layout.Wrapper>
