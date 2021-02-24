@@ -7,7 +7,7 @@
     "message": "Импортируйте дни рождения друзей из Facebook в любой календарь.",
     "description": "The description of the application, displayed in the web store."
   },
-  "FACEBOOK_REQUIRED": {
+  "SCAN_ERROR_FACEBOOK_REQUIRED": {
     "message": "Вам нужно быть на сайте facebook.<p>Нажмите на линк ниже для перехода и попробуйте снова.",
     "description": "Description in case user is not on a facebook page"
   },
@@ -19,11 +19,11 @@
     "message": "https://www.facebook.com/",
     "description": "Facebook login page."
   },
-  "FACEBOOK_REQUIRED_LINK": {
+  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK": {
     "message": "https://www.facebook.com/",
     "description": "Facebook url."
   },
-  "FACEBOOK_REQUIRED_LINK_TITLE": {
+  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE": {
     "message": "На сайт facebook",
     "description": "Button to facebook title."
   },
@@ -65,7 +65,7 @@
     "message": "Оставить отзыв",
     "description": "Share button"
   },
-  "NO_TOKEN_DETECTED": {
+  "SCAN_ERROR_NO_TOKEN_DETECTED": {
     "message": "Не удалось получить данные о днях рождения, удостоверьтесь что вы зашли в Facebook и попробуйте снова.",
     "description": "Description for error when no token found."
   },

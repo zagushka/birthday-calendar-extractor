@@ -7,10 +7,6 @@
     "message": "Import friends birthdays from facebook to your favorite calendar.",
     "description": "The description of the application, displayed in the web store."
   },
-  "FACEBOOK_REQUIRED": {
-    "message": "You need to be on a facebook page in order to generate calendar.<p>Please follow the link below and click the icon again.",
-    "description": "Description in case user is not on a facebook page"
-  },
   "LOG_INTO_FACEBOOK_TITLE": {
     "message": "Log into Facebook",
     "description": "Facebook url."
@@ -19,15 +15,19 @@
     "message": "https://www.facebook.com/",
     "description": "Facebook login page."
   },
-  "FACEBOOK_REQUIRED_LINK": {
-    "message": "https://www.facebook.com/",
-    "description": "Facebook url."
-  },
   "FACEBOOK_REQUIRED_REGEXP": {
     "message": "^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com",
     "description": "Allowed Facebook urls regexp to validate url"
   },
-  "FACEBOOK_REQUIRED_LINK_TITLE": {
+  "SCAN_ERROR_FACEBOOK_REQUIRED": {
+    "message": "You need to be on a facebook page in order to generate calendar.<p>Please follow the link below and click the icon again.",
+    "description": "Description in case user is not on a facebook page"
+  },
+  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK": {
+    "message": "https://www.facebook.com/",
+    "description": "Facebook url."
+  },
+  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE": {
     "message": "To facebook",
     "description": "Button to Facebook title."
   },
@@ -62,7 +62,7 @@
     "description": "Title when extraction process successfully finished"
   },
   "LEAVE_FEEDBACK_LINK": {
-    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo",
+    "message": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
     "description": "Link to extension store"
   },
   "LEAVE_FEEDBACK_TITLE": {
@@ -93,7 +93,7 @@
     "message": "Deactivate",
     "description": "Deactivate badge button title"
   },
-  "NO_TOKEN_DETECTED": {
+  "SCAN_ERROR_NO_TOKEN_DETECTED": {
     "message": "Unable to fetch birthdays data, make sure you are logged into Facebook and try again.",
     "description": "Description for error when no token found."
   },
