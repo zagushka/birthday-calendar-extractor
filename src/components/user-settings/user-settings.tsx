@@ -16,7 +16,7 @@ import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
   const {isLoading} = useContext(LoadingContext);
-  const {isActive, error} = useContext(TodayUsersContext);
+  const {isActive} = useContext(TodayUsersContext);
   const loaded = !isLoading('SETTINGS');
 
   return (
