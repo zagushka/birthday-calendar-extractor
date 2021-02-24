@@ -5,8 +5,11 @@ import {
 } from 'rxjs/operators';
 import { updateBadge } from './libs/badge';
 import {
+  forceBirthdaysScan,
+  sendScanLog,
+} from './libs/birthdays-scan';
+import {
   sendError,
-  SendScanLog,
   updateBadgeAction,
 } from './libs/events/actions';
 import { setupAlarms } from './libs/events/alarms';
@@ -14,6 +17,7 @@ import {
   listenTo,
   sendMessage,
 } from './libs/events/events';
+import { ScanErrorPayload } from './libs/events/executed-script.types';
 import {
   ALARM_NEW_DAY,
   BADGE_CLICKED,
@@ -29,20 +33,17 @@ import { CalendarCSV } from './libs/formats/csv';
 import { CalendarDeleteICS } from './libs/formats/delete-ics';
 import { CalendarICS } from './libs/formats/ics';
 import { CalendarJSON } from './libs/formats/json';
-import {
-  forceBirthdaysScan,
-  getBirthdaysList,
-  sendScanLog,
-} from './libs/lib';
-import {
-  storeLastBadgeClicked,
-  storeUserSettings,
-} from './libs/storage/chrome.storage';
+import { getBirthdaysList } from './libs/lib';
+import { storeUserSettings } from './libs/storage/chrome.storage';
 
 // On Badge Click update last time badge clicked
 listenTo(BADGE_CLICKED)
   .subscribe(() => {
-    storeLastBadgeClicked()
+    /**
+     * Since this event only fired when clicked on the badge, we I need to remove dialog message left
+     * and mark badge as visited/clicked
+     */
+    storeUserSettings({modal: null, badgeVisited: DateTime.local()})
       .subscribe(() => {
         sendMessage(updateBadgeAction(), true);
       });
@@ -78,19 +79,18 @@ listenTo(BIRTHDAYS_START_SCAN)
     // Update local storage, set scanning true
     storeUserSettings({scanning: true})
       .pipe(
-        // Force scan
-        switchMap(() => forceBirthdaysScan()),
+        // Start scan
+        switchMap(forceBirthdaysScan),
       )
-      .subscribe(
-        birthdays => {
+      .subscribe({
+        next: () => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
           storeUserSettings({scanning: false, scanSuccess: true}, true);
         },
-        error => {
-          sendMessage(SendScanLog(error), true);
-          storeUserSettings({scanning: false, scanSuccess: false}, true);
+        error: (error: ScanErrorPayload) => {
+          storeUserSettings({scanning: false, scanSuccess: false, modal: error}, true);
         },
-      );
+      });
   });
 
 listenTo(
