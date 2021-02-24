@@ -12,6 +12,7 @@ import { LoadingContext } from '../../context/loading.context';
 import { TodayUsersContext } from '../../context/today-users.context';
 import BirthdaysList from '../birthdays-list/birthdays-list';
 import { FirstScan } from '../first-scan';
+import SwitchModals from '../modals/switch-modals';
 import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
@@ -21,11 +22,9 @@ const UserSettings: FunctionComponent = () => {
 
   return (
     <>
+      <SwitchModals/>
       {loaded &&
       <Switch>
-        <Route path='/error'>
-          {!error ? <Redirect to={'/'}/> : ''}
-        </Route>
         <Route path='/activate'>
           <FirstScan/>
         </Route>
@@ -43,6 +42,5 @@ const UserSettings: FunctionComponent = () => {
     </>
   );
 };
-;
 
 export default UserSettings;

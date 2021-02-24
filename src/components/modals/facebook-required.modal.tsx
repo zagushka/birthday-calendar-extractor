@@ -17,7 +17,7 @@ const handleClick = (href: string) => (e: React.MouseEvent) => {
   handleClose();
 };
 
-const NoTokenDetectedModal: FunctionComponent = (props) => {
+const FacebookRequiredModal: FunctionComponent = (props) => {
   return (
     <Dialog
       open={true}
@@ -25,19 +25,19 @@ const NoTokenDetectedModal: FunctionComponent = (props) => {
     >
       <DialogTitle>{translate('ERROR_HEADER')}</DialogTitle>
       <DialogContent>
-        {translate('SCAN_ERROR_NO_TOKEN_DETECTED')}
+        {translate('SCAN_ERROR_FACEBOOK_REQUIRED')}
       </DialogContent>
       <DialogActions>
         <Button size='small'
                 color='primary'
                 variant='contained'
-                onClick={handleClick(translateString('LOG_INTO_FACEBOOK_URL'))}
+                onClick={handleClick(translateString('SCAN_ERROR_FACEBOOK_REQUIRED_LINK'))}
         >
-          {translate('LOG_INTO_FACEBOOK_TITLE')}
+          {translate('SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE')}
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default NoTokenDetectedModal;
+export default FacebookRequiredModal;

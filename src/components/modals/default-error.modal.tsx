@@ -6,38 +6,37 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import handleLink from '../../filters/handleLink';
 import { translate } from '../../filters/translate';
-import { translateString } from '../../filters/translateString';
+import { ScanErrorPayload } from '../../libs/events/executed-script.types';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 
 const handleClose = () => storeUserSettings({modal: null}, true);
-const handleClick = (href: string) => (e: React.MouseEvent) => {
-  handleLink(e, href, {close: true, active: true});
-  handleClose();
-};
 
-const NoTokenDetectedModal: FunctionComponent = (props) => {
+const DefaultErrorModal: FunctionComponent<{ data: ScanErrorPayload }> = ({data}) => {
+
   return (
     <Dialog
       open={true}
       onClose={handleClose}
     >
       <DialogTitle>{translate('ERROR_HEADER')}</DialogTitle>
+
       <DialogContent>
-        {translate('SCAN_ERROR_NO_TOKEN_DETECTED')}
+        <p>{translate('GENERAL_ERROR')}</p>
+        <p>{translate(data.type, data.error)}</p>
       </DialogContent>
       <DialogActions>
         <Button size='small'
                 color='primary'
                 variant='contained'
-                onClick={handleClick(translateString('LOG_INTO_FACEBOOK_URL'))}
+                onClick={handleClose}
         >
-          {translate('LOG_INTO_FACEBOOK_TITLE')}
+          {translate('CLOSE')}
         </Button>
       </DialogActions>
+
     </Dialog>
   );
 };
 
-export default NoTokenDetectedModal;
+export default DefaultErrorModal;

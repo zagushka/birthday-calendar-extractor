@@ -1,46 +1,61 @@
 import {
   Button,
+  createStyles,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  makeStyles,
+  Theme,
 } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 import React, { FunctionComponent } from 'react';
+import handleLink from '../../filters/handleLink';
 import { translate } from '../../filters/translate';
+import { translateString } from '../../filters/translateString';
+import { storeUserSettings } from '../../libs/storage/chrome.storage';
 
-interface DoneModalProps {
-  onHide: () => void;
-  open?: boolean;
-}
+const useStyles = makeStyles((theme: Theme) => ({
+  success: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+}));
 
-const DoneModal: FunctionComponent<DoneModalProps> = (props) => {
-  const {onHide, open = true} = props;
+const handleClose = () => storeUserSettings({modal: null}, true);
+const handleClick = (href: string) => (e: React.MouseEvent) => {
+  handleLink(e, href, {close: true, active: true});
+  handleClose();
+};
+const DoneModal: FunctionComponent = (props) => {
 
-  const handleClose = () => {
-    onHide();
-  };
+  const classes = useStyles();
 
   // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
   return (
     <Dialog
-      open={open}
+      open={true}
       onClose={handleClose}
     >
       <DialogTitle id='DONE'> {translate('DONE_TITLE')}</DialogTitle>
+
       <DialogContent>
-        <DialogContentText id='alert-dialog-description'>
-          {translate('DONE_DESCRIPTION')}
-        </DialogContentText>
+        {translate('DONE_DESCRIPTION')}
       </DialogContent>
+
       <DialogActions>
-        <Button onClick={handleClose} color='primary'>
-          {translate('LEAVE_FEEDBACK_TITLE')}
-        </Button>
-        <Button onClick={handleClose} color='primary' autoFocus>
-          {translate('CLOSE')}
+        <Button size='small'
+                color='primary'
+                variant='contained'
+                className={classes.success}
+                onClick={handleClick(translateString('LEAVE_FEEDBACK_LINK'))}
+        >
+          {translateString('LEAVE_FEEDBACK_TITLE')}
         </Button>
       </DialogActions>
+
     </Dialog>
   );
 };
