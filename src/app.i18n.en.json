@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Birthday Calendar Exporter for Facebook",
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appDesc": {
+    "message": "Import friends birthdays from facebook to your favorite calendar.",
+    "description": "The description of the application, displayed in the web store."
+  }
+}

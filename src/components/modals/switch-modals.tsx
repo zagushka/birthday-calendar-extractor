@@ -17,7 +17,7 @@ import {
   SCAN_ERROR_TIMEOUT,
 } from '../../libs/events/executed-script.types';
 import DefaultErrorModal from './default-error.modal';
-import FacebookRequiredModal from './facebook-required.modal';
+import FacebookRequiredModal from './facebook-required/facebook-required';
 import NoTokenDetectedModal from './no-token-detected.modal';
 
 const SwitchModals: FunctionComponent = (props) => {

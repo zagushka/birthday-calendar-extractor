@@ -1,12 +1,4 @@
 {
-  "appName": {
-    "message": "Birthday Calendar Exporter for Facebook",
-    "description": "The title of the application, displayed in the web store."
-  },
-  "appDesc": {
-    "message": "Import friends birthdays from facebook to your favorite calendar.",
-    "description": "The description of the application, displayed in the web store."
-  },
   "LOG_INTO_FACEBOOK_TITLE": {
     "message": "Log into Facebook",
     "description": "Facebook url."
@@ -18,18 +10,6 @@
   "FACEBOOK_REQUIRED_REGEXP": {
     "message": "^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com",
     "description": "Allowed Facebook urls regexp to validate url"
-  },
-  "SCAN_ERROR_FACEBOOK_REQUIRED": {
-    "message": "You need to be on a facebook page in order to generate calendar.<p>Please follow the link below and click the icon again.",
-    "description": "Description in case user is not on a facebook page"
-  },
-  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK": {
-    "message": "https://www.facebook.com/",
-    "description": "Facebook url."
-  },
-  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE": {
-    "message": "To facebook",
-    "description": "Button to Facebook title."
   },
   "NOT_SUPPORTED_LANGUAGE_TITLE": {
     "message": "Facebook language is not supported.",
@@ -169,6 +149,10 @@
     "message": "Birthday scan has been initiated.",
     "description": "Message send the moment scan process has been initiated."
   },
+  "SCAN_LOG_PROCESS_DONE": {
+    "message": "Birthday scan is finished.",
+    "description": "Message send after extraction process is done."
+  },
   "SCAN_LOG_CHECK_LOGIN": {
     "message": "Checking for Facebook login and language.",
     "description": "Message send before checking facebook login and language."
@@ -218,9 +202,5 @@
   "SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS": {
     "message": "Storing extracted data for further usage.",
     "description": "Message send before storing extracted birthdays to local storage."
-  },
-  "SCAN_LOG_PROCESS_DONE": {
-    "message": "Birthday scan is finished.",
-    "description": "Message send after extraction process is done."
   }
 }
