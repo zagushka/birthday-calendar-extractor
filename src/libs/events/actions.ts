@@ -19,12 +19,7 @@ import {
   CreateCalendarActionTypes,
   DISABLE_BADGE_NOTIFICATION,
   ENABLE_BADGE_NOTIFICATION,
-  EXECUTED_SCRIPT_CONTEXT_RESPONSE,
-  EXECUTED_SCRIPT_CONTEXT_ERROR,
-  ExecutedScriptContextResponseAction,
-  ExecutedScriptUserContextErrorAction,
   NotificationActionTypes,
-  RawScannedUser,
   SEND_ERROR,
   SEND_GENERATION_STATUS,
   SEND_SCAN_LOG,
@@ -119,26 +114,6 @@ export function SendScanLog(messageName: string, substitutions?: Array<string>):
   return {
     type: SEND_SCAN_LOG,
     payload: {messageName, substitutions},
-  };
-}
-
-export function ExecutedScriptContextResponse(responseId: string, users: Array<RawScannedUser>): ExecutedScriptContextResponseAction {
-  return {
-    type: EXECUTED_SCRIPT_CONTEXT_RESPONSE,
-    payload: {
-      responseId,
-      users,
-    },
-  };
-}
-
-export function ExecutedScriptUserContextError(responseId: string, error: string): ExecutedScriptUserContextErrorAction {
-  return {
-    type: EXECUTED_SCRIPT_CONTEXT_ERROR,
-    payload: {
-      responseId,
-      error,
-    },
   };
 }
 

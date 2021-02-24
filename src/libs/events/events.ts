@@ -20,6 +20,8 @@ allChromeMessages$.subscribe(e => allActions$.next(e));
 /**
  * Listen to allMessages$ filtered by actionName
  */
+export function listenTo<U extends ActionTypes, T = Message<U>>(...types: ActionTypes['type'][]): Observable<T>;
+
 export function listenTo(...types: ActionTypes['type'][]) {
   return allActions$
     .pipe(

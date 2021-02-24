@@ -3,6 +3,7 @@ import {
   CsvSettings,
   IcsSettings,
 } from '../../context/settings.context';
+import { ExecutedScriptTypes } from './executed-script.types';
 
 export const SEND_ERROR = 'SEND_ERROR'; // Send error message
 export const SEND_GENERATION_STATUS = 'SEND_GENERATION_STATUS'; // Send result of generation process
@@ -19,9 +20,6 @@ export const CREATE_CALENDAR_JSON = 'CREATE_CALENDAR_JSON';
 
 export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_SCAN';
 export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_SCAN_COMPLETE';
-
-export const EXECUTED_SCRIPT_CONTEXT_RESPONSE = 'EXECUTED_SCRIPT_CONTEXT_RESPONSE';
-export const EXECUTED_SCRIPT_CONTEXT_ERROR = 'EXECUTED_SCRIPT_CONTEXT_ERROR';
 
 export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 
@@ -114,34 +112,6 @@ export interface SendScanLogAction {
   };
 }
 
-export interface RawScannedUser {
-  birthdate: {
-    day: number;
-    month: number;
-    year: number;
-  };
-  name: string;
-  id: string;
-}
-
-export interface ExecutedScriptContextResponseAction {
-  type: typeof EXECUTED_SCRIPT_CONTEXT_RESPONSE;
-  payload: {
-    responseId: string;
-    users: Array<RawScannedUser>;
-  }
-}
-
-export interface ExecutedScriptUserContextErrorAction {
-  type: typeof EXECUTED_SCRIPT_CONTEXT_ERROR;
-  payload: {
-    responseId: string;
-    error: string;
-  }
-}
-
-type ExecutedScriptTypes = ExecutedScriptContextResponseAction | ExecutedScriptUserContextErrorAction;
-
 export type ActionTypes =
   NotificationActionTypes
   | BadgeNotificationActionTypes
@@ -151,11 +121,3 @@ export type ActionTypes =
   | SendScanLogAction
   | ExecutedScriptTypes
   ;
-
-export type ApplicationStatus =
-  'FACEBOOK_REQUIRED'
-  | 'NOT_SUPPORTED_LANGUAGE'
-  | 'DONE'
-  | 'USER_SETTINGS'
-  | 'NO_TOKEN_DETECTED';
-
