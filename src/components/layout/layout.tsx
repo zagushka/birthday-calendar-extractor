@@ -43,7 +43,6 @@ const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
     const [open, setOpen] = useState<boolean>(defaultOpen);
 
     useEffect(() => {
-      console.log(defaultOpen, 'CHANGED');
       setOpen(defaultOpen);
     }, [defaultOpen]);
 

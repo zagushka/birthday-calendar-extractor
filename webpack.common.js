@@ -63,7 +63,6 @@ module.exports = {
   },
   plugins: [
     new MergeJsonWebpackPlugin({
-      debug: true,
       output: {
         groupBy: [
           {
