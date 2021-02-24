@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {version} = require('./package.json');
 const ejs = require('ejs');
+const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -61,6 +62,24 @@ module.exports = {
     ]
   },
   plugins: [
+    new MergeJsonWebpackPlugin({
+      debug: true,
+      output: {
+        groupBy: [
+          {
+            pattern: "**/*.i18n.en.json",
+            fileName: "./_locales/en/messages.json"
+          },
+          {
+            pattern: "**/*.i18n.ru.json",
+            fileName: "./_locales/ru/messages.json"
+          },
+        ]
+      },
+      globOptions: {
+        nosort: true
+      }
+    }),
     new webpack.DefinePlugin({
       global: 'window',
     }),
