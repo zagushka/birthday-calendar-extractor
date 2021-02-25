@@ -6,7 +6,7 @@ import {
 
 export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   const responseId = Math.random().toString();
-  sendScanLog('LOOKING_FOR_FACEBOOK_TOKEN');
+  sendScanLog('SCAN_LOG_EXTRACT_TOKEN');
   /**
    * Make request to facebook.com in order to receive html with vital information such as
    * token
@@ -85,19 +85,22 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   async function getFacebookPage(): Promise<string> {
     let response: Response;
     try {
+      sendScanLog('SCAN_LOG_PAGE_REQUEST');
       /**
        * Make request to facebook.com in order to receive html with vital information such as
        * token
        */
       response = await fetch('https://www.facebook.com', {headers: {accept: 'text/html'}});
     } catch (error) {
+      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR');
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_REQUEST', error});
     }
 
     try {
-      sendScanLog('EXTRACTING_FACEBOOK_TOKEN');
+      sendScanLog('SCAN_LOG_PAGE_CONTENT');
       return await response.text();
     } catch (error) {
+      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR');
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_CONTENT', error});
     }
   }
@@ -114,7 +117,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
        * Make request to facebook.com in order to receive html with vital information such as
        * token
        */
-      sendScanLog('FETCHING_FRIENDS_BIRTHDAYS');
+      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST');
       response = await fetch('https://www.facebook.com/api/graphql/', {
         'headers': {
           'content-type': 'application/x-www-form-urlencoded',
@@ -129,13 +132,15 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         'method': 'POST',
       });
     } catch (error) {
+      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR');
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error});
     }
 
     try {
-      sendScanLog('EXTRACTING_FACEBOOK_BIRTHDAYS');
+      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT');
       return await response.json();
     } catch (error) {
+      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR');
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error});
     }
   }
@@ -149,10 +154,9 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
     const token = extractTokenFromPage(page);
     // No token found, report an error, quit
     if ('string' !== typeof token) {
-      sendScanLog('SCAN_LOG_CHECK_LOGIN_ERROR_LOGIN');
+      sendScanLog('SCAN_LOG_EXTRACT_TOKEN_ERROR');
       return Promise.reject({messageName: 'SCAN_ERROR_NO_TOKEN_DETECTED'});
     }
-    sendScanLog('SCAN_LOG_FACEBOOK_TOKEN_FOUND');
     return token;
   }
 
@@ -162,7 +166,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
    * @param response - previously fetched json with user birthday data
    */
   async function extractBirthdays(response: any) {
-    sendScanLog('EXTRACTING_FACEBOOK_BIRTHDAYS');
+    sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS');
     try {
       return response.data.viewer.all_friends_by_birthday_month.edges
         .map(({node}: any) => node.friends.edges)
@@ -173,7 +177,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
           id: node.id,
         }));
     } catch (error) {
-      sendScanLog('FAILED_BIRTHDAYS_EXTRACT', [error]);
+      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error]);
       return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error});
     }
   }

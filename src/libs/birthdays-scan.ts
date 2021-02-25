@@ -10,7 +10,6 @@ import {
   timeout,
 } from 'rxjs/operators';
 import { FACEBOOK_REQUIRED_REGEXP } from '../constants';
-import { fetchUserFriendsBirthdayInfoFromContext } from './executed-script-scan';
 import { SendScanLog } from './events/actions';
 import {
   listenTo,
@@ -24,6 +23,7 @@ import {
   SCAN_ERROR_TIMEOUT,
   SCAN_SUCCESS,
 } from './events/executed-script.types';
+import { fetchUserFriendsBirthdayInfoFromContext } from './executed-script-scan';
 import {
   RestoredBirthday,
   retrieveUserSettings,
