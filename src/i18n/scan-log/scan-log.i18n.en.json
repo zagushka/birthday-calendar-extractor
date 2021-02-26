@@ -12,11 +12,11 @@
     "description": "Error message send when user is not logged in to Facebook."
   },
   "SCAN_LOG_PAGE_REQUEST": {
-    "message": "",
+    "message": "Requesting Facebook page.",
     "description": "Make request to facebook.com"
   },
   "SCAN_LOG_PAGE_REQUEST_ERROR": {
-    "message": "???????????? '$message$'.",
+    "message": "Failed to request Facebook page.",
     "description": "Error making request to facebook.com",
     "placeholders": {
       "message": {
@@ -25,11 +25,11 @@
     }
   },
   "SCAN_LOG_PAGE_CONTENT": {
-    "message": "",
+    "message": "Getting Facebook page content.",
     "description": "Getting content of the facebook.com page"
   },
   "SCAN_LOG_PAGE_CONTENT_ERROR": {
-    "message": "???????????? '$message$'.",
+    "message": "Failed to get Facebook page content.",
     "description": "Error getting content of the facebook.com page.",
     "placeholders": {
       "message": {
@@ -38,11 +38,11 @@
     }
   },
   "SCAN_LOG_BIRTHDAYS_REQUEST": {
-    "message": "",
+    "message": "Requesting Facebook friends birthdays data.",
     "description": "Making request to facebook birthdays endpoint."
   },
   "SCAN_LOG_BIRTHDAYS_REQUEST_ERROR": {
-    "message": "???????????? '$message$'.",
+    "message": "Failed to request Facebook friends birthday data.",
     "description": "Failed to make request to facebook birthdays endpoint.",
     "placeholders": {
       "message": {
@@ -51,11 +51,11 @@
     }
   },
   "SCAN_LOG_BIRTHDAYS_CONTENT": {
-    "message": "",
-    "description": "Making request to facebook birthdays endpoint."
+    "message": "Getting Facebook birthdays content.",
+    "description": "Getting facebook birthdays content."
   },
   "SCAN_LOG_BIRTHDAYS_CONTENT_ERROR": {
-    "message": "???????????? '$message$'.",
+    "message": "Failed to get Facebook birthdays content.",
     "description": "Failed to make request to facebook birthdays endpoint.",
     "placeholders": {
       "message": {
@@ -69,7 +69,12 @@
   },
   "SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR": {
     "message": "Failed to extract birthdays from fetched data.",
-    "description": "Error while extracting birthdays from fetched data."
+    "description": "Error while extracting birthdays from fetched data.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
   },
   "SCAN_LOG_MERGING_BIRTHDAYS": {
     "message": "Merging newly scanned birthday with already existing data.",
