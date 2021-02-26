@@ -11,6 +11,11 @@
     "message": "Warning!",
     "description": "Error header"
   },
+  "ATTENTION_HEADER": {
+    "message": "Attention!",
+    "description": "Attention header"
+  },
+
   "ENABLE_BADGE": {
     "message": "See birthday notification icon.",
     "description": "Label for checkbox to display today's birthdays."

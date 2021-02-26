@@ -23,7 +23,7 @@ const FacebookRequiredModal: FunctionComponent = (props) => {
       open={true}
       onClose={handleClose}
     >
-      <DialogTitle>{translate('ERROR_HEADER')}</DialogTitle>
+      <DialogTitle>{translate('ATTENTION_HEADER')}</DialogTitle>
       <DialogContent>
         {translate('SCAN_ERROR_FACEBOOK_REQUIRED')}
       </DialogContent>

@@ -1,6 +1,6 @@
 {
   "SCAN_ERROR_FACEBOOK_REQUIRED": {
-    "message": "You need to be on a facebook page in order to generate calendar.<p>Please follow the link below and click the icon again.",
+    "message": "You need to be on a facebook page in order to scan your friends birthdays.<p>Please follow the link below and start over.",
     "description": "Description in case user is not on a facebook page"
   },
   "SCAN_ERROR_FACEBOOK_REQUIRED_LINK": {
