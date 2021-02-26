@@ -1,0 +1,27 @@
+{
+  "SCAN_ERROR_BIRTHDAYS_EXTRACT": {
+    "message": "Script failed to scan birthdays. It happens sometime... Please try again later.",
+    "description": ""
+  },
+  "REPORT_A_BUG_DESCRIPTION": {
+    "message": "Also you can use the text below to open a bug, I'll do my best to fix it as soon as possible.",
+    "description": ""
+  },
+  "REPORT_A_BUG_DETAILS_TEXTAREA": {
+    "message": "Script failed to scan birthdays. Error message: $message$",
+    "description": "",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "REPORT_A_BUG_URL": {
+    "message": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+    "description": "Link to report a bug."
+  },
+  "REPORT_A_BUG_TITLE": {
+    "message": "Copy error and open а bug",
+    "description": "Report а bug button name"
+  }
+}

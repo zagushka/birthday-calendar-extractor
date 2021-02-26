@@ -8,14 +8,17 @@
     "description": "Title when extraction process successfully finished"
   },
   "ERROR_HEADER": {
-    "message": "Warning!",
+    "message": "Error...",
     "description": "Error header"
+  },
+  "WARNING_HEADER": {
+    "message": "Warning!",
+    "description": "Warning header"
   },
   "ATTENTION_HEADER": {
     "message": "Attention!",
     "description": "Attention header"
   },
-
   "ENABLE_BADGE": {
     "message": "See birthday notification icon.",
     "description": "Label for checkbox to display today's birthdays."
@@ -31,5 +34,8 @@
   "GENERATE": {
     "message": "Proceed",
     "description": "Label 'generate' button"
+  },
+  "THANKS_FOR_MAKING_IT_BETTER": {
+    "message": "Thank you for making this extension better!"
   }
 }
