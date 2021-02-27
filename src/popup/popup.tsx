@@ -5,7 +5,7 @@ import App from './App';
 
 chrome.tabs.query({active: true, currentWindow: true}, tab => {
   ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter basename={'/popup/popup.html'}>
       <App/>
     </BrowserRouter>,
     document.getElementById('app'),
