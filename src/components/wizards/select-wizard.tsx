@@ -1,9 +1,10 @@
-import React, {
-  FunctionComponent,
-  useContext,
-} from 'react';
+import React, { FunctionComponent } from 'react';
+import {
+  generatePath,
+  useHistory,
+  useRouteMatch,
+} from 'react-router-dom';
 import { WIZARD_NAMES } from '../../constants';
-import { SettingsContext } from '../../context/settings.context';
 import { translateString } from '../../filters/translateString';
 import ActionAccordion, { ActionAccordionInterface } from '../action-accordion';
 import Layout from '../layout/layout';
@@ -12,12 +13,12 @@ import DeleteIcsGeneratorWizard from './delete-ics/delete-ics';
 import IcsGeneratorWizard from './ics/ics';
 
 const SelectWizard: FunctionComponent = () => {
-  const {action, setAction} = useContext(SettingsContext);
+  const {path, params: {action}} = useRouteMatch<{ action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES] }>();
+  const history = useHistory();
 
   const handleChange = (selectedAction: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]) =>
     (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-      const newAction = isExpanded ? selectedAction : null;
-      setAction(newAction);
+      history.replace(generatePath(path, {action: isExpanded ? selectedAction : undefined}));
     };
 
   const attributes = (ac: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]): ActionAccordionInterface => ({

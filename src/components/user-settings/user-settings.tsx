@@ -28,8 +28,8 @@ const UserSettings: FunctionComponent = () => {
         <Route path='/activate'>
           <FirstScan/>
         </Route>
-        <Route path='/export'>
-          {isActive ? <SelectWizard/> : <Redirect to='/activate'/>}
+        <Route path='/export/:action?'>
+          <SelectWizard/>
         </Route>
         <Route exact path='/'>
           {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
