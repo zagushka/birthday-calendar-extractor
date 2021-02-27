@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import { WIZARD_NAMES } from '../../constants';
 import { SettingsContext } from '../../context/settings.context';
+import { translateString } from '../../filters/translateString';
 import ActionAccordion, { ActionAccordionInterface } from '../action-accordion';
 import Layout from '../layout/layout';
 import CsvGeneratorWizard from './csv/csv';
@@ -28,7 +29,7 @@ const SelectWizard: FunctionComponent = () => {
   return (
     <Layout.Wrapper>
       <Layout.Header>
-        Select export format
+        {translateString('SELECT_EXPORT_FORMAT')}
       </Layout.Header>
       <Layout.Content p={1}>
         <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_ICS)}>
