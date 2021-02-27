@@ -7,18 +7,17 @@ import React, {
 import { TodayUsersContext } from '../../context/today-users.context';
 import {
   SCAN_ERROR_BIRTHDAYS_EXTRACT,
-  SCAN_ERROR_GENERAL,
   SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT,
   SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST,
   SCAN_ERROR_FACEBOOK_PAGE_CONTENT,
   SCAN_ERROR_FACEBOOK_PAGE_REQUEST,
   SCAN_ERROR_FACEBOOK_REQUIRED,
+  SCAN_ERROR_GENERAL,
   SCAN_ERROR_NO_TOKEN_DETECTED,
   SCAN_ERROR_TIMEOUT,
 } from '../../libs/events/executed-script.types';
-import DefaultErrorModal from './default-error.modal';
-import ErrorBirthdaysExtractModal from './error-birthdays-extract/error-birthdays-extract';
 import FacebookRequiredModal from './facebook-required/facebook-required';
+import GeneralErrorModal from './general-error/general-error.modal';
 import NoTokenDetectedModal from './no-token-detected/no-token-detected';
 
 const SwitchModals: FunctionComponent = (props) => {
@@ -40,19 +39,18 @@ const SwitchModals: FunctionComponent = (props) => {
       case SCAN_ERROR_NO_TOKEN_DETECTED:
         return setModalDialog(<NoTokenDetectedModal/>);
 
-      case SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST:
-      case SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT:
-      case SCAN_ERROR_BIRTHDAYS_EXTRACT:
-        return setModalDialog(<ErrorBirthdaysExtractModal error={modal}/>);
       // case 'DONE':
       //   return setModalDialog(<DoneModal/>);
       // case 'SCAN_SUCCESS':
       //   return setModalDialog(<ScanSuccessModal/>);
 
+      case SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST:
+      case SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT:
+      case SCAN_ERROR_BIRTHDAYS_EXTRACT:
       case SCAN_ERROR_TIMEOUT:
       case SCAN_ERROR_GENERAL:
       default:
-        setModalDialog(<DefaultErrorModal data={modal}/>);
+        setModalDialog(<GeneralErrorModal error={modal}/>);
     }
   }, [modal]);
 

@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  TextField,
 } from '@material-ui/core';
 import React, {
   FunctionComponent,
@@ -17,7 +18,7 @@ import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 
 const handleClose = () => storeUserSettings({modal: null}, true);
 
-const ErrorBirthdaysExtractModal: FunctionComponent<{ error: ScanErrorPayload }> = ({error}) => {
+const GeneralErrorModal: FunctionComponent<{ error: ScanErrorPayload }> = ({error}) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const errorMessage = btoa(JSON.stringify(error));
@@ -35,21 +36,26 @@ const ErrorBirthdaysExtractModal: FunctionComponent<{ error: ScanErrorPayload }>
     document.execCommand('Copy');
     element.blur();
   };
-
   return (
     <Dialog
       open={true}
       onClose={handleClose}
     >
       <DialogTitle>{translate('ERROR_HEADER')}</DialogTitle>
+
       <DialogContent>
-        <p>{translate('SCAN_ERROR_BIRTHDAYS_EXTRACT')}</p>
+        <p>{translate(error.type)}</p>
         <p>{translate('REPORT_A_BUG_DESCRIPTION')}</p>
-        <textarea
-          ref={textAreaRef}
+        <TextField
+          inputRef={textAreaRef}
           rows={4}
+          margin={'none'}
           value={translateString('REPORT_A_BUG_DETAILS_TEXTAREA', [errorMessage])}
-          readOnly={true}
+          multiline
+          variant='outlined'
+          InputProps={{
+            readOnly: true,
+          }}
         />
         <Button size='small'
                 color='primary'
@@ -59,9 +65,7 @@ const ErrorBirthdaysExtractModal: FunctionComponent<{ error: ScanErrorPayload }>
           {translate('REPORT_A_BUG_TITLE')}
         </Button>
       </DialogContent>
-
       <DialogActions>
-
         <Button size='small'
                 color='primary'
                 variant='contained'
@@ -70,8 +74,9 @@ const ErrorBirthdaysExtractModal: FunctionComponent<{ error: ScanErrorPayload }>
           {translate('CLOSE')}
         </Button>
       </DialogActions>
+
     </Dialog>
   );
 };
 
-export default ErrorBirthdaysExtractModal;
+export default GeneralErrorModal;
