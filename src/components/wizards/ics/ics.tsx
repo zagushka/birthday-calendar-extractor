@@ -29,8 +29,7 @@ const IcsGeneratorWizard: FunctionComponent = (props) => {
     const loaderName = startLoading();
     sendMessage(
       createCalendarIcs({
-        groupEvents: wizards.ics.groupEvents,
-        allDayEvent: wizards.ics.allDayEvent,
+        groupEvents: wizards.ics.groupEvents
       }),
     )
       .subscribe(() => stopLoading(loaderName));
@@ -47,15 +46,13 @@ const IcsGeneratorWizard: FunctionComponent = (props) => {
       <Box pb={1}>
         {translate('SELECT_ICS_DESCRIPTION')}
       </Box>
-      <FormControl size='small' component='fieldset'>
-        {/*<FormLabel component='legend'>Settings</FormLabel>*/}
-        <FormGroup>
-          <FormControlLabel control={<Switch size='small' onChange={handleChange('groupEvents')} checked={wizards.ics.groupEvents}/>}
-                            label={translateString('CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY')}/>
-          <FormControlLabel control={<Switch size='small' onChange={handleChange('allDayEvent')} checked={wizards.ics.allDayEvent}/>}
-                            label={translateString('CREATE_ICS_SETTINGS_ALL_DAY_EVENTS')}/>
-        </FormGroup>
-      </FormControl>
+      {/*<FormControl size='small' component='fieldset'>*/}
+      {/*  /!*<FormLabel component='legend'>Settings</FormLabel>*!/*/}
+      {/*  <FormGroup>*/}
+      {/*    <FormControlLabel control={<Switch size='small' onChange={handleChange('groupEvents')} checked={wizards.ics.groupEvents}/>}*/}
+      {/*                      label={translateString('CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY')}/>*/}
+      {/*  </FormGroup>*/}
+      {/*</FormControl>*/}
       <Box display='flex' justifyContent='flex-end'>
         <Button size='small' variant='contained' color='primary' onClick={startGeneration}>{translateString('GENERATE')}</Button>
       </Box>

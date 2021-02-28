@@ -1,3 +1,4 @@
+import History from 'history';
 import update from 'immutability-helper';
 import { DateTime } from 'luxon';
 import {
@@ -6,7 +7,6 @@ import {
   Subscriber,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { WIZARD_NAMES } from '../../constants';
 
 import { WizardsSettings } from '../../context/settings.context';
 import { ScanErrorPayload } from '../events/executed-script.types';
@@ -14,22 +14,22 @@ import AreaName = chrome.storage.AreaName;
 import StorageChange = chrome.storage.StorageChange;
 
 export interface Settings {
+  location: History.Location<any>;
   modal: ScanErrorPayload;
   activated: boolean;
   scanning: boolean;
   scanSuccess: boolean;
-  lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: DateTime;
   birthdays: Array<RestoredBirthday>;
 }
 
 export interface StoredSettings {
+  location: History.Location<any>;
   modal: ScanErrorPayload;
   activated: boolean;
   scanning: boolean;
   scanSuccess: boolean;
-  lastSelectedWizard: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
   wizardSettings: WizardsSettings;
   badgeVisited: number;
   birthdays: Array<StoredBirthday>;
@@ -44,14 +44,19 @@ export interface RestoredBirthday {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
+  location: {
+    pathname: '/',
+    search: '',
+    hash: '',
+    state: {},
+  },
   modal: null,
   activated: false,
   scanning: false,
   scanSuccess: true,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],
-  lastSelectedWizard: WIZARD_NAMES.CREATE_ICS,
-  wizardSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {allDayEvent: false, groupEvents: false}},
+  wizardSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {groupEvents: false}},
 };
 
 
@@ -152,7 +157,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case 'activated':
     case 'scanning':
     case 'scanSuccess':
-    case 'lastSelectedWizard':
+    case 'location':
     case 'wizardSettings': {
       return value ?? DEFAULT_SETTINGS[key];
     }
@@ -212,7 +217,7 @@ export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolea
           case 'activated':
           case 'scanning':
           case 'scanSuccess':
-          case 'lastSelectedWizard':
+          case 'location':
           case 'wizardSettings':
             return update(accumulator, {[key]: {$set: settings[key]}});
 

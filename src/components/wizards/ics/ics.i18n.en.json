@@ -10,9 +10,5 @@
   "CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY": {
     "message": "One event per day",
     "description": "Label for `create or delete ics` settings - single event per day"
-  },
-  "CREATE_ICS_SETTINGS_ALL_DAY_EVENTS": {
-    "message": "All day events",
-    "description": "Label for `create or delete ics` settings - all day events"
   }
 }

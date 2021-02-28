@@ -30,7 +30,6 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
     sendMessage(
       createCalendarDeleteIcs({
         groupEvents: wizards.ics.groupEvents,
-        allDayEvent: wizards.ics.allDayEvent,
       }),
     )
       .subscribe(() => stopLoading(loaderName));
@@ -52,8 +51,6 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
         <FormGroup>
           <FormControlLabel control={<Switch size='small' onChange={handleChange('groupEvents')} checked={wizards.ics.groupEvents}/>}
                             label={translateString('CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY')}/>
-          <FormControlLabel control={<Switch size='small' onChange={handleChange('allDayEvent')} checked={wizards.ics.allDayEvent}/>}
-                            label={translateString('CREATE_ICS_SETTINGS_ALL_DAY_EVENTS')}/>
         </FormGroup>
       </FormControl>
       <Box display='flex' justifyContent='flex-end'>
