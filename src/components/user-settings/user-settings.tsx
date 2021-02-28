@@ -1,9 +1,7 @@
-import History from 'history';
 import React, {
   FunctionComponent,
   useContext,
   useEffect,
-  useState,
 } from 'react';
 import {
   Redirect,
@@ -13,42 +11,43 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { CurrentStatusContext } from '../../context/current-status.context';
-import {
-  retrieveUserSettings,
-  storeUserSettings,
-} from '../../libs/storage/chrome.storage';
+import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import BirthdaysList from '../birthdays-list/birthdays-list';
 import { FirstScan } from '../first-scan';
 import SwitchModals from '../modals/switch-modals';
 import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
-  const {isActive} = useContext(CurrentStatusContext);
-  const history = useHistory();
-  const [restoredLocation, setRestoredLocation] = useState<History.Location>();
+  const {
+    isActive,
+    initDone,
+    location: restoredLocation,
+  } = useContext(CurrentStatusContext);
 
+  const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
-    if (restoredLocation) {
-      storeUserSettings({location: location});
-    }
+    !!restoredLocation && storeUserSettings({location});
   }, [location]);
 
-  // Update location on startup
+  /**
+   * The moment `initDone`, `restoredLocation` been fetched as well
+   * This Effect have no deps on `restoredLocation` because it will be changing
+   * but initDone fired only twice (`false` at the beginning and `true`
+   * when all the settings been fetched from storage)
+   */
   useEffect(() => {
-    retrieveUserSettings(['location'])
-      .subscribe(update => {
-        setRestoredLocation(update.location);
-        history.replace(update.location);
-      });
-  }, []);
+    initDone && history.replace(restoredLocation);
+  }, [initDone]);
 
+  if (!initDone) {
+    return (<></>);
+  }
 
   return (
     <>
       <SwitchModals/>
-      {restoredLocation &&
       <Switch>
         <Route path='/activate'>
           <FirstScan/>
@@ -56,14 +55,13 @@ const UserSettings: FunctionComponent = () => {
         <Route path='/export/:action?'>
           <SelectWizard/>
         </Route>
-        <Route exact path='/'>
+        <Route exact path='/calendar'>
           {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
         </Route>
-        <Route>
-          <Redirect to='/'/>
+        <Route path='/'>
+          <Redirect to='/calendar'/>
         </Route>
       </Switch>
-      }
     </>
   );
 };

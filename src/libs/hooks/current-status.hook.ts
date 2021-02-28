@@ -1,3 +1,4 @@
+import { Location } from 'history';
 import {
   useEffect,
   useState,
@@ -22,16 +23,19 @@ import {
  * Return always updated stored values
  */
 export function useCurrentStatus() {
+  const [initDone, setInitDone] = useState<boolean>(false);
+  const [location, setLocation] = useState<Location>();
   const [wizardsSettings, setWizardsSettings] = useState<WizardsSettings>();
-  const [isActive, setIsActive] = useState<boolean>(false); // is Active
-  const [modal, setModal] = useState<ScanErrorPayload>(null); // is Error
-  const [isScanning, setIsScanning] = useState<boolean>(false); // is Scanning in process
-  const [isScanSucceed, setIsScanSucceed] = useState<boolean>(true); // Flag to mark failed or successful scan
-  const [users, setUsers] = useState<Array<RestoredBirthday>>([]);
+  const [isActive, setIsActive] = useState<boolean>(); // is Active
+  const [modal, setModal] = useState<ScanErrorPayload>(); // is Error
+  const [isScanning, setIsScanning] = useState<boolean>(); // is Scanning in process
+  const [isScanSucceed, setIsScanSucceed] = useState<boolean>(); // Flag to mark failed or successful scan
+  const [users, setUsers] = useState<Array<RestoredBirthday>>();
 
   useEffect(() => {
     const onDestroy$ = new Subject<boolean>();
     concat(
+      // initialize settings onload
       retrieveUserSettings([
         'wizardsSettings',
         'modal',
@@ -39,7 +43,9 @@ export function useCurrentStatus() {
         'activated',
         'scanning',
         'scanSuccess',
-      ]), // initialize settings onload
+        'location',
+      ]),
+      // Listen to storage changes and update changed values
       listenToUserSettings(),
     )
       .pipe(takeUntil(onDestroy$))
@@ -47,6 +53,8 @@ export function useCurrentStatus() {
         (Object.keys(updates) as Array<keyof Settings>)
           .forEach((key) => {
             switch (key) {
+              case 'location':
+                return setLocation(updates[key]);
               case 'modal':
                 return setModal(updates[key]);
               case 'scanning':
@@ -61,6 +69,8 @@ export function useCurrentStatus() {
                 return setWizardsSettings(updates[key]);
             }
           });
+        // Set initDone to true in case it is not `true` yet to mark that variables restoration is done
+        !initDone && setInitDone(true);
       });
 
     return () => {
@@ -69,5 +79,5 @@ export function useCurrentStatus() {
     };
   }, []);
 
-  return {wizardsSettings, isActive, modal, isScanning, isScanSucceed, users};
+  return {initDone, location, wizardsSettings, isActive, modal, isScanning, isScanSucceed, users};
 }

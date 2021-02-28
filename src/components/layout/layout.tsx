@@ -55,7 +55,6 @@ const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
         <IconButton
           size='small'
           activeClassName={classes.buttonActive}
-          exact
           disabled={disabled}
           component={NavLink}
           to={to}
@@ -76,13 +75,13 @@ const ButtonList: Array<ButtonWithTooltipProps> = [
   {
     name: 'export',
     button: <GetApp/>,
-    to: '/export',
+    to: '/export/',
     tooltip: 'Export Your Birthdays Here',
   },
   {
     name: 'birthdays',
     button: <EventNote/>,
-    to: '/',
+    to: '/calendar',
     tooltip: 'Calendar with birthdays',
   },
   {

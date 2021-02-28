@@ -1,3 +1,4 @@
+import { Location } from 'history';
 import React, { FunctionComponent } from 'react';
 import { ScanErrorPayload } from '../libs/events/executed-script.types';
 import { useCurrentStatus } from '../libs/hooks/current-status.hook';
@@ -7,7 +8,9 @@ import {
 } from '../libs/storage/storaged.types';
 
 interface CurrentStatusContextInterface {
-  modal: ScanErrorPayload | null;
+  initDone: boolean;
+  location: Location;
+  modal: ScanErrorPayload;
   isActive: boolean;
   isScanning: boolean;
   isScanSucceed: boolean;
@@ -16,6 +19,8 @@ interface CurrentStatusContextInterface {
 }
 
 export const CurrentStatusContext = React.createContext<CurrentStatusContextInterface>({
+  initDone: false,
+  location: null,
   modal: null,
   isActive: false,
   isScanning: false,
@@ -26,23 +31,9 @@ export const CurrentStatusContext = React.createContext<CurrentStatusContextInte
 
 const CurrentStatusContextProvider: FunctionComponent = (props) => {
 
-  const {
-    users,
-    isActive,
-    isScanSucceed,
-    isScanning,
-    modal,
-    wizardsSettings,
-  } = useCurrentStatus();
+  const statusVariables = useCurrentStatus();
 
-  return <CurrentStatusContext.Provider value={{
-    modal,
-    isActive,
-    isScanning,
-    isScanSucceed,
-    users,
-    wizardsSettings,
-  }}>
+  return <CurrentStatusContext.Provider value={statusVariables}>
     {props.children}
   </CurrentStatusContext.Provider>;
 };
