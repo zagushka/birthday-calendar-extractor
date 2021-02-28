@@ -7,7 +7,6 @@ import {
   Redirect,
   Route,
   Switch,
-  useHistory,
   useLocation,
 } from 'react-router-dom';
 import { CurrentStatusContext } from '../../context/current-status.context';
@@ -24,22 +23,15 @@ const UserSettings: FunctionComponent = () => {
     location: restoredLocation,
   } = useContext(CurrentStatusContext);
 
-  const history = useHistory();
   const location = useLocation();
 
+  /**
+   * Start storing new location to the storage
+   * after initDone and restoredLocation been fetched
+   */
   useEffect(() => {
     !!restoredLocation && storeUserSettings({location});
   }, [location]);
-
-  /**
-   * The moment `initDone`, `restoredLocation` been fetched as well
-   * This Effect have no deps on `restoredLocation` because it will be changing
-   * but initDone fired only twice (`false` at the beginning and `true`
-   * when all the settings been fetched from storage)
-   */
-  useEffect(() => {
-    initDone && history.replace(restoredLocation);
-  }, [initDone]);
 
   if (!initDone) {
     return (<></>);
@@ -58,8 +50,11 @@ const UserSettings: FunctionComponent = () => {
         <Route exact path='/calendar'>
           {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
         </Route>
-        <Route path='/'>
-          <Redirect to='/calendar'/>
+        <Route exact path='/'>
+          {'/' === restoredLocation.pathname ?
+            <Redirect to='/export'/> :
+            <Redirect to={restoredLocation}/>
+          }
         </Route>
       </Switch>
     </>
