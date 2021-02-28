@@ -9,7 +9,7 @@ import { translate } from '../../filters/translate';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import LeaveFeedbackButton from '../leave-feedback.button/leave-feedback.button';
 
-const handleClose = () => storeUserSettings({modal: null}, true);
+const handleClose = () => storeUserSettings({modal: null});
 
 const DoneModal: FunctionComponent = (props) => {
 

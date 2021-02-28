@@ -44,7 +44,7 @@ listenTo(BADGE_CLICKED)
      * Since this event only fired when clicked on the badge, we I need to remove dialog message left
      * and mark badge as visited/clicked
      */
-    storeUserSettings({modal: null, badgeVisited: DateTime.local()})
+    storeUserSettings({modal: null, badgeVisited: DateTime.local()}, true)
       .subscribe(() => {
         sendMessage(updateBadgeAction(), true);
       });
@@ -63,7 +63,7 @@ listenTo(DISABLE_BADGE_NOTIFICATION)
     storeUserSettings({
       birthdays: [],
       activated: false,
-    })
+    }, true)
       .subscribe(() => {
         // Update badge it should be clean
         sendMessage(updateBadgeAction(), true);
@@ -78,7 +78,7 @@ listenTo(BIRTHDAYS_START_SCAN)
   .subscribe(() => {
     sendScanLog('SCAN_LOG_PROCESS_STARTED');
     // Update local storage, set scanning true
-    storeUserSettings({scanning: true})
+    storeUserSettings({scanning: true}, true)
       .pipe(
         // Start scan
         switchMap(forceBirthdaysScan),
@@ -87,10 +87,10 @@ listenTo(BIRTHDAYS_START_SCAN)
         next: () => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
           sendMessage(updateBadgeAction(), true);
-          storeUserSettings({scanning: false, scanSuccess: true}, true);
+          storeUserSettings({scanning: false, scanSuccess: true});
         },
         error: (error: ScanErrorPayload) => {
-          storeUserSettings({scanning: false, scanSuccess: false, modal: error}, true);
+          storeUserSettings({scanning: false, scanSuccess: false, modal: error});
         },
       });
   });
@@ -139,6 +139,6 @@ listenTo(
   });
 
 chrome.runtime.onStartup.addListener(() => {
-  storeUserSettings({scanning: false}, true);
+  storeUserSettings({scanning: false});
   setupAlarms();
 });

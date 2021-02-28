@@ -109,7 +109,7 @@ export const FirstScan: FunctionComponent = () => {
     // Check this is a facebook page and display modal error
     getFacebookTab()
       .subscribe({
-        error: error => storeUserSettings({modal: error}, true),
+        error: error => storeUserSettings({modal: error}),
       });
 
     // Stop listening to scan logs

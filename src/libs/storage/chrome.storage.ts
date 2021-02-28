@@ -84,7 +84,7 @@ export function filterBirthdaysForDate(birthdays: Array<RestoredBirthday>, date:
 export function storeLastBadgeClicked(): Observable<void> {
   return storeUserSettings({
     badgeVisited: DateTime.local(),
-  });
+  }, true);
 }
 
 const reviveBirthday = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
@@ -206,9 +206,9 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
   return r as unknown as Observable<U>; // <- Another dirty trick
 }
 
-export function storeUserSettings(settings: Partial<Settings>): Observable<void>;
-export function storeUserSettings(settings: Partial<Settings>, dontWait: boolean): void;
-export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolean) {
+export function storeUserSettings(settings: Partial<Settings>): void;
+export function storeUserSettings(settings: Partial<Settings>, wait: true): Observable<void>;
+export function storeUserSettings(settings: Partial<Settings>, wait?: boolean) {
   const data =
     (Object.keys(settings) as Array<keyof Settings>)
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
@@ -235,7 +235,7 @@ export function storeUserSettings(settings: Partial<Settings>, dontWait?: boolea
         }
       }, {});
 
-  if ('undefined' === typeof dontWait || false === dontWait) {
+  if (true === wait) {
     return bindCallback<Partial<StoredSettings>>(setWrapper)(data);
   }
 

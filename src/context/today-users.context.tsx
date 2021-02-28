@@ -69,7 +69,7 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
     return () => {
       onDestroy$.next(true);
       onDestroy$.complete();
-      storeUserSettings({modal: null}, true);
+      storeUserSettings({modal: null});
     };
   }, []);
 

@@ -79,7 +79,7 @@ const SettingsContextProvider: FunctionComponent = (props) => {
   }, []);
 
   const storeWizards = (wizards: WizardsSettings) => {
-    storeUserSettings({wizardSettings: wizards}, true);
+    storeUserSettings({wizardSettings: wizards});
   };
 
   return <SettingsContext.Provider value={{

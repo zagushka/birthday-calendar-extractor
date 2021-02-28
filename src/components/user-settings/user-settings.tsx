@@ -34,7 +34,7 @@ const UserSettings: FunctionComponent = () => {
 
   useEffect(() => {
     if (restoredLocation) {
-      storeUserSettings({location: location}, true);
+      storeUserSettings({location: location});
     }
   }, [location]);
 

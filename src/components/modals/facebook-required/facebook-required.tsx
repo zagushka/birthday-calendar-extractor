@@ -11,7 +11,7 @@ import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 
-const handleClose = () => storeUserSettings({modal: null}, true);
+const handleClose = () => storeUserSettings({modal: null});
 const handleClick = (href: string) => (e: React.MouseEvent) => {
   handleLink(e, href, {close: true, active: true});
   handleClose();

@@ -25,7 +25,7 @@ export class CalendarForStorage extends CalendarBase<{ name: string; start: Date
     storeUserSettings({
       birthdays: calendarData,
       activated: true,
-    })
+    }, true)
       .subscribe(() => {
         sendMessage(updateBadgeAction(), true);
         sendMessage(BirthdaysScanComplete(), true);

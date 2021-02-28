@@ -148,7 +148,7 @@ export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
       tap(() => sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS')),
       switchMap(combinedBirthdays => storeUserSettings({
         birthdays: combinedBirthdays, activated: true,
-      })),
+      }, true)),
     );
 }
 

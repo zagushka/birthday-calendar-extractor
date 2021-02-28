@@ -16,7 +16,7 @@ import { translateString } from '../../../filters/translateString';
 import { ScanErrorPayload } from '../../../libs/events/executed-script.types';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 
-const handleClose = () => storeUserSettings({modal: null}, true);
+const handleClose = () => storeUserSettings({modal: null});
 
 const GeneralErrorModal: FunctionComponent<{ error: ScanErrorPayload }> = ({error}) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
