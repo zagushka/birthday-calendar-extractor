@@ -20,7 +20,7 @@ export const DEFAULT_SETTINGS: Settings = {
     pathname: '/',
     search: '',
     hash: '',
-    state: {},
+    state: undefined,
   },
   modal: null,
   activated: false,

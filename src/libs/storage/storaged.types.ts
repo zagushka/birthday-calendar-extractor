@@ -1,4 +1,4 @@
-import History from 'history';
+import { Location } from 'history';
 import { DateTime } from 'luxon';
 import { ScanErrorPayload } from '../events/executed-script.types';
 
@@ -25,7 +25,7 @@ export interface WizardsSettings {
 }
 
 export interface Settings {
-  location: History.Location<any>;
+  location: Location;
   modal: ScanErrorPayload;
   activated: boolean;
   scanning: boolean;
@@ -36,7 +36,7 @@ export interface Settings {
 }
 
 export interface StoredSettings {
-  location: History.Location<any>;
+  location: Location;
   modal: ScanErrorPayload;
   activated: boolean;
   scanning: boolean;

@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import { BoxProps } from '@material-ui/core/Box/Box';
 import {
+  Build,
   EventNote,
   GetApp,
   Repeat,
@@ -16,6 +17,7 @@ import React, {
   useState,
 } from 'react';
 import { NavLink } from 'react-router-dom';
+import { isDevelopment } from '../../constants';
 import {
   useLayoutStyles,
   useTooltipStyles,
@@ -65,7 +67,7 @@ const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
     );
   };
 
-type buttonTypes = 'export' | 'birthdays' | 'activate';
+type buttonTypes = 'export' | 'birthdays' | 'activate' | 'dev-tools';
 
 type ButtonsListType<T> = {
   [key in buttonTypes]?: T
@@ -91,6 +93,15 @@ const ButtonList: Array<ButtonWithTooltipProps> = [
     tooltip: 'Scan birthdays',
   },
 ];
+
+if (isDevelopment) {
+  ButtonList.push({
+    name: 'dev-tools',
+    button: <Build/>,
+    to: '/dev-tools',
+    tooltip: 'dev-tools',
+  });
+}
 
 interface LayoutHeaderProps {
   disabledButtons?: ButtonsListType<boolean>;

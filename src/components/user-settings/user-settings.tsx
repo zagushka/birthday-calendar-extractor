@@ -9,9 +9,11 @@ import {
   Switch,
   useLocation,
 } from 'react-router-dom';
+import { isDevelopment } from '../../constants';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import BirthdaysList from '../birthdays-list/birthdays-list';
+import DevTools from '../dev-tools';
 import { FirstScan } from '../first-scan';
 import SwitchModals from '../modals/switch-modals';
 import SelectWizard from '../wizards/select-wizard';
@@ -50,6 +52,9 @@ const UserSettings: FunctionComponent = () => {
         <Route exact path='/calendar'>
           {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
         </Route>
+        {isDevelopment && <Route path='/dev-tools'>
+          <DevTools/>
+        </Route>}
         <Route exact path='/'>
           {'/' === restoredLocation.pathname ?
             <Redirect to='/export'/> :

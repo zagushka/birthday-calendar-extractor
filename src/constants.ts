@@ -7,3 +7,4 @@ export const WIZARD_NAMES = {
 } as const;
 
 export const FACEBOOK_REQUIRED_REGEXP = '^https:\\/\\/(web|www|m|l|mobile)\\.facebook\\.com';
+export const isDevelopment = (process.env.NODE_ENV === 'development');
