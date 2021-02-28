@@ -12,33 +12,35 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
+import { CurrentStatusContext } from '../../../context/current-status.context';
 import { LoadingContext } from '../../../context/loading.context';
-import {
-  CsvDateFormats,
-  SettingsContext,
-} from '../../../context/settings.context';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { createCalendarCsv } from '../../../libs/events/actions';
 import { sendMessage } from '../../../libs/events/events';
+import { storeUserSettings } from '../../../libs/storage/chrome.storage';
+import { CsvDateFormats } from '../../../libs/storage/storaged.types';
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
   const {startLoading, stopLoading} = useContext(LoadingContext);
-  const {wizards, setWizards} = useContext(SettingsContext);
+  const {wizardsSettings: settings} = useContext(CurrentStatusContext);
 
   const startGeneration = () => {
     const loaderName = startLoading();
-    sendMessage(
-      createCalendarCsv(wizards.csv.format),
-    )
+    sendMessage(createCalendarCsv(settings.csv.format))
       .subscribe(() => stopLoading(loaderName));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = (event.target as HTMLInputElement).value as CsvDateFormats;
-    const newState = update(wizards, {csv: {format: {$set: value}}});
-    setWizards(newState);
+    const value = event.target.value as CsvDateFormats;
+    const wizardSettings = update(settings, {csv: {format: {$set: value}}});
+    // Store updated settings
+    storeUserSettings({wizardsSettings: wizardSettings});
   };
+
+  if (!settings) {
+    return (<></>);
+  }
 
   return (
     <Box flexDirection='column' display='flex'>
@@ -47,7 +49,7 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
       </Box>
       <FormControl size='small' component='fieldset'>
         <FormLabel component='legend'>{translateString('CREATE_CSV_SETTINGS_DATE_FORMAT')}</FormLabel>
-        <RadioGroup row name='date-format' value={wizards.csv.format} onChange={handleChange}>
+        <RadioGroup row name='date-format' value={settings.csv.format} onChange={handleChange}>
           <FormControlLabel
             value='dd/LL/yyyy'
             control={<Radio size='small'/>}

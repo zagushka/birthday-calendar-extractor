@@ -1,4 +1,3 @@
-import History from 'history';
 import update from 'immutability-helper';
 import { DateTime } from 'luxon';
 import {
@@ -7,41 +6,14 @@ import {
   Subscriber,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { WizardsSettings } from '../../context/settings.context';
-import { ScanErrorPayload } from '../events/executed-script.types';
+import {
+  RestoredBirthday,
+  Settings,
+  StoredBirthday,
+  StoredSettings,
+} from './storaged.types';
 import AreaName = chrome.storage.AreaName;
 import StorageChange = chrome.storage.StorageChange;
-
-export interface Settings {
-  location: History.Location<any>;
-  modal: ScanErrorPayload;
-  activated: boolean;
-  scanning: boolean;
-  scanSuccess: boolean;
-  wizardSettings: WizardsSettings;
-  badgeVisited: DateTime;
-  birthdays: Array<RestoredBirthday>;
-}
-
-export interface StoredSettings {
-  location: History.Location<any>;
-  modal: ScanErrorPayload;
-  activated: boolean;
-  scanning: boolean;
-  scanSuccess: boolean;
-  wizardSettings: WizardsSettings;
-  badgeVisited: number;
-  birthdays: Array<StoredBirthday>;
-}
-
-export type StoredBirthday = [string, number, string];
-
-export interface RestoredBirthday {
-  name: string;
-  href: string;
-  start: DateTime;
-}
 
 export const DEFAULT_SETTINGS: Settings = {
   location: {
@@ -56,7 +28,7 @@ export const DEFAULT_SETTINGS: Settings = {
   scanSuccess: true,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],
-  wizardSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {groupEvents: false}},
+  wizardsSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {groupEvents: false}},
 };
 
 
@@ -158,7 +130,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case 'scanning':
     case 'scanSuccess':
     case 'location':
-    case 'wizardSettings': {
+    case 'wizardsSettings': {
       return value ?? DEFAULT_SETTINGS[key];
     }
 
@@ -218,7 +190,7 @@ export function storeUserSettings(settings: Partial<Settings>, wait?: boolean) {
           case 'scanning':
           case 'scanSuccess':
           case 'location':
-          case 'wizardSettings':
+          case 'wizardsSettings':
             return update(accumulator, {[key]: {$set: settings[key]}});
 
           case 'badgeVisited':

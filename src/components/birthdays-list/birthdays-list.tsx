@@ -25,7 +25,7 @@ import {
   ListOnScrollProps,
   VariableSizeList,
 } from 'react-window';
-import { TodayUsersContext } from '../../context/today-users.context';
+import { CurrentStatusContext } from '../../context/current-status.context';
 import Layout from '../layout/layout';
 import { useBirthdaysListStyles } from './birthdays-list.styles';
 import {
@@ -38,9 +38,8 @@ import {
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
 import { DayRow } from './day-row';
 
-
 const BirthdaysList: FunctionComponent = () => {
-  const {users: rawUsers, isScanning} = useContext(TodayUsersContext);
+  const {users: rawUsers, isScanning} = useContext(CurrentStatusContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
 
   const [users, setUsers] = useState<UserMapInterface>({

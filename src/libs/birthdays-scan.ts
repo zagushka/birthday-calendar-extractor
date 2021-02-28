@@ -25,10 +25,10 @@ import {
 } from './events/executed-script.types';
 import { fetchUserFriendsBirthdayInfoFromContext } from './executed-script-scan';
 import {
-  RestoredBirthday,
   retrieveUserSettings,
   storeUserSettings,
 } from './storage/chrome.storage';
+import { RestoredBirthday } from './storage/storaged.types';
 
 /**
  * Check provided string match any facebook url pattern

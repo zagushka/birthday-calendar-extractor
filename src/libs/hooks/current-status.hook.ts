@@ -1,5 +1,4 @@
-import React, {
-  FunctionComponent,
+import {
   useEffect,
   useState,
 } from 'react';
@@ -8,33 +7,22 @@ import {
   Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ScanErrorPayload } from '../libs/events/executed-script.types';
+import { ScanErrorPayload } from '../events/executed-script.types';
 import {
   listenToUserSettings,
-  RestoredBirthday,
   retrieveUserSettings,
+} from '../storage/chrome.storage';
+import {
+  RestoredBirthday,
   Settings,
-  storeUserSettings,
-} from '../libs/storage/chrome.storage';
+  WizardsSettings,
+} from '../storage/storaged.types';
 
-interface TodayUsersContextInterface {
-  modal: ScanErrorPayload | null;
-  isActive: boolean;
-  isScanning: boolean;
-  isScanSucceed: boolean;
-  users: Array<RestoredBirthday>;
-}
-
-export const TodayUsersContext = React.createContext<TodayUsersContextInterface>({
-  modal: null,
-  isActive: false,
-  isScanning: false,
-  isScanSucceed: true,
-  users: [],
-});
-
-const TodayUsersContextProvider: FunctionComponent = (props) => {
-
+/**
+ * Return always updated stored values
+ */
+export function useCurrentStatus() {
+  const [wizardsSettings, setWizardsSettings] = useState<WizardsSettings>();
   const [isActive, setIsActive] = useState<boolean>(false); // is Active
   const [modal, setModal] = useState<ScanErrorPayload>(null); // is Error
   const [isScanning, setIsScanning] = useState<boolean>(false); // is Scanning in process
@@ -42,12 +30,19 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
   const [users, setUsers] = useState<Array<RestoredBirthday>>([]);
 
   useEffect(() => {
-    const onDestroy$ = new Subject();
-
+    const onDestroy$ = new Subject<boolean>();
     concat(
-      retrieveUserSettings(['modal', 'birthdays', 'activated', 'scanning', 'scanSuccess']), // Get initial settings
-      listenToUserSettings().pipe(takeUntil(onDestroy$)), // Listen to UserSettings changes
+      retrieveUserSettings([
+        'wizardsSettings',
+        'modal',
+        'birthdays',
+        'activated',
+        'scanning',
+        'scanSuccess',
+      ]), // initialize settings onload
+      listenToUserSettings(),
     )
+      .pipe(takeUntil(onDestroy$))
       .subscribe((updates) => {
         (Object.keys(updates) as Array<keyof Settings>)
           .forEach((key) => {
@@ -62,6 +57,8 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
                 return setIsActive(updates[key]);
               case 'birthdays':
                 return setUsers(updates[key]);
+              case 'wizardsSettings':
+                return setWizardsSettings(updates[key]);
             }
           });
       });
@@ -69,19 +66,8 @@ const TodayUsersContextProvider: FunctionComponent = (props) => {
     return () => {
       onDestroy$.next(true);
       onDestroy$.complete();
-      storeUserSettings({modal: null});
     };
   }, []);
 
-  return <TodayUsersContext.Provider value={{
-    modal,
-    isActive,
-    isScanning,
-    isScanSucceed,
-    users,
-  }}>
-    {props.children}
-  </TodayUsersContext.Provider>;
-};
-
-export default TodayUsersContextProvider;
+  return {wizardsSettings, isActive, modal, isScanning, isScanSucceed, users};
+}

@@ -1,5 +1,5 @@
 import { PreparedEvent } from './lib';
-import { RestoredBirthday } from './storage/chrome.storage';
+import { RestoredBirthday } from './storage/storaged.types';
 
 export abstract class CalendarBase<Formatted, GeneratedEvent, GeneratedCalendar> {
   abstract readonly filename: string;

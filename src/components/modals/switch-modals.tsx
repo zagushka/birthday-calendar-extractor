@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { TodayUsersContext } from '../../context/today-users.context';
+import { CurrentStatusContext } from '../../context/current-status.context';
 import {
   SCAN_ERROR_BIRTHDAYS_EXTRACT,
   SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT,
@@ -22,7 +22,7 @@ import NoTokenDetectedModal from './no-token-detected/no-token-detected';
 
 const SwitchModals: FunctionComponent = (props) => {
 
-  const {modal} = useContext(TodayUsersContext);
+  const {modal} = useContext(CurrentStatusContext);
   const [modalDialog, setModalDialog] = useState<JSX.Element>(null);
 
   useEffect(() => {

@@ -3,11 +3,11 @@ import React, {
   useEffect,
 } from 'react';
 import UserSettings from '../components/user-settings/user-settings';
+import CurrentStatusContextProvider from '../context/current-status.context';
 import LoadingContextProvider from '../context/loading.context';
-import SettingsContextProvider from '../context/settings.context';
-import TodayUsersContextProvider from '../context/today-users.context';
 import { badgeClickedAction } from '../libs/events/actions';
 import { sendMessage } from '../libs/events/events';
+import { storeUserSettings } from '../libs/storage/chrome.storage';
 import './App.scss';
 
 const App: FunctionComponent = () => {
@@ -15,15 +15,19 @@ const App: FunctionComponent = () => {
   useEffect(() => {
     // Send notification badge was clicked
     sendMessage(badgeClickedAction(), true);
+
+    // Clean up
+    return () => {
+      // Remove opened modal
+      storeUserSettings({modal: null});
+    };
   }, []);
 
   return (
     <LoadingContextProvider>
-      <SettingsContextProvider>
-        <TodayUsersContextProvider>
-          <UserSettings/>
-        </TodayUsersContextProvider>
-      </SettingsContextProvider>
+      <CurrentStatusContextProvider>
+        <UserSettings/>
+      </CurrentStatusContextProvider>
     </LoadingContextProvider>
   );
 };

@@ -25,7 +25,7 @@ import React, {
 } from 'react';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TodayUsersContext } from '../context/today-users.context';
+import { CurrentStatusContext } from '../context/current-status.context';
 import { translateString } from '../filters/translateString';
 import { BirthdaysStartScan } from '../libs/events/actions';
 import {
@@ -33,8 +33,6 @@ import {
   sendMessage,
 } from '../libs/events/events';
 import { SEND_SCAN_LOG } from '../libs/events/types';
-import { getFacebookTab } from '../libs/birthdays-scan';
-import { storeUserSettings } from '../libs/storage/chrome.storage';
 import Layout from './layout/layout';
 
 const startScanHandler = () => {
@@ -74,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const FirstScan: FunctionComponent = () => {
   const classes = useStyles();
 
-  const {isScanning, isScanSucceed, isActive} = useContext(TodayUsersContext);
+  const {isScanning, isScanSucceed, isActive} = useContext(CurrentStatusContext);
   const [log, setLog] = useState<string>();
   const [success, setSuccess] = useState<boolean>();
 
@@ -106,11 +104,11 @@ export const FirstScan: FunctionComponent = () => {
         }
       });
 
-    // Check this is a facebook page and display modal error
-    getFacebookTab()
-      .subscribe({
-        error: error => storeUserSettings({modal: error}),
-      });
+    // // Check this is a facebook page and display modal error
+    // getFacebookTab()
+    //   .subscribe({
+    //     error: error => storeUserSettings({modal: error}),
+    //   });
 
     // Stop listening to scan logs
     return () => {

@@ -1,7 +1,7 @@
 import {
   CsvDateFormats,
   IcsSettings,
-} from '../../context/settings.context';
+} from '../storage/storaged.types';
 import {
   ActionTypes,
   ALARM_NEW_DAY,

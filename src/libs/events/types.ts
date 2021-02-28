@@ -2,7 +2,7 @@
 import {
   CsvSettings,
   IcsSettings,
-} from '../../context/settings.context';
+} from '../storage/storaged.types';
 import { ExecutedScriptTypes } from './executed-script.types';
 
 export const SEND_ERROR = 'SEND_ERROR'; // Send error message

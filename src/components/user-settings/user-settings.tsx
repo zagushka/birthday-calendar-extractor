@@ -12,8 +12,7 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
-import { LoadingContext } from '../../context/loading.context';
-import { TodayUsersContext } from '../../context/today-users.context';
+import { CurrentStatusContext } from '../../context/current-status.context';
 import {
   retrieveUserSettings,
   storeUserSettings,
@@ -24,9 +23,7 @@ import SwitchModals from '../modals/switch-modals';
 import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
-  const {isLoading} = useContext(LoadingContext);
-  const {isActive} = useContext(TodayUsersContext);
-  const loaded = !isLoading('SETTINGS');
+  const {isActive} = useContext(CurrentStatusContext);
   const history = useHistory();
   const [restoredLocation, setRestoredLocation] = useState<History.Location>();
 
@@ -51,7 +48,7 @@ const UserSettings: FunctionComponent = () => {
   return (
     <>
       <SwitchModals/>
-      {loaded && restoredLocation &&
+      {restoredLocation &&
       <Switch>
         <Route path='/activate'>
           <FirstScan/>

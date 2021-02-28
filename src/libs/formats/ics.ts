@@ -1,12 +1,14 @@
 import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
-import { IcsSettings } from '../../context/settings.context';
 import { CalendarBase } from '../base';
 import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
-import { RestoredBirthday } from '../storage/chrome.storage';
+import {
+  IcsSettings,
+  RestoredBirthday,
+} from '../storage/storaged.types';
 
 interface IcsEvent {
   start: string;

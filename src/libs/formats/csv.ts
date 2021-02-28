@@ -1,13 +1,15 @@
 import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
-import { CsvSettings } from '../../context/settings.context';
 import { CalendarBase } from '../base';
 import {
   arrayToCSVRow,
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
-import { RestoredBirthday } from '../storage/chrome.storage';
+import {
+  CsvSettings,
+  RestoredBirthday,
+} from '../storage/storaged.types';
 
 interface CsvFormattedEvent {
   name: string;

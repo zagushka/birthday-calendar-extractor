@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { ListChildComponentProps } from 'react-window';
 import handleLink from '../../filters/handleLink';
-import { RestoredBirthday } from '../../libs/storage/chrome.storage';
+import { RestoredBirthday } from '../../libs/storage/storaged.types';
 import { useBirthdaysListStyles } from './birthdays-list.styles';
 import { asShortDate } from './birthdays-list.tools';
 

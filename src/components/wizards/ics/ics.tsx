@@ -1,45 +1,41 @@
-import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Switch,
-} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import update from 'immutability-helper';
 import React, {
   FunctionComponent,
   useContext,
 } from 'react';
+import { CurrentStatusContext } from '../../../context/current-status.context';
 import { LoadingContext } from '../../../context/loading.context';
-import {
-  IcsSettings,
-  SettingsContext,
-} from '../../../context/settings.context';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { createCalendarIcs } from '../../../libs/events/actions';
 import { sendMessage } from '../../../libs/events/events';
+import { storeUserSettings } from '../../../libs/storage/chrome.storage';
+import { IcsSettings } from '../../../libs/storage/storaged.types';
 
 const IcsGeneratorWizard: FunctionComponent = (props) => {
   const {startLoading, stopLoading} = useContext(LoadingContext);
-  const {wizards, setWizards} = useContext(SettingsContext);
+  const {wizardsSettings: settings} = useContext(CurrentStatusContext);
 
   const startGeneration = () => {
     const loaderName = startLoading();
     sendMessage(
-      createCalendarIcs({
-        groupEvents: wizards.ics.groupEvents
-      }),
+      createCalendarIcs({groupEvents: settings.ics.groupEvents}),
     )
       .subscribe(() => stopLoading(loaderName));
   };
 
   const handleChange: <K extends keyof IcsSettings>(property: K) => any = (property) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value: boolean = (event.target as HTMLInputElement).checked;
-    const newState = update(wizards, {ics: {[property]: {$set: value}}});
-    setWizards(newState);
+    const value: boolean = event.target.checked;
+    const wizardSettings = update(settings, {ics: {[property]: {$set: value}}});
+    // Store updated settings
+    storeUserSettings({wizardsSettings: wizardSettings});
   };
+
+  if (!settings) {
+    return (<></>);
+  }
 
   return (
     <Box flexDirection='column' display='flex'>

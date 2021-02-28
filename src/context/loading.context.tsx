@@ -23,7 +23,7 @@ export const LoadingContext = React.createContext<LoadingContextInterface>({
 const LoadingContextProvider: FunctionComponent = (props) => {
   const [loader, dispatch] = useReducer(LoaderReducer, {
     loading: true,
-    instances: {'SETTINGS': 1},
+    instances: {},
   });
 
   const isLoading = (instanceName?: string) => {

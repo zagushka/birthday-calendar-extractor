@@ -5,7 +5,7 @@ import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
-import { RestoredBirthday } from '../storage/chrome.storage';
+import { RestoredBirthday } from '../storage/storaged.types';
 
 export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   readonly filename: string = 'birthday-calendar.json';

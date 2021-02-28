@@ -5,10 +5,8 @@ import {
   throwError,
 } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import {
-  RestoredBirthday,
-  retrieveUserSettings,
-} from './storage/chrome.storage';
+import { retrieveUserSettings } from './storage/chrome.storage';
+import { RestoredBirthday } from './storage/storaged.types';
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url

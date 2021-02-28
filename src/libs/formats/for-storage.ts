@@ -9,10 +9,8 @@ import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
-import {
-  RestoredBirthday,
-  storeUserSettings,
-} from '../storage/chrome.storage';
+import { storeUserSettings } from '../storage/chrome.storage';
+import { RestoredBirthday } from '../storage/storaged.types';
 
 export class CalendarForStorage extends CalendarBase<{ name: string; start: DateTime; href: string },
   { name: string; start: DateTime; href: string },
