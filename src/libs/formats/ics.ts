@@ -5,9 +5,10 @@ import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
+import { reviveBirthday } from '../storage/chrome.storage';
 import {
   IcsSettings,
-  RestoredBirthday,
+  StoredBirthday,
 } from '../storage/storaged.types';
 
 interface IcsEvent {
@@ -64,10 +65,12 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
   }
 
   generateCalendar(
-    events: Array<RestoredBirthday>,
+    storedBirthdays: Array<StoredBirthday>,
     fromYear: number = 2020, // Since all the events are recurring I generate them for leap year 2020
     tillYear: number = 2020,
   ) {
+
+    const events = storedBirthdays.map(reviveBirthday);
 
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // Sort incrementally

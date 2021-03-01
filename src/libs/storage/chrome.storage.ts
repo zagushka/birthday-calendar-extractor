@@ -59,7 +59,18 @@ export function storeLastBadgeClicked(): Observable<void> {
   }, true);
 }
 
-const reviveBirthday = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
+// @TODO Add support to optionally convert to current year and remove `reviveBirthdayThisYear`
+export const reviveBirthday = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
+  return {
+    name,
+    start: DateTime.local(2020) // use 2020 since date was originally from 2020
+      .set({ordinal}), // Set ordinal of 2020
+    // .set({year: DateTime.local().year}), // Convert to current year
+    href: 'https://facebook.com/' + hrefPartial,
+  };
+};
+
+export const reviveBirthdayThisYear = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
   return {
     name,
     start: DateTime.local(2020) // use 2020 since date was originally from 2020
@@ -130,17 +141,16 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case 'scanning':
     case 'scanSuccess':
     case 'location':
-    case 'wizardsSettings': {
+    case 'birthdays':
+    case 'wizardsSettings':
       return value ?? DEFAULT_SETTINGS[key];
-    }
 
-    case 'badgeVisited': {
+    case 'badgeVisited':
       return value && DateTime.fromMillis(value) || DEFAULT_SETTINGS[key];
-    }
 
-    case 'birthdays': {
-      return value && value.map((event: StoredBirthday) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
-    }
+    // case 'birthdays': {
+    //   return value && value.map((event: StoredBirthday) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
+    // }
 
     default:
       return undefined;
@@ -191,17 +201,18 @@ export function storeUserSettings(settings: Partial<Settings>, wait?: boolean) {
           case 'scanSuccess':
           case 'location':
           case 'wizardsSettings':
+          case 'birthdays':
             return update(accumulator, {[key]: {$set: settings[key]}});
 
           case 'badgeVisited':
             return update(accumulator, {[key]: {$set: settings[key].toMillis()}});
 
-          case 'birthdays':
-            return update(accumulator, {
-              [key]: {
-                $set: settings[key].map((event) => decayBirthday(event)),
-              },
-            });
+          // case 'birthdays':
+          //   return update(accumulator, {
+          //     [key]: {
+          //       $set: settings[key].map((event) => decayBirthday(event)),
+          //     },
+          //   });
           default:
             throw new Error(`Should not have ${key} key`);
         }

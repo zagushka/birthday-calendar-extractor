@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { ScanErrorPayload } from '../events/executed-script.types';
 
 export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
-export type StoredBirthday = [string, number, string];
+export type StoredBirthday = [string, number, string]; // [name, ordinal, userId]
 
 export interface RestoredBirthday {
   name: string;
@@ -32,7 +32,7 @@ export interface Settings {
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
   badgeVisited: DateTime;
-  birthdays: Array<RestoredBirthday>;
+  birthdays: Array<StoredBirthday>;
 }
 
 export interface StoredSettings {

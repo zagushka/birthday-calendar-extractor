@@ -6,7 +6,10 @@ import {
 } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { retrieveUserSettings } from './storage/chrome.storage';
-import { RestoredBirthday } from './storage/storaged.types';
+import {
+  RestoredBirthday,
+  StoredBirthday,
+} from './storage/storaged.types';
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url
@@ -73,7 +76,7 @@ export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, 
   return result;
 }
 
-export function getBirthdaysList(): Observable<Array<RestoredBirthday>> {
+export function getBirthdaysList(): Observable<Array<StoredBirthday>> {
   return retrieveUserSettings(['birthdays', 'activated'])
     .pipe(
       switchMap(({birthdays, activated}) => {

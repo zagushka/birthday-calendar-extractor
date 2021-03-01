@@ -5,7 +5,8 @@ import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
-import { RestoredBirthday } from '../storage/storaged.types';
+import { reviveBirthday } from '../storage/chrome.storage';
+import { StoredBirthday } from '../storage/storaged.types';
 
 export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   readonly filename: string = 'birthday-calendar.json';
@@ -25,10 +26,11 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   }
 
   generateCalendar(
-    events: Array<RestoredBirthday>,
+    storedBirthdays: Array<StoredBirthday>,
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {
+    const events = storedBirthdays.map(reviveBirthday);
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear);
     return JSON.stringify(this.generateEvents(preparedEvents));
   }

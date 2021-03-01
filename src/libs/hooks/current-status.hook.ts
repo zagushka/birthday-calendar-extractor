@@ -14,8 +14,8 @@ import {
   retrieveUserSettings,
 } from '../storage/chrome.storage';
 import {
-  RestoredBirthday,
   Settings,
+  StoredBirthday,
   WizardsSettings,
 } from '../storage/storaged.types';
 
@@ -30,7 +30,7 @@ export function useCurrentStatus() {
   const [modal, setModal] = useState<ScanErrorPayload>(); // is Error
   const [isScanning, setIsScanning] = useState<boolean>(); // is Scanning in process
   const [isScanSucceed, setIsScanSucceed] = useState<boolean>(); // Flag to mark failed or successful scan
-  const [users, setUsers] = useState<Array<RestoredBirthday>>();
+  const [users, setUsers] = useState<Array<StoredBirthday>>();
 
   useEffect(() => {
     const onDestroy$ = new Subject<boolean>();

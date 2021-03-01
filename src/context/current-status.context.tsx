@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { ScanErrorPayload } from '../libs/events/executed-script.types';
 import { useCurrentStatus } from '../libs/hooks/current-status.hook';
 import {
-  RestoredBirthday,
+  StoredBirthday,
   WizardsSettings,
 } from '../libs/storage/storaged.types';
 
@@ -14,7 +14,7 @@ interface CurrentStatusContextInterface {
   isActive: boolean;
   isScanning: boolean;
   isScanSucceed: boolean;
-  users: Array<RestoredBirthday>;
+  users: Array<StoredBirthday>;
   wizardsSettings: WizardsSettings;
 }
 

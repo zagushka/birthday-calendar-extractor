@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import {
   filterBirthdaysForDate,
   retrieveUserSettings,
+  reviveBirthdayThisYear,
 } from './storage/chrome.storage';
 
 /**
@@ -18,7 +19,7 @@ export function updateBadge(): void {
 
       // Update default badge value and color if functionality is active
       if (activated) {
-        const filteredBirthdays = filterBirthdaysForDate(birthdays, DateTime.local());
+        const filteredBirthdays = filterBirthdaysForDate(birthdays.map(reviveBirthdayThisYear), DateTime.local());
         badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
         badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
       }

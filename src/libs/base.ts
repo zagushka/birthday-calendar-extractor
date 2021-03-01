@@ -1,5 +1,5 @@
 import { PreparedEvent } from './lib';
-import { RestoredBirthday } from './storage/storaged.types';
+import { StoredBirthday } from './storage/storaged.types';
 
 export abstract class CalendarBase<Formatted, GeneratedEvent, GeneratedCalendar> {
   abstract readonly filename: string;
@@ -7,7 +7,7 @@ export abstract class CalendarBase<Formatted, GeneratedEvent, GeneratedCalendar>
 
   abstract save(calendarData: GeneratedCalendar): void;
 
-  abstract generateCalendar(events: Array<RestoredBirthday>, fromYear?: number, tillYear?: number): GeneratedCalendar;
+  abstract generateCalendar(events: Array<StoredBirthday>, fromYear?: number, tillYear?: number): GeneratedCalendar;
 
   abstract generateEvent(event: PreparedEvent): GeneratedEvent;
 

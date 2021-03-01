@@ -26,6 +26,7 @@ import {
   VariableSizeList,
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
+import { reviveBirthdayThisYear } from '../../libs/storage/chrome.storage';
 import Layout from '../layout/layout';
 import { useBirthdaysListStyles } from './birthdays-list.styles';
 import {
@@ -52,7 +53,8 @@ const BirthdaysList: FunctionComponent = () => {
 
   useEffect(() => {
     // Prepare birthdays
-    const grouped = groupUsersByOrdinal(rawUsers);
+    const revivedUsers = rawUsers.map(reviveBirthdayThisYear);
+    const grouped = groupUsersByOrdinal(revivedUsers);
     const itemsMap = mapGroupedUsersToDisplayItemDimensions(grouped);
 
     setUsers({userGroups: grouped, usersMap: itemsMap});

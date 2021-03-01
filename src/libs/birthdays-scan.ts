@@ -28,7 +28,7 @@ import {
   retrieveUserSettings,
   storeUserSettings,
 } from './storage/chrome.storage';
-import { RestoredBirthday } from './storage/storaged.types';
+import { StoredBirthday } from './storage/storaged.types';
 
 /**
  * Check provided string match any facebook url pattern
@@ -120,12 +120,12 @@ export const sendScanLog = (str: string, reps: Array<string> = []) => {
  * RestoredBirthday have basic information extracted from parsed html, such as
  * facebook id, user name, and birthdate
  */
-function scannedUserToRestoredBirthday(raw: RawScannedUser): RestoredBirthday {
-  return {
-    name: raw.name,
-    start: DateTime.local(2020, raw.birthdate.month, raw.birthdate.day).set({year: DateTime.local().year}),
-    href: 'https://facebook.com/' + raw.id,
-  };
+function scannedUserToDecayedBirthday(raw: RawScannedUser): StoredBirthday {
+  return [
+    raw.name,
+    DateTime.local(2020, raw.birthdate.month, raw.birthdate.day).ordinal,
+    raw.id,
+  ];
 }
 
 export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
@@ -134,11 +134,11 @@ export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
       // Merge with stored birthdays
       tap(() => sendScanLog('SCAN_LOG_MERGING_BIRTHDAYS')),
       map(({birthdays: oldBirthdays}) => {
-        const birthdays = rawUsers.map(scannedUserToRestoredBirthday);
+        const birthdays = rawUsers.map(scannedUserToDecayedBirthday);
         // Merge old birthdays and new birthdays converted to arrays for Map'ping
-        const nonUniques: Array<[string, RestoredBirthday]> =
-          birthdays.map<[string, RestoredBirthday]>(b => [b.href, b])
-            .concat(oldBirthdays.map(b => [b.href, b]));
+        const nonUniques: Array<[string, StoredBirthday]> =
+          birthdays.map<[string, StoredBirthday]>(b => [b[2], b])
+            .concat(oldBirthdays.map(b => [b[2], b]));
 
         // Map  birthdays to remove duplicates, older values survive
         return Array.from((new Map(nonUniques)).values());

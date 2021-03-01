@@ -6,9 +6,10 @@ import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
+import { reviveBirthdayThisYear } from '../storage/chrome.storage';
 import {
   CsvSettings,
-  RestoredBirthday,
+  StoredBirthday,
 } from '../storage/storaged.types';
 
 interface CsvFormattedEvent {
@@ -39,7 +40,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
   }
 
   generateCalendar(
-    events: Array<RestoredBirthday>,
+    storedBirthdays: Array<StoredBirthday>,
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {
@@ -47,6 +48,9 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     /**
      * Prepare Events
      */
+
+    const events = storedBirthdays.map(reviveBirthdayThisYear);
+
     const currentDateTime = DateTime.utc().set({hour: 0, second: 0, minute: 0, millisecond: 0});
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // csv requires past birthdays to be converted to future
