@@ -13,22 +13,18 @@ import React, {
   useContext,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { LoadingContext } from '../../../context/loading.context';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
-import { createCalendarCsv } from '../../../libs/events/actions';
-import { sendMessage } from '../../../libs/events/events';
+import { downloadCalendar } from '../../../libs/download-calendar';
+import { CREATE_CALENDAR_CSV } from '../../../libs/events/types';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 import { CsvDateFormats } from '../../../libs/storage/storaged.types';
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
-  const {startLoading, stopLoading} = useContext(LoadingContext);
-  const {wizardsSettings: settings} = useContext(CurrentStatusContext);
+  const {wizardsSettings: settings, users} = useContext(CurrentStatusContext);
 
   const startGeneration = () => {
-    const loaderName = startLoading();
-    sendMessage(createCalendarCsv(settings.csv.format))
-      .subscribe(() => stopLoading(loaderName));
+    downloadCalendar(CREATE_CALENDAR_CSV, users, settings.csv);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

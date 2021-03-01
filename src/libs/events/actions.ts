@@ -1,8 +1,4 @@
 import {
-  CsvDateFormats,
-  IcsSettings,
-} from '../storage/storaged.types';
-import {
   ActionTypes,
   ALARM_NEW_DAY,
   AlarmTypes,
@@ -12,11 +8,6 @@ import {
   BIRTHDAYS_SCAN_COMPLETE,
   BIRTHDAYS_START_SCAN,
   BirthdaysExtractionActionTypes,
-  CREATE_CALENDAR_CSV,
-  CREATE_CALENDAR_DELETE_ICS,
-  CREATE_CALENDAR_ICS,
-  CREATE_CALENDAR_JSON,
-  CreateCalendarActionTypes,
   DISABLE_BADGE_NOTIFICATION,
   ENABLE_BADGE_NOTIFICATION,
   NotificationActionTypes,
@@ -56,33 +47,6 @@ export function disableBadgeNotifications(): BadgeNotificationActionTypes {
 export function updateBadgeAction(): BadgeActionTypes {
   return {
     type: UPDATE_BADGE,
-  };
-}
-
-export function createCalendarCsv(format: CsvDateFormats): CreateCalendarActionTypes {
-  return {
-    type: CREATE_CALENDAR_CSV,
-    payload: {format},
-  };
-}
-
-export function createCalendarIcs(settings: IcsSettings): CreateCalendarActionTypes {
-  return {
-    type: CREATE_CALENDAR_ICS,
-    payload: settings,
-  };
-}
-
-export function createCalendarDeleteIcs(settings: IcsSettings): CreateCalendarActionTypes {
-  return {
-    type: CREATE_CALENDAR_DELETE_ICS,
-    payload: settings,
-  };
-}
-
-export function createCalendarJson(): CreateCalendarActionTypes {
-  return {
-    type: CREATE_CALENDAR_JSON,
   };
 }
 

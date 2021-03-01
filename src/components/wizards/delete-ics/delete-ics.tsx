@@ -6,24 +6,18 @@ import React, {
   useContext,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { LoadingContext } from '../../../context/loading.context';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
-import { createCalendarDeleteIcs } from '../../../libs/events/actions';
-import { sendMessage } from '../../../libs/events/events';
+import { downloadCalendar } from '../../../libs/download-calendar';
+import { CREATE_CALENDAR_DELETE_ICS } from '../../../libs/events/types';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 import { IcsSettings } from '../../../libs/storage/storaged.types';
 
 const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
-  const {startLoading, stopLoading} = useContext(LoadingContext);
-  const {wizardsSettings: settings} = useContext(CurrentStatusContext);
+  const {wizardsSettings: settings, users} = useContext(CurrentStatusContext);
 
   const startGeneration = () => {
-    const loaderName = startLoading();
-    sendMessage(
-      createCalendarDeleteIcs({groupEvents: settings.ics.groupEvents}),
-    )
-      .subscribe(() => stopLoading(loaderName));
+    downloadCalendar(CREATE_CALENDAR_DELETE_ICS, users, settings.ics);
   };
 
   const handleChange: <K extends keyof IcsSettings>(property: K) => any = (property) => (event: React.ChangeEvent<HTMLInputElement>) => {
