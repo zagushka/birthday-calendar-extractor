@@ -14,7 +14,7 @@ import { CurrentStatusContext } from '../../context/current-status.context';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import BirthdaysList from '../birthdays-list/birthdays-list';
 import DevTools from '../dev-tools';
-import { FirstScan } from '../first-scan';
+import { Scan } from '../scan/scan';
 import SwitchModals from '../modals/switch-modals';
 import SelectWizard from '../wizards/select-wizard';
 
@@ -44,7 +44,7 @@ const UserSettings: FunctionComponent = () => {
       <SwitchModals/>
       <Switch>
         <Route path='/activate'>
-          <FirstScan/>
+          <Scan/>
         </Route>
         <Route path='/export/:action?'>
           <SelectWizard/>

@@ -20,24 +20,14 @@ import clsx from 'clsx';
 import React, {
   FunctionComponent,
   useContext,
-  useEffect,
-  useState,
 } from 'react';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { CurrentStatusContext } from '../context/current-status.context';
-import { translateString } from '../filters/translateString';
-import { BirthdaysStartScan } from '../libs/events/actions';
-import {
-  listenTo,
-  sendMessage,
-} from '../libs/events/events';
-import { SEND_SCAN_LOG } from '../libs/events/types';
-import Layout from './layout/layout';
-
-const startScanHandler = () => {
-  sendMessage(BirthdaysStartScan(), true);
-};
+import { CurrentStatusContext } from '../../context/current-status.context';
+import { translateString } from '../../filters/translateString';
+import { BirthdaysStartScan } from '../../libs/events/actions';
+import { sendMessage } from '../../libs/events/events';
+import { useWasOnOff } from '../../libs/hooks/on-and-offs.hook';
+import { useScanLogListener } from '../../libs/hooks/scan-log-listener.hook';
+import Layout from '../layout/layout';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,60 +59,29 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const FirstScan: FunctionComponent = () => {
+export const Scan: FunctionComponent = () => {
   const classes = useStyles();
 
   const {isScanning, isScanSucceed, isActive} = useContext(CurrentStatusContext);
-  const [log, setLog] = useState<string>();
-  const [success, setSuccess] = useState<boolean>();
+  const log = useScanLogListener();
+  const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
+
+  const startScanHandler = () => {
+    resetWasScanningAndDone();
+    sendMessage(BirthdaysStartScan(), true);
+  };
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success && isScanSucceed,
-    [classes.buttonFail]: success && !isScanSucceed,
+    [classes.buttonSuccess]: wasScanningAndDone && isScanSucceed,
+    [classes.buttonFail]: wasScanningAndDone && !isScanSucceed,
   });
 
-  useEffect(() => {
-    if ('undefined' === typeof success && !isScanning) {
-      setSuccess(false);
-      return;
-    }
-
-    if (!isScanning) {
-      setSuccess(true);
-    }
-
-  }, [isScanning]);
-
-  useEffect(() => {
-    const onDestroy$ = new Subject<boolean>();
-    // Start listening to scan logs
-    listenTo(SEND_SCAN_LOG)
-      .pipe(takeUntil(onDestroy$))
-      .subscribe(({action}) => {
-        if (SEND_SCAN_LOG === action.type) {
-          setLog(translateString(action.payload.messageName, action.payload.substitutions));
-        }
-      });
-
-    // // Check this is a facebook page and display modal error
-    // getFacebookTab()
-    //   .subscribe({
-    //     error: error => storeUserSettings({modal: error}),
-    //   });
-
-    // Stop listening to scan logs
-    return () => {
-      onDestroy$.next(true);
-      onDestroy$.complete();
-    };
-  }, []);
-
-  const activeButtons = {birthdays: !isActive, export: !isActive || isScanning};
-  const activeTooltips = {export: isActive && success && isScanSucceed};
+  const disabledButtons = {birthdays: !isActive, export: isScanning};
+  const activeTooltips = {export: isActive && wasScanningAndDone && isScanSucceed};
 
   return (
     <Layout.Wrapper>
-      <Layout.Header disabledButtons={activeButtons} tooltipButtons={activeTooltips}>
+      <Layout.Header disabledButtons={disabledButtons} tooltipButtons={activeTooltips}>
         <Box>Scan Birthdays</Box>
       </Layout.Header>
 
@@ -144,9 +103,9 @@ export const FirstScan: FunctionComponent = () => {
               className={buttonClassname}
               disabled={isScanning}
               onClick={startScanHandler}
-              startIcon={success ? (isScanSucceed ? <Done/> : <Error/>) : <PlayArrow/>}
+              startIcon={wasScanningAndDone ? (isScanSucceed ? <Done/> : <Error/>) : <PlayArrow/>}
             >
-              Start scan
+              {translateString('START_SCAN')}
             </Button>
             {isScanning && <CircularProgress size={24} className={classes.buttonProgress}/>}
           </div>

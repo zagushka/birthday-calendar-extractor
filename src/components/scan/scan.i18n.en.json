@@ -1,0 +1,6 @@
+{
+  "START_SCAN": {
+    "message": "Start scan",
+    "description": "Button tile to initiate scan process"
+  }
+}
