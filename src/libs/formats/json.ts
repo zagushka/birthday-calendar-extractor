@@ -1,4 +1,3 @@
-import * as FileSaver from 'file-saver';
 import { DateTime } from 'luxon';
 import { CalendarBase } from '../base';
 import {
@@ -13,8 +12,14 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   readonly fileMimeType: string = 'application/json; charset=UTF-8';
 
   save(calendarData: string) {
-    const blob = new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType});
-    FileSaver.saveAs(blob, this.filename, {autoBom: true});
+    const url = URL.createObjectURL(
+      new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType}),
+    );
+    chrome.downloads.download({url, filename: this.filename},
+      (err) => {
+        console.log('Error downloading file ', err, chrome.runtime.lastError);
+      },
+    );
   }
 
   formatEvent(event: PreparedEvent) {
