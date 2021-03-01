@@ -1,6 +1,6 @@
 import { Location } from 'history';
 import React, { FunctionComponent } from 'react';
-import { ScanErrorPayload } from '../libs/events/executed-script.types';
+import { ShowModalAction } from '../libs/events/types';
 import { useCurrentStatus } from '../libs/hooks/current-status.hook';
 import {
   StoredBirthday,
@@ -10,7 +10,7 @@ import {
 interface CurrentStatusContextInterface {
   initDone: boolean;
   location: Location;
-  modal: ScanErrorPayload;
+  modal: ShowModalAction;
   isActive: boolean;
   isScanning: boolean;
   isScanSucceed: boolean;

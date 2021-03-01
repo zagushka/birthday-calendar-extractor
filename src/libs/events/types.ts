@@ -3,7 +3,10 @@ import {
   CsvSettings,
   IcsSettings,
 } from '../storage/storaged.types';
-import { ExecutedScriptTypes } from './executed-script.types';
+import {
+  ExecutedScriptTypes,
+  ScanErrorTypes,
+} from './executed-script.types';
 
 export const SEND_ERROR = 'SEND_ERROR'; // Send error message
 export const SEND_GENERATION_STATUS = 'SEND_GENERATION_STATUS'; // Send result of generation process
@@ -33,6 +36,16 @@ export const SEND_SCAN_LOG = 'SEND_SCAN_LOG';
 // NOTIFICATIONS
 export const BADGE_CLICKED = 'BADGE_CLICKED';
 export const ALARM_NEW_DAY = 'ALARM_NEW_DAY';
+
+// MODALS
+export const SHOW_MODAL_SCANNING = 'SHOW_MODAL_SCANNING';
+
+export type ShowModalTypes = typeof SHOW_MODAL_SCANNING;
+
+export interface ShowModalAction {
+  type: ScanErrorTypes | ShowModalTypes;
+  error?: any;
+}
 
 interface SendErrorAction {
   type: typeof SEND_ERROR;

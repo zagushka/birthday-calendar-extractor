@@ -13,12 +13,12 @@ import React, {
 import handleLink from '../../../filters/handleLink';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
-import { ScanErrorPayload } from '../../../libs/events/executed-script.types';
+import { ShowModalAction } from '../../../libs/events/types';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 
 const handleClose = () => storeUserSettings({modal: null});
 
-const GeneralErrorModal: FunctionComponent<{ error: ScanErrorPayload }> = ({error}) => {
+const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error}) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const errorMessage = btoa(JSON.stringify(error));

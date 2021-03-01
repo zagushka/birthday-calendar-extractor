@@ -8,7 +8,7 @@ import {
   Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ScanErrorPayload } from '../events/executed-script.types';
+import { ShowModalAction } from '../events/types';
 import {
   listenToUserSettings,
   retrieveUserSettings,
@@ -27,7 +27,7 @@ export function useCurrentStatus() {
   const [location, setLocation] = useState<Location>();
   const [wizardsSettings, setWizardsSettings] = useState<WizardsSettings>();
   const [isActive, setIsActive] = useState<boolean>(); // is Active
-  const [modal, setModal] = useState<ScanErrorPayload>(); // is Error
+  const [modal, setModal] = useState<ShowModalAction>(); // is Error
   const [isScanning, setIsScanning] = useState<boolean>(); // is Scanning in process
   const [isScanSucceed, setIsScanSucceed] = useState<boolean>(); // Flag to mark failed or successful scan
   const [users, setUsers] = useState<Array<StoredBirthday>>();

@@ -1,6 +1,6 @@
 import { Location } from 'history';
 import { DateTime } from 'luxon';
-import { ScanErrorPayload } from '../events/executed-script.types';
+import { ShowModalAction } from '../events/types';
 
 export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
 export type StoredBirthday = [string, number, string]; // [name, ordinal, userId]
@@ -26,7 +26,7 @@ export interface WizardsSettings {
 
 export interface Settings {
   location: Location;
-  modal: ScanErrorPayload;
+  modal: ShowModalAction;
   activated: boolean;
   scanning: boolean;
   scanSuccess: boolean;
@@ -37,7 +37,7 @@ export interface Settings {
 
 export interface StoredSettings {
   location: Location;
-  modal: ScanErrorPayload;
+  modal: ShowModalAction;
   activated: boolean;
   scanning: boolean;
   scanSuccess: boolean;
