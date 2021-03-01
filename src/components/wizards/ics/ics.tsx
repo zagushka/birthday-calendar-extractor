@@ -1,31 +1,44 @@
 import { Button } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import update from 'immutability-helper';
 import React, {
   FunctionComponent,
   useContext,
+  useEffect,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { downloadCalendar } from '../../../libs/download-calendar';
+import { BirthdaysStartScan } from '../../../libs/events/actions';
+import { sendMessage } from '../../../libs/events/events';
 import { CREATE_CALENDAR_ICS } from '../../../libs/events/types';
-import { storeUserSettings } from '../../../libs/storage/chrome.storage';
-import { IcsSettings } from '../../../libs/storage/storaged.types';
+import { useWasOnOff } from '../../../libs/hooks/on-and-offs.hook';
 
 const IcsGeneratorWizard: FunctionComponent = (props) => {
-  const {wizardsSettings: settings, users} = useContext(CurrentStatusContext);
+  const {wizardsSettings: settings, users, isActive, isScanSucceed, isScanning} = useContext(CurrentStatusContext);
+  const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
+
+  useEffect(() => {
+    if (wasScanningAndDone && isScanSucceed) {
+      downloadCalendar(CREATE_CALENDAR_ICS, users, settings.ics);
+    }
+  }, [wasScanningAndDone, isScanSucceed]);
 
   const startGeneration = () => {
-    downloadCalendar(CREATE_CALENDAR_ICS, users, settings.ics);
+    if (!isActive) {
+      resetWasScanningAndDone();
+      sendMessage(BirthdaysStartScan(), true);
+    } else {
+      downloadCalendar(CREATE_CALENDAR_ICS, users, settings.ics);
+    }
   };
 
-  const handleChange: <K extends keyof IcsSettings>(property: K) => any = (property) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value: boolean = event.target.checked;
-    const wizardSettings = update(settings, {ics: {[property]: {$set: value}}});
-    // Store updated settings
-    storeUserSettings({wizardsSettings: wizardSettings});
-  };
+  // const handleChange: <K extends keyof IcsSettings>(property: K) => any = (property) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value: boolean = event.target.checked;
+  //   const wizardSettings = update(settings, {ics: {[property]: {$set: value}}});
+  //   // Store updated settings
+  //   storeUserSettings({wizardsSettings: wizardSettings});
+  // };
 
   if (!settings) {
     return (<></>);
@@ -44,7 +57,13 @@ const IcsGeneratorWizard: FunctionComponent = (props) => {
       {/*  </FormGroup>*/}
       {/*</FormControl>*/}
       <Box display='flex' justifyContent='flex-end'>
-        <Button size='small' variant='contained' color='primary' onClick={startGeneration}>{translateString('GENERATE')}</Button>
+        <Button size='small'
+                variant='contained'
+                color='primary'
+                disabled={isScanning}
+                onClick={startGeneration}>
+          {translateString('GENERATE')}
+        </Button>
       </Box>
     </Box>
   );
