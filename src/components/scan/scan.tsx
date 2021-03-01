@@ -63,11 +63,12 @@ export const Scan: FunctionComponent = () => {
   const classes = useStyles();
 
   const {isScanning, isScanSucceed, isActive} = useContext(CurrentStatusContext);
-  const log = useScanLogListener();
+  const [log, resetLog] = useScanLogListener(1);
   const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
 
   const startScanHandler = () => {
     resetWasScanningAndDone();
+    resetLog();
     sendMessage(BirthdaysStartScan(), true);
   };
 
