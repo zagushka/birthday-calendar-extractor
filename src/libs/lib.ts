@@ -51,7 +51,7 @@ export function prepareEvent(event: RestoredBirthday, year: number): PreparedEve
     start: start,
     end: start.plus({days: 1}),
     href: event.href,
-    uid: window.btoa(event.href),
+    uid: btoa(event.href),
   };
 }
 
