@@ -11,17 +11,6 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
   readonly filename: string = 'birthday-calendar.json';
   readonly fileMimeType: string = 'application/json; charset=UTF-8';
 
-  save(calendarData: string) {
-    const url = URL.createObjectURL(
-      new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType}),
-    );
-    chrome.downloads.download({url, filename: this.filename},
-      (err) => {
-        console.log('Error downloading file ', err, chrome.runtime.lastError);
-      },
-    );
-  }
-
   formatEvent(event: PreparedEvent) {
     return {
       name: event.name,

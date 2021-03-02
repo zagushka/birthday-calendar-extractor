@@ -42,17 +42,6 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
     super();
   }
 
-  save(calendarData: string) {
-    const url = URL.createObjectURL(
-      new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType}),
-    );
-    chrome.downloads.download({url, filename: this.filename},
-      (err) => {
-        console.log('Error downloading file ', err, chrome.runtime.lastError);
-      },
-    );
-  }
-
   formatEvent(event: PreparedEvent) {
     /**
      * The date with local time form is simply a DATE-TIME value that does not contain the UTC designator nor does it reference a time zone.

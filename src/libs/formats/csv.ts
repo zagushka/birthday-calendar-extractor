@@ -25,17 +25,6 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     super();
   }
 
-  save(calendarData: string) {
-    const url = URL.createObjectURL(
-      new Blob([calendarData], {endings: 'transparent', type: this.fileMimeType}),
-    );
-    chrome.downloads.download({url, filename: this.filename},
-      (err) => {
-        console.log('Error downloading file ', err, chrome.runtime.lastError);
-      },
-    );
-  }
-
   formatEvent(event: PreparedEvent): CsvFormattedEvent {
     return {
       name: event.name,
