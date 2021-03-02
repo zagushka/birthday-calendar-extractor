@@ -16,9 +16,15 @@ import {
   SCAN_ERROR_NO_TOKEN_DETECTED,
   SCAN_ERROR_TIMEOUT,
 } from '../../libs/events/executed-script.types';
+import {
+  SHOW_MODAL_EXPORT_SUCCESS,
+  SHOW_MODAL_SCANNING,
+} from '../../libs/events/types';
+import DoneModal from './done.modal';
 import FacebookRequiredModal from './facebook-required/facebook-required';
 import GeneralErrorModal from './general-error/general-error.modal';
 import NoTokenDetectedModal from './no-token-detected/no-token-detected';
+import ScanningModal from './scanning/scanning.modal';
 
 const SwitchModals: FunctionComponent = (props) => {
 
@@ -31,6 +37,12 @@ const SwitchModals: FunctionComponent = (props) => {
     }
 
     switch (modal.type) {
+      case SHOW_MODAL_SCANNING:
+        return setModalDialog(<ScanningModal/>);
+
+      case SHOW_MODAL_EXPORT_SUCCESS:
+        return setModalDialog(<DoneModal/>);
+
       case SCAN_ERROR_FACEBOOK_REQUIRED:
         return setModalDialog(<FacebookRequiredModal/>);
 

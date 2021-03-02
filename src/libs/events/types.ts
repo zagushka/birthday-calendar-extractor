@@ -39,8 +39,9 @@ export const ALARM_NEW_DAY = 'ALARM_NEW_DAY';
 
 // MODALS
 export const SHOW_MODAL_SCANNING = 'SHOW_MODAL_SCANNING';
+export const SHOW_MODAL_EXPORT_SUCCESS = 'SHOW_MODAL_EXPORT_SUCCESS';
 
-export type ShowModalTypes = typeof SHOW_MODAL_SCANNING;
+export type ShowModalTypes = typeof SHOW_MODAL_SCANNING | typeof SHOW_MODAL_EXPORT_SUCCESS;
 
 export interface ShowModalAction {
   type: ScanErrorTypes | ShowModalTypes;
