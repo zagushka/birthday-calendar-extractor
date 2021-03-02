@@ -16,10 +16,15 @@ import React, {
 import { CurrentStatusContext } from '../../../context/current-status.context';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
-import { downloadCalendar } from '../../../libs/download-calendar';
 import { BirthdaysStartScan } from '../../../libs/events/actions';
 import { sendMessage } from '../../../libs/events/events';
-import { CREATE_CALENDAR_CSV } from '../../../libs/events/types';
+import { SCAN_ERROR_GENERAL } from '../../../libs/events/executed-script.types';
+import {
+  CREATE_CALENDAR_CSV,
+  SHOW_MODAL_EXPORT_SUCCESS,
+  SHOW_MODAL_SCANNING,
+} from '../../../libs/events/types';
+import { useCalendarDownloader } from '../../../libs/hooks/download-calendar.hook';
 import { useWasOnOff } from '../../../libs/hooks/on-and-offs.hook';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 import { CsvDateFormats } from '../../../libs/storage/storaged.types';
@@ -28,18 +33,33 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
   const {wizardsSettings: settings, users, isActive, isScanSucceed, isScanning} = useContext(CurrentStatusContext);
   const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
 
+  const {error, result, startDownload} = useCalendarDownloader(CREATE_CALENDAR_CSV, users, settings.csv);
+
+  useEffect(() => {
+    if ('success' === result) {
+      storeUserSettings({modal: {type: SHOW_MODAL_EXPORT_SUCCESS}});
+    }
+  }, [result]);
+
+  useEffect(() => {
+    if (!!error) {
+      storeUserSettings({modal: {type: SCAN_ERROR_GENERAL, error}});
+    }
+  }, [error]);
+
   useEffect(() => {
     if (wasScanningAndDone && isScanSucceed) {
-      downloadCalendar(CREATE_CALENDAR_CSV, users, settings.csv);
+      startDownload();
     }
   }, [wasScanningAndDone, isScanSucceed]);
 
   const startGeneration = () => {
     if (!isActive) {
       resetWasScanningAndDone();
+      storeUserSettings({modal: {type: SHOW_MODAL_SCANNING}});
       sendMessage(BirthdaysStartScan(), true);
     } else {
-      downloadCalendar(CREATE_CALENDAR_CSV, users, settings.csv);
+      startDownload();
     }
   };
 
