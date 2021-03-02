@@ -45,3 +45,33 @@ export function useWasOnOff(trigger: boolean): [boolean, () => void] {
 
   return [value, reset];
 }
+
+export type ChainStatusType = 'on' | 'off' | 'pending';
+const chainStatuses: Record<ChainStatusType, ChainStatusType> = {
+  'pending': 'on',
+  'on': 'off',
+  'off': 'pending',
+};
+
+/**
+ * The idea behind the chainStatus is the state that can be changed only in cycle
+ * 'on' -> 'off' -> 'pending' -> 'on' -> 'off'
+ *
+ */
+export function useChainStatus(): [ChainStatusType, (status: ChainStatusType) => boolean, () => void] {
+  const [switchStatus, setSwitchStatus] = useState<ChainStatusType>('pending');
+
+  function reset() {
+    setSwitchStatus('pending');
+  }
+
+  function update(status: ChainStatusType) {
+    if (chainStatuses[switchStatus] === status) {
+      setSwitchStatus(status);
+      return true;
+    }
+    return false;
+  }
+
+  return [switchStatus, update, reset];
+}
