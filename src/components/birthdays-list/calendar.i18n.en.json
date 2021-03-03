@@ -1,0 +1,10 @@
+{
+  "BUTTON_TO_DOWNLOADS_TITLE": {
+    "message": "Export Birthdays",
+    "description": ""
+  },
+  "BUTTON_TO_DOWNLOADS_TOOLTIP": {
+    "message": "Click to Download your birthday calendar",
+    "description": ""
+  }
+}
