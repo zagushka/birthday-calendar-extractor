@@ -9,7 +9,6 @@ import {
   Build,
   EventNote,
   GetApp,
-  Repeat,
 } from '@material-ui/icons';
 import React, {
   FunctionComponent,
@@ -20,7 +19,6 @@ import { NavLink } from 'react-router-dom';
 import { isDevelopment } from '../../constants';
 import {
   useLayoutStyles,
-  useTooltipStyles,
 } from './layout.styles';
 
 interface ButtonWithTooltipProps {
@@ -41,7 +39,6 @@ const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
      disabled = false,
    }) => {
     const classes = useLayoutStyles();
-    const tooltipStyles = useTooltipStyles();
     const [open, setOpen] = useState<boolean>(defaultOpen);
 
     useEffect(() => {
@@ -49,7 +46,7 @@ const ButtonWithTooltip: FunctionComponent<ButtonWithTooltipProps> =
     }, [defaultOpen]);
 
     return (
-      <Tooltip title={tooltip} arrow classes={tooltipStyles}
+      <Tooltip title={tooltip} arrow
                open={open}
                onClose={() => setOpen(false)}
                onOpen={() => setOpen(true)}
@@ -74,24 +71,24 @@ type ButtonsListType<T> = {
 };
 
 const ButtonList: Array<ButtonWithTooltipProps> = [
-  {
-    name: 'export',
-    button: <GetApp/>,
-    to: '/export/',
-    tooltip: 'Export Your Birthdays Here',
-  },
-  {
-    name: 'birthdays',
-    button: <EventNote/>,
-    to: '/calendar',
-    tooltip: 'Calendar with birthdays',
-  },
-  {
-    name: 'activate',
-    button: <Repeat/>,
-    to: '/activate',
-    tooltip: 'Scan birthdays',
-  },
+  // {
+  //   name: 'export',
+  //   button: <GetApp/>,
+  //   to: '/export',
+  //   tooltip: 'Export Your Birthdays Here',
+  // },
+  // {
+  //   name: 'birthdays',
+  //   button: <EventNote/>,
+  //   to: '/calendar',
+  //   tooltip: 'Calendar with birthdays',
+  // },
+  // // {
+  // //   name: 'activate',
+  // //   button: <Repeat/>,
+  // //   to: '/activate',
+  // //   tooltip: 'Scan birthdays',
+  // // },
 ];
 
 if (isDevelopment) {

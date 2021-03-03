@@ -14,8 +14,8 @@ import { CurrentStatusContext } from '../../context/current-status.context';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import BirthdaysList from '../birthdays-list/birthdays-list';
 import DevTools from '../dev-tools';
-import { Scan } from '../scan/scan';
 import SwitchModals from '../modals/switch-modals';
+import { Scan } from '../scan/scan';
 import SelectWizard from '../wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
@@ -49,9 +49,10 @@ const UserSettings: FunctionComponent = () => {
         <Route path='/export/:action?'>
           <SelectWizard/>
         </Route>
-        <Route exact path='/calendar'>
-          {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
+        {isActive && <Route exact path='/calendar'>
+          <BirthdaysList/>
         </Route>
+        }
         {isDevelopment && <Route path='/dev-tools'>
           <DevTools/>
         </Route>}

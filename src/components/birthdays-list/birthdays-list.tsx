@@ -7,6 +7,7 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
+  EventNote,
   GetApp,
   Repeat,
 } from '@material-ui/icons';
@@ -26,7 +27,9 @@ import {
   VariableSizeList,
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
+import { translateString } from '../../filters/translateString';
 import { reviveBirthdayThisYear } from '../../libs/storage/chrome.storage';
+import { CustomTooltip } from '../custom-tooltip';
 import Layout from '../layout/layout';
 import { useBirthdaysListStyles } from './birthdays-list.styles';
 import {
@@ -139,31 +142,19 @@ const BirthdaysList: FunctionComponent = () => {
         </VariableSizeList>
         }
       </Layout.Content>
-      <Layout.Footer display={'flex'} justifyContent={'flex-start'}>
-        <Box>
+      <Layout.Footer display={'flex'} justifyContent={'center'}>
+        <CustomTooltip title={translateString('BUTTON_TO_DOWNLOADS_TOOLTIP')}>
           <Button
             size='small'
             color='primary'
-            variant={'contained'}
+            variant={'outlined'}
             component={Link}
             to={'/export'}
-            startIcon={<GetApp/>}
+            startIcon={<EventNote/>}
           >
-            Export
+            {translateString('BUTTON_TO_DOWNLOADS_TITLE')}
           </Button>
-        </Box>
-        <Box pl={1}>
-          <Button
-            size='small'
-            variant={'contained'}
-            component={Link}
-            to={'/activate'}
-            startIcon={<Repeat/>}
-          >
-            Scan
-          </Button>
-        </Box>
-
+        </CustomTooltip>
       </Layout.Footer>
     </Layout.Wrapper>
   );
