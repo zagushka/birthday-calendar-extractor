@@ -24,7 +24,7 @@
     "description": "Description for report bug."
   },
   "REPORT_A_BUG_DETAILS_TEXTAREA": {
-    "message": "Script failed to scan birthdays. Error message: $message$",
+    "message": "Script failed to scan birthdays.\nError message: $message$",
     "description": "",
     "placeholders": {
       "message": {

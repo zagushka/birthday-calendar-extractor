@@ -1,6 +1,6 @@
 {
   "SCAN_ERROR_NO_TOKEN_DETECTED": {
-    "message": "Unable to fetch birthdays data, make sure you are logged into Facebook and try again.",
+    "message": "Unable to fetch birthdays data.<br/> Make sure you are logged into Facebook and try again.",
     "description": "Description for error when no token found."
   },
   "LOG_INTO_FACEBOOK_TITLE": {

@@ -1,30 +1,38 @@
 import {
   Dialog,
+  DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogContentText,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { translate } from '../../../filters/translate';
 import { useScanLogListener } from '../../../libs/hooks/scan-log-listener.hook';
-import { storeUserSettings } from '../../../libs/storage/chrome.storage';
+import {
+  DialogCloseButton,
+  DialogTitle,
+  handleCloseModal,
+} from '../modals.lib';
 
-const handleClose = () => storeUserSettings({modal: null});
-
-const ScanningModal: FunctionComponent = (props) => {
+const ScanningModal: FunctionComponent = () => {
   const [logs] = useScanLogListener();
 
   return (
     <Dialog
       open={true}
-      onClose={handleClose}
+      onClose={handleCloseModal}
     >
       <DialogTitle>
         {translate('MODAL_SCANNING_TITLE')}
       </DialogTitle>
 
       <DialogContent>
-        {logs.map((value, index) => <li key={index}>{value}</li>)}
+        <DialogContentText>
+          {logs.map((value, index) => <li key={index}>{value}</li>)}
+        </DialogContentText>
       </DialogContent>
+      <DialogActions>
+        <DialogCloseButton/>
+      </DialogActions>
     </Dialog>
   );
 };

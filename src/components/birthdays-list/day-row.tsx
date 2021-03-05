@@ -12,7 +12,7 @@ import { RestoredBirthday } from '../../libs/storage/storaged.types';
 import { useBirthdaysListStyles } from './birthdays-list.styles';
 import { asShortDate } from './birthdays-list.tools';
 
-const handleClick = (href: string) => (e: React.MouseEvent) => handleLink(e, href);
+const handleClick = (href: string) => (e: React.MouseEvent) => handleLink(href, {}, e);
 
 export const DayRow: NamedExoticComponent<ListChildComponentProps> = memo(({data, index, style}) => {
   const classes = useBirthdaysListStyles();

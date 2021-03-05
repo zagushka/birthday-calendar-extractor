@@ -24,8 +24,8 @@ interface LeaveFeedbackButtonProps {
 const LeaveFeedbackButton: FunctionComponent<LeaveFeedbackButtonProps> = (props) => {
   const classes = useStyles();
 
-  const handleClick = (href: string) => (e: React.MouseEvent) => {
-    handleLink(e, href, {close: true, active: true});
+  const handleClick = (e: React.MouseEvent) => {
+    handleLink('LEAVE_FEEDBACK_LINK', {close: true, active: true}, e);
     if (props.onClick) {
       props.onClick();
     }
@@ -36,7 +36,7 @@ const LeaveFeedbackButton: FunctionComponent<LeaveFeedbackButtonProps> = (props)
             color='primary'
             variant='contained'
             className={classes.success}
-            onClick={handleClick(translateString('LEAVE_FEEDBACK_LINK'))}
+            onClick={handleClick}
     >
       {translateString('LEAVE_FEEDBACK_TITLE')}
     </Button>

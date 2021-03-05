@@ -3,30 +3,31 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogContentText,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import React, {
   FunctionComponent,
   useRef,
 } from 'react';
-import handleLink from '../../../filters/handleLink';
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { ShowModalAction } from '../../../libs/events/types';
-import { storeUserSettings } from '../../../libs/storage/chrome.storage';
-
-const handleClose = () => storeUserSettings({modal: null});
+import {
+  DialogCloseButton,
+  DialogTitle,
+  handleCloseModal,
+  handleLinkClickAndCloseModal,
+} from '../modals.lib';
 
 const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error}) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
   const errorMessage = btoa(JSON.stringify(error));
 
-  const handleReportBugClick = (href: string) => (e: React.MouseEvent) => {
+  const handleReportBugClick = () => {
     copyToClipboard();
-    handleLink(e, href, {close: true, active: true});
-    handleClose();
+    handleLinkClickAndCloseModal('REPORT_A_BUG_URL');
   };
 
   const copyToClipboard = () => {
@@ -39,16 +40,23 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error
   return (
     <Dialog
       open={true}
-      onClose={handleClose}
+      onClose={handleCloseModal}
     >
-      <DialogTitle>{translate('ERROR_HEADER')}</DialogTitle>
+      <DialogTitle>
+        {translate('ERROR_HEADER')}
+      </DialogTitle>
 
       <DialogContent>
-        <p>{translate(error.type)}</p>
-        <p>{translate('REPORT_A_BUG_DESCRIPTION')}</p>
+        <Typography variant='body1' color='textSecondary' paragraph>
+          {translate(error.type)}
+        </Typography>
+        <Typography variant='body1' color='textSecondary' paragraph>
+          {translate('REPORT_A_BUG_DESCRIPTION')}
+        </Typography>
         <TextField
           inputRef={textAreaRef}
           rows={4}
+          fullWidth
           margin={'none'}
           value={translateString('REPORT_A_BUG_DETAILS_TEXTAREA', [errorMessage])}
           multiline
@@ -57,22 +65,17 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error
             readOnly: true,
           }}
         />
-        <Button size='small'
-                color='primary'
-                variant='text'
-                onClick={handleReportBugClick(translateString('REPORT_A_BUG_URL'))}
-        >
-          {translate('REPORT_A_BUG_TITLE')}
-        </Button>
       </DialogContent>
+
       <DialogActions>
         <Button size='small'
                 color='primary'
                 variant='contained'
-                onClick={handleClose}
+                onClick={handleReportBugClick}
         >
-          {translate('CLOSE')}
+          {translate('REPORT_A_BUG_TITLE')}
         </Button>
+        <DialogCloseButton/>
       </DialogActions>
 
     </Dialog>

@@ -7,18 +7,21 @@ interface LinkSettings {
   substitutions?: any;
 }
 
-const handleLink = (ev: React.MouseEvent, rawUrl: string, settings: LinkSettings = {}) => {
-  ev.preventDefault();
-  ev.stopPropagation();
-  if (!rawUrl.length) {
-    return false;
-  }
-
+const handleLink = (rawUrl: string, settings: LinkSettings, ev?: React.MouseEvent): boolean => {
   const {
     close = false,
     active = false,
     substitutions,
   } = settings;
+
+  if (ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
+  if (!rawUrl.length) {
+    return false;
+  }
 
   const url = translateString(rawUrl, substitutions) || rawUrl;
   chrome.tabs.create({url, active});
