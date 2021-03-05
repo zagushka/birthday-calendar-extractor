@@ -52,11 +52,11 @@ const UserSettings: FunctionComponent = () => {
           </Route>
 
           <Route path='/export/:action?'>
-            {isActive ? <SelectWizard/> : <Redirect to='/active'/>}
+            {isActive ? <SelectWizard/> : <Redirect to='/activate'/>}
           </Route>
 
           <Route exact path='/calendar'>
-            {isActive ? <BirthdaysList/> : <Redirect to='/active'/>}
+            {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
           </Route>
 
           {isDevelopment && <Route path='/dev-tools'>
@@ -65,7 +65,7 @@ const UserSettings: FunctionComponent = () => {
 
           <Route exact path='/'>
             {'/' === restoredLocation.pathname ?
-              <Redirect to='/activate'/> :
+              <Redirect to='/calendar'/> :
               <Redirect to={restoredLocation}/>
             }
           </Route>
