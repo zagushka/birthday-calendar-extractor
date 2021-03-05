@@ -5,8 +5,8 @@ import {
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import React, { FunctionComponent } from 'react';
-import handleLink from '../../filters/handleLink';
-import { translateString } from '../../filters/translateString';
+import handleLink from '../../../filters/handleLink';
+import { translateString } from '../../../filters/translateString';
 
 const useStyles = makeStyles((theme: Theme) => ({
   success: {
