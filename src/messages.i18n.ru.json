@@ -22,9 +22,5 @@
   "TODAY_NO_BIRTHDAYS_TITLE": {
     "message": "Сегодня нет именинников",
     "description": "Header text above list of birthdays when no birthdays for today"
-  },
-  "GENERATE": {
-    "message": "Приступить",
-    "description": "Label 'generate' button"
   }
 }

@@ -31,10 +31,6 @@
     "message": "There are no birthdays today",
     "description": "Header text above list of birthdays when no birthdays for today"
   },
-  "GENERATE": {
-    "message": "Proceed",
-    "description": "Label 'generate' button"
-  },
   "THANKS_FOR_MAKING_IT_BETTER": {
     "message": "Thank you for making this extension better!"
   }
