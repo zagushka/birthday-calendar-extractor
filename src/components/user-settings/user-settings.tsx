@@ -46,22 +46,26 @@ const UserSettings: FunctionComponent = () => {
       <SwitchModals/>
       <Layout.Wrapper>
         <Switch>
+
           <Route path='/activate'>
             <Scan/>
           </Route>
+
           <Route path='/export/:action?'>
-            <SelectWizard/>
+            {isActive ? <SelectWizard/> : <Redirect to='/active'/>}
           </Route>
-          {isActive && <Route exact path='/calendar'>
-            <BirthdaysList/>
+
+          <Route exact path='/calendar'>
+            {isActive ? <BirthdaysList/> : <Redirect to='/active'/>}
           </Route>
-          }
+
           {isDevelopment && <Route path='/dev-tools'>
             <DevTools/>
           </Route>}
+
           <Route exact path='/'>
             {'/' === restoredLocation.pathname ?
-              <Redirect to='/export'/> :
+              <Redirect to='/activate'/> :
               <Redirect to={restoredLocation}/>
             }
           </Route>
