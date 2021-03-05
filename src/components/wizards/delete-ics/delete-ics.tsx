@@ -1,5 +1,4 @@
-import { Button } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { Typography } from '@material-ui/core';
 import React, {
   FunctionComponent,
   useContext,
@@ -7,7 +6,6 @@ import React, {
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
 import { translate } from '../../../filters/translate';
-import { translateString } from '../../../filters/translateString';
 import { BirthdaysStartScan } from '../../../libs/events/actions';
 import { sendMessage } from '../../../libs/events/events';
 import { SCAN_ERROR_GENERAL } from '../../../libs/events/executed-script.types';
@@ -19,6 +17,7 @@ import {
 import { useCalendarDownloader } from '../../../libs/hooks/download-calendar.hook';
 import { useWasOnOff } from '../../../libs/hooks/on-and-offs.hook';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
+import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
 const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
   const {wizardsSettings: settings, users, isActive, isScanSucceed, isScanning} = useContext(CurrentStatusContext);
@@ -55,39 +54,21 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
     }
   };
 
-  // const handleChange: <K extends keyof IcsSettings>(property: K) => any = (property) => (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value: boolean = event.target.checked;
-  //   const wizardSettings = update(settings, {ics: {[property]: {$set: value}}});
-  //   // Store updated settings
-  //   storeUserSettings({wizardsSettings: wizardSettings});
-  // };
-
   if (!settings) {
-    return (<></>);
+    return null;
   }
 
   return (
-    <Box flexDirection='column' display='flex'>
-      <Box pb={1}>
+    <>
+      <Typography variant='body2' paragraph>
         {translate('SELECT_DELETE_ICS_DESCRIPTION')}
-      </Box>
-      {/*<FormControl size='small' component='fieldset'>*/}
-      {/*  /!*<FormLabel component='legend'>Settings</FormLabel>*!/*/}
-      {/*  <FormGroup>*/}
-      {/*    <FormControlLabel control={<Switch size='small' onChange={handleChange('groupEvents')} checked={wizards.ics.groupEvents}/>}*/}
-      {/*                      label={translateString('CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY')}/>*/}
-      {/*  </FormGroup>*/}
-      {/*</FormControl>*/}
-      <Box display='flex' justifyContent='flex-end'>
-        <Button size='small'
-                variant='contained'
-                color='primary'
-                disabled={isScanning}
-                onClick={startGeneration}>
-          {translateString('GENERATE')}
-        </Button>
-      </Box>
-    </Box>
+      </Typography>
+
+      <GenerateAndDownloadButton
+        disabled={isScanning}
+        onClick={startGeneration}
+      />
+    </>
   );
 };
 

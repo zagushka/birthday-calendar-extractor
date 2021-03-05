@@ -1,12 +1,11 @@
 import {
-  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
   Radio,
   RadioGroup,
+  Typography,
 } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import update from 'immutability-helper';
 import React, {
   FunctionComponent,
@@ -28,6 +27,7 @@ import { useCalendarDownloader } from '../../../libs/hooks/download-calendar.hoo
 import { useWasOnOff } from '../../../libs/hooks/on-and-offs.hook';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
 import { CsvDateFormats } from '../../../libs/storage/storaged.types';
+import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
   const {wizardsSettings: settings, users, isActive, isScanSucceed, isScanning} = useContext(CurrentStatusContext);
@@ -71,14 +71,15 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
   };
 
   if (!settings) {
-    return (<></>);
+    return null;
   }
 
   return (
-    <Box flexDirection='column' display='flex'>
-      <Box pb={1}>
+    <>
+      <Typography variant='body2'>
         {translate('FILE_FORMAT_CSV_DESCRIPTION')}
-      </Box>
+      </Typography>
+
       <FormControl size='small' component='fieldset'>
         <FormLabel component='legend'>{translateString('CREATE_CSV_SETTINGS_DATE_FORMAT')}</FormLabel>
         <RadioGroup row name='date-format' value={settings.csv.format} onChange={handleChange}>
@@ -92,16 +93,11 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
             label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY')}/>
         </RadioGroup>
       </FormControl>
-      <Box display='flex' justifyContent='flex-end'>
-        <Button size='small'
-                variant='contained'
-                color='primary'
-                disabled={isScanning}
-                onClick={startGeneration}>
-          {translateString('GENERATE')}
-        </Button>
-      </Box>
-    </Box>
+      <GenerateAndDownloadButton
+        disabled={isScanning}
+        onClick={startGeneration}
+      />
+    </>
   );
 };
 

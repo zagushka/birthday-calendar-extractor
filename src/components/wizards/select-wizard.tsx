@@ -34,20 +34,18 @@ const SelectWizard: FunctionComponent = () => {
         {translateString('SELECT_EXPORT_FORMAT')}
       </Layout.Header>
 
-      <Layout.Content>
-        <Box pt={1} pr={1}>
-          <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_ICS)}>
-            <IcsGeneratorWizard/>
-          </ActionAccordion>
+      <Layout.Content pt={1} pr={1}>
+        <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_ICS)}>
+          <IcsGeneratorWizard/>
+        </ActionAccordion>
 
-          <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_DELETE_ICS)}>
-            <DeleteIcsGeneratorWizard/>
-          </ActionAccordion>
+        <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_DELETE_ICS)}>
+          <DeleteIcsGeneratorWizard/>
+        </ActionAccordion>
 
-          <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}>
-            <CsvGeneratorWizard/>
-          </ActionAccordion>
-        </Box>
+        <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}>
+          <CsvGeneratorWizard/>
+        </ActionAccordion>
       </Layout.Content>
     </>
   );
