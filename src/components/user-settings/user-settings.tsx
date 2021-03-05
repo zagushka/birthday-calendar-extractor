@@ -14,6 +14,8 @@ import { CurrentStatusContext } from '../../context/current-status.context';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import BirthdaysList from '../birthdays-list/birthdays-list';
 import DevTools from '../dev-tools';
+import { BottomMenu } from '../bottom-naviagtion/bottom-navigation';
+import Layout from '../layout/layout';
 import SwitchModals from '../modals/switch-modals';
 import { Scan } from '../scan/scan';
 import SelectWizard from '../wizards/select-wizard';
@@ -42,27 +44,33 @@ const UserSettings: FunctionComponent = () => {
   return (
     <>
       <SwitchModals/>
-      <Switch>
-        <Route path='/activate'>
-          <Scan/>
-        </Route>
-        <Route path='/export/:action?'>
-          <SelectWizard/>
-        </Route>
-        {isActive && <Route exact path='/calendar'>
-          <BirthdaysList/>
-        </Route>
-        }
-        {isDevelopment && <Route path='/dev-tools'>
-          <DevTools/>
-        </Route>}
-        <Route exact path='/'>
-          {'/' === restoredLocation.pathname ?
-            <Redirect to='/export'/> :
-            <Redirect to={restoredLocation}/>
+      <Layout.Wrapper>
+        <Switch>
+          <Route path='/activate'>
+            <Scan/>
+          </Route>
+          <Route path='/export/:action?'>
+            <SelectWizard/>
+          </Route>
+          {isActive && <Route exact path='/calendar'>
+            <BirthdaysList/>
+          </Route>
           }
-        </Route>
-      </Switch>
+          {isDevelopment && <Route path='/dev-tools'>
+            <DevTools/>
+          </Route>}
+          <Route exact path='/'>
+            {'/' === restoredLocation.pathname ?
+              <Redirect to='/export'/> :
+              <Redirect to={restoredLocation}/>
+            }
+          </Route>
+          <Redirect to='/'/>
+        </Switch>
+        <Layout.Footer>
+          <BottomMenu/>
+        </Layout.Footer>
+      </Layout.Wrapper>
     </>
   );
 };

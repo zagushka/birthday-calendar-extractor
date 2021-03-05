@@ -2,13 +2,5 @@
   "SELECT_EXPORT_FORMAT": {
     "message": "Select export format",
     "description": "Header for export format interface"
-  },
-  "BUTTON_TO_CALENDAR_TITLE": {
-    "message": "Calendar",
-    "description": ""
-  },
-  "BUTTON_TO_CALENDAR_TOOLTIP": {
-    "message": "Click here to see your birthdays calendar",
-    "description": ""
   }
 }

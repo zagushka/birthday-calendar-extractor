@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { translate } from '../../filters/translate';
-import LeaveFeedbackButton from '../leave-feedback.button/leave-feedback.button';
+import LeaveFeedbackButton from '../buttons/leave-feedback.button/leave-feedback.button';
 import {
   DialogCloseButton,
   DialogTitle,

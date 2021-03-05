@@ -4,6 +4,7 @@ import {
   createStyles,
   makeStyles,
   Theme,
+  Typography,
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import {
@@ -22,6 +23,7 @@ import React, {
   useContext,
 } from 'react';
 import { CurrentStatusContext } from '../../context/current-status.context';
+import { translate } from '../../filters/translate';
 import { translateString } from '../../filters/translateString';
 import { BirthdaysStartScan } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
@@ -62,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Scan: FunctionComponent = () => {
   const classes = useStyles();
 
-  const {isScanning, isScanSucceed, isActive} = useContext(CurrentStatusContext);
+  const {isScanning, isScanSucceed} = useContext(CurrentStatusContext);
   const [[log], resetLog] = useScanLogListener(1);
   const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
 
@@ -77,22 +79,19 @@ export const Scan: FunctionComponent = () => {
     [classes.buttonFail]: wasScanningAndDone && !isScanSucceed,
   });
 
-  const disabledButtons = {birthdays: !isActive, export: isScanning};
-  const activeTooltips = {export: isActive && wasScanningAndDone && isScanSucceed};
-
   return (
-    <Layout.Wrapper>
-      <Layout.Header disabledButtons={disabledButtons} tooltipButtons={activeTooltips}>
-        <Box>Scan Birthdays</Box>
+    <>
+      <Layout.Header>
+        {translateString('SCAN_PAGE_TITLE')}
       </Layout.Header>
 
       <Layout.Content>
 
         {/*Upper part*/}
         <Box display={'flex'} textAlign={'center'} alignItems={'flex-end'} flexGrow={1} justifyContent={'center'}>
-          Scan your Facebook friends birthdays.
-          Already Existing birthdays will be preserved.
-          Once scanned your birthdays can be exported as calendar any time.
+          <Typography variant='body2' gutterBottom>
+            {translate('SCAN_PAGE_DESCRIPTION')}
+          </Typography>
         </Box>
 
         {/*Button*/}
@@ -101,6 +100,7 @@ export const Scan: FunctionComponent = () => {
             <Button
               variant='contained'
               color='primary'
+              size='large'
               className={buttonClassname}
               disabled={isScanning}
               onClick={startScanHandler}
@@ -114,9 +114,11 @@ export const Scan: FunctionComponent = () => {
 
         {/*Bottom part*/}
         <Box flexGrow={1} textAlign={'center'} display={'flex'} alignItems={'flex-start'} justifyContent={'center'}>
-          {log}
+          <Typography variant='body1' gutterBottom>
+            {log}
+          </Typography>
         </Box>
       </Layout.Content>
-    </Layout.Wrapper>
+    </>
   );
 };

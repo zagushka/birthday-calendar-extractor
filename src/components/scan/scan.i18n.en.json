@@ -2,5 +2,13 @@
   "START_SCAN": {
     "message": "Start scan",
     "description": "Button tile to initiate scan process"
+  },
+  "SCAN_PAGE_DESCRIPTION": {
+    "message": "Scan your Facebook friends birthdays.<br/> Already existing birthdays will be preserved.<br/> Once scanned your birthdays can be exported as calendar any time.",
+    "description": ""
+  },
+  "SCAN_PAGE_TITLE": {
+    "message": "Scan Birthdays",
+    "description": ""
   }
 }
