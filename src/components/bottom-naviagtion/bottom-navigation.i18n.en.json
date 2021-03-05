@@ -1,0 +1,22 @@
+{
+  "BUTTON_TO_SCAN_TITLE": {
+    "message": "Scan Birthdays",
+    "description": "Button tile to navigate to scan page"
+  },
+  "BUTTON_TO_DOWNLOADS_TITLE": {
+    "message": "Export Birthdays",
+    "description": ""
+  },
+  "BUTTON_TO_DOWNLOADS_TOOLTIP": {
+    "message": "Click to Download your birthday calendar",
+    "description": ""
+  },
+  "BUTTON_TO_CALENDAR_TITLE": {
+    "message": "Calendar",
+    "description": ""
+  },
+  "BUTTON_TO_CALENDAR_TOOLTIP": {
+    "message": "Click here to see your birthdays calendar",
+    "description": ""
+  }
+}
