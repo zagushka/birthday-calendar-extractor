@@ -12,7 +12,7 @@ import {
 import { isDevelopment } from '../../constants';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
-import BirthdaysList from '../birthdays-list/birthdays-list';
+import Calendar from '../calendar/calendar';
 import DevTools from '../dev-tools';
 import { BottomMenu } from '../bottom-naviagtion/bottom-navigation';
 import Layout from '../layout/layout';
@@ -56,7 +56,7 @@ const UserSettings: FunctionComponent = () => {
           </Route>
 
           <Route exact path='/calendar'>
-            {isActive ? <BirthdaysList/> : <Redirect to='/activate'/>}
+            {isActive ? <Calendar/> : <Redirect to='/activate'/>}
           </Route>
 
           {isDevelopment && <Route path='/dev-tools'>

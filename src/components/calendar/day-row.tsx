@@ -9,8 +9,8 @@ import React, {
 import { ListChildComponentProps } from 'react-window';
 import handleLink from '../../filters/handleLink';
 import { RestoredBirthday } from '../../libs/storage/storaged.types';
-import { useBirthdaysListStyles } from './birthdays-list.styles';
-import { asShortDate } from './birthdays-list.tools';
+import { asShortDate } from './calendar-tools';
+import { useBirthdaysListStyles } from './calendar.styles';
 
 const handleClick = (href: string) => (e: React.MouseEvent) => handleLink(href, {}, e);
 

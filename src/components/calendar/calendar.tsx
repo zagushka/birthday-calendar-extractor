@@ -24,6 +24,7 @@ import {
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { reviveBirthdayThisYear } from '../../libs/storage/chrome.storage';
+import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import Layout from '../layout/layout';
 import {
   asShortDate,
@@ -31,11 +32,11 @@ import {
   groupUsersByOrdinal,
   mapGroupedUsersToDisplayItemDimensions,
   UserMapInterface,
-} from './birthdays-list.tools';
+} from './calendar-tools';
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
 import { DayRow } from './day-row';
 
-const BirthdaysList: FunctionComponent = () => {
+const Calendar: FunctionComponent = () => {
   const {users: rawUsers} = useContext(CurrentStatusContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
 
@@ -103,16 +104,20 @@ const BirthdaysList: FunctionComponent = () => {
       </Layout.Header>
 
       {/*Navigation with today, next and previous day buttons*/}
-      <Box p={1} pl={0} display='flex'>
-        <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
+      <Box p={1} pl={0} pr={2} display='flex' justifyContent='space-between'>
+        <Box>
+          <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
 
-        <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
-          <ChevronLeft/>
-        </IconButton>
+          <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
+            <ChevronLeft/>
+          </IconButton>
 
-        <IconButton size={'small'} onClick={() => updateDayIndex(1)}>
-          <ChevronRight/>
-        </IconButton>
+          <IconButton size={'small'} onClick={() => updateDayIndex(1)}>
+            <ChevronRight/>
+          </IconButton>
+        </Box>
+
+        <BuyCoffeeButton variant='outlined' color='secondary' withIcon/>
       </Box>
 
       <Divider/>
@@ -137,4 +142,4 @@ const BirthdaysList: FunctionComponent = () => {
   );
 };
 
-export default BirthdaysList;
+export default Calendar;
