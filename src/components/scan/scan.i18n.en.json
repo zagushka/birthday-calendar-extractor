@@ -4,11 +4,15 @@
     "description": "Button tile to initiate scan process"
   },
   "SCAN_PAGE_DESCRIPTION": {
-    "message": "Scan your Facebook friends birthdays.<br/> Already existing birthdays will be preserved.<br/> Once scanned your birthdays can be exported as calendar any time.",
-    "description": ""
+    "message": "<p>Scan your Facebook friends' birthdays.</p> <p>Already scanned birthday will be preserved, even if your friend decides to hide it or is not linked at Facebook anymore.</p> <p>You can always repeat the scan to add new friends' birthdays to the previously created list.</p>",
+    "description": "Additional Scans description."
+  },
+  "SCAN_PAGE_FIRST_TIME_DESCRIPTION": {
+    "message": "<p>Hi and welcome to Birthday Calendar Creator for Facebook!</p> <p>To generate and download a calendar, an initial birthday scan is required. After a successful scan, the link to \"Calendar Generator\" will become available.</p> <p>You can always repeat the scan to add new friends' birthdays to the previously created list.</p> <p>Already scanned birthday will be preserved, even if your friend decides to hide it or is not linked at Facebook anymore.</p>",
+    "description": "First scan description."
   },
   "SCAN_PAGE_TITLE": {
     "message": "Scan Birthdays",
-    "description": ""
+    "description": "Scan Page title"
   }
 }

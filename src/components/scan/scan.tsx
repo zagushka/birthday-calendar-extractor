@@ -21,13 +21,18 @@ import clsx from 'clsx';
 import React, {
   FunctionComponent,
   useContext,
+  useEffect,
+  useState,
 } from 'react';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { translate } from '../../filters/translate';
 import { translateString } from '../../filters/translateString';
 import { BirthdaysStartScan } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
-import { useWasOnOff } from '../../libs/hooks/on-and-offs.hook';
+import {
+  useWasOff,
+  useWasOnOff,
+} from '../../libs/hooks/on-and-offs.hook';
 import { useScanLogListener } from '../../libs/hooks/scan-log-listener.hook';
 import Layout from '../layout/layout';
 
@@ -64,9 +69,18 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Scan: FunctionComponent = () => {
   const classes = useStyles();
 
-  const {isScanning, isScanSucceed} = useContext(CurrentStatusContext);
-  const [[log], resetLog] = useScanLogListener(1);
+  const {isScanning, isScanSucceed, isActive} = useContext(CurrentStatusContext);
   const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
+
+  const [wasActivated] = useWasOff(isActive);
+  const [firstTime, setFirstTime] = useState(false);
+
+  useEffect(() => {
+    setFirstTime(!wasActivated && isActive);
+  }, [wasActivated]);
+
+  const [[log], resetLog] = useScanLogListener(1);
+
 
   const startScanHandler = () => {
     resetWasScanningAndDone();
@@ -88,9 +102,16 @@ export const Scan: FunctionComponent = () => {
       <Layout.Content>
 
         {/*Upper part*/}
-        <Box display={'flex'} textAlign={'center'} alignItems={'flex-end'} flexGrow={1} justifyContent={'center'}>
-          <Typography variant='body2' gutterBottom>
-            {translate('SCAN_PAGE_DESCRIPTION')}
+        <Box display={'flex'}
+             textAlign={'left'}
+             alignItems={'flex-end'}
+             flexGrow={1}
+             justifyContent={'center'}
+             pl={1}
+             pr={2}
+        >
+          <Typography variant='body1' gutterBottom>
+            {translate(firstTime ? 'SCAN_PAGE_DESCRIPTION' : 'SCAN_PAGE_FIRST_TIME_DESCRIPTION')}
           </Typography>
         </Box>
 
