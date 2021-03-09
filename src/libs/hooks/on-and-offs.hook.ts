@@ -11,9 +11,29 @@ import {
  *
  * @param trigger value to listen to
  */
-function useWasOn(trigger: boolean): [boolean, () => void] {
+export function useWasOn(trigger: boolean): [boolean, () => void] {
   const [value, setValue] = useState(false);
   useEffect(() => !value && trigger && setValue(true));
+
+  function reset() {
+    setValue(trigger);
+  }
+
+  return [value, reset];
+}
+
+/**
+ * Listen to `trigger` variable changes
+ * Return true after trigger was false
+ * For example
+ * false | true | false | false -> true | true | true | true
+ * true | false | true | false -> false | true | true | true
+ *
+ * @param trigger value to listen to
+ */
+export function useWasOff(trigger: boolean): [boolean, () => void] {
+  const [value, setValue] = useState(false);
+  useEffect(() => !value && !trigger && setValue(true));
 
   function reset() {
     setValue(trigger);
