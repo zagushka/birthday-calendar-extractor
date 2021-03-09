@@ -18,7 +18,7 @@ interface BuyCoffeeButtonProps extends ButtonProps {
 }
 
 const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
-  const {withIcon = false} = props;
+  const {withIcon = false, ...parentProps} = props;
   const [title, setTitle] = useState<string>();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
     <Button
       onClick={() => handleLink('BUY_ME_COFFEE_LINK', {close: true, active: true})}
       endIcon={withIcon ? <FreeBreakfast/> : null}
-      {...props}
+      {...parentProps}
     >
       {title}
     </Button>
