@@ -1,22 +1,22 @@
 {
   "BUTTON_TO_SCAN_TITLE": {
-    "message": "Scan Birthdays",
+    "message": "Загрузка",
     "description": "Button title to navigate to scan page"
   },
   "BUTTON_TO_DOWNLOADS_TITLE": {
-    "message": "Calendar Generator",
+    "message": "Генератор",
     "description": "Button title to navigate to calendar generation page."
   },
   "BUTTON_TO_DOWNLOADS_TOOLTIP": {
-    "message": "Create and download birthday calendar",
+    "message": "Создать и скачать Календарь Дней Рождений",
     "description": "Tooltip for calendar download page"
   },
   "BUTTON_TO_CALENDAR_TITLE": {
-    "message": "Calendar",
+    "message": "Календарь",
     "description": "Button title to navigate to calendar page."
   },
   "BUTTON_TO_CALENDAR_TOOLTIP": {
-    "message": "Your friends' birthdays calendar",
+    "message": "Календарь дней рождений друзей",
     "description": "Tooltip for button to calendar page."
   }
 }
