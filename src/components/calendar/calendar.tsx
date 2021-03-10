@@ -23,6 +23,7 @@ import {
   VariableSizeList,
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
+import { translateString } from '../../filters/translateString';
 import { reviveBirthdayThisYear } from '../../libs/storage/chrome.storage';
 import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import Layout from '../layout/layout';
@@ -114,7 +115,9 @@ const Calendar: FunctionComponent = () => {
       {/*Navigation with today, next and previous day buttons*/}
       <Box p={1} pr={2} display='flex' justifyContent='space-between'>
         <Box>
-          <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
+          <Button size='small' color='primary' onClick={() => updateDayIndex()}>
+            {translateString('TODAY')}
+          </Button>
 
           <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
             <ChevronLeft/>
