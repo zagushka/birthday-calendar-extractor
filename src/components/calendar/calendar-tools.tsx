@@ -44,6 +44,15 @@ export const mapGroupedUsersToDisplayItemDimensions = (grouped: GroupedUsers): A
   }, []);
 };
 
+export function asLongDate(date: DateTime | number): string {
+  const format = {weekday: 'long', month: 'long', day: 'numeric'};
+  if ('number' === typeof date) {
+    return DateTime.fromMillis(date).toLocaleString(format);
+  }
+  return date.toLocaleString(format);
+}
+
+
 export function asShortDate(date: DateTime | number): string {
   const format = {weekday: 'short', month: 'short', day: 'numeric'};
   if ('number' === typeof date) {

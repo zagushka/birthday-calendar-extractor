@@ -27,14 +27,14 @@ import { reviveBirthdayThisYear } from '../../libs/storage/chrome.storage';
 import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import Layout from '../layout/layout';
 import {
-  asShortDate,
+  asLongDate,
   DAY_HEADER_HEIGHT,
   groupUsersByOrdinal,
   mapGroupedUsersToDisplayItemDimensions,
   UserMapInterface,
 } from './calendar-tools';
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
-import { DayRow } from './day-row';
+import { DayList } from './day-row';
 
 const Calendar: FunctionComponent = () => {
   const {users: rawUsers} = useContext(CurrentStatusContext);
@@ -65,6 +65,14 @@ const Calendar: FunctionComponent = () => {
       updateDayIndex(nextClosestIndex);
     }
   }, [users]);
+
+  /**
+   * Change the title according to the users and dayIndex
+   */
+  const [title, setTitle] = useState<string>();
+  useEffect(() => {
+    setTitle(users.userGroups[dayIndex] ? asLongDate(users.userGroups[dayIndex][0]) : '');
+  }, [users, dayIndex]);
 
   /**
    * Scroll the list to the closest element closest to index + delta parameter
@@ -100,11 +108,11 @@ const Calendar: FunctionComponent = () => {
     <>
       {/*Top Part of the list*/}
       <Layout.Header>
-        <Box>{users.userGroups[dayIndex] ? asShortDate(users.userGroups[dayIndex][0]) : ''}</Box>
+        <Box style={{textTransform: 'capitalize'}}>{title}</Box>
       </Layout.Header>
 
       {/*Navigation with today, next and previous day buttons*/}
-      <Box p={1} pl={0} pr={2} display='flex' justifyContent='space-between'>
+      <Box p={1} pr={2} display='flex' justifyContent='space-between'>
         <Box>
           <Button size='small' color='primary' onClick={() => updateDayIndex()}>Today</Button>
 
@@ -134,7 +142,7 @@ const Calendar: FunctionComponent = () => {
           width={'100%'}
           outerElementType={CustomScrollbarsVirtualList}
           itemCount={users.userGroups.length}>
-          {DayRow}
+          {DayList}
         </VariableSizeList>
         }
       </Layout.Content>
