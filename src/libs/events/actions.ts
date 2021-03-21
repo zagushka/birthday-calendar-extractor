@@ -4,12 +4,9 @@ import {
   AlarmTypes,
   BADGE_CLICKED,
   BadgeActionTypes,
-  BadgeNotificationActionTypes,
   BIRTHDAYS_SCAN_COMPLETE,
   BIRTHDAYS_START_SCAN,
   BirthdaysExtractionActionTypes,
-  DISABLE_BADGE_NOTIFICATION,
-  ENABLE_BADGE_NOTIFICATION,
   NotificationActionTypes,
   SEND_ERROR,
   SEND_GENERATION_STATUS,
@@ -29,18 +26,6 @@ export function sendGenerationStatus(status: string): NotificationActionTypes {
   return {
     type: SEND_GENERATION_STATUS,
     payload: {status},
-  };
-}
-
-export function enableBadgeNotifications(): BadgeNotificationActionTypes {
-  return {
-    type: ENABLE_BADGE_NOTIFICATION,
-  };
-}
-
-export function disableBadgeNotifications(): BadgeNotificationActionTypes {
-  return {
-    type: DISABLE_BADGE_NOTIFICATION,
   };
 }
 

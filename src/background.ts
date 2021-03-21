@@ -19,7 +19,6 @@ import {
   ALARM_NEW_DAY,
   BADGE_CLICKED,
   BIRTHDAYS_START_SCAN,
-  DISABLE_BADGE_NOTIFICATION,
   UPDATE_BADGE,
 } from './libs/events/types';
 import { storeUserSettings } from './libs/storage/chrome.storage';
@@ -43,19 +42,6 @@ listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
     startWith(true), // Initial Badge setup
   )
   .subscribe(() => updateBadge());
-
-// Take care of disable badge event
-listenTo(DISABLE_BADGE_NOTIFICATION)
-  .subscribe(() => {
-    storeUserSettings({
-      birthdays: [],
-      activated: false,
-    }, true)
-      .subscribe(() => {
-        // Update badge it should be clean
-        sendMessage(updateBadgeAction(), true);
-      });
-  });
 
 // Tell to tha app new data was fetched and request to update the badge
 // Should be done via local storage update

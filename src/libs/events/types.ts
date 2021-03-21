@@ -11,9 +11,6 @@ import {
 export const SEND_ERROR = 'SEND_ERROR'; // Send error message
 export const SEND_GENERATION_STATUS = 'SEND_GENERATION_STATUS'; // Send result of generation process
 
-export const ENABLE_BADGE_NOTIFICATION = 'ENABLE_BADGE_NOTIFICATION'; // Enable birthdays in badge notifications
-export const DISABLE_BADGE_NOTIFICATION = 'DISABLE_BADGE_NOTIFICATION'; // Disable birthdays in badge notifications
-
 export const UPDATE_BADGE = 'UPDATE_BADGE'; // Update badge status
 
 export const CREATE_CALENDAR_ICS = 'CREATE_CALENDAR_ICS';
@@ -59,16 +56,6 @@ interface SendGenerationStatusAction {
 }
 
 export type NotificationActionTypes = SendErrorAction | SendGenerationStatusAction;
-
-interface EnableBadgeNotificationAction {
-  type: typeof ENABLE_BADGE_NOTIFICATION;
-}
-
-interface DisableBadgeNotificationAction {
-  type: typeof DISABLE_BADGE_NOTIFICATION;
-}
-
-export type BadgeNotificationActionTypes = EnableBadgeNotificationAction | DisableBadgeNotificationAction;
 
 interface UpdateBadgeAction {
   type: typeof UPDATE_BADGE;
@@ -133,7 +120,6 @@ export interface SendScanLogAction {
 
 export type ActionTypes =
   NotificationActionTypes
-  | BadgeNotificationActionTypes
   | BadgeActionTypes
   | CreateCalendarActionTypes
   | AlarmTypes
