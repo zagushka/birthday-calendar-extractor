@@ -7,6 +7,11 @@ import {
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
+  fakeName,
+  isDevelopment,
+  isFakeNames,
+} from '../../constants';
+import {
   RestoredBirthday,
   Settings,
   StoredBirthday,
@@ -72,7 +77,7 @@ export const reviveBirthday = ([name, ordinal, hrefPartial]: StoredBirthday): Re
 
 export const reviveBirthdayThisYear = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
   return {
-    name,
+    name: isFakeNames && isDevelopment ? fakeName() : name,
     start: DateTime.local(2020) // use 2020 since date was originally from 2020
       .set({ordinal}) // Set ordinal of 2020
       .set({year: DateTime.local().year}), // Convert to current year

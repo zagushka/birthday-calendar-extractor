@@ -14,7 +14,10 @@ import React, {
   useContext,
 } from 'react';
 import { NavLink } from 'react-router-dom';
-import { isDevelopment } from '../../constants';
+import {
+  isDevelopment,
+  isShowTools,
+} from '../../constants';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { translateString } from '../../filters/translateString';
 
@@ -55,7 +58,7 @@ export const BottomMenu: FunctionComponent = () => {
       activeClassName='Mui-selected'
       to={'/activate'}
     />
-    {isDevelopment && <BottomNavigationAction
+    {isDevelopment && isShowTools && <BottomNavigationAction
       label='Tools'
       icon={<Build/>}
       component={NavLink}
