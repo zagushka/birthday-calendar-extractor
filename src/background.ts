@@ -72,3 +72,15 @@ chrome.runtime.onStartup.addListener(() => {
   storeUserSettings({scanning: false});
   setupAlarms();
 });
+
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if ('update' === details.reason) {
+    // const thisVersion = chrome.runtime.getManifest().version;
+    // Open a new page with changes for everyone upgrading from version 2 to 3
+    if ('2' === details.previousVersion.charAt(0)) {
+      // console.log('Updated from ' + details.previousVersion + ' to ' + thisVersion + '!');
+      chrome.tabs.create({url: 'static/update-from-2.html'});
+    }
+  }
+});
