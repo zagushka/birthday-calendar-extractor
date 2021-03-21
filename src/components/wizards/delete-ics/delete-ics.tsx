@@ -21,7 +21,7 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
 
   return (
     <>
-      <Typography variant='body2' paragraph>
+      <Typography variant='body2'>
         {translate('SELECT_DELETE_ICS_DESCRIPTION')}
       </Typography>
 

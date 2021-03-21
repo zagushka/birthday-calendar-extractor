@@ -1,3 +1,6 @@
 {
-
+  "SELECT_EXPORT_FORMAT": {
+    "message": "Создать и скачать календарь",
+    "description": "Header for export format interface"
+  }
 }

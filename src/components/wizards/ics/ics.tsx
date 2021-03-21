@@ -21,7 +21,7 @@ const IcsGeneratorWizard: FunctionComponent = () => {
 
   return (
     <>
-      <Typography variant='body2' paragraph>
+      <Typography variant='body2'>
         {translate('SELECT_ICS_DESCRIPTION')}
       </Typography>
 

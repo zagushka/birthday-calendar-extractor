@@ -1,6 +1,6 @@
 {
   "SELECT_DELETE_ICS_DESCRIPTION": {
-    "message": "Special ICS file used to remove previously imported events from Google Calendar. Import it to the calendar same way as original ICS import.",
+    "message": "Special ICS file used to remove previously imported events from Google Calendar. <p>Import it to the respective calendar the same way as original ICS.</p>",
     "description": "Description for delete-ics file type radio button"
   },
   "SELECT_FILE_FORMAT_DELETE_ICS": {
