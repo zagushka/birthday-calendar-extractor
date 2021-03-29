@@ -13,7 +13,7 @@ import {
  */
 export function useWasOn(trigger: boolean): [boolean, () => void] {
   const [value, setValue] = useState(false);
-  useEffect(() => !value && trigger && setValue(true));
+  useEffect(() => !value && trigger && setValue(true), [trigger]);
 
   function reset() {
     setValue(trigger);
@@ -54,7 +54,6 @@ export function useWasOnOff(trigger: boolean): [boolean, () => void] {
   const [wasOn, resetWasOn] = useWasOn(trigger);
 
   useEffect(() => {
-    console.log('inside', trigger, wasOn, value);
     (wasOn && !trigger && setValue(true));
   }, [wasOn, trigger]);
 
