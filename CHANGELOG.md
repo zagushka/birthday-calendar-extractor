@@ -2,8 +2,8 @@
 
 ## 3.0.0
 A totally new version of birthday extractor, created from scratch. New features:
-- A scrollable calendar with list of friends' birthdays become available.
-- Number of birthdays displayed on the "Cake" icon after scanning Facebook friends' birthdays.
+- A scrollable calendar with a list of friends' birthdays.
+- Number of birthdays displayed on the "cake" icon after scanning Facebook friends' birthdays.
 - Date format can be changed for CSV format.
 - Sophisticated work with a Facebook apis, fast and safe.
 - Better UI and UX.
