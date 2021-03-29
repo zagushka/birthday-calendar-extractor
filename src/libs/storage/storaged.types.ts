@@ -3,12 +3,20 @@ import { DateTime } from 'luxon';
 import { ShowModalAction } from '../events/types';
 
 export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
-export type StoredBirthday = [string, number, string]; // [name, ordinal, userId]
+
+/**
+ * [name, ordinal, userId, settings] Stored birthdays format
+ * where setting is bitwise settings
+ * 1 bit - hidden from export
+ */
+export type StoredBirthday = [string, number, string, number?];
 
 export interface RestoredBirthday {
+  id: string;
   name: string;
   href: string;
   start: DateTime;
+  hidden: boolean;
 }
 
 export interface CsvSettings {

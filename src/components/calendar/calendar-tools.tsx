@@ -5,7 +5,7 @@ import {
 import { RestoredBirthday } from '../../libs/storage/storaged.types';
 
 export const DAY_HEADER_HEIGHT = 38;
-export const USER_ROW_HEIGHT = 32;
+export const USER_ROW_HEIGHT = 30;
 
 export type GroupedUsers = Array<[number, Array<RestoredBirthday>]>;
 

@@ -4,22 +4,36 @@ import {
 } from '@material-ui/core';
 
 export const useDayRowStyles = makeStyles((theme: Theme) => ({
-  root: {
-    color: theme.palette.info.contrastText,
+  listItemSecondaryAction: {
+    visibility: 'hidden',
+    '&.hidden': {
+      visibility: 'inherit',
+    },
+  },
+  listItem: {
     borderRadius: 4,
-    marginBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
-    paddingTop: 6,
+    marginBottom: theme.spacing(0.25),
+    // paddingTop: 6,
     backgroundColor: theme.palette.primary.main,
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: theme.typography.fontWeightBold,
     '&.active': {
-      // backgroundColor: theme.palette.success.dark,
       backgroundColor: theme.palette.secondary.main,
+    },
+    '&:hover $listItemSecondaryAction': {
+      visibility: 'inherit',
     },
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
     },
+  },
+  listItemText: {
+    color: theme.palette.info.contrastText,
+  },
+  icon: {
+    color: theme.palette.info.contrastText,
+  },
+  dense: {
+    paddingTop: 0,
+    paddingBottom: 0,
   },
 }));
 

@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from '@material-ui/icons';
+import update from 'immutability-helper';
 
 import { DateTime } from 'luxon';
 import React, {
@@ -24,7 +25,10 @@ import {
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { translateString } from '../../filters/translateString';
-import { reviveBirthdayThisYear } from '../../libs/storage/chrome.storage';
+import {
+  reviveBirthdayThisYear,
+  storeUserSettings,
+} from '../../libs/storage/chrome.storage';
 import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import Layout from '../layout/layout';
 import {
@@ -58,14 +62,20 @@ const Calendar: FunctionComponent = () => {
 
   }, [rawUsers]);
 
+  const [ranOnce, setRanOnce] = useState(false);
+
   useEffect(() => {
+    if (ranOnce) {
+      return;
+    }
     // Find next closest day for today
     const current = DateTime.local().ordinal;
     const nextClosestIndex = users.usersMap.findIndex(({ordinal}) => ordinal >= current);
     if (~nextClosestIndex) {
       updateDayIndex(nextClosestIndex);
+      setRanOnce(true);
     }
-  }, [users]);
+  }, [users, ranOnce]);
 
   /**
    * Change the title according to the users and dayIndex
@@ -74,6 +84,11 @@ const Calendar: FunctionComponent = () => {
   useEffect(() => {
     setTitle(users.userGroups[dayIndex] ? asLongDate(users.userGroups[dayIndex][0]) : '');
   }, [users, dayIndex]);
+
+  const updateUserSettings = (id: string, settings: number) => {
+    const index = rawUsers.findIndex((user) => user[2] === id);
+    storeUserSettings({birthdays: update(rawUsers, {[index]: {3: {$set: settings}}})});
+  };
 
   /**
    * Scroll the list to the closest element closest to index + delta parameter
@@ -138,7 +153,10 @@ const Calendar: FunctionComponent = () => {
         {!!users.userGroups.length &&
         <VariableSizeList
           itemSize={i => users.usersMap[i].height}
-          itemData={users.userGroups}
+          itemData={{
+            userGroup: users.userGroups,
+            toggleStatus: updateUserSettings,
+          }}
           ref={listRef}
           height={429}
           onScroll={scrollHandler}

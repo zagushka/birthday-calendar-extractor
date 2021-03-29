@@ -65,23 +65,27 @@ export function storeLastBadgeClicked(): Observable<void> {
 }
 
 // @TODO Add support to optionally convert to current year and remove `reviveBirthdayThisYear`
-export const reviveBirthday = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
+export const reviveBirthday = ([name, ordinal, hrefPartial, settings = 0]: StoredBirthday): RestoredBirthday => {
   return {
+    id: hrefPartial,
     name,
     start: DateTime.local(2020) // use 2020 since date was originally from 2020
       .set({ordinal}), // Set ordinal of 2020
     // .set({year: DateTime.local().year}), // Convert to current year
     href: 'https://facebook.com/' + hrefPartial,
+    hidden: !!(settings & 1)
   };
 };
 
-export const reviveBirthdayThisYear = ([name, ordinal, hrefPartial]: StoredBirthday): RestoredBirthday => {
+export const reviveBirthdayThisYear = ([name, ordinal, hrefPartial, settings = 0]: StoredBirthday): RestoredBirthday => {
   return {
+    id: hrefPartial,
     name: isFakeNames && isDevelopment ? fakeName() : name,
     start: DateTime.local(2020) // use 2020 since date was originally from 2020
       .set({ordinal}) // Set ordinal of 2020
       .set({year: DateTime.local().year}), // Convert to current year
     href: 'https://facebook.com/' + hrefPartial,
+    hidden: !!(settings & 1)
   };
 };
 
