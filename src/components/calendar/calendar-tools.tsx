@@ -1,4 +1,7 @@
-import { DateTime } from 'luxon';
+import {
+  DateTime,
+  DateTimeFormatOptions,
+} from 'luxon';
 import { RestoredBirthday } from '../../libs/storage/storaged.types';
 
 export const DAY_HEADER_HEIGHT = 38;
@@ -45,7 +48,7 @@ export const mapGroupedUsersToDisplayItemDimensions = (grouped: GroupedUsers): A
 };
 
 export function asLongDate(date: DateTime | number): string {
-  const format = {weekday: 'long', month: 'long', day: 'numeric'};
+  const format: DateTimeFormatOptions = {weekday: 'long', month: 'long', day: 'numeric'};
   if ('number' === typeof date) {
     return DateTime.fromMillis(date).toLocaleString(format);
   }
@@ -54,7 +57,7 @@ export function asLongDate(date: DateTime | number): string {
 
 
 export function asShortDate(date: DateTime | number): string {
-  const format = {weekday: 'short', month: 'short', day: 'numeric'};
+  const format: DateTimeFormatOptions = {weekday: 'short', month: 'short', day: 'numeric'};
   if ('number' === typeof date) {
     return DateTime.fromMillis(date).toLocaleString(format);
   }
