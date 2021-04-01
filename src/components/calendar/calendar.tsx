@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-} from '@material-ui/core';
-import {
-  ChevronLeft,
-  ChevronRight,
-} from '@material-ui/icons';
+import { Box } from '@material-ui/core';
 import { useThrottleCallback } from '@react-hook/throttle';
 import update from 'immutability-helper';
 
@@ -26,13 +17,12 @@ import {
   VariableSizeList,
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
-import { translateString } from '../../filters/translateString';
 import {
   reviveBirthdayThisYear,
   storeUserSettings,
 } from '../../libs/storage/chrome.storage';
-import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import Layout from '../layout/layout';
+import { CalendarNavigation } from './calendar-navigation';
 import {
   asLongDate,
   DAY_HEADER_HEIGHT,
@@ -40,6 +30,7 @@ import {
   mapGroupedUsersToDisplayItemDimensions,
   UserMapInterface,
 } from './calendar-tools';
+import { CreateButton } from './create-button';
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
 import { DayList } from './day-row';
 
@@ -131,29 +122,11 @@ const Calendar: FunctionComponent = () => {
       </Layout.Header>
 
       {/*Navigation with today, next and previous day buttons*/}
-      <Box p={1} pr={2} display='flex' justifyContent='space-between'>
-        <Box>
-          <Button size='small' color='primary' onClick={() => updateDayIndex()}>
-            {translateString('TODAY')}
-          </Button>
-
-          <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
-            <ChevronLeft/>
-          </IconButton>
-
-          <IconButton size={'small'} onClick={() => updateDayIndex(1)}>
-            <ChevronRight/>
-          </IconButton>
-        </Box>
-
-        <BuyCoffeeButton variant='outlined' color='secondary' withIcon/>
-      </Box>
-
-      <Divider/>
+      <CalendarNavigation updateDayIndex={updateDayIndex}/>
 
       <Layout.Content>
         {/*Scroll with list of birthdays*/}
-        {!!users.userGroups.length &&
+
         <VariableSizeList
           itemSize={i => users.usersMap[i].height}
           itemData={{
@@ -168,7 +141,8 @@ const Calendar: FunctionComponent = () => {
           itemCount={users.userGroups.length}>
           {DayList}
         </VariableSizeList>
-        }
+
+        <CreateButton/>
       </Layout.Content>
     </>
   );
