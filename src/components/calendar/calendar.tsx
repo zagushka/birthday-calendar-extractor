@@ -8,11 +8,13 @@ import {
   ChevronLeft,
   ChevronRight,
 } from '@material-ui/icons';
+import { useThrottleCallback } from '@react-hook/throttle';
 import update from 'immutability-helper';
 
 import { DateTime } from 'luxon';
 import React, {
   FunctionComponent,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -50,6 +52,13 @@ const Calendar: FunctionComponent = () => {
     usersMap: [],
   });
 
+  const scrollHandler = useThrottleCallback(
+    useCallback(({scrollOffset}: ListOnScrollProps) => {
+        const index = users.usersMap.findIndex(item => item.offset + item.height >= scrollOffset);
+        setDayIndex(index);
+      }, [users],
+    ), 10);
+
   const listRef = useRef<VariableSizeList>();
 
   useEffect(() => {
@@ -57,7 +66,6 @@ const Calendar: FunctionComponent = () => {
     const revivedUsers = rawUsers.map(reviveBirthdayThisYear);
     const grouped = groupUsersByOrdinal(revivedUsers);
     const itemsMap = mapGroupedUsersToDisplayItemDimensions(grouped);
-
     setUsers({userGroups: grouped, usersMap: itemsMap});
 
   }, [rawUsers]);
@@ -113,11 +121,6 @@ const Calendar: FunctionComponent = () => {
     }
     // Scroll to required position
     listRef.current.scrollTo(users.usersMap[index].offset + DAY_HEADER_HEIGHT - 10);
-  };
-
-  const scrollHandler = ({scrollOffset, scrollUpdateWasRequested}: ListOnScrollProps) => {
-    const index = users.usersMap.findIndex(item => item.offset + item.height >= scrollOffset);
-    setDayIndex(index);
   };
 
   return (
