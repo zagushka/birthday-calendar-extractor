@@ -3,6 +3,7 @@ import { useThrottleCallback } from '@react-hook/throttle';
 import update from 'immutability-helper';
 
 import { DateTime } from 'luxon';
+import memoize from 'memoize-one';
 import React, {
   FunctionComponent,
   useCallback,
@@ -34,6 +35,11 @@ import { CreateButton } from './create-button';
 import { CustomScrollbarsVirtualList } from './custom-scrollbars';
 import { DayList } from './day-row';
 
+const createItemData = memoize((userGroup, toggleStatus) => ({
+  userGroup,
+  toggleStatus,
+}));
+
 const Calendar: FunctionComponent = () => {
   const {users: rawUsers} = useContext(CurrentStatusContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
@@ -61,6 +67,12 @@ const Calendar: FunctionComponent = () => {
 
   }, [rawUsers]);
 
+  const updateUserSettings = (id: string, settings: number) => {
+    const index = rawUsers.findIndex((user) => user[2] === id);
+    storeUserSettings({birthdays: update(rawUsers, {[index]: {3: {$set: settings}}})});
+  };
+  const itemData = createItemData(users.userGroups, updateUserSettings);
+
   const [ranOnce, setRanOnce] = useState(false);
 
   useEffect(() => {
@@ -83,11 +95,6 @@ const Calendar: FunctionComponent = () => {
   useEffect(() => {
     setTitle(users.userGroups[dayIndex] ? asLongDate(users.userGroups[dayIndex][0]) : '');
   }, [users, dayIndex]);
-
-  const updateUserSettings = (id: string, settings: number) => {
-    const index = rawUsers.findIndex((user) => user[2] === id);
-    storeUserSettings({birthdays: update(rawUsers, {[index]: {3: {$set: settings}}})});
-  };
 
   /**
    * Scroll the list to the closest element closest to index + delta parameter
@@ -129,10 +136,7 @@ const Calendar: FunctionComponent = () => {
 
         <VariableSizeList
           itemSize={i => users.usersMap[i].height}
-          itemData={{
-            userGroup: users.userGroups,
-            toggleStatus: updateUserSettings,
-          }}
+          itemData={itemData}
           ref={listRef}
           height={429}
           onScroll={scrollHandler}

@@ -13,7 +13,6 @@ import { DateTime } from 'luxon';
 import React, {
   FunctionComponent,
   memo,
-  NamedExoticComponent,
 } from 'react';
 import { ListChildComponentProps } from 'react-window';
 import handleLink from '../../filters/handleLink';
@@ -36,35 +35,37 @@ interface DayRowProps extends MUIClassesProp<typeof useDayRowStyles> {
 }
 
 const DayRow: FunctionComponent<DayRowProps> = (props) => {
-    const classes = useDayRowStyles(props);
-    const {user: {id, href, name, hidden}} = props;
-    return (<ListItem button
-                      key={href}
-                      classes={{
-                        container: classes.listItem,
-                        dense: classes.dense,
-                      }}
-                      onClick={handleClick(href)}
+  const classes = useDayRowStyles(props);
+  const {user: {id, href, name, hidden}} = props;
+  return (<ListItem button
+                    key={href}
+                    classes={{
+                      container: classes.listItem,
+                      dense: classes.dense,
+                    }}
+                    onClick={handleClick(href)}
+  >
+    <ListItemText primary={name} className={classes.listItemText}/>
+    <ListItemSecondaryAction
+      className={classes.listItemSecondaryAction}
     >
-      <ListItemText primary={name} className={classes.listItemText}/>
-      <ListItemSecondaryAction
-        className={classes.listItemSecondaryAction}
-      >
-        <IconButton size='small' edge='end' className={classes.icon}
-                    onClick={() => props.toggleVisibility(id, +!hidden)}>
-          {hidden ? <VisibilityOff fontSize='small'/> : <Visibility fontSize='small'/>}
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>);
-  }
-;
+      <IconButton size='small' edge='end' className={classes.icon}
+                  onClick={() => props.toggleVisibility(id, +!hidden)}>
+        {hidden ? <VisibilityOff fontSize='small'/> : <Visibility fontSize='small'/>}
+      </IconButton>
+    </ListItemSecondaryAction>
+  </ListItem>);
+};
 
-export const DayList: NamedExoticComponent<ListChildComponentProps> = memo(({data, index, style}) => {
+interface DayListProps extends ListChildComponentProps {
+  data: {
+    userGroup: Array<[number, Array<RestoredBirthday>]>;
+    toggleStatus: (id: string, settings: number) => void;
+  };
+}
+
+export const DayList = memo<DayListProps>(({data: {userGroup, toggleStatus}, index, style}) => {
   const classes = useDayListStyles();
-  const {
-    userGroup,
-    toggleStatus,
-  } = data as { userGroup: Array<[number, Array<RestoredBirthday>]>; toggleStatus: (id: string, settings: number) => void };
 
   const [dayMils, users]: [number, Array<RestoredBirthday>] = userGroup[index];
   const active = DateTime.local().ordinal === DateTime.fromMillis(dayMils).ordinal;
@@ -76,10 +77,10 @@ export const DayList: NamedExoticComponent<ListChildComponentProps> = memo(({dat
       <div className={classes.dayTitle}>
         {asLongDate(dayMils)}
       </div>
-      {users.map((user, key) =>
+      {users.map((user) =>
         <DayRow
           user={user}
-          key={key}
+          key={user.id}
           toggleVisibility={toggleStatus}
           classes={{
             listItem: active ? 'active' : null,
