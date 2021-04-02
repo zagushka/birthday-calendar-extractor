@@ -70,12 +70,12 @@ export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable(
  */
 export function scanUserBirthdays(tabId: number, waitTime = 10_000): Observable<Array<RawScannedUser>> {
   return new Observable((subscriber) => {
-    // @ts-ignore
+
     chrome.scripting.executeScript({
         target: {tabId},
         function: fetchUserFriendsBirthdayInfoFromContext,
       },
-      (response: Array<{ result: any }>) => {
+      (response) => {
         // Working with a single tab, use the firs array element
         waitForResponse(response[0].result);
       });
