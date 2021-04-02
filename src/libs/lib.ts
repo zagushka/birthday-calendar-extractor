@@ -218,7 +218,7 @@ function loopDates() {
 function extractLanguageFromPage(page: string): string {
   const pattern = new RegExp('."language":"(.*?)"', 'm');
   const result = pattern.exec(page);
-  return result && result[1];
+  return result && JSON.parse(`"${result[1]}"`);
 }
 
 /**
@@ -227,7 +227,7 @@ function extractLanguageFromPage(page: string): string {
 function extractTokenFromPage(page: string): string {
   const pattern = new RegExp('.*async_get_token":"(.*?)"', 'm');
   const result = pattern.exec(page);
-  return result && result[1];
+  return result && JSON.parse(`"${result[1]}"`);
 }
 
 /**

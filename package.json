@@ -1,7 +1,7 @@
 {
   "name": "birthday-calendar-extractor",
   "sideEffects": false,
-  "version": "2.4.2",
+  "version": "2.6.0",
   "description": "Chrome extension - birthday calendar extractor for Facebook.",
   "dependencies": {
     "file-saver": "^2.0.2",
