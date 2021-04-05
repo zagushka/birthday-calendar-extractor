@@ -63,8 +63,11 @@ interface UpdateBadgeAction {
 
 export type BadgeActionTypes = UpdateBadgeAction;
 
-interface BirthdaysStartExtractionAction {
+export interface BirthdaysStartExtractionAction {
   type: typeof BIRTHDAYS_START_SCAN;
+  payload: {
+    useOld: boolean;
+  }
 }
 
 interface BirthdaysExtractionCompleteAction {

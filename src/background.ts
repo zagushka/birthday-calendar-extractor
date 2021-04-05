@@ -19,6 +19,7 @@ import {
   ALARM_NEW_DAY,
   BADGE_CLICKED,
   BIRTHDAYS_START_SCAN,
+  BirthdaysStartExtractionAction,
   UPDATE_BADGE,
 } from './libs/events/types';
 import { storeUserSettings } from './libs/storage/chrome.storage';
@@ -47,14 +48,14 @@ listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
 // Should be done via local storage update
 // sendMessage(updateBadgeAction(), true);
 
-listenTo(BIRTHDAYS_START_SCAN)
-  .subscribe(() => {
+listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
+  .subscribe(({action}) => {
     sendScanLog('SCAN_LOG_PROCESS_STARTED');
     // Update local storage, set scanning true
     storeUserSettings({scanning: true}, true)
       .pipe(
         // Start scan
-        switchMap(forceBirthdaysScan),
+        switchMap(() => forceBirthdaysScan(action.payload.useOld)),
       )
       .subscribe({
         next: () => {
