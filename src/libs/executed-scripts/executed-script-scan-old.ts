@@ -401,7 +401,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
 
     if (!findLanguageSetByLanguage(language)) {
       sendScanLog('SCAN_LOG_CHECK_LOGIN_ERROR_LANGUAGE');
-      return Promise.reject({messageName: 'No supported language detected. Please use '});
+      return Promise.reject({messageName: 'SCAN_ERROR_NOT_SUPPORTED_LANGUAGE'});
     }
     return {token, language, asyncToken};
   }

@@ -60,6 +60,8 @@ export const SCAN_ERROR_BIRTHDAYS_EXTRACT = 'SCAN_ERROR_BIRTHDAYS_EXTRACT';
 export const SCAN_ERROR_GENERAL = 'SCAN_ERROR_GENERAL';
 // Scan script timeout error
 export const SCAN_ERROR_TIMEOUT = 'SCAN_ERROR_TIMEOUT';
+// Facebook language is not supported by application
+export const SCAN_ERROR_NOT_SUPPORTED_LANGUAGE = 'SCAN_ERROR_NOT_SUPPORTED_LANGUAGE';
 // Scan success
 export const SCAN_SUCCESS = 'SCAN_SUCCESS';
 
@@ -81,5 +83,6 @@ export type ScanErrorTypes =
   | typeof SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT
   | typeof SCAN_ERROR_BIRTHDAYS_EXTRACT
   | typeof SCAN_ERROR_TIMEOUT
+  | typeof SCAN_ERROR_NOT_SUPPORTED_LANGUAGE
   | typeof SCAN_ERROR_GENERAL;
 

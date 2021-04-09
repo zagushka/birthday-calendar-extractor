@@ -1,0 +1,14 @@
+{
+  "SCAN_ERROR_NOT_SUPPORTED_LANGUAGE": {
+    "message": "Your Facebook language is not supported. Please change it to English (UK), English (US), Русский, Українська or עברית, and scan again.",
+    "description": "Description in case facebook language is not supported"
+  },
+  "SCAN_ERROR_NOT_SUPPORTED_LANGUAGE_LINK": {
+    "message": "https://www.facebook.com/settings?tab=language",
+    "description": "Facebook settings page with language set."
+  },
+  "SCAN_ERROR_NOT_SUPPORTED_LANGUAGE_TITLE": {
+    "message": "Change language",
+    "description": "Button to facebook settings page title."
+  }
+}

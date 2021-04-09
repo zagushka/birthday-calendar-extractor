@@ -14,6 +14,7 @@ import {
   SCAN_ERROR_FACEBOOK_REQUIRED,
   SCAN_ERROR_GENERAL,
   SCAN_ERROR_NO_TOKEN_DETECTED,
+  SCAN_ERROR_NOT_SUPPORTED_LANGUAGE,
   SCAN_ERROR_TIMEOUT,
 } from '../../libs/events/executed-script.types';
 import {
@@ -24,9 +25,10 @@ import DoneModal from './done.modal';
 import FacebookRequiredModal from './facebook-required/facebook-required';
 import GeneralErrorModal from './general-error/general-error.modal';
 import NoTokenDetectedModal from './no-token-detected/no-token-detected';
+import NotSupportedLanguageModal from './not-supported-language/not-supported-language';
 import ScanningModal from './scanning/scanning.modal';
 
-const SwitchModals: FunctionComponent = (props) => {
+const SwitchModals: FunctionComponent = () => {
 
   const {modal} = useContext(CurrentStatusContext);
   const [modalDialog, setModalDialog] = useState<JSX.Element>(null);
@@ -50,6 +52,9 @@ const SwitchModals: FunctionComponent = (props) => {
       case SCAN_ERROR_FACEBOOK_PAGE_CONTENT:
       case SCAN_ERROR_NO_TOKEN_DETECTED:
         return setModalDialog(<NoTokenDetectedModal/>);
+
+      case SCAN_ERROR_NOT_SUPPORTED_LANGUAGE:
+        return setModalDialog(<NotSupportedLanguageModal/>);
 
       // case 'DONE':
       //   return setModalDialog(<DoneModal/>);
