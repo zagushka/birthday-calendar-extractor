@@ -75,7 +75,8 @@
     "ordered-imports": false,
     "quotemark": [
       true,
-      "single"
+      "single",
+      "jsx-double"
     ],
     "trailing-comma": false,
     "no-bitwise": false,
