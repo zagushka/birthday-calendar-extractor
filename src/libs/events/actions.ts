@@ -47,7 +47,7 @@ export function alarmNewDay(): AlarmTypes {
   };
 }
 
-export function BirthdaysStartScan(useOld: boolean): BirthdaysExtractionActionTypes {
+export function BirthdaysStartScan(useOld: boolean = false): BirthdaysExtractionActionTypes {
   return {
     type: BIRTHDAYS_START_SCAN,
     payload: {useOld},

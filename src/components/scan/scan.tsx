@@ -85,7 +85,7 @@ export const Scan: FunctionComponent = () => {
   const startScanHandler = () => {
     resetWasScanningAndDone();
     resetLog();
-    sendMessage(BirthdaysStartScan(), true);
+    sendMessage(BirthdaysStartScan(true), true);
   };
 
   const buttonClassname = clsx({

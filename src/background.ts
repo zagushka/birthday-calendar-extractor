@@ -55,7 +55,8 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
     storeUserSettings({scanning: true}, true)
       .pipe(
         // Start scan
-        switchMap(() => forceBirthdaysScan(action.payload.useOld)),
+        switchMap(() => forceBirthdaysScan(false)),
+        switchMap(() => forceBirthdaysScan(true)),
       )
       .subscribe({
         next: () => {
