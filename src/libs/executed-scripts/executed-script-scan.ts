@@ -1,8 +1,8 @@
 import {
-  ScanErrorTypes,
   ExecutedScriptScanResponseAction,
   RawScannedUser,
-} from './events/executed-script.types';
+  ScanErrorTypes,
+} from '../events/executed-script.types';
 
 export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   const responseId = Math.random().toString();
@@ -14,8 +14,21 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   getFacebookPage()
     .then(extractFacebookToken)
     // Fetch user friends birthday data
-    .then(fetchFriendsBirthdayInfo)
-    .then(extractBirthdays)
+    .then((token) => {
+      return concatPromise(
+        ...[
+          -1, // Apr, May
+          0, // May, June
+          2, // Jul, Aug
+          4, // Sep, Oct
+          6, // Nov, Jan
+          8, // Feb, March
+          10, // removed
+        ] // Make all the request with even assets
+          .map(offset => () => fetchFriendsBirthdayInfo(token, offset).then(extractBirthdays)),
+      );
+    })
+    .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month), []))
     .then((result) => executedScriptUserContextResponse(result))
     .catch(error => executedScriptUserContextError(error.messageName, error.modal));
 
@@ -109,8 +122,9 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
    * Make graphQL request and page and handle response errors
    *
    * @param token - token to use with facebook requests
+   * @param cursor - month offset starting from 0
    */
-  async function fetchFriendsBirthdayInfo(token: string) {
+  async function fetchFriendsBirthdayInfo(token: string, cursor: number) {
     let response: Response;
     try {
       /**
@@ -126,7 +140,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
           + '&fb_dtsg=' + encodeURIComponent(token)
           + '&fb_api_caller_class=RelayModern'
           + '&fb_api_req_friendly_name=BirthdayCometMonthlyBirthdaysRefetchQuery'
-          + '&variables=' + encodeURIComponent(JSON.stringify({'count': 12}))
+          + '&variables=' + encodeURIComponent(JSON.stringify({'count': 2, 'cursor': cursor.toString()}))
           + '&server_timestamps=true'
           + '&doc_id=3681233908586032',
         'method': 'POST',
@@ -180,6 +194,15 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
       sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error]);
       return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error});
     }
+  }
+
+  function concatPromise<T = any>(...promises: Array<() => Promise<any>>): Promise<Array<T>> {
+    if (!promises.length) {
+      return Promise.resolve([]);
+    }
+    return promises.reduce((ac, promise) => {
+      return ac.then(r => promise().then(r2 => r.concat(r2)));
+    }, Promise.resolve([]));
   }
 
   return responseId;

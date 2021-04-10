@@ -128,7 +128,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
     // Fetch user friends birthday data
     .then(async ({asyncToken, language, token}) => {
       const languageSet = findLanguageSetByLanguage(language);
-      let fetchedBirthdays;
+      let fetchedBirthdays: Array<{ name: string; id: string; birthdate: any }>;
       let mappedUsers: Array<{ name: string; id: string }>;
 
       try {
@@ -138,16 +138,16 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       }
 
       try {
-        fetchedBirthdays = await Promise.all(
-          [
+        fetchedBirthdays = await concatPromise(
+          ...[
             1606809600, // DateTime.utc(2020, 12, 1, 8).toSeconds()
             1606806000, // DateTime.utc(2020, 12, 1, 7).toSeconds()
           ] // Make all the request with even assets
-            .map(date => fetchFriendsBirthdayInfo(asyncToken, date)
+            .map(date => () => fetchFriendsBirthdayInfo(asyncToken, date)
               .then(r => extractBirthdays(r, languageSet)),
             ),
-          )
-          .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month)));
+        )
+          .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month), []));
       } catch (e) {
         return Promise.reject(e);
       }
@@ -422,6 +422,18 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error});
     }
   }
+
+
+  function concatPromise<T = any>(...promises: Array<() => Promise<any>>): Promise<Array<T>> {
+    if (!promises.length) {
+      return Promise.resolve([]);
+    }
+    return promises.reduce((ac, promise) => {
+      // return ac.then(r => new Promise((resolve, reject) => promise.then(r2 => resolve(r.concat(r2)))));
+      return ac.then(r => promise().then(r2 => r.concat(r2)));
+    }, Promise.resolve([]));
+  }
+
 
   return responseId;
 };
