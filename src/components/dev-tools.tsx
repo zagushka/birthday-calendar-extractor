@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import { DateTime } from 'luxon';
 import React from 'react';
 import {
   setBadgeColor,
@@ -30,6 +31,7 @@ const DevTools: React.FunctionComponent = () => {
   const clearBadge = () => {
     setBadgeText('');
     setBadgeColor();
+    storeUserSettings({badgeVisited: DateTime.fromMillis(0)});
   };
 
   const openModal = (type: ScanErrorTypes | ShowModalTypes) => () => {
