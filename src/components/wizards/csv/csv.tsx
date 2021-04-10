@@ -10,6 +10,7 @@ import update from 'immutability-helper';
 import React, {
   FunctionComponent,
   useContext,
+  useMemo,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
 import { translate } from '../../../filters/translate';
@@ -22,7 +23,11 @@ import GenerateAndDownloadButton from '../../buttons/generate.button/generate.bu
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
   const {wizardsSettings: settings, users, isScanning} = useContext(CurrentStatusContext);
-  const {startDownload} = useHandleDownload(CREATE_CALENDAR_CSV, users, settings.csv);
+
+  // Remove "hidden" users from the list
+  const activeUsers = useMemo(() => users.filter(u => !(u[3] ?? 0 & 1)), [users]);
+
+  const {startDownload} = useHandleDownload(CREATE_CALENDAR_CSV, activeUsers, settings.csv);
 
   const startGeneration = () => {
     startDownload();
