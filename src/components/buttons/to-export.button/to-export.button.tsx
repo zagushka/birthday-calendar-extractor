@@ -22,11 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface LeaveFeedbackButtonProps {
-  onClick?: () => void;
-}
-
-const ToCalendarCreatorButton: FunctionComponent<LeaveFeedbackButtonProps> = (props) => {
+const ToExportButton: FunctionComponent = () => {
   const classes = useStyles();
   const [countdown, setCountDown] = useState(60);
   const history = useHistory();
@@ -59,9 +55,9 @@ const ToCalendarCreatorButton: FunctionComponent<LeaveFeedbackButtonProps> = (pr
             className={classes.success}
             onClick={handleClick}
     >
-      {translate('TO_CALENDAR_GENERATOR_TITLE', [countdown.toString()])}
+      {translate('TO_CALENDAR_EXPORT_TITLE', [countdown.toString()])}
     </Button>
   );
 };
 
-export default ToCalendarCreatorButton;
+export default ToExportButton;

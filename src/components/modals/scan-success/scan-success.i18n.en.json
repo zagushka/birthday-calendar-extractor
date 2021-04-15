@@ -1,10 +1,10 @@
 {
   "MODAL_SCAN_SUCCESS_TITLE": {
-    "message": "Scan success modal title",
-    "description": ""
+    "message": "Scan complete.",
+    "description": "Scan success modal title"
   },
   "MODAL_SCAN_SUCCESS_DESCRIPTION": {
-    "message": "Scan success modal description",
-    "description": ""
+    "message": "Scanned birthdays will be remembered by extension until you remove it.<br/>Now you can preview the calendar or generate and download it for import.",
+    "description": "Scan success modal description"
   }
 }

@@ -7,7 +7,8 @@ import {
 import React, { FunctionComponent } from 'react';
 import { translate } from '../../../filters/translate';
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
-import LeaveFeedbackButton from '../../buttons/leave-feedback.button/leave-feedback.button';
+import ToExportButton from '../../buttons/to-export.button/to-export.button';
+import ToCalendarButton from '../../buttons/to-calendar.button/to-calendar.button';
 import {
   DialogTitle,
   handleCloseModal,
@@ -31,7 +32,8 @@ const ScanSuccessModal: FunctionComponent = () => {
       </DialogContent>
 
       <DialogActions>
-        <LeaveFeedbackButton onClick={handleCloseModal}/>
+        <ToCalendarButton/>
+        <ToExportButton/>
         <DialogCloseButton/>
       </DialogActions>
 

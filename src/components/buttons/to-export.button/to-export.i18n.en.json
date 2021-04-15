@@ -1,6 +1,6 @@
 {
-  "TO_CALENDAR_GENERATOR_TITLE": {
-    "message": "Generate Calendar ($seconds$)",
+  "TO_CALENDAR_EXPORT_TITLE": {
+    "message": "Generate ($seconds$)",
     "description": "Title for the button to calendar generator with countdown.",
     "placeholders": {
       "seconds": {
