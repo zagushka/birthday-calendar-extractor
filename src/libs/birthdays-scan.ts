@@ -91,7 +91,7 @@ export function scanUserBirthdays(tabId: number, useOld: boolean, waitTime = 10_
       return listenTo<ExecutedScriptScanResponseAction>(EXECUTED_SCRIPT_RESPONSE)
         .pipe(
           filter(({action}) => action.responseId === responseId),
-          timeout(waitTime), // Wait up to 10 seconds till context page response
+          timeout(waitTime), // Wait up to 10 seconds (default) till context page response
           take(1),
         )
         .subscribe({
@@ -165,7 +165,7 @@ export function forceBirthdaysScan(useOld: boolean) {
       // Check for the token and language
       // Fetch the data from facebook
       pluck('id'),
-      switchMap((tabId) => scanUserBirthdays(tabId, useOld, 10_000)),
+      switchMap((tabId) => scanUserBirthdays(tabId, useOld, 30_000)),
       switchMap(updateStoredBirthdays),
     );
 }
