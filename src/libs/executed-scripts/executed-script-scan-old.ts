@@ -240,7 +240,8 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
    * ["LocaleInitialData",[],{"locale":"en_US","language":"English (US)"},273]
    */
   function extractLanguageFromPage(page: string): string {
-    const pattern = new RegExp('."language":"(.*?)"', 'm');
+    // Example: "{"current_locale":{"localized_name":"English (US)"}}
+    const pattern = new RegExp('."localized_name":"(.*?)"', 'm');
     const result = pattern.exec(page);
     return result && JSON.parse(`"${result[1]}"`);
   }
