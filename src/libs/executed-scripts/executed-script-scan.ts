@@ -26,11 +26,11 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
           10, // removed
         ] // Make all the request with even assets
           .map(offset => () => fetchFriendsBirthdayInfo(token, offset).then(extractBirthdays)),
-      );
+      )
+        .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month), []));
     })
-    .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month), []))
     .then((result) => executedScriptUserContextResponse(result))
-    .catch(error => executedScriptUserContextError(error.messageName, error.modal));
+    .catch(error => executedScriptUserContextError(error.messageName, error.error));
 
   /**
    * Send message with Scan log update
@@ -192,7 +192,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         }));
     } catch (error) {
       sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error});
+      return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error: {error, response}});
     }
   }
 

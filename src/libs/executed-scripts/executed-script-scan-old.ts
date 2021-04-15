@@ -124,7 +124,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
    * token
    */
   getFacebookPage()
-    .then(extractFacebookToken)
+    .then(extractFacebookTokens)
     // Fetch user friends birthday data
     .then(async ({asyncToken, language, token}) => {
       const languageSet = findLanguageSetByLanguage(language);
@@ -134,7 +134,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       try {
         mappedUsers = await fetchFriendsInfo(token);
       } catch (e) {
-        console.log(e);
+        return Promise.reject(e);
       }
 
       try {
@@ -161,7 +161,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       });
     })
     .then((result) => executedScriptUserContextResponse(result))
-    .catch(error => executedScriptUserContextError(error.messageName, error.modal));
+    .catch(error => executedScriptUserContextError(error.messageName, error.error));
 
   /**
    * Send message with Scan log update
@@ -319,7 +319,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
        * Make request to facebook.com in order to receive html with vital information such as
        * token
        */
-      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST');
+      sendScanLog('SCAN_LOG_FRIENDS_LIST_REQUEST');
       response = await fetch('https://www.facebook.com/api/graphql/', {
         'headers': {
           'content-type': 'application/x-www-form-urlencoded',
@@ -341,20 +341,19 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
         'method': 'POST',
       });
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error});
+      sendScanLog('SCAN_LOG_FRIENDS_LIST_REQUEST_ERROR', [error]);
+      return Promise.reject({messageName: 'SCAN_ERROR_FRIENDS_LIST_REQUEST', error});
     }
 
+    let json;
     try {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT');
-      return await response.json()
-        .then(data => {
-          return (data.data.comet_composer_typeahead_bootload as Array<{ node: { name: string; id: string } }>)
-            .map(({node: {id, name}}) => ({name, id}));
-        });
+      sendScanLog('SCAN_LOG_FRIENDS_LIST_CONTENT');
+      json = await response.json();
+      return (json.data.comet_composer_typeahead_bootload as Array<{ node: { name: string; id: string } }>)
+        .map(({node: {id, name}}) => ({name, id}));
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error});
+      sendScanLog('SCAN_LOG_FRIENDS_LIST_CONTENT_ERROR', [error]);
+      return Promise.reject({messageName: 'SCAN_ERROR_FRIENDS_LIST_CONTENT', error: {error, response: json}});
     }
   }
 
@@ -374,13 +373,14 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error});
     }
 
+    let text;
     try {
       sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT');
-      const text = await response.text();
+      text = await response.text();
       return JSON.parse(text.substring(9)).domops[0][3].__html;
     } catch (error) {
       sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error});
+      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error: {error, response: text}});
     }
   }
 
@@ -389,7 +389,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
    *
    * @param page - page content
    */
-  async function extractFacebookToken(page: string): Promise<{ token: string; language: string; asyncToken: string }> {
+  async function extractFacebookTokens(page: string): Promise<{ token: string; language: string; asyncToken: string }> {
     const token = extractTokenFromPage(page);
     const asyncToken = extractAsyncTokenFromPage(page);
     const language = extractLanguageFromPage(page);
@@ -398,6 +398,12 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
     if ('string' !== typeof token) {
       sendScanLog('SCAN_LOG_EXTRACT_TOKEN_ERROR');
       return Promise.reject({messageName: 'SCAN_ERROR_NO_TOKEN_DETECTED'});
+    }
+
+    // No async token found, report an error, quit
+    if ('string' !== typeof asyncToken) {
+      sendScanLog('SCAN_LOG_EXTRACT_ASYNC_TOKEN_ERROR');
+      return Promise.reject({messageName: 'SCAN_ERROR_NO_ASYNC_TOKEN_DETECTED'});
     }
 
     if (!findLanguageSetByLanguage(language)) {
@@ -430,11 +436,8 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       return Promise.resolve([]);
     }
     return promises.reduce((ac, promise) => {
-      // return ac.then(r => new Promise((resolve, reject) => promise.then(r2 => resolve(r.concat(r2)))));
       return ac.then(r => promise().then(r2 => r.concat(r2)));
     }, Promise.resolve([]));
   }
-
-
   return responseId;
 };
