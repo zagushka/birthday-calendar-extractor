@@ -1,14 +1,14 @@
 {
   "SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST": {
-    "message": "Failed to make request to Facebook.<br/> Please try again later.",
+    "message": "Failed to make request to Facebook.<br/> Please try again.",
     "description": "Failed to make request to facebook birthdays endpoint."
   },
   "SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT": {
-    "message": "Failed to get Facebook birthdays content.<br/> Please try again later.",
+    "message": "Failed to get Facebook birthdays content.<br/> Please try again.",
     "description": "Failed to make request to facebook birthdays endpoint."
   },
   "SCAN_ERROR_BIRTHDAYS_EXTRACT": {
-    "message": "Failed to extract birthdays from fetched data.<br/> Please try again later.",
+    "message": "Failed to extract birthdays from fetched data.<br/> Please try again.",
     "description": "Error while extracting birthdays from fetched data."
   },
   "SCAN_ERROR_TIMEOUT": {
@@ -16,7 +16,7 @@
     "description": "Error on timeout."
   },
   "SCAN_ERROR_GENERAL": {
-    "message": "Something went wrong. It happens sometime...<br/> Please try again later.",
+    "message": "Something went wrong. It happens sometime...<br/> Please try again.",
     "description": "Text for unknown error."
   },
   "REPORT_A_BUG_DESCRIPTION": {
