@@ -36,7 +36,7 @@ export interface Settings {
   location: Location;
   modal: ShowModalAction;
   activated: boolean;
-  scanning: boolean;
+  scanning: number;
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
   badgeVisited: DateTime;
@@ -47,7 +47,7 @@ export interface StoredSettings {
   location: Location;
   modal: ShowModalAction;
   activated: boolean;
-  scanning: boolean;
+  scanning: number;
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
   badgeVisited: number;

@@ -29,7 +29,7 @@ export const DEFAULT_SETTINGS: Settings = {
   },
   modal: null,
   activated: false,
-  scanning: false,
+  scanning: 0,
   scanSuccess: true,
   badgeVisited: DateTime.fromMillis(0),
   birthdays: [],

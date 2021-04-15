@@ -52,7 +52,7 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
   .subscribe(({action}) => {
     sendScanLog('SCAN_LOG_PROCESS_STARTED');
     // Update local storage, set scanning true
-    storeUserSettings({scanning: true}, true)
+    storeUserSettings({scanning: DateTime.utc().plus({minutes: 2}).toMillis()}, true)
       .pipe(
         // Start scan
         switchMap(() => forceBirthdaysScan(false)),
@@ -62,16 +62,16 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
         next: () => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
           sendMessage(updateBadgeAction(), true);
-          storeUserSettings({scanning: false, scanSuccess: true});
+          storeUserSettings({scanning: 0, scanSuccess: true});
         },
         error: (error: ScanErrorPayload) => {
-          storeUserSettings({scanning: false, scanSuccess: false, modal: error});
+          storeUserSettings({scanning: 0, scanSuccess: false, modal: error});
         },
       });
   });
 
 chrome.runtime.onStartup.addListener(() => {
-  storeUserSettings({scanning: false});
+  storeUserSettings({scanning: 0});
   setupAlarms();
 });
 

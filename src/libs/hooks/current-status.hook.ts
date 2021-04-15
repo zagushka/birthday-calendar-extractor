@@ -1,4 +1,5 @@
 import { Location } from 'history';
+import { DateTime } from 'luxon';
 import {
   useEffect,
   useState,
@@ -8,10 +9,12 @@ import {
   Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SCAN_ERROR_GENERAL } from '../events/executed-script.types';
 import { ShowModalAction } from '../events/types';
 import {
   listenToUserSettings,
   retrieveUserSettings,
+  storeUserSettings,
 } from '../storage/chrome.storage';
 import {
   Settings,
@@ -34,6 +37,7 @@ export function useCurrentStatus() {
 
   useEffect(() => {
     const onDestroy$ = new Subject<boolean>();
+    let timer: ReturnType<typeof setTimeout>;
     concat(
       // initialize settings onload
       retrieveUserSettings([
@@ -58,7 +62,14 @@ export function useCurrentStatus() {
               case 'modal':
                 return setModal(updates[key]);
               case 'scanning':
-                return setIsScanning(updates[key]);
+                // Unlock scanning if needed
+                if (+updates[key]) {
+                  const wait = +updates[key] - DateTime.utc().toMillis();
+                  timer = setTimeout(() => {
+                    storeUserSettings({scanning: 0, scanSuccess: false, modal: {type: SCAN_ERROR_GENERAL}});
+                  }, wait > 0 ? wait : 0);
+                }
+                return setIsScanning(!!updates[key]);
               case 'scanSuccess':
                 return setIsScanSucceed(updates[key]);
               case 'activated':
@@ -74,6 +85,7 @@ export function useCurrentStatus() {
       });
 
     return () => {
+      clearTimeout(timer);
       onDestroy$.next(true);
       onDestroy$.complete();
     };
