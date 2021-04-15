@@ -20,6 +20,7 @@ import {
   BADGE_CLICKED,
   BIRTHDAYS_START_SCAN,
   BirthdaysStartExtractionAction,
+  SHOW_MODAL_SCAN_SUCCESS,
   UPDATE_BADGE,
 } from './libs/events/types';
 import { storeUserSettings } from './libs/storage/chrome.storage';
@@ -62,7 +63,7 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
         next: () => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
           sendMessage(updateBadgeAction(), true);
-          storeUserSettings({scanning: 0, scanSuccess: true});
+          storeUserSettings({scanning: 0, scanSuccess: true, modal: {type: SHOW_MODAL_SCAN_SUCCESS}});
         },
         error: (error: ScanErrorPayload) => {
           storeUserSettings({scanning: 0, scanSuccess: false, modal: error});

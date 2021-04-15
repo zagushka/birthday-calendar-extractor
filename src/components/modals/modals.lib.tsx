@@ -1,5 +1,4 @@
 import {
-  Button,
   createStyles,
   IconButton,
   Theme,
@@ -11,7 +10,6 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import handleLink from '../../filters/handleLink';
-import { translate } from '../../filters/translate';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 
 export const handleCloseModal = () => storeUserSettings({modal: null});
@@ -43,22 +41,11 @@ export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const {children, classes, ...other} = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant='h6'>{children}</Typography>
-      <IconButton aria-label='close' size='medium' className={classes.closeButton} onClick={handleCloseModal}>
+      <Typography variant="h6">{children}</Typography>
+      <IconButton aria-label="close" size="medium" className={classes.closeButton} onClick={handleCloseModal}>
         <CloseIcon/>
       </IconButton>
     </MuiDialogTitle>
   );
 });
 
-export const DialogCloseButton = () => {
-  return (
-    <Button size='small'
-            color='primary'
-            variant='text'
-            onClick={handleCloseModal}
-    >
-      {translate('CLOSE')}
-    </Button>
-  );
-};

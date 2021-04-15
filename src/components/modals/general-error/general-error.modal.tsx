@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -14,8 +13,8 @@ import React, {
 import { translate } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { ShowModalAction } from '../../../libs/events/types';
+import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
 import {
-  DialogCloseButton,
   DialogTitle,
   handleCloseModal,
   handleLinkClickAndCloseModal,

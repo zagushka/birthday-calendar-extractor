@@ -22,14 +22,14 @@ import {
 } from '../../libs/events/executed-script.types';
 import {
   SHOW_MODAL_EXPORT_SUCCESS,
-  SHOW_MODAL_SCANNING,
+  SHOW_MODAL_SCAN_SUCCESS,
 } from '../../libs/events/types';
 import DoneModal from './done.modal';
 import FacebookRequiredModal from './facebook-required/facebook-required';
 import GeneralErrorModal from './general-error/general-error.modal';
 import NoTokenDetectedModal from './no-token-detected/no-token-detected';
 import NotSupportedLanguageModal from './not-supported-language/not-supported-language';
-import ScanningModal from './scanning/scanning.modal';
+import ScanSuccessModal from './scan-success/scan-success.modal';
 
 const SwitchModals: FunctionComponent = () => {
 
@@ -42,8 +42,8 @@ const SwitchModals: FunctionComponent = () => {
     }
 
     switch (modal.type) {
-      case SHOW_MODAL_SCANNING:
-        return setModalDialog(<ScanningModal/>);
+      case SHOW_MODAL_SCAN_SUCCESS:
+        return setModalDialog(<ScanSuccessModal/>);
 
       case SHOW_MODAL_EXPORT_SUCCESS:
         return setModalDialog(<DoneModal/>);

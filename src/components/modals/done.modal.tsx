@@ -6,9 +6,9 @@ import {
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { translate } from '../../filters/translate';
+import { DialogCloseButton } from '../buttons/dialog-close/dialog-close';
 import LeaveFeedbackButton from '../buttons/leave-feedback.button/leave-feedback.button';
 import {
-  DialogCloseButton,
   DialogTitle,
   handleCloseModal,
 } from './modals.lib';

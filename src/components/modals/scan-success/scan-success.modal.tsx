@@ -6,35 +6,37 @@ import {
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { translate } from '../../../filters/translate';
-import { useScanLogListener } from '../../../libs/hooks/scan-log-listener.hook';
+import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
+import LeaveFeedbackButton from '../../buttons/leave-feedback.button/leave-feedback.button';
 import {
-  DialogCloseButton,
   DialogTitle,
   handleCloseModal,
 } from '../modals.lib';
 
-const ScanningModal: FunctionComponent = () => {
-  const [logs] = useScanLogListener();
-
+const ScanSuccessModal: FunctionComponent = () => {
+  // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
   return (
     <Dialog
       open={true}
       onClose={handleCloseModal}
     >
       <DialogTitle>
-        {translate('MODAL_SCANNING_TITLE')}
+        {translate('MODAL_SCAN_SUCCESS_TITLE')}
       </DialogTitle>
 
       <DialogContent>
         <DialogContentText>
-          {logs.map((value, index) => <li key={index}>{value}</li>)}
+          {translate('MODAL_SCAN_SUCCESS_DESCRIPTION')}
         </DialogContentText>
       </DialogContent>
+
       <DialogActions>
+        <LeaveFeedbackButton onClick={handleCloseModal}/>
         <DialogCloseButton/>
       </DialogActions>
+
     </Dialog>
   );
 };
 
-export default ScanningModal;
+export default ScanSuccessModal;

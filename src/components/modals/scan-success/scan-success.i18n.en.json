@@ -1,0 +1,10 @@
+{
+  "MODAL_SCAN_SUCCESS_TITLE": {
+    "message": "Scan success modal title",
+    "description": ""
+  },
+  "MODAL_SCAN_SUCCESS_DESCRIPTION": {
+    "message": "Scan success modal description",
+    "description": ""
+  }
+}
