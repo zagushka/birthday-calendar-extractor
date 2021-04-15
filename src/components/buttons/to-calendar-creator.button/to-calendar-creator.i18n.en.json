@@ -1,0 +1,12 @@
+{
+  "TO_CALENDAR_GENERATOR_TITLE": {
+    "message": "Generate Calendar ($seconds$)",
+    "description": "Title for the button to calendar generator with countdown.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "10"
+      }
+    }
+  }
+}
