@@ -6,7 +6,7 @@ import {
 import { retrieveUserSettings } from '../libs/storage/chrome.storage';
 import { StoredBirthday } from '../libs/storage/storaged.types';
 
-export const UPGRADE_TO_3_0_4 = () => {
+export const UPGRADE_TO_3_1_0 = () => {
   // get stored birthdays
   return retrieveUserSettings(['birthdays'])
     .pipe(
@@ -27,7 +27,7 @@ export const UPGRADE_TO_3_0_4 = () => {
       }),
       // switchMap(birthdays => storeUserSettings({birthdays}, true)),
       tap((b) => {
-        console.log('upgrade to 3.0.4 successful');
+        console.log('upgrade to 3.1.0 successful');
       }),
     );
 };
