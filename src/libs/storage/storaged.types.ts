@@ -5,11 +5,19 @@ import { ShowModalAction } from '../events/types';
 export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
 
 /**
- * [name, ordinal, userId, settings] Stored birthdays format
+ * [name, uid, [day, month, year], misc, settings] Stored birthdays format
  * where setting is bitwise settings
- * 1 bit - hidden from export
+ * 1rst bit = 1 << 0- hidden from export
+ * 2nd bit = 1 << 1 - custom made contact
  */
-export type StoredBirthday = [string, number, string, number?];
+export enum STORED_BIRTHDAY {
+  NAME,
+  UID,
+  BIRTH_DATE,
+  MISC,
+  SETTINGS
+}
+export type StoredBirthday = [string, string, [number, number, number], any, number];
 
 export interface RestoredBirthday {
   id: string;
@@ -17,6 +25,11 @@ export interface RestoredBirthday {
   href: string;
   start: DateTime;
   hidden: boolean;
+  birthdate: {
+    day: number;
+    month: number;
+    year: number;
+  };
 }
 
 export interface CsvSettings {

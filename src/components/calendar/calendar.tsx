@@ -19,9 +19,10 @@ import {
 } from 'react-window';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import {
-  reviveBirthdayThisYear,
+  reviveBirthday,
   storeUserSettings,
 } from '../../libs/storage/chrome.storage';
+import { STORED_BIRTHDAY } from '../../libs/storage/storaged.types';
 import Layout from '../layout/layout';
 import { CalendarNavigation } from './calendar-navigation';
 import {
@@ -60,7 +61,8 @@ const Calendar: FunctionComponent = () => {
 
   useEffect(() => {
     // Prepare birthdays
-    const revivedUsers = rawUsers.map(reviveBirthdayThisYear);
+    const year = DateTime.local().year;
+    const revivedUsers = rawUsers.map(u => reviveBirthday(u, year));
     const grouped = groupUsersByOrdinal(revivedUsers);
     const itemsMap = mapGroupedUsersToDisplayItemDimensions(grouped);
     setUsers({userGroups: grouped, usersMap: itemsMap});
@@ -68,8 +70,8 @@ const Calendar: FunctionComponent = () => {
   }, [rawUsers]);
 
   const updateUserSettings = (id: string, settings: number) => {
-    const index = rawUsers.findIndex((user) => user[2] === id);
-    storeUserSettings({birthdays: update(rawUsers, {[index]: {3: {$set: settings}}})});
+    const index = rawUsers.findIndex((user) => user[STORED_BIRTHDAY.UID] === id);
+    storeUserSettings({birthdays: update(rawUsers, {[index]: {[STORED_BIRTHDAY.SETTINGS]: {$set: settings}}})});
   };
   const itemData = createItemData(users.userGroups, updateUserSettings);
 

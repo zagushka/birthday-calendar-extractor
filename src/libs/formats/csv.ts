@@ -5,7 +5,7 @@ import {
   generatePreparedEventsForYears,
   PreparedEvent,
 } from '../lib';
-import { reviveBirthdayThisYear } from '../storage/chrome.storage';
+import { reviveBirthday } from '../storage/chrome.storage';
 import {
   CsvSettings,
   StoredBirthday,
@@ -43,7 +43,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
      * Prepare Events
      */
 
-    const events = storedBirthdays.map(reviveBirthdayThisYear);
+    const events = storedBirthdays.map(reviveBirthday);
 
     const currentDateTime = DateTime.utc().set({hour: 0, second: 0, minute: 0, millisecond: 0});
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)

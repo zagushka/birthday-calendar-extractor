@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import update from 'immutability-helper';
 import { Observable } from 'rxjs';
 import {
   filter,
@@ -29,7 +29,10 @@ import {
   retrieveUserSettings,
   storeUserSettings,
 } from './storage/chrome.storage';
-import { StoredBirthday } from './storage/storaged.types';
+import {
+  STORED_BIRTHDAY,
+  StoredBirthday,
+} from './storage/storaged.types';
 
 /**
  * Check provided string match any facebook url pattern
@@ -105,7 +108,7 @@ export function scanUserBirthdays(tabId: number, useOld: boolean, waitTime = 10_
                 subscriber.error(action.payload);
             }
           },
-          error: (error) => {
+          error: () => {
             subscriber.error({type: SCAN_ERROR_TIMEOUT});
           },
           complete: () => subscriber.complete(),
@@ -125,9 +128,53 @@ export const sendScanLog = (str: string, reps: Array<string> = []) => {
 function scannedUserToDecayedBirthday(raw: RawScannedUser): StoredBirthday {
   return [
     raw.name,
-    DateTime.local(2020, raw.birthdate.month, raw.birthdate.day).ordinal,
     raw.id,
+    [raw.birthdate.day, raw.birthdate.month, raw.birthdate.year],
+    null,
+    0,
   ];
+}
+
+/**
+ * Merge sets of Arrays of StoredBirthdays
+ * Every next set have greater priority, so in order to preserve already scanned birthdays (duplicates) and not override possible changes
+ * make sure to provide them as the last parameter of the function
+ * for example mergeBirthdaysAllowDatesUpdate(newBirthdays, oldBirthdays)
+ *
+ * The only exception is birthdate year property, script will always try to update with a year even if it comes from newest duplicate row.
+ *
+ * @param groupArray array of groups of StoredBirthday
+ */
+function mergeBirthdaysAllowDatesUpdate(...groupArray: Array<Array<StoredBirthday>>) {
+  const mappedBirthdays = ([] as Array<StoredBirthday>)
+    .concat(...groupArray)
+    .reduceRight<Map<string, StoredBirthday>>(
+      (collector, birthday) => {
+        const uid = birthday[STORED_BIRTHDAY.UID];
+        if (!collector.has(uid)) {
+          return collector.set(uid, birthday);
+        }
+
+        // update birthdate in case duplicate birthdate has a 'year'
+        const year = birthday[STORED_BIRTHDAY.BIRTH_DATE][2];
+        if ('number' === typeof year && 'number' !== typeof collector.get(uid)[STORED_BIRTHDAY.BIRTH_DATE]) {
+          collector.set(uid, update(birthday, {[STORED_BIRTHDAY.BIRTH_DATE]: {2: {$set: year}}}));
+        }
+        return collector;
+      },
+      new Map(),
+    );
+
+  return Array.from(mappedBirthdays.values());
+}
+
+function mergeBirthdays(...groupArray: Array<Array<StoredBirthday>>): Array<StoredBirthday> {
+  const nonUniquesForMap: Array<[string, StoredBirthday]> =
+    [].concat(...groupArray) // Combine birthdays groups, newcomers will survive.
+      .map(b => [b[STORED_BIRTHDAY.UID], b]); // format to [key, value] to use as initial parameter for a `new Map`
+
+  // Map  birthdays to remove duplicates, older values survive
+  return Array.from((new Map(nonUniquesForMap)).values());
 }
 
 export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
@@ -135,15 +182,10 @@ export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
     .pipe(
       // Merge with stored birthdays
       tap(() => sendScanLog('SCAN_LOG_MERGING_BIRTHDAYS')),
+
       map(({birthdays: oldBirthdays}) => {
         const birthdays = rawUsers.map(scannedUserToDecayedBirthday);
-        // Merge old birthdays and new birthdays converted to arrays for Map'ping
-        const nonUniques: Array<[string, StoredBirthday]> =
-          birthdays.map<[string, StoredBirthday]>(b => [b[2], b])
-            .concat(oldBirthdays.map(b => [b[2], b]));
-
-        // Map  birthdays to remove duplicates, older values survive
-        return Array.from((new Map(nonUniques)).values());
+        return mergeBirthdaysAllowDatesUpdate(birthdays, oldBirthdays);
       }),
 
       // Store fetched data for further usage

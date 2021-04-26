@@ -18,14 +18,17 @@ import { translateString } from '../../../filters/translateString';
 import { CREATE_CALENDAR_CSV } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
 import { storeUserSettings } from '../../../libs/storage/chrome.storage';
-import { CsvDateFormats } from '../../../libs/storage/storaged.types';
+import {
+  CsvDateFormats,
+  STORED_BIRTHDAY,
+} from '../../../libs/storage/storaged.types';
 import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
 const CsvGeneratorWizard: FunctionComponent = (props) => {
   const {wizardsSettings: settings, users, isScanning} = useContext(CurrentStatusContext);
 
   // Remove "hidden" users from the list
-  const activeUsers = useMemo(() => users.filter(u => !(u[3] ?? 0 & 1)), [users]);
+  const activeUsers = useMemo(() => users.filter(u => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
 
   const {startDownload} = useHandleDownload(CREATE_CALENDAR_CSV, activeUsers, settings.csv);
 
