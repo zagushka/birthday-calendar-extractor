@@ -24,6 +24,7 @@ import {
   UPDATE_BADGE,
 } from './libs/events/types';
 import { storeUserSettings } from './libs/storage/chrome.storage';
+import { UPGRADE_TO_3_0_4 } from './migrations/migration.3.0.4';
 
 // On Badge Click update last time badge clicked
 listenTo(BADGE_CLICKED)
@@ -75,9 +76,20 @@ chrome.runtime.onInstalled.addListener((details) => {
   if ('update' === details.reason) {
     // const thisVersion = chrome.runtime.getManifest().version;
     // Open a new page with changes for everyone upgrading from version 2 to 3
-    if ('2' === details.previousVersion.charAt(0)) {
-      // console.log('Updated from ' + details.previousVersion + ' to ' + thisVersion + '!');
-      chrome.tabs.create({url: 'static/update-from-2.html'});
+    switch (true) {
+      // Update from 2 any version of 3
+      case details.previousVersion < '3':
+        chrome.tabs.create({url: 'static/update-from-2.html'});
+        break;
+      // Update from any previous version of 3 before 3.0.4 (birthdays not stored as ordinals of 2020 anymore)
+      case details.previousVersion < '3.0.4':
+      case true:
+        // Get birthdays
+        UPGRADE_TO_3_0_4()
+          .subscribe(() => {
+            updateBadge();
+          });
+        break;
     }
   }
 });
