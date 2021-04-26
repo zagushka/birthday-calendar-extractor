@@ -9,6 +9,7 @@ import { WIZARD_NAMES } from '../../constants';
 import { translateString } from '../../filters/translateString';
 import ActionAccordion, { ActionAccordionInterface } from '../action-accordion';
 import Layout from '../layout/layout';
+import CsvDataGeneratorWizard from './csv-data/csv-data';
 import CsvGeneratorWizard from './csv/csv';
 import DeleteIcsGeneratorWizard from './delete-ics/delete-ics';
 import IcsGeneratorWizard from './ics/ics';
@@ -43,8 +44,12 @@ const SelectWizard: FunctionComponent = () => {
           <DeleteIcsGeneratorWizard/>
         </ActionAccordion>
 
-        <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}>
-          <CsvGeneratorWizard/>
+        {/*<ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}>*/}
+        {/*  <CsvGeneratorWizard/>*/}
+        {/*</ActionAccordion>*/}
+
+        <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV_DATA)}>
+          <CsvDataGeneratorWizard/>
         </ActionAccordion>
       </Layout.Content>
     </>

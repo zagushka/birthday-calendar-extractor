@@ -6,29 +6,25 @@ import React, {
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
 import { translate } from '../../../filters/translate';
-import { CREATE_CALENDAR_ICS } from '../../../libs/events/types';
+import { CREATE_CSV_DATA } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
 import { STORED_BIRTHDAY } from '../../../libs/storage/storaged.types';
 import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
-const IcsGeneratorWizard: FunctionComponent = () => {
-  const {wizardsSettings: settings, users, isScanning} = useContext(CurrentStatusContext);
+const CsvDataGeneratorWizard: FunctionComponent = () => {
+  const {users, isScanning} = useContext(CurrentStatusContext);
 
   // Remove "hidden" users from the list
   const activeUsers = useMemo(() => users.filter(u => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
 
-  const {startDownload} = useHandleDownload(CREATE_CALENDAR_ICS, activeUsers, settings.ics);
+  const {startDownload} = useHandleDownload(CREATE_CSV_DATA, activeUsers);
 
   const startGeneration = () => startDownload();
 
-  if (!settings) {
-    return null;
-  }
-
   return (
     <>
-      <Typography variant='body2'>
-        {translate('SELECT_ICS_DESCRIPTION')}
+      <Typography variant="body2">
+        {translate('SELECT_CSV_DATA_DESCRIPTION')}
       </Typography>
 
       <GenerateAndDownloadButton
@@ -39,4 +35,4 @@ const IcsGeneratorWizard: FunctionComponent = () => {
   );
 };
 
-export default IcsGeneratorWizard;
+export default CsvDataGeneratorWizard;

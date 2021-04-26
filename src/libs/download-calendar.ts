@@ -1,12 +1,14 @@
 import { Observable } from 'rxjs';
+import { downloadFile } from './download-file';
 import {
   CREATE_CALENDAR_CSV,
   CREATE_CALENDAR_DELETE_ICS,
   CREATE_CALENDAR_ICS,
   CREATE_CALENDAR_JSON,
-  CreateCalendarTypes,
+  CREATE_CSV_DATA,
 } from './events/types';
 import { CalendarCSV } from './formats/csv';
+import { calendarCSVData } from './formats/csv-data';
 import { CalendarDeleteICS } from './formats/delete-ics';
 import { CalendarICS } from './formats/ics';
 import { CalendarJSON } from './formats/json';
@@ -26,6 +28,12 @@ export function downloadCalendar(type: any, birthdays: Array<StoredBirthday>, op
       case CREATE_CALENDAR_CSV: {
         const calendar = new CalendarCSV(options);
         calendar.save(calendar.generateCalendar(birthdays), subscriber);
+        break;
+      }
+      case CREATE_CSV_DATA: {
+        const calendar = calendarCSVData(birthdays);
+        downloadFile(calendar, {mimeType: 'text/csv; charset=UTF-8', filename: 'birthdays.csv'})
+          .subscribe(subscriber);
         break;
       }
       case CREATE_CALENDAR_JSON: {

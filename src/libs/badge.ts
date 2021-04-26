@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import {
   filterBirthdaysForDate,
   retrieveUserSettings,
-  reviveBirthdayThisYear,
+  reviveBirthday,
 } from './storage/chrome.storage';
 
 /**
@@ -10,7 +10,6 @@ import {
  * Set Badge color according to the last click on badge time
  */
 export function updateBadge(): void {
-  // @TODO Add Check Badge is active
   retrieveUserSettings(['birthdays', 'activated', 'badgeVisited'])
     .subscribe(({birthdays, badgeVisited, activated}) => {
       // filter only today's birthdays
@@ -19,9 +18,14 @@ export function updateBadge(): void {
 
       // Update default badge value and color if functionality is active
       if (activated) {
-        const filteredBirthdays = filterBirthdaysForDate(birthdays.map(reviveBirthdayThisYear), DateTime.local());
-        badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
-        badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
+        const year = DateTime.local().year;
+        try { // Adding try so no application update can cause an error
+          const filteredBirthdays = filterBirthdaysForDate(birthdays.map(b => reviveBirthday(b, year)), DateTime.local());
+          badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
+          badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
+        } catch (e) {
+          // error while updating the app
+        }
       }
 
       setBadgeText(badgeNumber);

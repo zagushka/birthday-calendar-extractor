@@ -64,38 +64,20 @@ export function storeLastBadgeClicked(): Observable<void> {
   }, true);
 }
 
-// @TODO Add support to optionally convert to current year and remove `reviveBirthdayThisYear`
-export const reviveBirthday = ([name, ordinal, hrefPartial, settings = 0]: StoredBirthday): RestoredBirthday => {
+export const reviveBirthday = (
+  [name, uid, [day, month, year], misc, settings = 0]: StoredBirthday,
+  useYear = 2020,
+): RestoredBirthday => {
   return {
-    id: hrefPartial,
-    name,
-    start: DateTime.local(2020) // use 2020 since date was originally from 2020
-      .set({ordinal}), // Set ordinal of 2020
-    // .set({year: DateTime.local().year}), // Convert to current year
-    href: 'https://facebook.com/' + hrefPartial,
-    hidden: !!(settings & 1)
-  };
-};
-
-export const reviveBirthdayThisYear = ([name, ordinal, hrefPartial, settings = 0]: StoredBirthday): RestoredBirthday => {
-  return {
-    id: hrefPartial,
+    id: uid,
     name: isFakeNames && isDevelopment ? fakeName() : name,
-    start: DateTime.local(2020) // use 2020 since date was originally from 2020
-      .set({ordinal}) // Set ordinal of 2020
-      .set({year: DateTime.local().year}), // Convert to current year
-    href: 'https://facebook.com/' + hrefPartial,
-    hidden: !!(settings & 1)
+    // use provided or 2020 since scanned birthdates was originally from 2020, because of the leap years
+    start: DateTime.local(2020, month, day)
+      .set({year: useYear}), // Convert to current year
+    href: settings & 1 << 1 ? misc : 'https://facebook.com/' + uid,
+    birthdate: {day, month, year},
+    hidden: !!(settings & 1 << 0),
   };
-};
-
-const decayBirthday = (birthday: RestoredBirthday): StoredBirthday => {
-  return [
-    birthday.name,
-    birthday.start.ordinal, // Day of the year in 2020
-    // Remove https://facebook.com/ to reduce the size, using indexOf since facebook subdomain can vary
-    birthday.href.slice(birthday.href.indexOf('/', 8) + 1), // 8 = 'https://'.length
-  ];
 };
 
 /**
