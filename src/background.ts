@@ -71,12 +71,6 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
       });
   });
 
-chrome.runtime.onStartup.addListener(() => {
-  storeUserSettings({scanning: 0});
-  setupAlarms();
-});
-
-
 chrome.runtime.onInstalled.addListener((details) => {
   if ('update' === details.reason) {
     // const thisVersion = chrome.runtime.getManifest().version;
@@ -87,3 +81,6 @@ chrome.runtime.onInstalled.addListener((details) => {
     }
   }
 });
+
+storeUserSettings({scanning: 0}); // Unlock scanning
+setupAlarms(); // Setup alarms
