@@ -6,9 +6,5 @@
   "SELECT_ICS_DESCRIPTION": {
     "message": "Most likely this is the format you are looking for. ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.<p>Make sure to create a new calendar in your favorite calendar app before importing!</p><p>Only Google Calendar properly supports later event removal.</p>",
     "description": "Description for ics file type radio button"
-  },
-  "CREATE_ICS_SETTINGS_ONE_EVENT_PER_DAY": {
-    "message": "One event per day",
-    "description": "Label for `create or delete ics` settings - single event per day"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "SELECT_FILE_FORMAT_CSV_DATA": {
+    "message": "Export birthdates as CSV file.",
+    "description": "Label for birthdates csv file type"
+  },
+  "SELECT_CSV_DATA_DESCRIPTION": {
+    "message": "Creates CSV file with birthdates of your friends. <p>CSV file format used by Microsoft Excel or Google Sheets.</p> <p>DO NOT USE it to import birthdays to a calendar, ICS format should be used instead.</p>",
+    "description": "Description for csv data file type"
+  }
+}
