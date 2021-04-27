@@ -32,7 +32,7 @@ export function downloadCalendar(type: any, birthdays: Array<StoredBirthday>, op
       }
       case CREATE_CSV_DATA: {
         const calendar = calendarCSVData(birthdays);
-        downloadFile(calendar, {mimeType: 'text/csv; charset=UTF-8', filename: 'birthdays.csv'})
+        downloadFile(calendar, {mimeType: 'text/csv; charset=UTF-8', filename: 'facebook-dates-of-birth.csv'})
           .subscribe(subscriber);
         break;
       }
