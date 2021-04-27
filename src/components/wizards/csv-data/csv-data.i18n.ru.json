@@ -1,7 +1,7 @@
 {
   "SELECT_FILE_FORMAT_CSV_DATA": {
     "message": "Экспортировать даты рождения в формат ICS",
-    "description": "Label for birthdates csv file type"
+    "description": "Label for dates of birth csv file type"
   },
   "SELECT_CSV_DATA_DESCRIPTION": {
     "message": "Создает CSV файл со списком дат рождений ваших друзей. <p>CSV формат используется Microsoft Excel или Google Sheets.</p> <p>НЕ ИСПОЛЬЗУЙТЕ этот формат для импорта дней рождений в календари, ICS - предпочтительнее.</p>",

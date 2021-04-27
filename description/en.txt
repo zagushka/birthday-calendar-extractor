@@ -4,8 +4,8 @@ With this extension you will
 - See number of your friends having birthday today at the extension "cake" icon.
 - Have a birthdays' calendar overview.
 
-
-The calendar can be exported in `ICS` or `CSV` formats.
+The birthdays calendar can be exported in `ICS` format.
+Dates of birth can be downloaded as the `CSV` file as well.
 
 * ICS is a universal calendar format used by Microsoft Outlook, Google Calendar, and Apple Calendar.
 * CSV file format used by Microsoft Excel or Google Sheets.
@@ -22,6 +22,8 @@ Question: Is it possible to remove some of the contacts before importing to the 
 Answer: There is command line tool you can use: https://github.com/guenter-r/calendar_file_splitter
 
 Changelog
+3.1.0
+- Dates of birth can be downloaded as the `CSV` file.
 3.0.0
 - A scrollable calendar with a list of friends' birthdays.
 - Number of birthdays displayed on the "cake" icon after scanning Facebook friends' birthdays.
