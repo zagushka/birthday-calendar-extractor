@@ -2,11 +2,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
+  Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { translate } from '../../filters/translate';
-import { DialogCloseButton } from '../buttons/dialog-close/dialog-close';
+import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import LeaveFeedbackButton from '../buttons/leave-feedback.button/leave-feedback.button';
 import {
   DialogTitle,
@@ -26,14 +26,15 @@ const DoneModal: FunctionComponent = () => {
       </DialogTitle>
 
       <DialogContent>
-        <DialogContentText>
+        <Typography variant="body1" color="textSecondary">
           {translate('DONE_DESCRIPTION')}
-        </DialogContentText>
+        </Typography>
       </DialogContent>
 
       <DialogActions>
         <LeaveFeedbackButton onClick={handleCloseModal}/>
-        <DialogCloseButton/>
+        <BuyCoffeeButton variant="outlined" color="secondary" withIcon/>
+        {/*<DialogCloseButton/>*/}
       </DialogActions>
 
     </Dialog>

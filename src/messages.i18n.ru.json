@@ -1,6 +1,6 @@
 {
   "DONE_DESCRIPTION": {
-    "message": "Ваш календарь готов и может быть импортирован.<br> Пожалуйста оставьте отзыв :о)",
+    "message": "Ваш календарь загружен и готов быть импортирован.<p> Пожалуйста оставьте отзыв, если это дополнение было вам полезно, или угостите меня кофе :о)</p>",
     "description": "Description when extraction process successfully finished"
   },
   "DONE_TITLE": {

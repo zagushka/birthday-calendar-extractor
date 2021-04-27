@@ -1,6 +1,6 @@
 {
   "DONE_DESCRIPTION": {
-    "message": "Your calendar is ready for import.<br>Please leave me a feedback if you find this extension helpful :o)",
+    "message": "Your calendar has been downloaded and is ready to import. <p>Please leave me a feedback if you find this extension helpful.<br/> You can also treat me with a cup of coffee :o)</p>",
     "description": "Description when extraction process successfully finished"
   },
   "DONE_TITLE": {
