@@ -1,9 +1,13 @@
 import { DateTime } from 'luxon';
 import {
   map,
+  switchMap,
   tap,
 } from 'rxjs/operators';
-import { retrieveUserSettings } from '../libs/storage/chrome.storage';
+import {
+  retrieveUserSettings,
+  storeUserSettings,
+} from '../libs/storage/chrome.storage';
 import { StoredBirthday } from '../libs/storage/storaged.types';
 
 export const UPGRADE_TO_3_1_0 = () => {
@@ -18,14 +22,14 @@ export const UPGRADE_TO_3_1_0 = () => {
             return [
               birthdate[0], // name
               birthdate[2], // uid
-              [null, date.month, date.day],
+              [date.day, date.month, date.year],
               null,
               birthdate[3] ?? 0,
             ];
           });
         return updated;
       }),
-      // switchMap(birthdays => storeUserSettings({birthdays}, true)),
+      switchMap(birthdays => storeUserSettings({birthdays}, true)),
       tap((b) => {
         console.log('upgrade to 3.1.0 successful');
       }),

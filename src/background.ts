@@ -83,7 +83,6 @@ chrome.runtime.onInstalled.addListener((details) => {
         break;
       // Update from any previous version of 3 before 3.1.0 (birthdays not stored as ordinals of 2020 anymore)
       case details.previousVersion < '3.1.0':
-      case true:
         // Get birthdays
         UPGRADE_TO_3_1_0()
           .subscribe(() => {
