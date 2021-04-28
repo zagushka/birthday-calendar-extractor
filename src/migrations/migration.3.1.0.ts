@@ -22,7 +22,7 @@ export const UPGRADE_TO_3_1_0 = () => {
             return [
               birthdate[0], // name
               birthdate[2], // uid
-              [date.day, date.month, date.year],
+              [date.day, date.month, null],
               null,
               birthdate[3] ?? 0,
             ];
