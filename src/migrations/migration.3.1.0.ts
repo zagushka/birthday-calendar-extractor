@@ -1,5 +1,9 @@
 import { DateTime } from 'luxon';
 import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
   map,
   switchMap,
   tap,
@@ -10,7 +14,16 @@ import {
 } from '../libs/storage/chrome.storage';
 import { StoredBirthday } from '../libs/storage/storaged.types';
 
-export const UPGRADE_TO_3_1_0 = () => {
+/**
+ * Starting from 3.1.0 additional functionality required contacts to have the birth-year
+ * This fix is about to convert old stored contact into the new format
+ *
+ * @param version - previous version
+ */
+export function UPGRADE_TO_3_1_0(version: string): Observable<any> {
+  if (version < '3.1.0') {
+    return of(false);
+  }
   // get stored birthdays
   return retrieveUserSettings(['birthdays'])
     .pipe(
@@ -30,7 +43,7 @@ export const UPGRADE_TO_3_1_0 = () => {
         return updated;
       }),
       switchMap(birthdays => storeUserSettings({birthdays}, true)),
-      tap((b) => {
+      tap(() => {
         console.log('upgrade to 3.1.0 successful');
       }),
     );

@@ -24,7 +24,7 @@ import {
   UPDATE_BADGE,
 } from './libs/events/types';
 import { storeUserSettings } from './libs/storage/chrome.storage';
-import { UPGRADE_TO_3_1_0 } from './migrations/migration.3.1.0';
+import { migrations } from './migrations/migraions';
 
 // On Badge Click update last time badge clicked
 listenTo(BADGE_CLICKED)
@@ -72,26 +72,7 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
       });
   });
 
-chrome.runtime.onInstalled.addListener((details) => {
-  if ('update' === details.reason) {
-    // const thisVersion = chrome.runtime.getManifest().version;
-    // Open a new page with changes for everyone upgrading from version 2 to 3
-    switch (true) {
-      // Update from 2 any version of 3
-      case details.previousVersion < '3':
-        chrome.tabs.create({url: 'static/update-from-2.html'});
-        break;
-      // Update from any previous version of 3 before 3.1.0 (birthdays not stored as ordinals of 2020 anymore)
-      case details.previousVersion < '3.1.0':
-        // Get birthdays
-        UPGRADE_TO_3_1_0()
-          .subscribe(() => {
-            updateBadge();
-          });
-        break;
-    }
-  }
-});
+chrome.runtime.onInstalled.addListener(migrations);
 
 storeUserSettings({scanning: 0}); // Unlock scanning
 setupAlarms(); // Setup alarms
