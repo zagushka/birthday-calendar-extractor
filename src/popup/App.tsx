@@ -10,9 +10,6 @@ import React, {
 import UserSettings from '../components/user-settings/user-settings';
 import CurrentStatusContextProvider from '../context/current-status.context';
 import LoadingContextProvider from '../context/loading.context';
-import { badgeClickedAction } from '../libs/events/actions';
-import { sendMessage } from '../libs/events/events';
-import { storeUserSettings } from '../libs/storage/chrome.storage';
 import './App.scss';
 
 
@@ -88,14 +85,8 @@ const theme = createMuiTheme(themeOptions);
 const App: FunctionComponent = () => {
 
   useEffect(() => {
-    // Send notification badge was clicked
-    sendMessage(badgeClickedAction(), true);
-
-    // Clean up
-    return () => {
-      // Remove opened modal
-      storeUserSettings({modal: null});
-    };
+    // Let the background script know we are up and running
+    chrome.runtime.connect()
   }, []);
 
   return (

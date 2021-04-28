@@ -33,7 +33,7 @@ export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
 export const SEND_SCAN_LOG = 'SEND_SCAN_LOG';
 
 // NOTIFICATIONS
-export const BADGE_CLICKED = 'BADGE_CLICKED';
+export const BADGE_CLICKED = 'BADGE_CLICKED'; // @TODO REMOVE IT, not used anymore
 export const ALARM_NEW_DAY = 'ALARM_NEW_DAY';
 
 // MODALS

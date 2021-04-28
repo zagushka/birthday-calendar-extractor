@@ -17,7 +17,6 @@ import {
 import { ScanErrorPayload } from './libs/events/executed-script.types';
 import {
   ALARM_NEW_DAY,
-  BADGE_CLICKED,
   BIRTHDAYS_START_SCAN,
   BirthdaysStartExtractionAction,
   SHOW_MODAL_SCAN_SUCCESS,
@@ -26,18 +25,22 @@ import {
 import { storeUserSettings } from './libs/storage/chrome.storage';
 import { migrations } from './migrations/migraions';
 
-// On Badge Click update last time badge clicked
-listenTo(BADGE_CLICKED)
-  .subscribe(() => {
-    /**
-     * Since this event only fired when clicked on the badge, we I need to remove dialog message left
-     * and mark badge as visited/clicked
-     */
-    storeUserSettings({modal: null, badgeVisited: DateTime.local()}, true)
-      .subscribe(() => {
-        sendMessage(updateBadgeAction(), true);
-      });
+// new connection means popup was initiated
+chrome.runtime.onConnect.addListener((externalPort) => {
+  externalPort.onDisconnect.addListener(() => {
+    // Clean up
+    // Remove opened modal
+    storeUserSettings({modal: null});
   });
+
+  /**
+   * Since this event only fired when clicked on the badge mark badge as visited/clicked
+   */
+  storeUserSettings({badgeVisited: DateTime.local()}, true)
+    .subscribe(() => {
+      sendMessage(updateBadgeAction(), true);
+    });
+});
 
 // Update Badge on badge update request or new date alarm
 listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
