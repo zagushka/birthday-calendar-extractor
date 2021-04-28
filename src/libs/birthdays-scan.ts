@@ -157,7 +157,7 @@ function mergeBirthdaysAllowDatesUpdate(...groupArray: Array<Array<StoredBirthda
 
         // update birthdate in case duplicate birthdate has a 'year'
         const year = birthday[STORED_BIRTHDAY.BIRTH_DATE][2];
-        if ('number' === typeof year && 'number' !== typeof collector.get(uid)[STORED_BIRTHDAY.BIRTH_DATE]) {
+        if ('number' === typeof year && 'number' !== typeof collector.get(uid)[STORED_BIRTHDAY.BIRTH_DATE][2]) {
           collector.set(uid, update(birthday, {[STORED_BIRTHDAY.BIRTH_DATE]: {2: {$set: year}}}));
         }
         return collector;

@@ -27,7 +27,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         ] // Make all the request with even assets
           .map(offset => () => fetchFriendsBirthdayInfo(token, offset).then(extractBirthdays)),
       )
-        .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month), []));
+        .then(monthArray => [].concat(...monthArray));
     })
     .then((result) => executedScriptUserContextResponse(result))
     .catch(error => executedScriptUserContextError(error.messageName, error.error));

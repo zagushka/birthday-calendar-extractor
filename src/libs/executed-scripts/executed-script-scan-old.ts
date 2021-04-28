@@ -133,11 +133,6 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
 
       try {
         mappedUsers = await fetchFriendsInfo(token);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-
-      try {
         fetchedBirthdays = await concatPromise(
           ...[
             1606809600, // DateTime.utc(2020, 12, 1, 8).toSeconds()
@@ -147,11 +142,12 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
               .then(r => extractBirthdays(r, languageSet)),
             ),
         )
-          .then(monthArray => monthArray.reduce((ac, month) => ac.concat(month), []));
+          .then(monthArray => [].concat(...monthArray));
       } catch (e) {
         return Promise.reject(e);
       }
 
+      // Detect user facebook id and replace with it original human readable part of their profile url
       return fetchedBirthdays.map(birthday => {
         const found = mappedUsers.filter(u => u.name === birthday.name);
         if (1 === found.length) {
@@ -439,5 +435,6 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       return ac.then(r => promise().then(r2 => r.concat(r2)));
     }, Promise.resolve([]));
   }
+
   return responseId;
 };

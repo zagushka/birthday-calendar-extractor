@@ -33,6 +33,7 @@ export function useCurrentStatus() {
   const [modal, setModal] = useState<ShowModalAction>(); // is Error
   const [isScanning, setIsScanning] = useState<boolean>(); // is Scanning in process
   const [isScanSucceed, setIsScanSucceed] = useState<boolean>(); // Flag to mark failed or successful scan
+  const [isDonated, setIsDonated] = useState<boolean>();
   const [users, setUsers] = useState<Array<StoredBirthday>>();
 
   useEffect(() => {
@@ -41,13 +42,14 @@ export function useCurrentStatus() {
     concat(
       // initialize settings onload
       retrieveUserSettings([
-        'wizardsSettings',
-        'modal',
-        'birthdays',
         'activated',
+        'birthdays',
+        'donated',
+        'location',
+        'modal',
         'scanning',
         'scanSuccess',
-        'location',
+        'wizardsSettings',
       ]),
       // Listen to storage changes and update changed values
       listenToUserSettings(),
@@ -66,7 +68,11 @@ export function useCurrentStatus() {
                 if (+updates[key]) {
                   const wait = +updates[key] - DateTime.utc().toMillis();
                   timer = setTimeout(() => {
-                    storeUserSettings({scanning: 0, scanSuccess: false, modal: {type: SCAN_ERROR_GENERAL}});
+                    storeUserSettings({
+                      scanning: 0,
+                      scanSuccess: false,
+                      modal: {type: SCAN_ERROR_GENERAL, error: 'Removed infinite scan lock'},
+                    });
                   }, wait > 0 ? wait : 0);
                 }
                 return setIsScanning(!!updates[key]);
@@ -74,6 +80,8 @@ export function useCurrentStatus() {
                 return setIsScanSucceed(updates[key]);
               case 'activated':
                 return setIsActive(updates[key]);
+              case 'donated':
+                return setIsDonated(updates[key]);
               case 'birthdays':
                 return setUsers(updates[key]);
               case 'wizardsSettings':
@@ -91,5 +99,14 @@ export function useCurrentStatus() {
     };
   }, []);
 
-  return {initDone, location, wizardsSettings, isActive, modal, isScanning, isScanSucceed, users};
+  return {
+    initDone,
+    location,
+    wizardsSettings,
+    isActive,
+    modal, isScanning,
+    isScanSucceed,
+    isDonated,
+    users,
+  };
 }

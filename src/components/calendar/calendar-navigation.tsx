@@ -8,8 +8,16 @@ import {
   ChevronLeft,
   ChevronRight,
 } from '@material-ui/icons';
-import React, { FunctionComponent } from 'react';
+import React, {
+  FunctionComponent,
+  MouseEventHandler,
+  useCallback,
+  useContext,
+} from 'react';
+import { CurrentStatusContext } from '../../context/current-status.context';
 import { translateString } from '../../filters/translateString';
+import { useTapsCounter } from '../../libs/hooks/tap-counter.hook';
+import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 
 interface CalendarNavigationProps {
@@ -17,11 +25,24 @@ interface CalendarNavigationProps {
 }
 
 export const CalendarNavigation: FunctionComponent<CalendarNavigationProps> = ({updateDayIndex}) => {
+  const {isDonated} = useContext(CurrentStatusContext);
+
+  const hideButton = useCallback(() => {
+    storeUserSettings({donated: !isDonated});
+  }, [isDonated]);
+
+  const multipleClicksHandler = useTapsCounter(5, 1000, hideButton);
+
+  const handleClickOnToday: MouseEventHandler = (event) => {
+    multipleClicksHandler();
+    updateDayIndex();
+  };
+
   return (
     <React.Fragment>
-      <Box p={1} pr={2} display='flex' justifyContent='space-between'>
+      <Box p={1} pr={2} display="flex" justifyContent="space-between">
         <Box>
-          <Button size='small' color='primary' onClick={() => updateDayIndex()}>
+          <Button size="small" color="primary" onClick={handleClickOnToday}>
             {translateString('TODAY')}
           </Button>
 
@@ -34,7 +55,7 @@ export const CalendarNavigation: FunctionComponent<CalendarNavigationProps> = ({
           </IconButton>
         </Box>
 
-        <BuyCoffeeButton variant='outlined' color='secondary' withIcon/>
+        <BuyCoffeeButton variant="outlined" color="secondary" withIcon/>
       </Box>
 
       <Divider/>
