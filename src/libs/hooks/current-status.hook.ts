@@ -66,7 +66,7 @@ export function useCurrentStatus() {
                 if (+updates[key]) {
                   const wait = +updates[key] - DateTime.utc().toMillis();
                   timer = setTimeout(() => {
-                    storeUserSettings({scanning: 0, scanSuccess: false, modal: {type: SCAN_ERROR_GENERAL}});
+                    storeUserSettings({scanning: 0, scanSuccess: false, modal: {type: SCAN_ERROR_GENERAL, error: 'Removed infinite scan lock'}});
                   }, wait > 0 ? wait : 0);
                 }
                 return setIsScanning(!!updates[key]);
