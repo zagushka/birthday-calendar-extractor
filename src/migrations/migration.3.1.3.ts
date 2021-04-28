@@ -21,10 +21,12 @@ import {
  * all contacts without the `year` field were replaced with 2020.
  * This migration fix that issue and replace all the birth-dates year 2020 with null
  *
+ * For version >= '3.1.0' && version < '3.1.3'
+ *
  * @param version - previous Version
  */
 export function UPGRADE_TO_3_1_3(version: string): Observable<any> {
-  if (version >= '3.1.0' && version < '3.1.3') {
+  if (!(version >= '3.1.0' && version < '3.1.3')) {
     return of(false);
   }
   return retrieveUserSettings(['birthdays'])

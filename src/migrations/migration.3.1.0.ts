@@ -18,12 +18,15 @@ import { StoredBirthday } from '../libs/storage/storaged.types';
  * Starting from 3.1.0 additional functionality required contacts to have the birth-year
  * This fix is about to convert old stored contact into the new format
  *
+ * For version < '3.1.0'
+ *
  * @param version - previous version
  */
 export function UPGRADE_TO_3_1_0(version: string): Observable<any> {
-  if (version < '3.1.0') {
+  if (!(version < '3.1.0')) {
     return of(false);
   }
+
   // get stored birthdays
   return retrieveUserSettings(['birthdays'])
     .pipe(
