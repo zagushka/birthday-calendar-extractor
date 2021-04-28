@@ -3,13 +3,16 @@ import {
   ButtonProps,
   IconButton,
   IconButtonProps,
+  Zoom,
 } from '@material-ui/core';
 import { FreeBreakfast } from '@material-ui/icons';
 import React, {
   FunctionComponent,
+  useContext,
   useEffect,
   useState,
 } from 'react';
+import { CurrentStatusContext } from '../../../context/current-status.context';
 import handleLink from '../../../filters/handleLink';
 import { translateString } from '../../../filters/translateString';
 
@@ -19,6 +22,7 @@ interface BuyCoffeeButtonProps extends ButtonProps {
 
 const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
   const {withIcon = false, ...parentProps} = props;
+  const {isDonated} = useContext(CurrentStatusContext);
   const [title, setTitle] = useState<string>();
 
   useEffect(() => {
@@ -28,13 +32,17 @@ const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
   }, [withIcon]);
 
   return (
-    <Button
-      onClick={() => handleLink('BUY_ME_COFFEE_LINK', {close: true, active: true})}
-      endIcon={withIcon ? <FreeBreakfast/> : null}
-      {...parentProps}
-    >
-      {title}
-    </Button>
+    <>
+      {!isDonated && <Zoom in={!isDonated} style={{transitionDelay: !isDonated ? '500ms' : '0ms'}}>
+        <Button
+          onClick={() => handleLink('BUY_ME_COFFEE_LINK', {close: true, active: true})}
+          endIcon={withIcon ? <FreeBreakfast/> : null}
+          {...parentProps}
+        >
+          {title}
+        </Button>
+      </Zoom>}
+    </>
   );
 };
 
