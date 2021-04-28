@@ -17,6 +17,7 @@ export enum STORED_BIRTHDAY {
   MISC,
   SETTINGS
 }
+
 export type StoredBirthday = [string, string, [number, number, number], any, number];
 
 export interface RestoredBirthday {
@@ -46,23 +47,25 @@ export interface WizardsSettings {
 }
 
 export interface Settings {
+  activated: boolean;
+  badgeVisited: DateTime;
+  birthdays: Array<StoredBirthday>;
+  donated: boolean;
   location: Location;
   modal: ShowModalAction;
-  activated: boolean;
   scanning: number;
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
-  badgeVisited: DateTime;
-  birthdays: Array<StoredBirthday>;
 }
 
 export interface StoredSettings {
+  activated: boolean;
+  badgeVisited: number;
+  birthdays: Array<StoredBirthday>;
+  donated: boolean;
   location: Location;
   modal: ShowModalAction;
-  activated: boolean;
   scanning: number;
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
-  badgeVisited: number;
-  birthdays: Array<StoredBirthday>;
 }

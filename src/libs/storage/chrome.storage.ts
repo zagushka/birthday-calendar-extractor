@@ -21,6 +21,10 @@ import AreaName = chrome.storage.AreaName;
 import StorageChange = chrome.storage.StorageChange;
 
 export const DEFAULT_SETTINGS: Settings = {
+  activated: false,
+  badgeVisited: DateTime.fromMillis(0),
+  birthdays: [],
+  donated: false,
   location: {
     pathname: '/',
     search: '',
@@ -28,11 +32,8 @@ export const DEFAULT_SETTINGS: Settings = {
     state: undefined,
   },
   modal: null,
-  activated: false,
   scanning: 0,
   scanSuccess: true,
-  badgeVisited: DateTime.fromMillis(0),
-  birthdays: [],
   wizardsSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {groupEvents: false}},
 };
 
@@ -127,21 +128,18 @@ export function listenToUserSettings(): Observable<Partial<Settings>> {
  */
 const reviveSettingsField = (key: keyof Settings, value: any): any => {
   switch (key) {
-    case 'modal':
     case 'activated':
+    case 'birthdays':
+    case 'donated':
+    case 'location':
+    case 'modal':
     case 'scanning':
     case 'scanSuccess':
-    case 'location':
-    case 'birthdays':
     case 'wizardsSettings':
       return value ?? DEFAULT_SETTINGS[key];
 
     case 'badgeVisited':
       return value && DateTime.fromMillis(value) || DEFAULT_SETTINGS[key];
-
-    // case 'birthdays': {
-    //   return value && value.map((event: StoredBirthday) => reviveBirthday(event)) || DEFAULT_SETTINGS[key];
-    // }
 
     default:
       return undefined;
@@ -186,24 +184,19 @@ export function storeUserSettings(settings: Partial<Settings>, wait?: boolean) {
     (Object.keys(settings) as Array<keyof Settings>)
       .reduce<Partial<StoredSettings>>((accumulator, key) => {
         switch (key) {
-          case 'modal':
           case 'activated':
+          case 'birthdays':
+          case 'donated':
+          case 'location':
+          case 'modal':
           case 'scanning':
           case 'scanSuccess':
-          case 'location':
           case 'wizardsSettings':
-          case 'birthdays':
             return update(accumulator, {[key]: {$set: settings[key]}});
 
           case 'badgeVisited':
             return update(accumulator, {[key]: {$set: settings[key].toMillis()}});
 
-          // case 'birthdays':
-          //   return update(accumulator, {
-          //     [key]: {
-          //       $set: settings[key].map((event) => decayBirthday(event)),
-          //     },
-          //   });
           default:
             throw new Error(`Should not have ${key} key`);
         }
