@@ -61,7 +61,7 @@ export const calendarCSVData = (storedBirthdays: Array<StoredBirthday>) => {
     const preEscaped = [
       // There is unicode cake character before event.name, you may not see it in you editor
       formattedEvent.name, // `Name,`,
-      formattedEvent.birthdate.year?.toString(), // `Year`,
+      (formattedEvent.birthdate.year ?? '').toString(), // `Year`,
       formattedEvent.birthdate.month.toString(), // `Month`,
       formattedEvent.birthdate.day.toString(), // `Day`,
       formattedEvent.href, // `Link to Profile`
