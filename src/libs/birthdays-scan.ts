@@ -24,7 +24,6 @@ import {
   SCAN_SUCCESS,
 } from './events/executed-script.types';
 import { fetchUserFriendsBirthdayInfoFromContext } from './executed-scripts/executed-script-scan';
-import { fetchUserFriendsBirthdayInfoFromContextOld } from './executed-scripts/executed-script-scan-old';
 import {
   retrieveUserSettings,
   storeUserSettings,
@@ -70,15 +69,14 @@ export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable(
  * There is 10 seconds default timeout for the Observable
  *
  * @param tabId - chrome.tabs.Tab.id of the page to execute the script on
- * @param useOld - set true to use old fashion birthday scanner
  * @param waitTime - time to wait before Observable throws an error, 10 seconds default value
  */
-export function scanUserBirthdays(tabId: number, useOld: boolean, waitTime = 10_000): Observable<Array<RawScannedUser>> {
+export function scanUserBirthdays(tabId: number, waitTime = 10_000): Observable<Array<RawScannedUser>> {
   return new Observable((subscriber) => {
 
     chrome.scripting.executeScript({
         target: {tabId},
-        func: useOld ? fetchUserFriendsBirthdayInfoFromContextOld : fetchUserFriendsBirthdayInfoFromContext,
+        func: fetchUserFriendsBirthdayInfoFromContext,
       },
       (response) => {
         // Working with a single tab, use the firs array element
@@ -200,14 +198,14 @@ export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
  * Make new full scan of the birthdays data
  * Store fetched data to local storage
  */
-export function forceBirthdaysScan(useOld: boolean) {
+export function forceBirthdaysScan() {
   // Check user on a facebook page and fetch current Tab info
   return getFacebookTab()
     .pipe(
       // Check for the token and language
       // Fetch the data from facebook
       pluck('id'),
-      switchMap((tabId) => scanUserBirthdays(tabId, useOld, 30_000)),
+      switchMap((tabId) => scanUserBirthdays(tabId, 30_000)),
       switchMap(updateStoredBirthdays),
     );
 }

@@ -60,8 +60,7 @@ listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
     storeUserSettings({scanning: DateTime.utc().plus({minutes: 2}).toMillis()}, true)
       .pipe(
         // Start scan
-        switchMap(() => forceBirthdaysScan(false)),
-        switchMap(() => forceBirthdaysScan(true)),
+        switchMap(() => forceBirthdaysScan()),
       )
       .subscribe({
         next: () => {
