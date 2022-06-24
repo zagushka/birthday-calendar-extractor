@@ -20,7 +20,6 @@ import {
 
 export function downloadCalendar(type: typeof CREATE_CALENDAR_CSV, birthdays: Array<StoredBirthday>, options: CsvSettings): Observable<any>;
 export function downloadCalendar(type: typeof CREATE_CALENDAR_JSON, birthdays: Array<StoredBirthday>): Observable<any>;
-// tslint:disable-next-line:max-line-length
 export function downloadCalendar(type: typeof CREATE_CALENDAR_ICS | typeof CREATE_CALENDAR_DELETE_ICS, birthdays: Array<StoredBirthday>, options: IcsSettings): Observable<any>;
 export function downloadCalendar(type: any, birthdays: Array<StoredBirthday>, options?: any): Observable<any> {
   return new Observable(subscriber => {
