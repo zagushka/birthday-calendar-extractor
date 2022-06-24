@@ -1,15 +1,5 @@
 import { DateTime } from 'luxon';
-import {
-  Observable,
-  of,
-  throwError,
-} from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { retrieveUserSettings } from './storage/chrome.storage';
-import {
-  RestoredBirthday,
-  StoredBirthday,
-} from './storage/storaged.types';
+import { RestoredBirthday } from './storage/storaged.types';
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url
@@ -74,19 +64,4 @@ export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, 
   } while (tillYear >= year);
 
   return result;
-}
-
-export function getBirthdaysList(): Observable<Array<StoredBirthday>> {
-  return retrieveUserSettings(['birthdays', 'activated'])
-    .pipe(
-      switchMap(({birthdays, activated}) => {
-        if (activated) {
-          // Using cached version
-          return of(birthdays);
-        }
-
-        // We should never reach this line
-        return throwError('SCAN BIRTHDAYS FIRST');
-      }),
-    );
 }
