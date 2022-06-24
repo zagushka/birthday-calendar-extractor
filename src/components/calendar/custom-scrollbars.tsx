@@ -2,7 +2,7 @@ import React, {
   FunctionComponent,
   useCallback,
 } from 'react';
-import Scrollbars from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars-2';
 
 export interface CustomScrollbarsProps {
   onScroll: any;

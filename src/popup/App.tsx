@@ -1,8 +1,8 @@
 import {
-  createMuiTheme,
+  createTheme,
+  ThemeOptions,
   ThemeProvider,
 } from '@material-ui/core/styles';
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 import React, {
   FunctionComponent,
   useEffect,
@@ -80,7 +80,7 @@ export const themeOptions: ThemeOptions = {
   },
 };
 
-const theme = createMuiTheme(themeOptions);
+const theme = createTheme(themeOptions);
 
 const App: FunctionComponent = () => {
 

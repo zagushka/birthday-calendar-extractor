@@ -44,7 +44,7 @@ export function sendMessage<T>(action: ActionTypes, dontWait?: boolean) {
   });
   // Send message
   if ('undefined' === typeof dontWait || false === dontWait) {
-    return bindCallback<ActionTypes, T>(sendMessageWrapper)(action);
+    return bindCallback<[ActionTypes], [T]>(sendMessageWrapper)(action);
   }
   return chrome.runtime.sendMessage(action);
 

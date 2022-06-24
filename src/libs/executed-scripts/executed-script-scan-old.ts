@@ -295,7 +295,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
        */
       response = await fetch('https://www.facebook.com', {headers: {accept: 'text/html'}});
     } catch (error) {
-      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR', [error]);
+      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_REQUEST', error});
     }
 
@@ -303,7 +303,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       sendScanLog('SCAN_LOG_PAGE_CONTENT');
       return await response.text();
     } catch (error) {
-      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR', [error]);
+      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_CONTENT', error});
     }
   }
@@ -337,7 +337,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
         'method': 'POST',
       });
     } catch (error) {
-      sendScanLog('SCAN_LOG_FRIENDS_LIST_REQUEST_ERROR', [error]);
+      sendScanLog('SCAN_LOG_FRIENDS_LIST_REQUEST_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FRIENDS_LIST_REQUEST', error});
     }
 
@@ -348,7 +348,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       return (json.data.comet_composer_typeahead_bootload as Array<{ node: { name: string; id: string } }>)
         .map(({node: {id, name}}) => ({name, id}));
     } catch (error) {
-      sendScanLog('SCAN_LOG_FRIENDS_LIST_CONTENT_ERROR', [error]);
+      sendScanLog('SCAN_LOG_FRIENDS_LIST_CONTENT_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FRIENDS_LIST_CONTENT', error: {error, response: json}});
     }
   }
@@ -365,7 +365,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
         'https://www.facebook.com/async/birthdays/?date=' + date + '&__a=1&fb_dtsg_ag=' + token,
       );
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error]);
+      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error});
     }
 
@@ -375,7 +375,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       text = await response.text();
       return JSON.parse(text.substring(9)).domops[0][3].__html;
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error]);
+      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error: {error, response: text}});
     }
   }
@@ -421,7 +421,7 @@ export const fetchUserFriendsBirthdayInfoFromContextOld = (): string => {
       const items = extractBirthdayDataFromHtml(response);
       return generateBirthdaysFromRaw(items, languageSet);
     } catch (error) {
-      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error]);
+      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error});
     }
   }

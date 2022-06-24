@@ -96,7 +96,7 @@ const userSettingsListenerFunction =
       .reduce((accumulator, key) => {
         const {newValue} = changes[key];
         const value = reviveSettingsField(key, newValue);
-        if (undefined !== typeof value) {
+        if ('undefined' !== typeof value) {
           return update(accumulator, {[key]: {$set: value}});
         }
         return accumulator;
@@ -164,7 +164,7 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
           .reduce((accumulator, key) => {
             const storedValue = data[key];
             const value = reviveSettingsField(key, storedValue);
-            if (undefined !== typeof value) {
+            if ('undefined' !== typeof value) {
               return update(accumulator, {[key]: {$set: value}});
             }
             return accumulator;
@@ -203,7 +203,7 @@ export function storeUserSettings(settings: Partial<Settings>, wait?: boolean) {
       }, {});
 
   if (true === wait) {
-    return bindCallback<Partial<StoredSettings>>(setWrapper)(data);
+    return bindCallback<[Partial<StoredSettings>], [void]>(setWrapper)(data);
   }
 
   chrome.storage.local.set(data);

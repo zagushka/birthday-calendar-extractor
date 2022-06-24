@@ -17,7 +17,7 @@ export function setupAlarms() {
   const now = DateTime.local();
 // Wait till tomorrow
   const wait = Math.floor((DateTime.local(now.year, now.month, now.day)
-    .plus({day: 1, minute: 1}).toSeconds() - now.toSeconds()) / 60);
+    .plus({days: 1, minutes: 1}).toSeconds() - now.toSeconds()) / 60);
 
 // Repeat every 24 hours
   const period = 60 * 24;

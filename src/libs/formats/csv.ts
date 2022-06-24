@@ -49,7 +49,7 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // csv requires past birthdays to be converted to future
       .map(event => {
-        event.start = event.start < currentDateTime ? event.start.plus({year: 1}) : event.start;
+        event.start = event.start < currentDateTime ? event.start.plus({years: 1}) : event.start;
         return event;
       })
       // Sort incrementally

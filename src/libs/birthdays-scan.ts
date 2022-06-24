@@ -78,7 +78,7 @@ export function scanUserBirthdays(tabId: number, useOld: boolean, waitTime = 10_
 
     chrome.scripting.executeScript({
         target: {tabId},
-        function: useOld ? fetchUserFriendsBirthdayInfoFromContextOld : fetchUserFriendsBirthdayInfoFromContext,
+        func: useOld ? fetchUserFriendsBirthdayInfoFromContextOld : fetchUserFriendsBirthdayInfoFromContext,
       },
       (response) => {
         // Working with a single tab, use the firs array element

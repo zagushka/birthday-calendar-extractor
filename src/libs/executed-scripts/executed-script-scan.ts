@@ -105,7 +105,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
        */
       response = await fetch('https://www.facebook.com', {headers: {accept: 'text/html'}});
     } catch (error) {
-      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR', [error]);
+      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_REQUEST', error});
     }
 
@@ -113,7 +113,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
       sendScanLog('SCAN_LOG_PAGE_CONTENT');
       return await response.text();
     } catch (error) {
-      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR', [error]);
+      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_CONTENT', error});
     }
   }
@@ -146,7 +146,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         'method': 'POST',
       });
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error]);
+      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error});
     }
 
@@ -154,7 +154,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
       sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT');
       return await response.json();
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error]);
+      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error});
     }
   }
@@ -191,7 +191,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
           id: node.id,
         }));
     } catch (error) {
-      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error]);
+      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error as string]);
       return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error: {error, response}});
     }
   }
