@@ -11,10 +11,6 @@
     "message": "No Facebook login detected.",
     "description": "Error message send when user is not logged in to Facebook."
   },
-  "SCAN_LOG_EXTRACT_ASYNC_TOKEN_ERROR": {
-    "message": "No Facebook async login detected.",
-    "description": "Error message send when user is no async token detected."
-  },
   "SCAN_LOG_PAGE_REQUEST": {
     "message": "Requesting Facebook page.",
     "description": "Make request to facebook.com"
@@ -74,32 +70,6 @@
   "SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR": {
     "message": "Failed to extract birthdays from fetched data.",
     "description": "Error while extracting birthdays from fetched data.",
-    "placeholders": {
-      "message": {
-        "content": "$1"
-      }
-    }
-  },
-  "SCAN_LOG_FRIENDS_LIST_REQUEST": {
-    "message": "Extracting friends list.",
-    "description": "Starting birthdays extraction from fetched data."
-  },
-  "SCAN_LOG_FRIENDS_LIST_REQUEST_ERROR": {
-    "message": "Failed to extract friends list.",
-    "description": "Error while extracting friends list.",
-    "placeholders": {
-      "message": {
-        "content": "$1"
-      }
-    }
-  },
-  "SCAN_LOG_FRIENDS_LIST_CONTENT": {
-    "message": "Extracting friends list content.",
-    "description": "Extracting friends list content."
-  },
-  "SCAN_LOG_FRIENDS_LIST_CONTENT_ERROR": {
-    "message": "Failed to extract friends list content.",
-    "description": "Error while extracting friends list content.",
     "placeholders": {
       "message": {
         "content": "$1"
