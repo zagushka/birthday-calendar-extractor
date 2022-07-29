@@ -6,7 +6,6 @@ import {
   StoredBirthday,
 } from '../storage/storaged.types';
 
-
 /**
  * Sort function comparing two birthdays by user name
  *
@@ -70,4 +69,3 @@ export const calendarCSVData = (storedBirthdays: Array<StoredBirthday>) => {
     return arrayToCSVRow(preEscaped);
   }
 };
-

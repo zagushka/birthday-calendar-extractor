@@ -42,6 +42,6 @@ export const FAKE_SECOND_NAMES = [
 ];
 
 export function fakeName(): string {
-  return FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)]
-    + ' ' + FAKE_SECOND_NAMES[Math.floor(Math.random() * FAKE_SECOND_NAMES.length)];
+  return `${FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)]
+  } ${FAKE_SECOND_NAMES[Math.floor(Math.random() * FAKE_SECOND_NAMES.length)]}`;
 }

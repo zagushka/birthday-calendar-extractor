@@ -12,7 +12,6 @@ export interface RawScannedUser {
 
 export type CalendarTypes = 'CSV' | 'ICS' | 'DELETE-ICS';
 
-
 export interface ExportDoneResponse {
   type: typeof RESPONSE_EXPORT_DONE;
   calendar: CalendarTypes; // Created calendar format type
@@ -27,7 +26,6 @@ export interface ScanSuccessPayload {
   type: typeof SCAN_SUCCESS;
   users: Array<RawScannedUser>; // Scanned users array
 }
-
 
 export interface ExecutedScriptScanResponseAction {
   type: typeof EXECUTED_SCRIPT_RESPONSE;
@@ -82,4 +80,3 @@ export type ScanErrorTypes =
   | typeof SCAN_ERROR_BIRTHDAYS_EXTRACT
   | typeof SCAN_ERROR_TIMEOUT
   | typeof SCAN_ERROR_GENERAL;
-

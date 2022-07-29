@@ -9,9 +9,9 @@ import { CREATE_CALENDAR_DELETE_ICS } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
 import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
-const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
-  const {wizardsSettings: settings, users, isScanning} = useContext(CurrentStatusContext);
-  const {startDownload} = useHandleDownload(CREATE_CALENDAR_DELETE_ICS, users, settings.ics);
+const DeleteIcsGeneratorWizard: FunctionComponent = () => {
+  const { wizardsSettings: settings, users, isScanning } = useContext(CurrentStatusContext);
+  const { startDownload } = useHandleDownload(CREATE_CALENDAR_DELETE_ICS, users, settings.ics);
 
   const startGeneration = () => startDownload();
 
@@ -21,7 +21,7 @@ const DeleteIcsGeneratorWizard: FunctionComponent = (props) => {
 
   return (
     <>
-      <Typography variant='body2'>
+      <Typography variant="body2">
         {translate('SELECT_DELETE_ICS_DESCRIPTION')}
       </Typography>
 

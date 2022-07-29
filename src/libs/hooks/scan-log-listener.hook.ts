@@ -26,11 +26,9 @@ export function useScanLogListener(limit: number = 256): [Array<string>, () => v
     // Start listening to scan logs
     listenTo<SendScanLogAction>(SEND_SCAN_LOG)
       .pipe(
-        scan<Message<SendScanLogAction>, Array<string>>((accumulator, {action}) => {
-          return accumulator
-            .concat(translateString(action.payload.messageName, action.payload.substitutions))
-            .slice(-limit);
-        }, []),
+        scan<Message<SendScanLogAction>, Array<string>>((accumulator, { action }) => accumulator
+          .concat(translateString(action.payload.messageName, action.payload.substitutions))
+          .slice(-limit), []),
         takeUntil(onDestroy$),
       )
       .subscribe((logs) => {

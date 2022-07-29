@@ -2,14 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {version} = require('./package.json');
 const ejs = require('ejs');
-const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
+const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
+const { version } = require('./package.json');
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    'background': './background.ts',
+    background: './background.ts',
     // 'content': './content.ts',
     'popup/popup': './popup/popup.tsx',
   },
@@ -59,25 +59,25 @@ module.exports = {
           esModule: false,
         },
       },
-    ]
+    ],
   },
   plugins: [
     new MergeJsonWebpackPlugin({
       output: {
         groupBy: [
           {
-            pattern: "**/*.i18n.en.json",
-            fileName: "./_locales/en/messages.json"
+            pattern: '**/*.i18n.en.json',
+            fileName: './_locales/en/messages.json',
           },
           {
-            pattern: "**/*.i18n.ru.json",
-            fileName: "./_locales/ru/messages.json"
+            pattern: '**/*.i18n.ru.json',
+            fileName: './_locales/ru/messages.json',
           },
-        ]
+        ],
       },
       globOptions: {
-        nosort: true
-      }
+        nosort: true,
+      },
     }),
     new webpack.DefinePlugin({
       global: 'window',
@@ -88,13 +88,14 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'public'), to: './',
+          from: path.resolve(__dirname, 'public'),
+          to: './',
           globOptions: {
             ignore: ['**/manifest.json'],
           },
         },
         // Append variables to popup.html
-        {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
+        { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
         // Update manifest version from package.json
         {
           from: '../public/manifest.json',
@@ -105,10 +106,10 @@ module.exports = {
             return JSON.stringify(jsonContent, null, 2);
           },
         },
-      ]
+      ],
     }),
   ],
-  mode: 'production'
+  mode: 'production',
 };
 
 function transformHtml(content) {

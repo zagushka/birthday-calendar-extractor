@@ -29,7 +29,7 @@ export function prepareEvent(event: RestoredBirthday, year: number): PreparedEve
   // Since all coming birthdays are from 2020 (leap year) 02/29 can occur
   // I change the year to required and
   // luxon knows to handle leap years and change 29 to 28 for Feb if needed
-  const start = event.start.set({year: year});
+  const start = event.start.set({ year });
 
   // Wrong date
   if (!start.isValid) {
@@ -38,8 +38,8 @@ export function prepareEvent(event: RestoredBirthday, year: number): PreparedEve
 
   return {
     name: event.name,
-    start: start,
-    end: start.plus({days: 1}),
+    start,
+    end: start.plus({ days: 1 }),
     href: event.href,
     uid: btoa(event.href),
   };
@@ -53,7 +53,7 @@ export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, 
   const result: Array<PreparedEvent> = [];
 
   do {
-    events.forEach(event => {
+    events.forEach((event) => {
       const preparedEvent = prepareEvent(event, year);
       if (preparedEvent) {
         result.push(preparedEvent);

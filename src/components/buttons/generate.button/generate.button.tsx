@@ -8,13 +8,15 @@ interface GenerateAndDownloadButtonProps {
 }
 
 const GenerateAndDownloadButton: FunctionComponent<GenerateAndDownloadButtonProps> = (props) => {
-  const {onClick, disabled = false} = props;
+  const { onClick, disabled = false } = props;
   return (
-    <Button size='small'
-            variant='contained'
-            color='primary'
-            disabled={disabled}
-            onClick={onClick}>
+    <Button
+      size="small"
+      variant="contained"
+      color="primary"
+      disabled={disabled}
+      onClick={onClick}
+    >
       {translateString('GENERATE')}
     </Button>
   );

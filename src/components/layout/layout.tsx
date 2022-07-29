@@ -7,17 +7,18 @@ import { BoxProps } from '@material-ui/core/Box/Box';
 import React, { FunctionComponent } from 'react';
 import { useLayoutStyles } from './layout.styles';
 
-export const LayoutHeader: FunctionComponent =
-  ({children}) => {
-    const classes = useLayoutStyles();
+export const LayoutHeader: FunctionComponent = ({ children }) => {
+  const classes = useLayoutStyles();
 
-    return (<>
+  return (
+    <>
       <Box className={classes.header}>
-        <Typography color='textPrimary' variant='h6'>{children}</Typography>
+        <Typography color="textPrimary" variant="h6">{children}</Typography>
       </Box>
-      <Divider/>
-    </>);
-  };
+      <Divider />
+    </>
+  );
+};
 
 export interface LayoutContentProps {
   direction?: 'vertical' | 'horizontal'
@@ -26,19 +27,21 @@ export interface LayoutContentProps {
 export const LayoutContent: FunctionComponent<LayoutContentProps & BoxProps> = (props) => {
   const classes = useLayoutStyles();
   return (
-    <Box pb={1} pl={1} className={classes.content} {...props}/>
+    <Box pb={1} pl={1} className={classes.content} {...props} />
   );
 };
 
 export const LayoutFooter: FunctionComponent<LayoutContentProps & BoxProps> = (props) => {
   const classes = useLayoutStyles();
-  return (<>
-    <Divider/>
-    <Box className={classes.footer} {...props}/>
-  </>);
+  return (
+    <>
+      <Divider />
+      <Box className={classes.footer} {...props} />
+    </>
+  );
 };
 
-export const LayoutWrapper: FunctionComponent = ({children}) => {
+export const LayoutWrapper: FunctionComponent = ({ children }) => {
   const classes = useLayoutStyles();
 
   return (

@@ -15,7 +15,7 @@ import { ActionTypes } from './types';
  */
 export const allActions$: Subject<Message<ActionTypes>> = new Subject();
 // Forward chrome.runtime.onMessage
-allChromeMessages$.subscribe(e => allActions$.next(e));
+allChromeMessages$.subscribe((e) => allActions$.next(e));
 
 /**
  * Listen to allMessages$ filtered by actionName
@@ -25,7 +25,7 @@ export function listenTo<U extends ActionTypes, T = Message<U>>(...types: Action
 export function listenTo(...types: ActionTypes['type'][]) {
   return allActions$
     .pipe(
-      filter<Message<ActionTypes>>(a => types.includes(a.action.type)),
+      filter<Message<ActionTypes>>((a) => types.includes(a.action.type)),
     );
 }
 
@@ -35,17 +35,16 @@ const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => ch
  * Can be used on both popup and backend
  */
 export function sendMessage<T>(action: ActionTypes): Observable<T>;
-export function sendMessage(action: ActionTypes, dontWait: boolean): void;
-export function sendMessage<T>(action: ActionTypes, dontWait?: boolean) {
+export function sendMessage(action: ActionTypes, wait: true): void;
+export function sendMessage<T>(action: ActionTypes, wait = false) {
   // Mirror for the local needs
   allActions$.next({
     action,
     callback: () => null,
   });
   // Send message
-  if ('undefined' === typeof dontWait || false === dontWait) {
+  if (wait) {
     return bindCallback<[ActionTypes], [T]>(sendMessageWrapper)(action);
   }
-  return chrome.runtime.sendMessage(action);
-
+  chrome.runtime.sendMessage(action, () => null);
 }

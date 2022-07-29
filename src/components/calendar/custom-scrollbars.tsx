@@ -10,8 +10,10 @@ export interface CustomScrollbarsProps {
   style: any;
 }
 
-export const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({onScroll, forwardedRef, style, children}) => {
-  const refSetter = useCallback(scrollbarsRef => {
+export const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({
+  onScroll, forwardedRef, style, children,
+}) => {
+  const refSetter = useCallback((scrollbarsRef) => {
     if (scrollbarsRef) {
       forwardedRef(scrollbarsRef.view);
     } else {
@@ -22,7 +24,7 @@ export const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({onSc
   return (
     <Scrollbars
       ref={refSetter}
-      style={{...style, overflow: 'hidden'}}
+      style={{ ...style, overflow: 'hidden' }}
       onScroll={onScroll}
     >
       {children}
@@ -31,5 +33,5 @@ export const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({onSc
 };
 
 export const CustomScrollbarsVirtualList = React.forwardRef<unknown, CustomScrollbarsProps>((props, ref) => (
-  <CustomScrollbars {...props} forwardedRef={ref}/>
+  <CustomScrollbars {...props} forwardedRef={ref} />
 ));

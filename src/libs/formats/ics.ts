@@ -34,8 +34,9 @@ TRANSP:TRANSPARENT
 END:VEVENT`;
 }
 
-export class CalendarICS extends CalendarBase<{}, string, string> {
+export class CalendarICS extends CalendarBase<string, string> {
   readonly filename: string = 'birthday-calendar.ics';
+
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
 
   constructor(public settings: IcsSettings) {
@@ -51,7 +52,7 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
     return {
       name: event.name,
       start: event.start.toFormat('yyyyLLdd'),
-      end: event.start.plus({days: 1}).toFormat('yyyyLLdd'),
+      end: event.start.plus({ days: 1 }).toFormat('yyyyLLdd'),
       stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss\'Z\''),
       href: event.href,
       uid: event.uid,
@@ -63,7 +64,6 @@ export class CalendarICS extends CalendarBase<{}, string, string> {
     fromYear: number = 2020, // Since all the events are recurring I generate them for leap year 2020
     tillYear: number = 2020,
   ) {
-
     const events = storedBirthdays.map(reviveBirthday);
 
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
@@ -80,16 +80,15 @@ END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
   }
 
   generateEvents(events: Array<PreparedEvent>): Array<string> {
-    const grouped =
-      events.reduce((ac, event) => {
-        if (!ac.has(event.start)) {
-          ac.set(event.start, []);
-        }
-        ac.set(event.start, [...ac.get(event.start), event]);
-        return ac;
-      }, new Map<DateTime, Array<PreparedEvent>>());
+    const grouped = events.reduce((ac, event) => {
+      if (!ac.has(event.start)) {
+        ac.set(event.start, []);
+      }
+      ac.set(event.start, [...ac.get(event.start), event]);
+      return ac;
+    }, new Map<DateTime, Array<PreparedEvent>>());
 
-    return events.map(e => this.generateEvent(e)); // Generate final events
+    return events.map((e) => this.generateEvent(e)); // Generate final events
   }
 
   generateEvent(event: PreparedEvent) {

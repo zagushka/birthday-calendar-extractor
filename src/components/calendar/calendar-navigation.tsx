@@ -24,41 +24,41 @@ interface CalendarNavigationProps {
   updateDayIndex: (delta?: number) => void;
 }
 
-export const CalendarNavigation: FunctionComponent<CalendarNavigationProps> = ({updateDayIndex}) => {
-  const {isDonated} = useContext(CurrentStatusContext);
+export const CalendarNavigation: FunctionComponent<CalendarNavigationProps> = ({ updateDayIndex }) => {
+  const { isDonated } = useContext(CurrentStatusContext);
 
   const hideButton = useCallback(() => {
-    storeUserSettings({donated: !isDonated});
+    storeUserSettings({ donated: !isDonated });
   }, [isDonated]);
 
   const multipleClicksHandler = useTapsCounter(5, 1000, hideButton);
 
-  const handleClickOnToday: MouseEventHandler = (event) => {
+  const handleClickOnToday: MouseEventHandler = () => {
     multipleClicksHandler();
     updateDayIndex();
   };
 
   return (
-    <React.Fragment>
+    <>
       <Box p={1} pr={2} display="flex" justifyContent="space-between">
         <Box>
           <Button size="small" color="primary" onClick={handleClickOnToday}>
             {translateString('TODAY')}
           </Button>
 
-          <IconButton size={'small'} onClick={() => updateDayIndex(-1)}>
-            <ChevronLeft/>
+          <IconButton size="small" onClick={() => updateDayIndex(-1)}>
+            <ChevronLeft />
           </IconButton>
 
-          <IconButton size={'small'} onClick={() => updateDayIndex(1)}>
-            <ChevronRight/>
+          <IconButton size="small" onClick={() => updateDayIndex(1)}>
+            <ChevronRight />
           </IconButton>
         </Box>
 
-        <BuyCoffeeButton variant="outlined" color="secondary" withIcon/>
+        <BuyCoffeeButton variant="outlined" color="secondary" withIcon />
       </Box>
 
-      <Divider/>
-    </React.Fragment>
+      <Divider />
+    </>
   );
 };

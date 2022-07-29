@@ -20,7 +20,7 @@ import {
   handleLinkClickAndCloseModal,
 } from '../modals.lib';
 
-const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error}) => {
+const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({ error }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const errorMessage = btoa(JSON.stringify(error));
 
@@ -38,7 +38,7 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error
   };
   return (
     <Dialog
-      open={true}
+      open
       onClose={handleCloseModal}
     >
       <DialogTitle>
@@ -46,20 +46,20 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error
       </DialogTitle>
 
       <DialogContent>
-        <Typography variant='body1' color='textSecondary' paragraph>
+        <Typography variant="body1" color="textSecondary" paragraph>
           {translate(error.type)}
         </Typography>
-        <Typography variant='body1' color='textSecondary' paragraph>
+        <Typography variant="body1" color="textSecondary" paragraph>
           {translate('REPORT_A_BUG_DESCRIPTION')}
         </Typography>
         <TextField
           inputRef={textAreaRef}
           rows={4}
           fullWidth
-          margin={'none'}
+          margin="none"
           value={translateString('REPORT_A_BUG_DETAILS_TEXTAREA', [errorMessage])}
           multiline
-          variant='outlined'
+          variant="outlined"
           InputProps={{
             readOnly: true,
           }}
@@ -67,14 +67,15 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({error
       </DialogContent>
 
       <DialogActions>
-        <Button size='small'
-                color='primary'
-                variant='contained'
-                onClick={handleReportBugClick}
+        <Button
+          size="small"
+          color="primary"
+          variant="contained"
+          onClick={handleReportBugClick}
         >
           {translate('REPORT_A_BUG_TITLE')}
         </Button>
-        <DialogCloseButton/>
+        <DialogCloseButton />
       </DialogActions>
 
     </Dialog>

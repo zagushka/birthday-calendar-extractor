@@ -1,5 +1,5 @@
-import { Location } from 'history';
 import { DateTime } from 'luxon';
+import type { Location } from 'history';
 import { ShowModalAction } from '../events/types';
 
 export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';

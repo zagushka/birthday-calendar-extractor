@@ -1,6 +1,5 @@
 import {
   makeStyles,
-  Theme,
   Tooltip,
 } from '@material-ui/core';
 import React, {
@@ -10,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 
-const useTooltipStyles = makeStyles((theme: Theme) => ({
+const useTooltipStyles = makeStyles(() => ({
   tooltipPlacementBottom: {
     marginTop: 10,
   },
@@ -26,7 +25,7 @@ interface CustomTooltipProps {
 }
 
 export const CustomTooltip: FunctionComponent<CustomTooltipProps> = (props) => {
-  const {title, defaultOpen = false} = props;
+  const { title, defaultOpen = false } = props;
   const [open, setOpen] = useState<boolean>(defaultOpen);
 
   useEffect(() => {
@@ -44,7 +43,8 @@ export const CustomTooltip: FunctionComponent<CustomTooltipProps> = (props) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       title={title}
-      children={props.children}
-    />
+    >
+      {props.children}
+    </Tooltip>
   );
 };

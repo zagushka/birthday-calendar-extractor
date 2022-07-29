@@ -13,32 +13,28 @@ import {
   handleCloseModal,
 } from './modals.lib';
 
-const DoneModal: FunctionComponent = () => {
-
+const DoneModal: FunctionComponent = () => (
   // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
-  return (
-    <Dialog
-      open={true}
-      onClose={handleCloseModal}
-    >
-      <DialogTitle>
-        {translate('DONE_TITLE')}
-      </DialogTitle>
+  <Dialog
+    open
+    onClose={handleCloseModal}
+  >
+    <DialogTitle>
+      {translate('DONE_TITLE')}
+    </DialogTitle>
 
-      <DialogContent>
-        <Typography variant="body1" color="textSecondary">
-          {translate('DONE_DESCRIPTION')}
-        </Typography>
-      </DialogContent>
+    <DialogContent>
+      <Typography variant="body1" color="textSecondary">
+        {translate('DONE_DESCRIPTION')}
+      </Typography>
+    </DialogContent>
 
-      <DialogActions>
-        <LeaveFeedbackButton onClick={handleCloseModal}/>
-        <BuyCoffeeButton variant="outlined" color="secondary" withIcon/>
-        {/*<DialogCloseButton/>*/}
-      </DialogActions>
+    <DialogActions>
+      <LeaveFeedbackButton onClick={handleCloseModal} />
+      <BuyCoffeeButton variant="outlined" color="secondary" withIcon />
+      {/* <DialogCloseButton/> */}
+    </DialogActions>
 
-    </Dialog>
-  );
-};
-
+  </Dialog>
+);
 export default DoneModal;

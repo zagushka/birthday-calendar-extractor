@@ -24,7 +24,7 @@ const handleLink = (rawUrl: string, settings: LinkSettings, ev?: React.MouseEven
   }
 
   const url = translateString(rawUrl, substitutions) || rawUrl;
-  chrome.tabs.create({url, active});
+  chrome.tabs.create({ url, active });
 
   if (close) {
     window.close();

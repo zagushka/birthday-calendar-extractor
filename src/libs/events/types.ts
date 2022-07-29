@@ -131,5 +131,4 @@ export type ActionTypes =
   | CreateCalendarActionTypes
   | AlarmTypes
   | SendScanLogAction
-  | ExecutedScriptTypes
-  ;
+  | ExecutedScriptTypes;

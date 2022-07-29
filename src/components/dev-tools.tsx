@@ -31,11 +31,11 @@ const DevTools: React.FunctionComponent = () => {
   const clearBadge = () => {
     setBadgeText('');
     setBadgeColor();
-    storeUserSettings({badgeVisited: DateTime.fromMillis(0)});
+    storeUserSettings({ badgeVisited: DateTime.fromMillis(0) });
   };
 
   const openModal = (type: ScanErrorTypes | ShowModalTypes) => () => {
-    storeUserSettings({modal: {type}});
+    storeUserSettings({ modal: { type } });
   };
 
   return (
@@ -46,16 +46,17 @@ const DevTools: React.FunctionComponent = () => {
       </Layout.Header>
 
       <Layout.Content>
-        <Button variant='outlined' color='secondary' onClick={clearChromeStorage}>Clear Chrome Local Storage</Button>
-        <Button variant='outlined' onClick={clearBadge}>Clear Badge</Button>
-        <Button variant='outlined' onClick={openModal(SCAN_ERROR_BIRTHDAYS_EXTRACT)}>Birthdays Extract Failed Modal</Button>
-        <Button variant='outlined' onClick={openModal(SHOW_MODAL_SCAN_SUCCESS)}>Scanning Success Modal</Button>
-        <Button variant='outlined' onClick={openModal(SHOW_MODAL_EXPORT_SUCCESS)}>Export Success Modal</Button>
-        <Button variant='outlined' onClick={openModal(SCAN_ERROR_FACEBOOK_REQUIRED)}>Facebook Required Modal</Button>
-        <Button variant='outlined' onClick={openModal(SCAN_ERROR_NO_TOKEN_DETECTED)}>No token detected Modal</Button>
+        <Button variant="outlined" color="secondary" onClick={clearChromeStorage}>Clear Chrome Local Storage</Button>
+        <Button variant="outlined" onClick={clearBadge}>Clear Badge</Button>
+        <Button variant="outlined" onClick={openModal(SCAN_ERROR_BIRTHDAYS_EXTRACT)}>Birthdays Extract Failed Modal</Button>
+        <Button variant="outlined" onClick={openModal(SHOW_MODAL_SCAN_SUCCESS)}>Scanning Success Modal</Button>
+        <Button variant="outlined" onClick={openModal(SHOW_MODAL_EXPORT_SUCCESS)}>Export Success Modal</Button>
+        <Button variant="outlined" onClick={openModal(SCAN_ERROR_FACEBOOK_REQUIRED)}>Facebook Required Modal</Button>
+        <Button variant="outlined" onClick={openModal(SCAN_ERROR_NO_TOKEN_DETECTED)}>No token detected Modal</Button>
       </Layout.Content>
 
-    </Layout.Wrapper>);
+    </Layout.Wrapper>
+  );
 };
 
 export default DevTools;

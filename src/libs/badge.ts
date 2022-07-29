@@ -11,16 +11,16 @@ import {
  */
 export function updateBadge(): void {
   retrieveUserSettings(['birthdays', 'activated', 'badgeVisited'])
-    .subscribe(({birthdays, badgeVisited, activated}) => {
+    .subscribe(({ birthdays, badgeVisited, activated }) => {
       // filter only today's birthdays
       let badgeNumber = '';
       let badgeColor: string | chrome.browserAction.ColorArray = [0, 0, 0, 0];
 
       // Update default badge value and color if functionality is active
       if (activated) {
-        const year = DateTime.local().year;
+        const { year } = DateTime.local();
         try { // Adding try so no application update can cause an error
-          const filteredBirthdays = filterBirthdaysForDate(birthdays.map(b => reviveBirthday(b, year)), DateTime.local());
+          const filteredBirthdays = filterBirthdaysForDate(birthdays.map((b) => reviveBirthday(b, year)), DateTime.local());
           badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
           badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
         } catch (e) {
@@ -34,9 +34,9 @@ export function updateBadge(): void {
 }
 
 export function setBadgeColor(color: string | chrome.browserAction.ColorArray = [0, 0, 0, 0]) {
-  chrome.action.setBadgeBackgroundColor({color});
+  return chrome.action.setBadgeBackgroundColor({ color });
 }
 
 export function setBadgeText(text: string) {
-  chrome.action.setBadgeText({text});
+  return chrome.action.setBadgeText({ text });
 }

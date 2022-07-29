@@ -46,18 +46,20 @@ function isOnFacebookPage(url: string): boolean {
  * Check current page is facebook and emit its Tab (`chrome.tabs.Tab`)
  * Throws error {type: SCAN_ERROR_FACEBOOK_REQUIRED} when not of a facebook
  */
-export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable(subscriber => {
-  chrome.tabs.query({active: true, currentWindow: true},
+export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable((subscriber) => {
+  chrome.tabs.query(
+    { active: true, currentWindow: true },
     (tabs) => {
       const url = tabs[0]?.url;
       // check currTab.url is a Facebook page
-      if ('string' === typeof url && isOnFacebookPage(url)) {
+      if (typeof url === 'string' && isOnFacebookPage(url)) {
         subscriber.next(tabs[0]);
         return;
       }
 
-      subscriber.error({type: SCAN_ERROR_FACEBOOK_REQUIRED});
-    });
+      subscriber.error({ type: SCAN_ERROR_FACEBOOK_REQUIRED });
+    },
+  );
 
   return () => subscriber.complete();
 });
@@ -73,50 +75,49 @@ export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable(
  */
 export function scanUserBirthdays(tabId: number, waitTime = 10_000): Observable<Array<RawScannedUser>> {
   return new Observable((subscriber) => {
-
-    chrome.scripting.executeScript({
-        target: {tabId},
+    chrome.scripting.executeScript(
+      {
+        target: { tabId },
         func: fetchUserFriendsBirthdayInfoFromContext,
       },
       (response) => {
-        // Working with a single tab, use the firs array element
+      // Working with a single tab, use the firs array element
         waitForResponse(response[0].result);
-      });
+      },
+    );
 
     /**
      * Listen to response from page report messages,
      * It should come with unique responseId and have a type
      * `EXECUTED_SCRIPT_RESPONSE`
      */
-    const waitForResponse = (responseId: string) => {
-      return listenTo<ExecutedScriptScanResponseAction>(EXECUTED_SCRIPT_RESPONSE)
-        .pipe(
-          filter(({action}) => action.responseId === responseId),
-          timeout(waitTime), // Wait up to 10 seconds (default) till context page response
-          take(1),
-        )
-        .subscribe({
-          next: ({action}) => {
-            switch (action.payload.type) {
-              case SCAN_SUCCESS:
-                subscriber.next(action.payload.users);
-                subscriber.complete();
-                break;
-              default:
-                subscriber.error(action.payload);
-            }
-          },
-          error: () => {
-            subscriber.error({type: SCAN_ERROR_TIMEOUT});
-          },
-          complete: () => subscriber.complete(),
-        });
-    };
+    const waitForResponse = (responseId: string) => listenTo<ExecutedScriptScanResponseAction>(EXECUTED_SCRIPT_RESPONSE)
+      .pipe(
+        filter(({ action }) => action.responseId === responseId),
+        timeout(waitTime), // Wait up to 10 seconds (default) till context page response
+        take(1),
+      )
+      .subscribe({
+        next: ({ action }) => {
+          switch (action.payload.type) {
+            case SCAN_SUCCESS:
+              subscriber.next(action.payload.users);
+              subscriber.complete();
+              break;
+            default:
+              subscriber.error(action.payload);
+          }
+        },
+        error: () => {
+          subscriber.error({ type: SCAN_ERROR_TIMEOUT });
+        },
+        complete: () => subscriber.complete(),
+      });
   });
 }
 
 export const sendScanLog = (str: string, reps: Array<string> = []) => {
-  sendMessage(SendScanLog(str, reps), true);
+  sendMessage(SendScanLog(str, reps));
 };
 
 /**
@@ -155,8 +156,8 @@ function mergeBirthdaysAllowDatesUpdate(...groupArray: Array<Array<StoredBirthda
 
         // update birthdate in case duplicate birthdate has a 'year'
         const year = birthday[STORED_BIRTHDAY.BIRTH_DATE][2];
-        if ('number' === typeof year && 'number' !== typeof collector.get(uid)[STORED_BIRTHDAY.BIRTH_DATE][2]) {
-          collector.set(uid, update(birthday, {[STORED_BIRTHDAY.BIRTH_DATE]: {2: {$set: year}}}));
+        if (typeof year === 'number' && typeof collector.get(uid)[STORED_BIRTHDAY.BIRTH_DATE][2] !== 'number') {
+          collector.set(uid, update(birthday, { [STORED_BIRTHDAY.BIRTH_DATE]: { 2: { $set: year } } }));
         }
         return collector;
       },
@@ -166,29 +167,20 @@ function mergeBirthdaysAllowDatesUpdate(...groupArray: Array<Array<StoredBirthda
   return Array.from(mappedBirthdays.values());
 }
 
-function mergeBirthdays(...groupArray: Array<Array<StoredBirthday>>): Array<StoredBirthday> {
-  const nonUniquesForMap: Array<[string, StoredBirthday]> =
-    [].concat(...groupArray) // Combine birthdays groups, newcomers will survive.
-      .map(b => [b[STORED_BIRTHDAY.UID], b]); // format to [key, value] to use as initial parameter for a `new Map`
-
-  // Map  birthdays to remove duplicates, older values survive
-  return Array.from((new Map(nonUniquesForMap)).values());
-}
-
 export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
   return retrieveUserSettings(['birthdays', 'activated'])
     .pipe(
       // Merge with stored birthdays
       tap(() => sendScanLog('SCAN_LOG_MERGING_BIRTHDAYS')),
 
-      map(({birthdays: oldBirthdays}) => {
+      map(({ birthdays: oldBirthdays }) => {
         const birthdays = rawUsers.map(scannedUserToDecayedBirthday);
         return mergeBirthdaysAllowDatesUpdate(birthdays, oldBirthdays);
       }),
 
       // Store fetched data for further usage
       tap(() => sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS')),
-      switchMap(combinedBirthdays => storeUserSettings({
+      switchMap((combinedBirthdays) => storeUserSettings({
         birthdays: combinedBirthdays, activated: true,
       }, true)),
     );

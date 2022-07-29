@@ -42,7 +42,7 @@ const createItemData = memoize((userGroup, toggleStatus) => ({
 }));
 
 const Calendar: FunctionComponent = () => {
-  const {users: rawUsers} = useContext(CurrentStatusContext);
+  const { users: rawUsers } = useContext(CurrentStatusContext);
   const [dayIndex, setDayIndex] = useState<number>(0);
 
   const [users, setUsers] = useState<UserMapInterface>({
@@ -50,28 +50,25 @@ const Calendar: FunctionComponent = () => {
     usersMap: [],
   });
 
-  const scrollHandler = useThrottleCallback(
-    useCallback(({scrollOffset}: ListOnScrollProps) => {
-        const index = users.usersMap.findIndex(item => item.offset + item.height >= scrollOffset);
-        setDayIndex(index);
-      }, [users],
-    ), 10);
+  const scrollHandler = useThrottleCallback(useCallback(({ scrollOffset }: ListOnScrollProps) => {
+    const index = users.usersMap.findIndex((item) => item.offset + item.height >= scrollOffset);
+    setDayIndex(index);
+  }, [users]), 10);
 
   const listRef = useRef<VariableSizeList>();
 
   useEffect(() => {
     // Prepare birthdays
-    const year = DateTime.local().year;
-    const revivedUsers = rawUsers.map(u => reviveBirthday(u, year));
+    const { year } = DateTime.local();
+    const revivedUsers = rawUsers.map((u) => reviveBirthday(u, year));
     const grouped = groupUsersByOrdinal(revivedUsers);
     const itemsMap = mapGroupedUsersToDisplayItemDimensions(grouped);
-    setUsers({userGroups: grouped, usersMap: itemsMap});
-
+    setUsers({ userGroups: grouped, usersMap: itemsMap });
   }, [rawUsers]);
 
   const updateUserSettings = (id: string, settings: number) => {
     const index = rawUsers.findIndex((user) => user[STORED_BIRTHDAY.UID] === id);
-    storeUserSettings({birthdays: update(rawUsers, {[index]: {[STORED_BIRTHDAY.SETTINGS]: {$set: settings}}})});
+    storeUserSettings({ birthdays: update(rawUsers, { [index]: { [STORED_BIRTHDAY.SETTINGS]: { $set: settings } } }) });
   };
   const itemData = createItemData(users.userGroups, updateUserSettings);
 
@@ -83,7 +80,7 @@ const Calendar: FunctionComponent = () => {
     }
     // Find next closest day for today
     const current = DateTime.local().ordinal;
-    const nextClosestIndex = users.usersMap.findIndex(({ordinal}) => ordinal >= current);
+    const nextClosestIndex = users.usersMap.findIndex(({ ordinal }) => ordinal >= current);
     if (~nextClosestIndex) {
       updateDayIndex(nextClosestIndex);
       setRanOnce(true);
@@ -108,10 +105,10 @@ const Calendar: FunctionComponent = () => {
   const updateDayIndex = (delta?: number) => {
     let index = dayIndex + (delta ?? 0);
 
-    if ('undefined' === typeof delta) {
+    if (typeof delta === 'undefined') {
       // No index provided, set index close to today
       const todayOrdinal = DateTime.local().ordinal;
-      index = users.usersMap.findIndex(({ordinal}) => ordinal >= todayOrdinal);
+      index = users.usersMap.findIndex(({ ordinal }) => ordinal >= todayOrdinal);
     } else if (index < 0) {
       // Small index, set index to the the end
       index = users.userGroups.length - 1;
@@ -125,30 +122,31 @@ const Calendar: FunctionComponent = () => {
 
   return (
     <>
-      {/*Top Part of the list*/}
+      {/* Top Part of the list */}
       <Layout.Header>
-        <Box style={{textTransform: 'capitalize'}}>{title}</Box>
+        <Box style={{ textTransform: 'capitalize' }}>{title}</Box>
       </Layout.Header>
 
-      {/*Navigation with today, next and previous day buttons*/}
-      <CalendarNavigation updateDayIndex={updateDayIndex}/>
+      {/* Navigation with today, next and previous day buttons */}
+      <CalendarNavigation updateDayIndex={updateDayIndex} />
 
       <Layout.Content>
-        {/*Scroll with list of birthdays*/}
+        {/* Scroll with list of birthdays */}
 
         <VariableSizeList
-          itemSize={i => users.usersMap[i].height}
+          itemSize={(i) => users.usersMap[i].height}
           itemData={itemData}
           ref={listRef}
           height={429}
           onScroll={scrollHandler}
-          width={'100%'}
+          width="100%"
           outerElementType={CustomScrollbarsVirtualList}
-          itemCount={users.userGroups.length}>
+          itemCount={users.userGroups.length}
+        >
           {DayList}
         </VariableSizeList>
 
-        <CreateButton/>
+        <CreateButton />
       </Layout.Content>
     </>
   );

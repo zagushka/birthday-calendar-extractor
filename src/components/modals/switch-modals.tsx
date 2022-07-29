@@ -27,8 +27,7 @@ import NoTokenDetectedModal from './no-token-detected/no-token-detected';
 import ScanSuccessModal from './scan-success/scan-success.modal';
 
 const SwitchModals: FunctionComponent = () => {
-
-  const {modal} = useContext(CurrentStatusContext);
+  const { modal } = useContext(CurrentStatusContext);
   const [modalDialog, setModalDialog] = useState<JSX.Element>(null);
 
   useEffect(() => {
@@ -38,18 +37,18 @@ const SwitchModals: FunctionComponent = () => {
 
     switch (modal.type) {
       case SHOW_MODAL_SCAN_SUCCESS:
-        return setModalDialog(<ScanSuccessModal/>);
+        return setModalDialog(<ScanSuccessModal />);
 
       case SHOW_MODAL_EXPORT_SUCCESS:
-        return setModalDialog(<DoneModal/>);
+        return setModalDialog(<DoneModal />);
 
       case SCAN_ERROR_FACEBOOK_REQUIRED:
-        return setModalDialog(<FacebookRequiredModal/>);
+        return setModalDialog(<FacebookRequiredModal />);
 
       case SCAN_ERROR_FACEBOOK_PAGE_REQUEST:
       case SCAN_ERROR_FACEBOOK_PAGE_CONTENT:
       case SCAN_ERROR_NO_TOKEN_DETECTED:
-        return setModalDialog(<NoTokenDetectedModal/>);
+        return setModalDialog(<NoTokenDetectedModal />);
 
       case SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST:
       case SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT:
@@ -57,15 +56,11 @@ const SwitchModals: FunctionComponent = () => {
       case SCAN_ERROR_TIMEOUT:
       case SCAN_ERROR_GENERAL:
       default:
-        setModalDialog(<GeneralErrorModal error={modal}/>);
+        setModalDialog(<GeneralErrorModal error={modal} />);
     }
   }, [modal]);
 
-  return (
-    <>
-      {modalDialog}
-    </>
-  );
+  return modalDialog;
 };
 
 export default SwitchModals;

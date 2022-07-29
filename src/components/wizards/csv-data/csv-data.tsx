@@ -12,12 +12,12 @@ import { STORED_BIRTHDAY } from '../../../libs/storage/storaged.types';
 import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
 const CsvDataGeneratorWizard: FunctionComponent = () => {
-  const {users, isScanning} = useContext(CurrentStatusContext);
+  const { users, isScanning } = useContext(CurrentStatusContext);
 
   // Remove "hidden" users from the list
-  const activeUsers = useMemo(() => users.filter(u => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
+  const activeUsers = useMemo(() => users.filter((u) => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
 
-  const {startDownload} = useHandleDownload(CREATE_CSV_DATA, activeUsers);
+  const { startDownload } = useHandleDownload(CREATE_CSV_DATA, activeUsers);
 
   const startGeneration = () => startDownload();
 

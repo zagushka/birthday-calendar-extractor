@@ -30,11 +30,11 @@ export function UPGRADE_TO_3_1_0(version: string): Observable<any> {
   // get stored birthdays
   return retrieveUserSettings(['birthdays'])
     .pipe(
-      map(({birthdays}) => {
+      map(({ birthdays }) => {
         const updated: Array<StoredBirthday> = (birthdays as unknown as Array<[string, number, string, number?]>)
           .map((birthdate) => {
             const date = DateTime.local(2020) // use 2020 since date was originally from 2020
-              .set({ordinal: birthdate[1]}); // Set ordinal of 2020
+              .set({ ordinal: birthdate[1] }); // Set ordinal of 2020
             return [
               birthdate[0], // name
               birthdate[2], // uid
@@ -45,9 +45,9 @@ export function UPGRADE_TO_3_1_0(version: string): Observable<any> {
           });
         return updated;
       }),
-      switchMap(birthdays => storeUserSettings({birthdays}, true)),
+      switchMap((birthdays) => storeUserSettings({ birthdays }, true)),
       tap(() => {
         console.log('upgrade to 3.1.0 successful');
       }),
     );
-};
+}

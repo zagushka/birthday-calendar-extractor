@@ -28,42 +28,47 @@ const useStyles = makeStyles({
 });
 
 export const BottomMenu: FunctionComponent = () => {
-  const {isActive} = useContext(CurrentStatusContext);
+  const { isActive } = useContext(CurrentStatusContext);
   const classes = useStyles();
 
-  return (<BottomNavigation
-    showLabels
-    className={classes.root}
-  >
-    <BottomNavigationAction
-      label={translateString('BUTTON_TO_CALENDAR_TITLE')}
-      icon={<EventNote/>}
-      disabled={!isActive}
-      component={NavLink}
-      activeClassName='Mui-selected'
-      to={'/calendar'}
-    />
-    <BottomNavigationAction
-      label={translateString('BUTTON_TO_DOWNLOADS_TITLE')}
-      icon={<GetApp/>}
-      disabled={!isActive}
-      component={NavLink}
-      activeClassName='Mui-selected'
-      to={'/export'}
-    />
-    <BottomNavigationAction
-      label={translateString('BUTTON_TO_SCAN_TITLE')}
-      icon={<Repeat/>}
-      component={NavLink}
-      activeClassName='Mui-selected'
-      to={'/activate'}
-    />
-    {isDevelopment && isShowTools && <BottomNavigationAction
-      label='Tools'
-      icon={<Build/>}
-      component={NavLink}
-      activeClassName='Mui-selected'
-      to={'/dev-tools'}
-    />}
-  </BottomNavigation>);
+  return (
+    <BottomNavigation
+      showLabels
+      className={classes.root}
+    >
+      <BottomNavigationAction
+        label={translateString('BUTTON_TO_CALENDAR_TITLE')}
+        icon={<EventNote />}
+        disabled={!isActive}
+        component={NavLink}
+        className="Mui-selected"
+        to="/calendar"
+      />
+
+      <BottomNavigationAction
+        label={translateString('BUTTON_TO_DOWNLOADS_TITLE')}
+        icon={<GetApp />}
+        disabled={!isActive}
+        component={NavLink}
+        className="Mui-selected"
+        to="/export"
+      />
+      <BottomNavigationAction
+        label={translateString('BUTTON_TO_SCAN_TITLE')}
+        icon={<Repeat />}
+        component={NavLink}
+        className="Mui-selected"
+        to="/activate"
+      />
+      {isDevelopment && isShowTools && (
+      <BottomNavigationAction
+        label="Tools"
+        icon={<Build />}
+        component={NavLink}
+        className="Mui-selected"
+        to="/dev-tools"
+      />
+      )}
+    </BottomNavigation>
+  );
 };

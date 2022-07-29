@@ -1,5 +1,5 @@
-import { Location } from 'history';
 import React, { FunctionComponent } from 'react';
+import { Location } from 'react-router-dom';
 import { ShowModalAction } from '../libs/events/types';
 import { useCurrentStatus } from '../libs/hooks/current-status.hook';
 import {
@@ -28,16 +28,17 @@ export const CurrentStatusContext = React.createContext<CurrentStatusContextInte
   isScanSucceed: true,
   isDonated: false,
   users: [],
-  wizardsSettings: {csv: {format: 'dd/LL/yyyy'}, ics: {groupEvents: false}},
+  wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
 });
 
 const CurrentStatusContextProvider: FunctionComponent = (props) => {
-
   const statusVariables = useCurrentStatus();
 
-  return <CurrentStatusContext.Provider value={statusVariables}>
-    {props.children}
-  </CurrentStatusContext.Provider>;
+  return (
+    <CurrentStatusContext.Provider value={statusVariables}>
+      {props.children}
+    </CurrentStatusContext.Provider>
+  );
 };
 
 export default CurrentStatusContextProvider;
