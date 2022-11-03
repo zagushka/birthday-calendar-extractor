@@ -1,0 +1,14 @@
+{
+  "ADD_BIRTHDAYS_HEADER": {
+    "message": "Add Birthdays",
+    "description": "Add Birthdays modal header"
+  },
+  "ADD_BIRTHDAYS_DESCRIPTION": {
+    "message": "Add birthdays to your calendar. Enter the date of birth and name of the person on each line. For example: 01/25/1978 Volodymyr Zelenskyy",
+    "description": "Add Birthdays modal description"
+  },
+  "ADD_BIRTHDAYS_BUTTON_TITLE": {
+    "message": "Add Birthdays",
+    "description": "Add Birthdays button title"
+  }
+}

@@ -15,11 +15,13 @@ import {
   SCAN_ERROR_GENERAL,
   SCAN_ERROR_NO_TOKEN_DETECTED,
   SCAN_ERROR_TIMEOUT,
+  SHOW_MODAL_ADD_BIRTHDAYS,
 } from '../../libs/events/executed-script.types';
 import {
   SHOW_MODAL_EXPORT_SUCCESS,
   SHOW_MODAL_SCAN_SUCCESS,
 } from '../../libs/events/types';
+import AddBirthdaysModal from './add-birhtdays/add-birthdays.modal';
 import DoneModal from './done.modal';
 import FacebookRequiredModal from './facebook-required/facebook-required';
 import GeneralErrorModal from './general-error/general-error.modal';
@@ -44,6 +46,9 @@ const SwitchModals: FunctionComponent = () => {
 
       case SCAN_ERROR_FACEBOOK_REQUIRED:
         return setModalDialog(<FacebookRequiredModal />);
+
+      case SHOW_MODAL_ADD_BIRTHDAYS:
+        return setModalDialog(<AddBirthdaysModal />);
 
       case SCAN_ERROR_FACEBOOK_PAGE_REQUEST:
       case SCAN_ERROR_FACEBOOK_PAGE_CONTENT:

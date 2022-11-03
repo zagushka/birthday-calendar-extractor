@@ -60,6 +60,8 @@ export const SCAN_ERROR_GENERAL = 'SCAN_ERROR_GENERAL';
 export const SCAN_ERROR_TIMEOUT = 'SCAN_ERROR_TIMEOUT';
 // Scan success
 export const SCAN_SUCCESS = 'SCAN_SUCCESS';
+// Add birthdays modal
+export const SHOW_MODAL_ADD_BIRTHDAYS = 'SHOW_MODAL_ADD_BIRTHDAYS';
 
 /**
  * Types of EXECUTED_SCRIPT_RESPONSE
@@ -79,4 +81,5 @@ export type ScanErrorTypes =
   | typeof SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT
   | typeof SCAN_ERROR_BIRTHDAYS_EXTRACT
   | typeof SCAN_ERROR_TIMEOUT
-  | typeof SCAN_ERROR_GENERAL;
+  | typeof SCAN_ERROR_GENERAL
+  | typeof SHOW_MODAL_ADD_BIRTHDAYS;

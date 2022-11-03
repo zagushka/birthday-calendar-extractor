@@ -54,7 +54,8 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({ erro
         </Typography>
         <TextField
           inputRef={textAreaRef}
-          rows={4}
+          minRows={4}
+          maxRows={4}
           fullWidth
           margin="none"
           value={translateString('REPORT_A_BUG_DETAILS_TEXTAREA', [errorMessage])}
