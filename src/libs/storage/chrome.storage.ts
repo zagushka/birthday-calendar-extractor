@@ -151,7 +151,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
 
 /**
  * Fetch data from chrome.local storage
- * It have a bit dirty tricks of typescript "as"... everything just to move one step toward this function to return right Pick from
+ * It has a bit of dirty tricks of typescript "as"... everything just to move one step toward this function to return right Pick from
  * Settings interface.
  *
  * Parameter is the array of properties names of Settings interface - values to fetch from storage

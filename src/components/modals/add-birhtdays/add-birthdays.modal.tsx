@@ -67,7 +67,7 @@ if (!Array.prototype.uniques) {
 
 interface ParsedBirthdate {date: DateTime, name: string, source: string}
 
-const AddBirthdaysModal: FunctionComponent<{ sourceText: string }> = ({ sourceText = '01/25/1978 Volodymyr Zelenskyy' }) => {
+const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceText = '01/25/1978 Volodymyr Zelenskyy' }) => {
   const classes = useStyles();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [parsed, setParsed] = useState<ParsedBirthdate[]>([]);

@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import type { Location } from 'history';
+import type { Location } from 'react-router-dom';
 import { ShowModalAction } from '../events/types';
 
 export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
