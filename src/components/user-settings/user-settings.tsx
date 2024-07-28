@@ -48,38 +48,40 @@ const UserSettings: FunctionComponent = () => {
 
   return (
     <>
-      <SwitchModals />
+      <SwitchModals/>
       <Layout.Wrapper>
         <Routes>
           <Route
             path="/"
             element={restoredLocation.pathname === '/'
-              ? <Navigate to="calendar" replace />
-              : <Navigate to={restoredLocation} replace />}
+              ? <Navigate to="calendar" replace/>
+              : <Navigate to={restoredLocation} replace/>}
           />
-          <Route path="activate" element={<Scan />} />
+          <Route path="activate" element={<Scan/>}/>
 
           {isActive && (
-          <Route path="export">
-            Hey, you need to activate the extension first!
-            <Route path=":action" element={<SelectWizard />} />
-            <Route path="" element={<Navigate to={`/export/${WIZARD_NAMES.CREATE_ICS}`} replace />} />
-          </Route>
+            <Route path="export">
+              <Route path=":action" element={<SelectWizard/>}/>
+              <Route path="" element={<Navigate to={`/export/${WIZARD_NAMES.CREATE_ICS}`} replace/>}/>
+            </Route>
           )}
 
           <Route
             path="calendar"
             element={isActive
-              ? <Calendar />
-              : <Navigate to="activate" replace />}
+              ? <Calendar/>
+              : <Navigate to="/activate" replace/>}
           />
 
-          {isDevelopment && <Route path="dev-tools" element={<DevTools />} />}
+          {isDevelopment && <Route path="dev-tools" element={<DevTools/>}/>}
 
-          {/* <Navigate to="/" replace /> */}
+          <Route
+            path="*"
+            element={<Navigate to={"/"} replace/>}
+          />
         </Routes>
         <Layout.Footer>
-          <BottomMenu />
+          <BottomMenu/>
         </Layout.Footer>
       </Layout.Wrapper>
     </>

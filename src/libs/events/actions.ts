@@ -18,14 +18,14 @@ import {
 export function sendError(error: string): NotificationActionTypes {
   return {
     type: SEND_ERROR,
-    payload: { error },
+    payload: {error},
   };
 }
 
 export function sendGenerationStatus(status: string): NotificationActionTypes {
   return {
     type: SEND_GENERATION_STATUS,
-    payload: { status },
+    payload: {status},
   };
 }
 
@@ -47,10 +47,9 @@ export function alarmNewDay(): AlarmTypes {
   };
 }
 
-export function BirthdaysStartScan(useOld: boolean = false): BirthdaysExtractionActionTypes {
+export function BirthdaysStartScan(): BirthdaysExtractionActionTypes {
   return {
     type: BIRTHDAYS_START_SCAN,
-    payload: { useOld },
   };
 }
 
@@ -63,7 +62,7 @@ export function BirthdaysScanComplete(): BirthdaysExtractionActionTypes {
 export function SendScanLog(messageName: string, substitutions?: Array<string>): SendScanLogAction {
   return {
     type: SEND_SCAN_LOG,
-    payload: { messageName, substitutions },
+    payload: {messageName, substitutions},
   };
 }
 

@@ -66,6 +66,7 @@ export function useCurrentStatus() {
               case 'scanning':
                 // Unlock scanning if needed
                 if (+updates[key]) {
+                  // @TODO make sure we unlock it on success
                   const wait = +updates[key] - DateTime.utc().toMillis();
                   timer = setTimeout(() => {
                     storeUserSettings({
@@ -77,6 +78,8 @@ export function useCurrentStatus() {
                 }
                 return setIsScanning(!!updates[key]);
               case 'scanSuccess':
+                // stop timer started by setTimeout
+                clearTimeout(timer);
                 return setIsScanSucceed(updates[key]);
               case 'activated':
                 return setIsActive(updates[key]);

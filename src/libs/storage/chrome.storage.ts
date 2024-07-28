@@ -49,7 +49,7 @@ const setWrapper = <T>(parameters: T, callback: () => void) => chrome.storage.lo
  * Helper wrapper function for local.get to be used with rxjs bindCallback
  */
 const getWrapper = <K extends Array<keyof StoredSettings>>(keys: K, callback: (items: StoredSettings) => void) => {
-  chrome.storage.local.get(keys, callback as () => any);
+  return chrome.storage.local.get(keys, callback as () => any);
 };
 
 export function filterBirthdaysForDate(

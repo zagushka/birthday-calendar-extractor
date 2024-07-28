@@ -58,7 +58,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         error,
       },
     };
-    chrome.runtime.sendMessage(message);
+    return chrome.runtime.sendMessage(message);
   }
 
   /**
@@ -75,7 +75,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         users,
       },
     };
-    chrome.runtime.sendMessage(message);
+    return chrome.runtime.sendMessage(message);
   }
 
   /**
@@ -193,6 +193,19 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
       return Promise.reject({ messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error: { error, response } });
     }
   }
+
+  /**
+   *
+   * The `concatPromise` function is designed to handle an array of functions that each return a promise.
+   * It executes these promises sequentially and accumulates their results into a single array.
+   * This function is particularly useful when the order of promise execution and result accumulation is important.
+
+   * #### Behavior
+   * - **Sequential Execution**: The promises provided are not executed in parallel. Each promise is executed only after the previous one has been resolved.
+   * - **Result Accumulation**: The results of each promise are accumulated into an array. The order of the results in the array corresponds to the order of the promise functions in the input array.
+   * - **Empty Input Handling**: If an empty array is passed as input, the function immediately resolves to an empty array.
+   * @param promises
+   */
 
   function concatPromise<T = any>(...promises: Array<() => Promise<any>>): Promise<Array<T>> {
     if (!promises.length) {

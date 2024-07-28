@@ -31,6 +31,7 @@ chrome.runtime.onConnect.addListener((externalPort) => {
     // Clean up
     // Remove opened modal
     storeUserSettings({ modal: null });
+    return true;
   });
 
   /**

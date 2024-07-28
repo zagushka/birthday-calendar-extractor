@@ -27,6 +27,7 @@ import {
 declare global {
   interface Array<T> {
     partition(callback: (item: T) => boolean): [T[], T[]];
+
     uniques(criteria: () => boolean): T[];
   }
 }
@@ -65,7 +66,11 @@ if (!Array.prototype.uniques) {
   };
 }
 
-interface ParsedBirthdate {date: DateTime, name: string, source: string}
+interface ParsedBirthdate {
+  date: DateTime;
+  name: string;
+  source: string;
+}
 
 const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceText = '01/25/1978 Volodymyr Zelenskyy' }) => {
   const classes = useStyles();
@@ -101,7 +106,7 @@ const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceT
 
   return (
     <Dialog
-      open
+      open={true}
       onClose={handleCloseModal}
     >
       <DialogTitle>
@@ -145,7 +150,7 @@ const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceT
         >
           {translate('ADD_BIRTHDAYS_BUTTON_TITLE')}
         </Button>
-        <DialogCloseButton />
+        <DialogCloseButton/>
       </DialogActions>
 
     </Dialog>

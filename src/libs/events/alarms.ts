@@ -6,6 +6,7 @@ const onAlarmListener = (alarm: chrome.alarms.Alarm) => {
   if (alarm.name === 'new-day-alarm') {
     sendMessage(alarmNewDay());
   }
+  return true;
 };
 
 // Alarms should forward their events via `sendMessage`

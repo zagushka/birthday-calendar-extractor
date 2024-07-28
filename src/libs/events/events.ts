@@ -34,9 +34,9 @@ const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => ch
 /**
  * Can be used on both popup and backend
  */
-export function sendMessage<T>(action: ActionTypes): Observable<T>;
-export function sendMessage(action: ActionTypes, wait: true): void;
-export function sendMessage<T>(action: ActionTypes, wait = false) {
+export function sendMessage(action: ActionTypes): void;
+export function sendMessage<T>(action: ActionTypes, wait: true): Promise<T>;
+export function sendMessage<T>(action: ActionTypes, wait = false): Promise<T> | void {
   // Mirror for the local needs
   allActions$.next({
     action,
@@ -44,7 +44,8 @@ export function sendMessage<T>(action: ActionTypes, wait = false) {
   });
   // Send message
   if (wait) {
-    return bindCallback<[ActionTypes], [T]>(sendMessageWrapper)(action);
+    return chrome.runtime.sendMessage(action);
   }
+
   chrome.runtime.sendMessage(action, () => null);
 }

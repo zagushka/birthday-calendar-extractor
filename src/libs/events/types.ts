@@ -69,9 +69,6 @@ export type BadgeActionTypes = UpdateBadgeAction;
 
 export interface BirthdaysStartExtractionAction {
   type: typeof BIRTHDAYS_START_SCAN;
-  payload: {
-    useOld: boolean;
-  }
 }
 
 interface BirthdaysExtractionCompleteAction {

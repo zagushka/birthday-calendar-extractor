@@ -43,7 +43,7 @@ function isOnFacebookPage(url: string): boolean {
 }
 
 /**
- * Check current page is facebook and emit its Tab (`chrome.tabs.Tab`)
+ * Check that the current page is facebook and emit its Tab (`chrome.tabs.Tab`)
  * Throws error {type: SCAN_ERROR_FACEBOOK_REQUIRED} when not of a facebook
  */
 export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable((subscriber) => {
@@ -78,6 +78,7 @@ export function scanUserBirthdays(tabId: number, waitTime = 10_000): Observable<
     chrome.scripting.executeScript(
       {
         target: { tabId },
+        // world: "MAIN",
         func: fetchUserFriendsBirthdayInfoFromContext,
       },
       (response) => {
@@ -196,7 +197,7 @@ export function forceBirthdaysScan() {
     .pipe(
       // Check for the token and language
       // Fetch the data from facebook
-      pluck('id'),
+      map(tab => tab.id),
       switchMap((tabId) => scanUserBirthdays(tabId, 30_000)),
       switchMap(updateStoredBirthdays),
     );
