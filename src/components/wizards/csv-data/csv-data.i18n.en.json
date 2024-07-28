@@ -1,10 +1,10 @@
 {
   "SELECT_FILE_FORMAT_CSV_DATA": {
-    "message": "Download dates of birth as CSV file.",
-    "description": "Label for dates of birth csv file type"
+    "message": "Download Dates of Birth as a CSV File.",
+    "description": "Label for the dates of birth CSV file type"
   },
   "SELECT_CSV_DATA_DESCRIPTION": {
-    "message": "Create and download CSV file with your friends' dates of birth. <p>CSV file format used by Microsoft Excel or Google Sheets.</p> <p>DO NOT USE it to import birthdays to a calendar, ICS format should be used instead.</p>",
-    "description": "Description for csv data file type"
+    "message": "Create and download a CSV file containing your friends' dates of birth. <p>This CSV file format can be used with Microsoft Excel or Google Sheets.</p> <p>DO NOT USE it to import birthdays into a calendar; the ICS format is recommended instead.</p>",
+    "description": "Description for the CSV data file type"
   }
 }

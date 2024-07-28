@@ -1,0 +1,74 @@
+{
+  "START_SCAN": {
+    "message": {
+      "en": "Start Scan",
+      "zh": "开始扫描",
+      "es": "Iniciar escaneo",
+      "hi": "स्कैन शुरू करें",
+      "ar": "بدء الفحص",
+      "bn": "স্ক্যান শুরু করুন",
+      "pt": "Iniciar digitalização",
+      "ja": "スキャンを開始",
+      "de": "Scan starten",
+      "it": "Inizia scansione",
+      "uk": "Почати сканування",
+      "ru": "Начать сканирование",
+      "he": "התחל סריקה"
+    },
+    "description": "Button title to initiate the scan process"
+  },
+  "SCAN_PAGE_DESCRIPTION": {
+    "message": {
+      "en": "<p>Scan your Facebook friends' birthdays.</p> <p>Already scanned birthdays will be preserved, even if your friends decide to hide them or are no longer linked on Facebook.</p> <p>You can always repeat the scan to add new friends' birthdays to the previously created list.</p>",
+      "zh": "<p>扫描您 Facebook 朋友的生日。</p> <p>已扫描的生日将被保存，即使您的朋友决定隐藏它们或不再链接到 Facebook。</p> <p>您可以随时重复扫描以将新朋友的生日添加到之前创建的列表中。</p>",
+      "es": "<p>Escanea los cumpleaños de tus amigos de Facebook.</p> <p>Los cumpleaños ya escaneados se conservarán, incluso si tus amigos deciden ocultarlos o ya no están vinculados en Facebook.</p> <p>Siempre puedes repetir el escaneo para agregar los cumpleaños de nuevos amigos a la lista creada anteriormente.</p>",
+      "hi": "<p>अपने फेसबुक दोस्तों के जन्मदिन स्कैन करें।</p> <p>पहले से स्कैन किए गए जन्मदिन सहेजे जाएंगे, भले ही आपके दोस्त उन्हें छिपाने का निर्णय लें या अब फेसबुक से लिंक न हों।</p> <p>आप हमेशा नए दोस्तों के जन्मदिन को पहले से बनाई गई सूची में जोड़ने के लिए स्कैन को दोहरा सकते हैं।</p>",
+      "ar": "<p>مسح أعياد ميلاد أصدقائك على Facebook.</p> <p>ستتم حفظ أعياد الميلاد التي تم مسحها بالفعل، حتى إذا قرر أصدقاؤك إخفاءها أو لم يعودوا مرتبطين على Facebook.</p> <p>يمكنك دائمًا تكرار الفحص لإضافة أعياد ميلاد الأصدقاء الجدد إلى القائمة التي تم إنشاؤها مسبقًا.</p>",
+      "bn": "<p>আপনার ফেসবুক বন্ধুদের জন্মদিন স্ক্যান করুন।</p> <p>ইতিমধ্যে স্ক্যান করা জন্মদিন সংরক্ষিত থাকবে, এমনকি আপনার বন্ধুদের যদি সেগুলি লুকানোর সিদ্ধান্ত নেয় বা ফেসবুকে আর সংযুক্ত না থাকে।</p> <p>আপনি সর্বদা নতুন বন্ধুদের জন্মদিনগুলি পূর্বে তৈরি করা তালিকায় যোগ করার জন্য স্ক্যানটি পুনরাবৃত্তি করতে পারেন।</p>",
+      "pt": "<p>Escaneie os aniversários dos seus amigos do Facebook.</p> <p>Os aniversários já escaneados serão preservados, mesmo que seus amigos decidam ocultá-los ou não estejam mais vinculados no Facebook.</p> <p>Você pode sempre repetir a digitalização para adicionar novos aniversários de amigos à lista criada anteriormente.</p>",
+      "ja": "<p>Facebookの友達の誕生日をスキャンします。</p> <p>既にスキャンされた誕生日は保存され、友達がそれらを非表示にするか、Facebookにリンクされていない場合でも保存されます。</p> <p>スキャンを繰り返して、新しい友達の誕生日を以前に作成したリストに追加することができます。</p>",
+      "de": "<p>Scannen Sie die Geburtstage Ihrer Facebook-Freunde.</p> <p>Bereits gescannte Geburtstage werden gespeichert, auch wenn Ihre Freunde beschließen, sie zu verbergen oder nicht mehr auf Facebook verlinkt sind.</p> <p>Sie können den Scanvorgang jederzeit wiederholen, um neue Geburtstage von Freunden zur zuvor erstellten Liste hinzuzufügen.</p>",
+      "it": "<p>Scansiona i compleanni dei tuoi amici di Facebook.</p> <p>I compleanni già scansionati saranno conservati, anche se i tuoi amici decidono di nasconderli o non sono più collegati su Facebook.</p> <p>Puoi sempre ripetere la scansione per aggiungere i compleanni di nuovi amici alla lista precedentemente creata.</p>",
+      "uk": "<p>Скануйте дні народження ваших друзів у Facebook.</p> <p>Вже відскановані дні народження будуть збережені, навіть якщо ваші друзі вирішать приховати їх або більше не будуть пов'язані з Facebook.</p> <p>Ви завжди можете повторити сканування, щоб додати дні народження нових друзів до раніше створеного списку.</p>",
+      "ru": "<p>Сканируйте дни рождения ваших друзей на Facebook.</p> <p>Уже отсканированные дни рождения будут сохранены, даже если ваши друзья решат их скрыть или больше не будут связаны с Facebook.</p> <p>Вы всегда можете повторить сканирование, чтобы добавить дни рождения новых друзей в ранее созданный список.</p>",
+      "he": "<p>סרוק את ימי ההולדת של חבריך בפייסבוק.</p> <p>ימי הולדת שכבר נסרקו יישמרו, גם אם חבריך יחליטו להסתיר אותם או לא להיות מקושרים יותר בפייסבוק.</p> <p>תוכל תמיד לחזור על הסריקה כדי להוסיף ימי הולדת של חברים חדשים לרשימה שנוצרה בעבר.</p>"
+    },
+    "description": "Description for additional scans"
+  },
+  "SCAN_PAGE_FIRST_TIME_DESCRIPTION": {
+    "message": {
+      "en": "<p>Welcome to Birthday Calendar Creator for Facebook!</p> <p>To generate and download a calendar, an initial birthday scan is required. After a successful scan, the link to the \"Calendar Generator\" will become available.</p> <p>You can always repeat the scan to add new friends' birthdays to the previously created list.</p> <p>Already scanned birthdays will be preserved, even if your friends decide to hide them or are no longer linked on Facebook.</p>",
+      "zh": "<p>欢迎使用 Facebook 生日日历创建器！</p> <p>要生成并下载日历，首先需要进行一次生日扫描。成功扫描后，“日历生成器”链接将可用。</p> <p>您可以随时重复扫描以将新朋友的生日添加到之前创建的列表中。</p> <p>已扫描的生日将被保存，即使您的朋友决定隐藏它们或不再链接到 Facebook。</p>",
+      "es": "<p>¡Bienvenido al Creador de Calendarios de Cumpleaños para Facebook!</p> <p>Para generar y descargar un calendario, se requiere un escaneo inicial de cumpleaños. Después de un escaneo exitoso, el enlace al \"Generador de Calendarios\" estará disponible.</p> <p>Siempre puedes repetir el escaneo para agregar los cumpleaños de nuevos amigos a la lista creada anteriormente.</p> <p>Los cumpleaños ya escaneados se conservarán, incluso si tus amigos deciden ocultarlos o ya no están vinculados en Facebook.</p>",
+      "hi": "<p>फेसबुक के लिए बर्थडे कैलेंडर क्रिएटर में आपका स्वागत है!</p> <p>कैलेंडर उत्पन्न करने और डाउनलोड करने के लिए, प्रारंभिक जन्मदिन स्कैन आवश्यक है। सफल स्कैन के बाद, \"कैलेंडर जनरेटर\" के लिए लिंक उपलब्ध हो जाएगा।</p> <p>आप हमेशा नए दोस्तों के जन्मदिन को पहले से बनाई गई सूची में जोड़ने के लिए स्कैन को दोहरा सकते हैं।</p> <p>पहले से स्कैन किए गए जन्मदिन सहेजे जाएंगे, भले ही आपके दोस्त उन्हें छिपाने का निर्णय लें या अब फेसबुक से लिंक न हों।</p>",
+      "ar": "<p>مرحبًا بك في منشئ تقويم عيد الميلاد لـ Facebook!</p> <p>لتوليد وتنزيل تقويم، يلزم إجراء مسح أولي لأعياد الميلاد. بعد مسح ناجح، سيصبح الرابط إلى \"مولد التقويم\" متاحًا.</p> <p>يمكنك دائمًا تكرار الفحص لإضافة أعياد ميلاد الأصدقاء الجدد إلى القائمة التي تم إنشاؤها مسبقًا.</p> <p>ستتم حفظ أعياد الميلاد التي تم مسحها بالفعل، حتى إذا قرر أصدقاؤك إخفاءها أو لم يعودوا مرتبطين على Facebook.</p>",
+      "bn": "<p>ফেসবুকের জন্য জন্মদিন ক্যালেন্ডার নির্মাতায় আপনাকে স্বাগতম!</p> <p>ক্যালেন্ডার তৈরি এবং ডাউনলোড করতে, একটি প্রাথমিক জন্মদিন স্ক্যান প্রয়োজন। একটি সফল স্ক্যানের পরে, \"ক্যালেন্ডার জেনারেটর\" লিঙ্কটি উপলব্ধ হবে।</p> <p>আপনি সর্বদা নতুন বন্ধুদের জন্মদিনগুলি পূর্বে তৈরি করা তালিকায় যোগ করার জন্য স্ক্যানটি পুনরাবৃত্তি করতে পারেন।</p> <p>ইতিমধ্যে স্ক্যান করা জন্মদিন সংরক্ষিত থাকবে, এমনকি আপনার বন্ধুদের যদি সেগুলি লুকানোর সিদ্ধান্ত নেয় বা ফেসবুকে আর সংযুক্ত না থাকে।</p>",
+      "pt": "<p>Bem-vindo ao Criador de Calendários de Aniversário para o Facebook!</p> <p>Para gerar e baixar um calendário, é necessário um escaneamento inicial de aniversários. Após um escaneamento bem-sucedido, o link para o \"Gerador de Calendários\" ficará disponível.</p> <p>Você pode sempre repetir a digitalização para adicionar novos aniversários de amigos à lista criada anteriormente.</p> <p>Os aniversários já escaneados serão preservados, mesmo que seus amigos decidam ocultá-los ou não estejam mais vinculados no Facebook.</p>",
+      "ja": "<p>Facebookの誕生日カレンダー作成ツールへようこそ！</p> <p>カレンダーを生成してダウンロードするには、最初の誕生日スキャンが必要です。スキャンが成功すると、「カレンダー生成器」へのリンクが利用可能になります。</p> <p>スキャンを繰り返して、新しい友達の誕生日を以前に作成したリストに追加することができます。</p> <p>既にスキャンされた誕生日は保存され、友達がそれらを非表示にするか、Facebookにリンクされていない場合でも保存されます。</p>",
+      "de": "<p>Willkommen beim Geburtstagskalender-Ersteller für Facebook!</p> <p>Um einen Kalender zu erstellen und herunterzuladen, ist ein initialer Geburtstags-Scan erforderlich. Nach einem erfolgreichen Scan wird der Link zum \"Kalendergenerator\" verfügbar.</p> <p>Sie können den Scanvorgang jederzeit wiederholen, um neue Geburtstage von Freunden zur zuvor erstellten Liste hinzuzufügen.</p> <p>Bereits gescannte Geburtstage werden gespeichert, auch wenn Ihre Freunde beschließen, sie zu verbergen oder nicht mehr auf Facebook verlinkt sind.</p>",
+      "it": "<p>Benvenuto nel Creatore di Calendari di Compleanni per Facebook!</p> <p>Per generare e scaricare un calendario, è necessario una scansione iniziale dei compleanni. Dopo una scansione riuscita, il link al \"Generatore di Calendari\" sarà disponibile.</p> <p>Puoi sempre ripetere la scansione per aggiungere i compleanni di nuovi amici alla lista precedentemente creata.</p> <p>I compleanni già scansionati saranno conservati, anche se i tuoi amici decidono di nasconderli o non sono più collegati su Facebook.</p>",
+      "uk": "<p>Ласкаво просимо до творця календаря днів народження для Facebook!</p> <p>Для створення та завантаження календаря потрібно первинне сканування днів народження. Після успішного сканування посилання на \"Генератор календарів\" стане доступним.</p> <p>Ви завжди можете повторити сканування, щоб додати дні народження нових друзів до раніше створеного списку.</p> <p>Вже відскановані дні народження зберігатимуться, навіть якщо ваші друзі вирішать приховати їх або більше не будуть пов'язані з Facebook.</p>",
+      "ru": "<p>Добро пожаловать в создатель календаря дней рождений для Facebook!</p> <p>Для создания и загрузки календаря необходимо первичное сканирование дней рождений. После успешного сканирования ссылка на \"Генератор календарей\" станет доступной.</p> <p>Вы всегда можете повторить сканирование, чтобы добавить дни рождения новых друзей в ранее созданный список.</p> <p>Уже отсканированные дни рождения будут сохранены, даже если ваши друзья решат их скрыть или больше не будут связаны с Facebook.</p>",
+      "he": "<p>ברוכים הבאים ליוצר יומן ימי ההולדת לפייסבוק!</p> <p>ליצירת והורדת יומן נדרשת סריקה ראשונית של ימי ההולדת. לאחר סריקה מוצלחת, הקישור ל\"מחולל היומן\" יהיה זמין.</p> <p>תוכל תמיד לחזור על הסריקה כדי להוסיף ימי הולדת של חברים חדשים לרשימה שנוצרה בעבר.</p> <p>ימי הולדת שכבר נסרקו יישמרו, גם אם חבריך יחליטו להסתיר אותם או לא להיות מקושרים יותר בפייסבוק.</p>"
+    },
+    "description": "Description for the first scan"
+  },
+  "SCAN_PAGE_TITLE": {
+    "message": {
+      "en": "Scan Birthdays",
+      "zh": "扫描生日",
+      "es": "Escanear Cumpleaños",
+      "hi": "जन्मदिन स्कैन करें",
+      "ar": "مسح أعياد الميلاد",
+      "bn": "জন্মদিন স্ক্যান করুন",
+      "pt": "Digitalizar Aniversários",
+      "ja": "誕生日をスキャン",
+      "de": "Geburtstage scannen",
+      "it": "Scansiona Compleanni",
+      "uk": "Сканувати дні народження",
+      "ru": "Сканировать дни рождения",
+      "he": "סרוק ימי הולדת"
+    },
+    "description": "Title for the Scan Page"
+  }
+}

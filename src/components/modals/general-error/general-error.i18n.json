@@ -1,0 +1,169 @@
+{
+  "SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST": {
+    "message": {
+      "en": "Failed to make request to Facebook.<br/> Please try again.",
+      "zh": "请求 Facebook 失败。<br/> 请重试。",
+      "es": "Error al realizar la solicitud a Facebook.<br/> Por favor, inténtalo de nuevo.",
+      "hi": "फेसबुक पर अनुरोध भेजने में विफल।<br/> कृपया पुन: प्रयास करें।",
+      "ar": "فشل في تقديم الطلب إلى Facebook.<br/> حاول مرة اخرى.",
+      "bn": "ফেসবুকে অনুরোধ পাঠাতে ব্যর্থ হয়েছে।<br/> অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "pt": "Falha ao fazer a solicitação para o Facebook.<br/> Por favor, tente novamente.",
+      "ja": "Facebookへのリクエストに失敗しました。<br/> もう一度やり直してください。",
+      "de": "Anfrage an Facebook fehlgeschlagen.<br/> Bitte versuchen Sie es erneut.",
+      "it": "Richiesta a Facebook fallita.<br/> Per favore riprova.",
+      "uk": "Не вдалося зробити запит до Facebook.<br/> Будь ласка, спробуйте ще раз.",
+      "ru": "Не удалось отправить запрос на Facebook.<br/> Пожалуйста, попробуйте снова.",
+      "he": "הבקשה לפייסבוק נכשלה.<br/> נסה שוב."
+    },
+    "description": "Failed to make request to facebook birthdays endpoint."
+  },
+  "SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT": {
+    "message": {
+      "en": "Failed to get Facebook birthdays content.<br/> Please try again.",
+      "zh": "获取 Facebook 生日内容失败。<br/> 请重试。",
+      "es": "Error al obtener el contenido de cumpleaños de Facebook.<br/> Por favor, inténtalo de nuevo.",
+      "hi": "फेसबुक जन्मदिन सामग्री प्राप्त करने में विफल।<br/> कृपया पुन: प्रयास करें।",
+      "ar": "فشل في الحصول على محتوى أعياد الميلاد على Facebook.<br/> حاول مرة اخرى.",
+      "bn": "ফেসবুক জন্মদিনের বিষয়বস্তু পেতে ব্যর্থ হয়েছে।<br/> অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "pt": "Falha ao obter conteúdo de aniversários do Facebook.<br/> Por favor, tente novamente.",
+      "ja": "Facebookの誕生日コンテンツを取得できませんでした。<br/> もう一度お試しください。",
+      "de": "Fehler beim Abrufen des Facebook-Geburtstagsinhalts.<br/> Bitte versuchen Sie es erneut.",
+      "it": "Errore nel recupero del contenuto dei compleanni di Facebook.<br/> Per favore riprova.",
+      "uk": "Не вдалося отримати дані про дні народження у Facebook.<br/> Будь ласка, спробуйте ще раз.",
+      "ru": "Не удалось получить контент о днях рождения на Facebook.<br/> Пожалуйста, попробуйте снова.",
+      "he": "נכשל באחזור תוכן ימי ההולדת של פייסבוק.<br/> נסה שוב."
+    },
+    "description": "Failed to make request to facebook birthdays endpoint."
+  },
+  "SCAN_ERROR_BIRTHDAYS_EXTRACT": {
+    "message": {
+      "en": "Failed to extract birthdays from fetched data.<br/> Please try again.",
+      "zh": "从获取的数据中提取生日失败。<br/> 请重试。",
+      "es": "Error al extraer los cumpleaños de los datos obtenidos.<br/> Por favor, inténtalo de nuevo.",
+      "hi": "प्राप्त डेटा से जन्मदिन निकालने में विफल।<br/> कृपया पुन: प्रयास करें।",
+      "ar": "فشل في استخراج أعياد الميلاد من البيانات المستردة.<br/> حاول مرة اخرى.",
+      "bn": "আনা তথ্য থেকে জন্মদিনগুলি বের করতে ব্যর্থ হয়েছে।<br/> অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "pt": "Falha ao extrair aniversários dos dados recuperados.<br/> Por favor, tente novamente.",
+      "ja": "取得したデータから誕生日を抽出できませんでした。<br/> もう一度お試しください。",
+      "de": "Geburtstage aus den abgerufenen Daten konnten nicht extrahiert werden.<br/> Bitte versuchen Sie es erneut.",
+      "it": "Errore nell'estrazione dei compleanni dai dati recuperati.<br/> Per favore riprova.",
+      "uk": "Не вдалося витягти дні народження з отриманих даних.<br/> Будь ласка, спробуйте ще раз.",
+      "ru": "Не удалось извлечь дни рождения из полученных данных.<br/> Пожалуйста, попробуйте снова.",
+      "he": "נכשל באחזור ימי ההולדת מהנתונים שהובאו.<br/> נסה שוב."
+    },
+    "description": "Error while extracting birthdays from fetched data."
+  },
+  "SCAN_ERROR_TIMEOUT": {
+    "message": {
+      "en": "It took too long to fulfill the extraction process. Please try again.",
+      "zh": "提取过程耗时过长。请重试。",
+      "es": "El proceso de extracción tomó demasiado tiempo. Por favor, inténtalo de nuevo.",
+      "hi": "उद्धरण प्रक्रिया को पूरा करने में बहुत अधिक समय लगा। कृपया पुनः प्रयास करें।",
+      "ar": "استغرق إتمام عملية الاستخراج وقتًا طويلاً. حاول مرة اخرى.",
+      "bn": "উদ্ধার প্রক্রিয়া সম্পূর্ণ করতে খুব বেশি সময় লেগেছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "pt": "Demorou muito para concluir o processo de extração. Por favor, tente novamente.",
+      "ja": "抽出プロセスの実行に時間がかかりすぎました。もう一度やり直してください。",
+      "de": "Es hat zu lange gedauert, um den Extraktionsprozess abzuschließen. Bitte versuchen Sie es erneut.",
+      "it": "Il processo di estrazione ha impiegato troppo tempo. Per favore riprova.",
+      "uk": "Процес вилучення зайняв надто багато часу. Будь ласка, спробуйте ще раз.",
+      "ru": "Процесс извлечения занял слишком много времени. Пожалуйста, попробуйте снова.",
+      "he": "לקח יותר מדי זמן להשלים את תהליך המיצוי. נסה שוב."
+    },
+    "description": "Error on timeout."
+  },
+  "SCAN_ERROR_GENERAL": {
+    "message": {
+      "en": "Something went wrong. It happens sometime...<br/> Please try again.",
+      "zh": "出了点问题。有时候会这样...<br/> 请重试。",
+      "es": "Algo salió mal. A veces pasa...<br/> Por favor, inténtalo de nuevo.",
+      "hi": "कुछ गलत हो गया। ऐसा कभी-कभी होता है...<br/> कृपया पुनः प्रयास करें।",
+      "ar": "حدث خطأ ما. يحدث أحيانًا...<br/> حاول مرة اخرى.",
+      "bn": "কিছু ভুল হয়েছে. মাঝে মাঝে এমন হয়...<br/> অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "pt": "Algo deu errado. Às vezes acontece...<br/> Por favor, tente novamente.",
+      "ja": "何かがうまくいかなかった。時々起こることです...<br/> もう一度やり直してください。",
+      "de": "Etwas ist schief gelaufen. Es passiert manchmal...<br/> Bitte versuchen Sie es erneut.",
+      "it": "Qualcosa è andato storto. Succede a volte...<br/> Per favore riprova.",
+      "uk": "Щось пішло не так. Це іноді трапляється...<br/> Будь ласка, спробуйте ще раз.",
+      "ru": "Что-то пошло не так. Это случается...<br/> Пожалуйста, попробуйте снова.",
+      "he": "משהו השתבש. זה קורה לפעמים...<br/> נסה שוב."
+    },
+    "description": "Text for unknown error."
+  },
+  "REPORT_A_BUG_DESCRIPTION": {
+    "message": {
+      "en": "Also you can use the text below to open a bug, I'll do my best to fix it as soon as possible.",
+      "zh": "您也可以使用下面的文本报告一个错误，我会尽力尽快修复它。",
+      "es": "También puedes usar el texto de abajo para reportar un error, haré todo lo posible para solucionarlo lo antes posible.",
+      "hi": "आप नीचे दिए गए पाठ का उपयोग करके कोई बग रिपोर्ट कर सकते हैं, मैं इसे जल्द से जल्द ठीक करने की पूरी कोशिश करूंगा।",
+      "ar": "يمكنك أيضًا استخدام النص أدناه للإبلاغ عن خطأ، سأبذل قصارى جهدي لإصلاحه في أقرب وقت ممكن.",
+      "bn": "আপনি নীচের পাঠ্যটি ব্যবহার করে একটি বাগ খুলতে পারেন, আমি এটি যত তাড়াতাড়ি সম্ভব ঠিক করার জন্য যথাসাধ্য চেষ্টা করব।",
+      "pt": "Você também pode usar o texto abaixo para relatar um bug, farei o meu melhor para corrigi-lo o mais rápido possível.",
+      "ja": "以下のテキストを使用してバグを報告することもできます。できるだけ早く修正するよう努めます。",
+      "de": "Sie können auch den unten stehenden Text verwenden, um einen Fehler zu melden. Ich werde mein Bestes tun, um ihn so schnell wie möglich zu beheben.",
+      "it": "Puoi anche utilizzare il testo in basso per segnalare un bug, farò del mio meglio per risolverlo il prima possibile.",
+      "uk": "Ви також можете використовувати наведений нижче текст, щоб повідомити про помилку, я зроблю все можливе, щоб виправити її якомога швидше.",
+      "ru": "Вы также можете использовать текст ниже, чтобы сообщить об ошибке. Я постараюсь исправить это как можно скорее.",
+      "he": "תוכל גם להשתמש בטקסט למטה כדי לפתוח באג, אעשה כמיטב יכולתי לתקן אותו בהקדם האפשרי."
+    },
+    "description": "Description for report bug."
+  },
+  "REPORT_A_BUG_DETAILS_TEXTAREA": {
+    "message": {
+      "en": "Script failed to scan birthdays.\nError message: $message$",
+      "zh": "脚本扫描生日失败。\n错误信息: $message$",
+      "es": "El script falló al escanear cumpleaños.\nMensaje de error: $message$",
+      "hi": "स्क्रिप्ट जन्मदिनों को स्कैन करने में विफल रही।\nत्रुटि संदेश: $message$",
+      "ar": "فشل البرنامج النصي في فحص أعياد الميلاد.\nرسالة الخطأ: $message$",
+      "bn": "স্ক্রিপ্ট জন্মদিন স্ক্যান করতে ব্যর্থ হয়েছে।\nত্রুটি বার্তা: $message$",
+      "pt": "O script falhou ao escanear aniversários.\nMensagem de erro: $message$",
+      "ja": "スクリプトが誕生日のスキャンに失敗しました。\nエラーメッセージ: $message$",
+      "de": "Skript konnte Geburtstage nicht scannen.\nFehlermeldung: $message$",
+      "it": "Lo script non è riuscito a scansionare i compleanni.\nMessaggio di errore: $message$",
+      "uk": "Скрипт не вдалося сканувати дні народження.\nПовідомлення про помилку: $message$",
+      "ru": "Скрипт не смог сканировать дни рождения.\nСообщение об ошибке: $message$",
+      "he": "הסריקה נכשלה לסרוק ימי הולדת.\nהודעת שגיאה: $message$"
+    },
+    "description": "",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "REPORT_A_BUG_URL": {
+    "message": {
+      "en": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "zh": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "es": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "hi": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "ar": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "bn": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "pt": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "ja": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "de": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "it": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "uk": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "ru": "https://github.com/zagushka/birthday-calendar-extractor/issues",
+      "he": "https://github.com/zagushka/birthday-calendar-extractor/issues"
+    },
+    "description": "Link to report a bug."
+  },
+  "REPORT_A_BUG_TITLE": {
+    "message": {
+      "en": "Copy and open а bug",
+      "zh": "复制并报告错误",
+      "es": "Copiar y abrir un error",
+      "hi": "एक बग की नकल करें और खोलें",
+      "ar": "نسخ وفتح خطأ",
+      "bn": "একটি বাগ অনুলিপি করুন এবং খুলুন",
+      "pt": "Copie e abra um bug",
+      "ja": "バグをコピーして開く",
+      "de": "Kopiere und öffne einen Fehler",
+      "it": "Copia e apri un bug",
+      "uk": "Скопіювати та відкрити помилку",
+      "ru": "Копировать и открыть ошибку",
+      "he": "העתק ופתח באג"
+    },
+    "description": "Report а bug button name"
+  }
+}

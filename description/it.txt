@@ -1,0 +1,19 @@
+Con questa estensione, potrai:
+
+- Seguire e non perdere mai i compleanni dei tuoi amici di Facebook.
+- Generare ed esportare un calendario con tutti i compleanni dei tuoi amici di Facebook nel tuo programma di calendario preferito.
+- Verificare se i tuoi amici hanno il compleanno oggi controllando l'icona "torta" dell'estensione.
+- Avere una panoramica dei compleanni dei tuoi amici nella vista "Calendario".
+
+I compleanni possono essere esportati in formato ICS, supportato da Microsoft Outlook, Google Calendar e Apple Calendar. Così come in formato CSV, compatibile con Microsoft Excel o Google Sheets.
+
+Utilizza il file generato per importare i compleanni dei tuoi amici nel tuo programma di calendario preferito. Raccomando vivamente di creare un nuovo sottocalendario a tema compleanno per le importazioni.
+
+FAQ
+
+Domanda: Ho esportato accidentalmente i compleanni nel mio calendario principale. Come posso annullare questo?
+Risposta: Solo Google Calendar supporta correttamente la rimozione degli eventi. Vai alla scheda "Scarica Calendario" e usa "Elimina ICS importato da Google Calendar". Verrà scaricato un file chiamato `delete-birthday-calendar.ics`. Importa questo file nel calendario corrispondente.
+
+Domanda: È possibile rimuovere alcuni contatti prima di importarli nel calendario?
+Risposta: Sì, puoi andare alla scheda "Calendario" e rimuovere i contatti dall'elenco facendo clic sull'icona "occhio" accanto al contatto. E poi scarica di nuovo il calendario.
+Puoi anche utilizzare uno strumento da riga di comando disponibile su: https://github.com/guenter-r/calendar_file_splitter

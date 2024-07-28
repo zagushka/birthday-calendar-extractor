@@ -5,19 +5,19 @@
   },
   "SCAN_LOG_EXTRACT_TOKEN": {
     "message": "Checking for Facebook login.",
-    "description": "Message send before checking facebook login."
+    "description": "Message sent before checking Facebook login."
   },
   "SCAN_LOG_EXTRACT_TOKEN_ERROR": {
     "message": "No Facebook login detected.",
-    "description": "Error message send when user is not logged in to Facebook."
+    "description": "Error message sent when the user is not logged into Facebook."
   },
   "SCAN_LOG_PAGE_REQUEST": {
     "message": "Requesting Facebook page.",
-    "description": "Make request to facebook.com"
+    "description": "Requesting a page from facebook.com."
   },
   "SCAN_LOG_PAGE_REQUEST_ERROR": {
     "message": "Failed to request Facebook page.",
-    "description": "Error making request to facebook.com",
+    "description": "Error while making a request to facebook.com.",
     "placeholders": {
       "message": {
         "content": "$1"
@@ -25,12 +25,12 @@
     }
   },
   "SCAN_LOG_PAGE_CONTENT": {
-    "message": "Getting Facebook page content.",
-    "description": "Getting content of the facebook.com page"
+    "message": "Retrieving Facebook page content.",
+    "description": "Getting the content of the facebook.com page."
   },
   "SCAN_LOG_PAGE_CONTENT_ERROR": {
-    "message": "Failed to get Facebook page content.",
-    "description": "Error getting content of the facebook.com page.",
+    "message": "Failed to retrieve Facebook page content.",
+    "description": "Error getting the content of the facebook.com page.",
     "placeholders": {
       "message": {
         "content": "$1"
@@ -38,12 +38,12 @@
     }
   },
   "SCAN_LOG_BIRTHDAYS_REQUEST": {
-    "message": "Requesting Facebook friends birthdays data.",
-    "description": "Making request to facebook birthdays endpoint."
+    "message": "Requesting Facebook friends' birthdays data.",
+    "description": "Making a request to the Facebook birthdays endpoint."
   },
   "SCAN_LOG_BIRTHDAYS_REQUEST_ERROR": {
-    "message": "Failed to request Facebook friends birthday data.",
-    "description": "Failed to make request to facebook birthdays endpoint.",
+    "message": "Failed to request Facebook friends' birthday data.",
+    "description": "Failed to make a request to the Facebook birthdays endpoint.",
     "placeholders": {
       "message": {
         "content": "$1"
@@ -51,12 +51,12 @@
     }
   },
   "SCAN_LOG_BIRTHDAYS_CONTENT": {
-    "message": "Getting Facebook birthdays content.",
-    "description": "Getting facebook birthdays content."
+    "message": "Retrieving Facebook birthdays content.",
+    "description": "Getting the Facebook birthdays content."
   },
   "SCAN_LOG_BIRTHDAYS_CONTENT_ERROR": {
-    "message": "Failed to get Facebook birthdays content.",
-    "description": "Failed to make request to facebook birthdays endpoint.",
+    "message": "Failed to retrieve Facebook birthdays content.",
+    "description": "Failed to retrieve content from the Facebook birthdays endpoint.",
     "placeholders": {
       "message": {
         "content": "$1"
@@ -65,11 +65,11 @@
   },
   "SCAN_LOG_EXTRACT_BIRTHDAYS": {
     "message": "Extracting birthdays from fetched data.",
-    "description": "Starting birthdays extraction from fetched data."
+    "description": "Starting to extract birthdays from the fetched data."
   },
   "SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR": {
     "message": "Failed to extract birthdays from fetched data.",
-    "description": "Error while extracting birthdays from fetched data.",
+    "description": "Error while extracting birthdays from the fetched data.",
     "placeholders": {
       "message": {
         "content": "$1"
@@ -77,15 +77,15 @@
     }
   },
   "SCAN_LOG_MERGING_BIRTHDAYS": {
-    "message": "Merging newly scanned birthday with already existing data.",
-    "description": "Message send before merging of newly scanned birthdays with old data."
+    "message": "Merging newly scanned birthdays with existing data.",
+    "description": "Message sent before merging newly scanned birthdays with old data."
   },
   "SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS": {
     "message": "Storing updated birthday data.",
-    "description": "Message send before storing extracted birthdays to local storage."
+    "description": "Message sent before storing extracted birthdays to local storage."
   },
   "SCAN_LOG_PROCESS_DONE": {
-    "message": "Birthday scan is finished.",
-    "description": "Message send after extraction process is done."
+    "message": "Birthday scan is complete.",
+    "description": "Message sent after the extraction process is finished."
   }
 }

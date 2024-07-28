@@ -1,0 +1,20 @@
+{
+  "SELECT_EXPORT_FORMAT": {
+    "message": {
+      "en": "Download Calendar",
+      "zh": "下载日历",
+      "es": "Descargar Calendario",
+      "hi": "कैलेंडर डाउनलोड करें",
+      "ar": "تنزيل التقويم",
+      "bn": "ক্যালেন্ডার ডাউনলোড করুন",
+      "pt": "Baixar Calendário",
+      "ja": "カレンダーをダウンロード",
+      "de": "Kalender herunterladen",
+      "it": "Scarica Calendario",
+      "uk": "Завантажити календар",
+      "ru": "Скачать календарь",
+      "he": "הורד יומן"
+    },
+    "description": "Header for the export format interface"
+  }
+}

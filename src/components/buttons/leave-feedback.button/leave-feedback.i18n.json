@@ -1,0 +1,38 @@
+{
+  "LEAVE_FEEDBACK_LINK": {
+    "message": {
+      "en": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "zh": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "es": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "hi": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "ar": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "bn": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "pt": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "ja": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "de": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "it": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "uk": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "ru": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews",
+      "he": "https://chrome.google.com/webstore/detail/birthday-calendar-extract/imielmggcccenhgncmpjlehemlinhjjo/reviews"
+    },
+    "description": "Link to extension store"
+  },
+  "LEAVE_FEEDBACK_TITLE": {
+    "message": {
+      "en": "Leave a feedback",
+      "zh": "留下反馈",
+      "es": "Deja un comentario",
+      "hi": "प्रतिक्रिया छोड़ें",
+      "ar": "اترك تعليقا",
+      "bn": "প্রতিক্রিয়া জানান",
+      "pt": "Deixe um feedback",
+      "ja": "フィードバックを残す",
+      "de": "Hinterlassen Sie ein Feedback",
+      "it": "Lascia un feedback",
+      "uk": "Залишити відгук",
+      "ru": "Оставить отзыв",
+      "he": "השאר משוב"
+    },
+    "description": "Share button"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "SELECT_DELETE_ICS_DESCRIPTION": {
+    "message": {
+      "en": "Special ICS file used to remove previously imported events from Google Calendar. <p>Import it into the respective calendar the same way as the original ICS file.</p>",
+      "zh": "特殊的 ICS 文件用于从 Google 日历中删除以前导入的事件。<p>将其导入到相应的日历中，与原始 ICS 文件的导入方式相同。</p>",
+      "es": "Archivo ICS especial utilizado para eliminar eventos importados anteriormente de Google Calendar. <p>Impórtelo en el calendario correspondiente de la misma manera que el archivo ICS original.</p>",
+      "hi": "Google कैलेंडर से पहले से आयातित घटनाओं को हटाने के लिए विशेष ICS फ़ाइल। <p>इसे मूल ICS फ़ाइल की तरह ही संबंधित कैलेंडर में आयात करें।</p>",
+      "ar": "ملف ICS خاص يستخدم لإزالة الأحداث التي تم استيرادها مسبقًا من تقويم Google. <p>استورده في التقويم المعني بنفس طريقة استيراد ملف ICS الأصلي.</p>",
+      "bn": "গুগল ক্যালেন্ডার থেকে পূর্বে আমদানি করা ইভেন্টগুলি সরাতে ব্যবহৃত বিশেষ ICS ফাইল। <p>এটিকে মূল ICS ফাইলের মতো একইভাবে সংশ্লিষ্ট ক্যালেন্ডারে আমদানি করুন।</p>",
+      "pt": "Arquivo ICS especial usado para remover eventos importados anteriormente do Google Calendar. <p>Importe-o para o calendário correspondente da mesma forma que o arquivo ICS original.</p>",
+      "ja": "Google カレンダーから以前にインポートしたイベントを削除するための特別な ICS ファイル。 <p>元の ICS ファイルと同じ方法で該当するカレンダーにインポートします。</p>",
+      "de": "Spezielle ICS-Datei, die verwendet wird, um zuvor importierte Ereignisse aus Google Kalender zu entfernen. <p>Importieren Sie es in den entsprechenden Kalender auf dieselbe Weise wie die ursprüngliche ICS-Datei.</p>",
+      "it": "File ICS speciale utilizzato per rimuovere gli eventi precedentemente importati da Google Calendar. <p>Importalo nel calendario rispettivo allo stesso modo del file ICS originale.</p>",
+      "uk": "Спеціальний файл ICS, який використовується для видалення раніше імпортованих подій із Google Календаря. <p>Імпортуйте його в відповідний календар так само, як і оригінальний файл ICS.</p>",
+      "ru": "Специальный файл ICS, используемый для удаления ранее импортированных событий из Google Календаря. <p>Импортируйте его в соответствующий календарь так же, как и исходный файл ICS.</p>",
+      "he": "קובץ ICS מיוחד המשמש להסרת אירועים שיובאו בעבר מ-Google Calendar. <p>ייבא אותו ליומן המתאים באותו אופן כמו קובץ ה-ICS המקורי.</p>"
+    },
+    "description": "Description for the delete-ics file type radio button"
+  },
+  "SELECT_FILE_FORMAT_DELETE_ICS": {
+    "message": {
+      "en": "Delete Imported ICS from Google Calendar",
+      "zh": "从 Google 日历中删除导入的 ICS",
+      "es": "Eliminar ICS importado de Google Calendar",
+      "hi": "Google कैलेंडर से आयातित ICS हटाएं",
+      "ar": "احذف ICS المستوردة من تقويم Google",
+      "bn": "গুগল ক্যালেন্ডার থেকে আমদানি করা ICS মুছুন",
+      "pt": "Excluir ICS importado do Google Calendar",
+      "ja": "Google カレンダーからインポートされた ICS を削除",
+      "de": "Importierte ICS aus Google Kalender löschen",
+      "it": "Elimina ICS importato da Google Calendar",
+      "uk": "Видалити імпортований ICS із Google Календаря",
+      "ru": "Удалить импортированный ICS из Google Календаря",
+      "he": "מחק ICS מיובא מ-Google Calendar"
+    },
+    "description": "Label for the delete-ics file type radio button"
+  }
+}

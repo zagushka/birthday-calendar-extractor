@@ -3,8 +3,34 @@ const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ejs = require('ejs');
-const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
-const { version } = require('./package.json');
+const {version} = require('./package.json');
+const MergeJsonPlugin = require("merge-json-webpack-plugin");
+
+/**
+ * Extracts only the locale messages for the specified language
+ *
+ * @param content
+ * @param lang
+ * @param fallback
+ * @returns {{}}
+ */
+function extractLocaleOnly(lang, fallback = "en") {
+  return function (content) {
+    return Object.keys(content).reduce((collector, key) => {
+      const value = content[key];
+      // Get the message for the specified language, or fallback to the default language
+      // If the default language is not available, use message as is (old format)
+      const message = value.message[lang] || value.message[fallback] || value.message;
+      if ("string" === typeof message) {
+        collector[key] = {
+          ...value,
+          message,
+        }
+      }
+      return collector;
+    }, {});
+  }
+}
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -62,22 +88,19 @@ module.exports = {
     ],
   },
   plugins: [
-    new MergeJsonWebpackPlugin({
-      output: {
-        groupBy: [
-          {
-            pattern: '**/*.i18n.en.json',
-            fileName: './_locales/en/messages.json',
-          },
-          {
-            pattern: '**/*.i18n.ru.json',
-            fileName: './_locales/ru/messages.json',
-          },
-        ],
-      },
-      globOptions: {
-        nosort: true,
-      },
+    new MergeJsonPlugin({
+      force: true,
+      groups: [
+        ...["zh", "es", "en", "hi", "ar", "bn", "pt", "ja", "de", "it", "uk", "ru", "he"]
+          .map((lang) => ({
+            pattern: `**/*.i18n.json`,
+            to: `./_locales/${lang}/messages.json`,
+            transform: extractLocaleOnly(lang),
+            globOptions: {
+              ignore: ['**/!*.json'],
+            },
+          })),
+      ],
     }),
     new webpack.DefinePlugin({
       global: 'window',
@@ -95,7 +118,7 @@ module.exports = {
           },
         },
         // Append variables to popup.html
-        { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
+        {from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml},
         // Update manifest version from package.json
         {
           from: '../public/manifest.json',

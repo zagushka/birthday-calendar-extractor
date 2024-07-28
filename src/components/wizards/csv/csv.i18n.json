@@ -1,0 +1,92 @@
+{
+  "SELECT_FILE_FORMAT_CSV": {
+    "message": {
+      "en": "Export birthdays as a CSV file.",
+      "zh": "将生日导出为 CSV 文件。",
+      "es": "Exportar cumpleaños como archivo CSV.",
+      "hi": "जन्मदिनों को CSV फ़ाइल के रूप में निर्यात करें।",
+      "ar": "تصدير أعياد الميلاد كملف CSV.",
+      "bn": "জন্মদিনগুলি CSV ফাইল হিসাবে রপ্তানি করুন।",
+      "pt": "Exportar aniversários como um arquivo CSV.",
+      "ja": "誕生日をCSVファイルとしてエクスポートします。",
+      "de": "Exportieren Sie Geburtstage als CSV-Datei.",
+      "it": "Esporta i compleanni come file CSV.",
+      "uk": "Експортуйте дні народження у вигляді файлу CSV.",
+      "ru": "Экспортировать дни рождения в виде файла CSV.",
+      "he": "ייצא ימי הולדת כקובץ CSV."
+    },
+    "description": "Label for CSV file type radio button"
+  },
+  "FILE_FORMAT_CSV_DESCRIPTION": {
+    "message": {
+      "en": "CSV file format used by Microsoft Excel or Google Sheets. <p>DO NOT USE it to import birthdays to a calendar; ICS format is preferable.</p>",
+      "zh": "CSV 文件格式用于 Microsoft Excel 或 Google 表格。<p>请勿使用它来将生日导入到日历；建议使用 ICS 格式。</p>",
+      "es": "Formato de archivo CSV utilizado por Microsoft Excel o Google Sheets. <p>NO LO USE para importar cumpleaños a un calendario; es preferible el formato ICS.</p>",
+      "hi": "CSV फ़ाइल स्वरूप का उपयोग Microsoft Excel या Google शीट्स द्वारा किया जाता है। <p>जन्मदिनों को कैलेंडर में आयात करने के लिए इसका उपयोग न करें; ICS प्रारूप बेहतर है।</p>",
+      "ar": "تنسيق ملف CSV المستخدم بواسطة Microsoft Excel أو Google Sheets. <p>لا تستخدمه لاستيراد أعياد الميلاد إلى التقويم؛ تنسيق ICS أفضل.</p>",
+      "bn": "CSV ফাইল বিন্যাসটি Microsoft Excel বা Google Sheets দ্বারা ব্যবহৃত হয়। <p>জন্মদিনগুলি ক্যালেন্ডারে আমদানি করতে এটি ব্যবহার করবেন না; ICS বিন্যাস পছন্দনীয়।</p>",
+      "pt": "Formato de arquivo CSV usado pelo Microsoft Excel ou Google Sheets. <p>NÃO O USE para importar aniversários para um calendário; o formato ICS é preferível.</p>",
+      "ja": "CSVファイル形式はMicrosoft ExcelまたはGoogleスプレッドシートで使用されます。 <p>誕生日をカレンダーにインポートするために使用しないでください。 ICS形式が推奨されます。</p>",
+      "de": "CSV-Dateiformat, das von Microsoft Excel oder Google Sheets verwendet wird. <p>VERWENDEN SIE ES NICHT, um Geburtstage in einen Kalender zu importieren; ICS-Format ist vorzuziehen.</p>",
+      "it": "Formato di file CSV utilizzato da Microsoft Excel o Google Sheets. <p>NON UTILIZZARLO per importare i compleanni in un calendario; è preferibile il formato ICS.</p>",
+      "uk": "Формат файлу CSV, що використовується Microsoft Excel або Google Sheets. <p>НЕ ВИКОРИСТОВУЙТЕ його для імпорту днів народження в календар; краще використовувати формат ICS.</p>",
+      "ru": "Формат файла CSV, используемый Microsoft Excel или Google Sheets. <p>НЕ ИСПОЛЬЗУЙТЕ его для импорта дней рождения в календарь; предпочтителен формат ICS.</p>",
+      "he": "תבנית קובץ CSV המשמשת את Microsoft Excel או Google Sheets. <p>אל תשתמש בו כדי לייבא ימי הולדת ליומן; תבנית ICS עדיפה.</p>"
+    },
+    "description": "Description for the CSV file type label"
+  },
+  "CREATE_CSV_SETTINGS_DATE_FORMAT": {
+    "message": {
+      "en": "Date Format",
+      "zh": "日期格式",
+      "es": "Formato de fecha",
+      "hi": "दिनांक प्रारूप",
+      "ar": "تنسيق التاريخ",
+      "bn": "তারিখ বিন্যাস",
+      "pt": "Formato de data",
+      "ja": "日付形式",
+      "de": "Datumsformat",
+      "it": "Formato della data",
+      "uk": "Формат дати",
+      "ru": "Формат даты",
+      "he": "פורמט תאריך"
+    },
+    "description": "Label for CSV settings date format"
+  },
+  "CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH": {
+    "message": {
+      "en": "Day/Month",
+      "zh": "日/月",
+      "es": "Día/Mes",
+      "hi": "दिन/महीना",
+      "ar": "يوم/شهر",
+      "bn": "দিন/মাস",
+      "pt": "Dia/Mês",
+      "ja": "日/月",
+      "de": "Tag/Monat",
+      "it": "Giorno/Mese",
+      "uk": "День/Місяць",
+      "ru": "День/Месяц",
+      "he": "יום/חודש"
+    },
+    "description": "Label for CSV settings date format: Day/Month"
+  },
+  "CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY": {
+    "message": {
+      "en": "Month/Day",
+      "zh": "月/日",
+      "es": "Mes/Día",
+      "hi": "महीना/दिन",
+      "ar": "شهر/يوم",
+      "bn": "মাস/দিন",
+      "pt": "Mês/Dia",
+      "ja": "月/日",
+      "de": "Monat/Tag",
+      "it": "Mese/Giorno",
+      "uk": "Місяць/День",
+      "ru": "Месяц/День",
+      "he": "חודש/יום"
+    },
+    "description": "Label for CSV settings date format: Month/Day"
+  }
+}

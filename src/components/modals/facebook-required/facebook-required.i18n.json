@@ -1,0 +1,56 @@
+{
+  "SCAN_ERROR_FACEBOOK_REQUIRED": {
+    "message": {
+      "en": "You need to be on a facebook page in order to scan your friends birthdays. <br/>Please follow the link below and start over.",
+      "zh": "您需要在 Facebook 页面上才能扫描朋友的生日。<br/>请点击下面的链接重新开始。",
+      "es": "Necesitas estar en una página de Facebook para escanear los cumpleaños de tus amigos. <br/>Por favor, sigue el enlace de abajo y empieza de nuevo.",
+      "hi": "आपको अपने दोस्तों के जन्मदिन को स्कैन करने के लिए फेसबुक पेज पर होना चाहिए। <br/>कृपया नीचे दिए गए लिंक का अनुसरण करें और फिर से शुरू करें।",
+      "ar": "تحتاج إلى أن تكون على صفحة فيسبوك لمسح أعياد ميلاد أصدقائك. <br/>يرجى اتباع الرابط أدناه والبدء من جديد.",
+      "bn": "আপনার বন্ধুদের জন্মদিন স্ক্যান করার জন্য আপনাকে একটি ফেসবুক পৃষ্ঠায় থাকতে হবে। <br/>অনুগ্রহ করে নীচের লিঙ্কটি অনুসরণ করুন এবং আবার শুরু করুন।",
+      "pt": "Você precisa estar em uma página do Facebook para escanear os aniversários dos seus amigos. <br/>Por favor, siga o link abaixo e comece de novo.",
+      "ja": "友達の誕生日をスキャンするには、Facebookページにいる必要があります。 <br/>以下のリンクをクリックして、もう一度やり直してください。",
+      "de": "Sie müssen auf einer Facebook-Seite sein, um die Geburtstage Ihrer Freunde zu scannen. <br/>Bitte folgen Sie dem unten stehenden Link und starten Sie erneut.",
+      "it": "Devi essere su una pagina Facebook per scansionare i compleanni dei tuoi amici. <br/>Per favore, segui il link qui sotto e ricomincia.",
+      "uk": "Ви повинні бути на сторінці Facebook, щоб сканувати дні народження ваших друзів. <br/>Будь ласка, перейдіть за посиланням нижче і почніть знову.",
+      "ru": "Вам нужно находиться на странице Facebook, чтобы сканировать дни рождения ваших друзей. <br/>Пожалуйста, следуйте по ссылке ниже и начните заново.",
+      "he": "עליך להיות בדף פייסבוק כדי לסרוק את ימי ההולדת של חבריך. <br/>אנא עקוב אחר הקישור למטה והתחל מחדש."
+    },
+    "description": "Description in case user is not on a facebook page"
+  },
+  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK": {
+    "message": {
+      "en": "https://www.facebook.com/",
+      "zh": "https://www.facebook.com/",
+      "es": "https://www.facebook.com/",
+      "hi": "https://www.facebook.com/",
+      "ar": "https://www.facebook.com/",
+      "bn": "https://www.facebook.com/",
+      "pt": "https://www.facebook.com/",
+      "ja": "https://www.facebook.com/",
+      "de": "https://www.facebook.com/",
+      "it": "https://www.facebook.com/",
+      "uk": "https://www.facebook.com/",
+      "ru": "https://www.facebook.com/",
+      "he": "https://www.facebook.com/"
+    },
+    "description": "Facebook url."
+  },
+  "SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE": {
+    "message": {
+      "en": "To facebook",
+      "zh": "前往 Facebook",
+      "es": "A Facebook",
+      "hi": "फेसबुक पर",
+      "ar": "إلى فيسبوك",
+      "bn": "ফেসবুকে",
+      "pt": "Para o Facebook",
+      "ja": "Facebookへ",
+      "de": "Zu Facebook",
+      "it": "A Facebook",
+      "uk": "До Facebook",
+      "ru": "На Facebook",
+      "he": "לפייסבוק"
+    },
+    "description": "Button to Facebook title."
+  }
+}

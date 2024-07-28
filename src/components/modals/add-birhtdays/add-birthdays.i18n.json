@@ -1,0 +1,56 @@
+{
+  "ADD_BIRTHDAYS_HEADER": {
+    "message": {
+      "en": "Add Birthdays",
+      "zh": "添加生日",
+      "es": "Agregar cumpleaños",
+      "hi": "जन्मदिन जोड़ें",
+      "ar": "إضافة أعياد الميلاد",
+      "bn": "জন্মদিন যোগ করুন",
+      "pt": "Adicionar Aniversários",
+      "ja": "誕生日を追加",
+      "de": "Geburtstage hinzufügen",
+      "it": "Aggiungi compleanni",
+      "uk": "Додати дні народження",
+      "ru": "Добавить дни рождения",
+      "he": "הוסף ימי הולדת"
+    },
+    "description": "Add Birthdays modal header"
+  },
+  "ADD_BIRTHDAYS_DESCRIPTION": {
+    "message": {
+      "en": "Add birthdays to your calendar. Enter the date of birth and name of the person on each line. For example: 01/25/1978 Volodymyr Zelenskyy",
+      "zh": "将生日添加到您的日历。 在每一行输入出生日期和名字，例如：01/25/1978 Volodymyr Zelenskyy",
+      "es": "Agregue cumpleaños a su calendario. Ingrese la fecha de nacimiento y el nombre de la persona en cada línea. Por ejemplo: 01/25/1978 Volodymyr Zelenskyy",
+      "hi": "अपने कैलेंडर में जन्मदिन जोड़ें। प्रत्येक पंक्ति में जन्म तिथि और व्यक्ति का नाम दर्ज करें। उदाहरण के लिए: 01/25/1978 Volodymyr Zelenskyy",
+      "ar": "أضف أعياد الميلاد إلى التقويم الخاص بك. أدخل تاريخ الميلاد واسم الشخص في كل سطر. على سبيل المثال: 01/25/1978 Volodymyr Zelenskyy",
+      "bn": "আপনার ক্যালেন্ডারে জন্মদিন যোগ করুন। প্রতিটি লাইনে জন্ম তারিখ এবং ব্যক্তির নাম লিখুন। উদাহরণ: 01/25/1978 Volodymyr Zelenskyy",
+      "pt": "Adicione aniversários ao seu calendário. Digite a data de nascimento e o nome da pessoa em cada linha. Por exemplo: 01/25/1978 Volodymyr Zelenskyy",
+      "ja": "カレンダーに誕生日を追加します。 各行に生年月日と名前を入力してください。 例: 01/25/1978 Volodymyr Zelenskyy",
+      "de": "Fügen Sie Ihrem Kalender Geburtstage hinzu. Geben Sie in jeder Zeile das Geburtsdatum und den Namen der Person ein. Zum Beispiel: 01/25/1978 Volodymyr Zelenskyy",
+      "it": "Aggiungi compleanni al tuo calendario. Inserisci la data di nascita e il nome della persona su ogni riga. Ad esempio: 01/25/1978 Volodymyr Zelenskyy",
+      "uk": "Додайте дні народження у свій календар. Введіть дату народження та ім'я особи на кожному рядку. Наприклад: 01/25/1978 Volodymyr Zelenskyy",
+      "ru": "Добавьте дни рождения в свой календарь. Введите дату рождения и имя человека на каждой строке. Например: 01/25/1978 Volodymyr Zelenskyy",
+      "he": "הוסף ימי הולדת ללוח השנה שלך. הזן את תאריך הלידה ושם האדם בכל שורה. לדוגמה: 01/25/1978 Volodymyr Zelenskyy"
+    },
+    "description": "Add Birthdays modal description"
+  },
+  "ADD_BIRTHDAYS_BUTTON_TITLE": {
+    "message": {
+      "en": "Add Birthdays",
+      "zh": "添加生日",
+      "es": "Agregar cumpleaños",
+      "hi": "जन्मदिन जोड़ें",
+      "ar": "إضافة أعياد الميلاد",
+      "bn": "জন্মদিন যোগ করুন",
+      "pt": "Adicionar Aniversários",
+      "ja": "誕生日を追加",
+      "de": "Geburtstage hinzufügen",
+      "it": "Aggiungi compleanni",
+      "uk": "Додати дні народження",
+      "ru": "Добавить дни рождения",
+      "he": "הוסף ימי הולדת"
+    },
+    "description": "Add Birthdays button title"
+  }
+}

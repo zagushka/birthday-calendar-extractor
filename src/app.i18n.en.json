@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store."
   },
   "appDesc": {
-    "message": "Import friends birthdays from facebook to your favorite calendar.",
+    "message": "Save your friends' birthdays from Facebook to your favorite calendar and never miss them again!",
     "description": "The description of the application, displayed in the web store."
   }
 }

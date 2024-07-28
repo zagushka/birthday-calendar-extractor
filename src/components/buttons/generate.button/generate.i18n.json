@@ -1,0 +1,20 @@
+{
+  "GENERATE": {
+    "message": {
+      "en": "Generate and Download",
+      "zh": "生成并下载",
+      "es": "Generar y Descargar",
+      "hi": "उत्पन्न करें और डाउनलोड करें",
+      "ar": "توليد وتحميل",
+      "bn": "উৎপন্ন করুন এবং ডাউনলোড করুন",
+      "pt": "Gerar e Baixar",
+      "ja": "生成してダウンロード",
+      "de": "Erstellen und Herunterladen",
+      "it": "Genera e Scarica",
+      "uk": "Створити і завантажити",
+      "ru": "Создать и скачать",
+      "he": "צור והורד"
+    },
+    "description": "Label 'generate' button"
+  }
+}

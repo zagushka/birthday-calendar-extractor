@@ -1,0 +1,38 @@
+{
+  "MODAL_SCAN_SUCCESS_TITLE": {
+    "message": {
+      "en": "Scan complete.",
+      "zh": "扫描完成。",
+      "es": "Escaneo completado.",
+      "hi": "स्कैन पूरा हुआ।",
+      "ar": "اكتمل الفحص.",
+      "bn": "স্ক্যান সম্পন্ন।",
+      "pt": "Escaneamento completo.",
+      "ja": "スキャンが完了しました。",
+      "de": "Scan abgeschlossen.",
+      "it": "Scansione completata.",
+      "uk": "Сканування завершено.",
+      "ru": "Сканирование завершено.",
+      "he": "הסריקה הושלמה."
+    },
+    "description": "Scan success modal title"
+  },
+  "MODAL_SCAN_SUCCESS_DESCRIPTION": {
+    "message": {
+      "en": "Scanned birthdays will be remembered by extension until you remove it.<br/>Now you can preview the calendar or generate and download it for import.",
+      "zh": "扫描到的生日将由扩展程序记住，直到您将其删除为止。<br/>现在您可以预览日历或生成并下载它以进行导入。",
+      "es": "Los cumpleaños escaneados serán recordados por la extensión hasta que los elimines.<br/>Ahora puedes previsualizar el calendario o generarlo y descargarlo para importarlo.",
+      "hi": "स्कैन किए गए जन्मदिन को एक्सटेंशन द्वारा तब तक याद रखा जाएगा जब तक आप इसे हटा नहीं देते।<br/>अब आप कैलेंडर का पूर्वावलोकन कर सकते हैं या इसे उत्पन्न और डाउनलोड कर सकते हैं।",
+      "ar": "سيتم تذكر أعياد الميلاد الممسوحة ضوئيًا بواسطة الامتداد حتى تقوم بإزالته.<br/>الآن يمكنك معاينة التقويم أو إنشاءه وتنزيله للاستيراد.",
+      "bn": "স্ক্যান করা জন্মদিনগুলি এক্সটেনশন দ্বারা মনে রাখা হবে যতক্ষণ না আপনি এটি সরিয়ে ফেলেন।<br/>এখন আপনি ক্যালেন্ডারটি প্রাকদর্শন করতে বা আমদানি করার জন্য এটি তৈরি এবং ডাউনলোড করতে পারেন।",
+      "pt": "Os aniversários escaneados serão lembrados pela extensão até que você os remova.<br/>Agora você pode visualizar o calendário ou gerá-lo e baixá-lo para importação.",
+      "ja": "スキャンされた誕生日は、あなたがそれを削除するまで拡張機能によって記憶されます。<br/>今、カレンダーをプレビューするか、生成してダウンロードしてインポートできます。",
+      "de": "Die gescannten Geburtstage werden von der Erweiterung gespeichert, bis Sie sie entfernen.<br/>Sie können den Kalender jetzt anzeigen oder ihn zur Importierung generieren und herunterladen.",
+      "it": "I compleanni scansionati saranno ricordati dall'estensione fino a quando non li rimuoverai.<br/>Ora puoi visualizzare in anteprima il calendario o generarlo e scaricarlo per l'importazione.",
+      "uk": "Скановані дні народження будуть збережені розширенням, доки ви їх не видалите.<br/>Тепер ви можете переглянути календар або згенерувати та завантажити його для імпорту.",
+      "ru": "Отсканированные дни рождения будут запомнены расширением, пока вы его не удалите.<br/>Теперь вы можете просмотреть календарь или создать и скачать его для импорта.",
+      "he": "ימי ההולדת הסרוקים יישמרו על ידי התוסף עד שתסירו אותו.<br/>כעת ניתן לצפות בתצוגה מקדימה של היומן או ליצור ולהוריד אותו לייבוא."
+    },
+    "description": "Scan success modal description"
+  }
+}
