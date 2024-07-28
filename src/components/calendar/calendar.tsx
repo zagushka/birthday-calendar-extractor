@@ -17,12 +17,13 @@ import {
   ListOnScrollProps,
   VariableSizeList,
 } from 'react-window';
+import { toggleStoredUserSettings } from "../../libs/birthdays-scan";
 import { CurrentStatusContext } from '../../context/current-status.context';
 import {
   reviveBirthday,
   storeUserSettings,
 } from '../../libs/storage/chrome.storage';
-import { STORED_BIRTHDAY } from '../../libs/storage/storaged.types';
+import { STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS } from '../../libs/storage/storaged.types';
 import Layout from '../layout/layout';
 import { CalendarNavigation } from './calendar-navigation';
 import {
@@ -66,9 +67,16 @@ const Calendar: FunctionComponent = () => {
     setUsers({ userGroups: grouped, usersMap: itemsMap });
   }, [rawUsers]);
 
-  const updateUserSettings = (id: string, settings: number) => {
+  const updateUserSettings = (id: string, state: "on" | "off") => {
     const index = rawUsers.findIndex((user) => user[STORED_BIRTHDAY.UID] === id);
-    storeUserSettings({ birthdays: update(rawUsers, { [index]: { [STORED_BIRTHDAY.SETTINGS]: { $set: settings } } }) });
+    const settings = toggleStoredUserSettings(
+      rawUsers[index][STORED_BIRTHDAY.SETTINGS],
+      STORED_BIRTHDAY_SETTINGS.HIDDEN_FOR_EXPORT,
+      state
+    );
+    storeUserSettings({
+      birthdays: update(rawUsers, { [index]: { [STORED_BIRTHDAY.SETTINGS]: { $set: settings } } })
+    });
   };
   const itemData = createItemData(users.userGroups, updateUserSettings);
 
@@ -128,7 +136,7 @@ const Calendar: FunctionComponent = () => {
       </Layout.Header>
 
       {/* Navigation with today, next and previous day buttons */}
-      <CalendarNavigation updateDayIndex={updateDayIndex} />
+      <CalendarNavigation updateDayIndex={updateDayIndex}/>
 
       <Layout.Content>
         {/* Scroll with list of birthdays */}
@@ -146,7 +154,7 @@ const Calendar: FunctionComponent = () => {
           {DayList}
         </VariableSizeList>
 
-        <CreateButton />
+        <CreateButton/>
       </Layout.Content>
     </>
   );

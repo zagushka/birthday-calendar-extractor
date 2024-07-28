@@ -31,7 +31,7 @@ interface MUIClassesProp<TUseStyles extends () => unknown> {
 
 interface DayRowProps extends MUIClassesProp<typeof useDayRowStyles> {
   user: RestoredBirthday;
-  toggleVisibility: (id: string, settings: number) => void;
+  toggleVisibility: (id: string, state: "on" | "off") => void;
 }
 
 const DayRow: FunctionComponent<DayRowProps> = (props) => {
@@ -51,7 +51,7 @@ const DayRow: FunctionComponent<DayRowProps> = (props) => {
       }}
       onClick={handleClick(href)}
     >
-      <ListItemText primary={name} className={classes.listItemText} />
+      <ListItemText primary={name} className={classes.listItemText}/>
       <ListItemSecondaryAction
         className={classes.listItemSecondaryAction}
       >
@@ -59,9 +59,9 @@ const DayRow: FunctionComponent<DayRowProps> = (props) => {
           size="small"
           edge="end"
           className={classes.icon}
-          onClick={() => props.toggleVisibility(id, +!hidden)}
+          onClick={() => props.toggleVisibility(id, hidden ? 'on' : 'off')}
         >
-          {hidden ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+          {hidden ? <VisibilityOff fontSize="small"/> : <Visibility fontSize="small"/>}
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
@@ -70,7 +70,7 @@ const DayRow: FunctionComponent<DayRowProps> = (props) => {
 
 type DayListProps = ListChildComponentProps<{
   userGroup: Array<[number, Array<RestoredBirthday>]>;
-  toggleStatus: (id: string, settings: number) => void;
+  toggleStatus: (id: string, state: "on" | "off") => void;
 }>;
 
 export const DayList = memo<DayListProps>(({ data: { userGroup, toggleStatus }, index, style }) => {

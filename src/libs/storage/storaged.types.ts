@@ -8,7 +8,7 @@ export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
  * [name, uid, [day, month, year], misc, settings] Stored birthdays format
  * where setting is bitwise settings
  * 1rst bit = 1 << 0- hidden from export
- * 2nd bit = 1 << 1 - custom made contact
+ * 2nd bit = 1 << 1 - custom-made contact
  */
 export enum STORED_BIRTHDAY {
   NAME,
@@ -16,6 +16,11 @@ export enum STORED_BIRTHDAY {
   BIRTH_DATE,
   MISC,
   SETTINGS
+}
+
+export enum STORED_BIRTHDAY_SETTINGS {
+  HIDDEN_FOR_EXPORT = 1 << 0,
+  CUSTOM_MADE = 1 << 1,
 }
 
 export type StoredBirthday = [string, string, [number, number, number], any, number];

@@ -8,6 +8,10 @@ export interface RawScannedUser {
   };
   name: string;
   id: string;
+  misc?: {
+    source: "facebook" | "manual";
+    [key: string]: any;
+  }
 }
 
 export type CalendarTypes = 'CSV' | 'ICS' | 'DELETE-ICS';

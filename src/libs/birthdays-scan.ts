@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import {
   filter,
   map,
-  pluck,
   switchMap,
   take,
   tap,
@@ -29,7 +28,7 @@ import {
   storeUserSettings,
 } from './storage/chrome.storage';
 import {
-  STORED_BIRTHDAY,
+  STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS,
   StoredBirthday,
 } from './storage/storaged.types';
 
@@ -82,7 +81,7 @@ export function scanUserBirthdays(tabId: number, waitTime = 10_000): Observable<
         func: fetchUserFriendsBirthdayInfoFromContext,
       },
       (response) => {
-      // Working with a single tab, use the firs array element
+        // Working with a single tab, use the firs array element
         waitForResponse(response[0].result);
       },
     );
@@ -123,7 +122,7 @@ export const sendScanLog = (str: string, reps: Array<string> = []) => {
 
 /**
  * RestoredBirthday have basic information extracted from parsed html, such as
- * facebook id, user name, and birthdate
+ * facebook id, name, and birthdate
  */
 function scannedUserToDecayedBirthday(raw: RawScannedUser): StoredBirthday {
   return [
@@ -131,14 +130,29 @@ function scannedUserToDecayedBirthday(raw: RawScannedUser): StoredBirthday {
     raw.id,
     [raw.birthdate.day, raw.birthdate.month, raw.birthdate.year],
     null,
-    0,
+    createStoredUserSettings(raw.misc?.source === 'manual' ? STORED_BIRTHDAY_SETTINGS.CUSTOM_MADE : 0),
   ];
+}
+
+
+export function createStoredUserSettings(...settings: STORED_BIRTHDAY_SETTINGS[]): number {
+  return settings.reduce((acc, setting) => acc | setting, 0);
+}
+/**
+ * Toggle stored user settings, we use bitwise operations to toggle settings
+ */
+export function toggleStoredUserSettings(settings: number, flag: STORED_BIRTHDAY_SETTINGS, state: "on" | "off") {
+  if (state === "on") {
+    return settings | flag;
+
+  }
+  return settings & ~flag;
 }
 
 /**
  * Merge sets of Arrays of StoredBirthdays
  * Every next set have greater priority, so in order to preserve already scanned birthdays (duplicates) and not override possible changes
- * make sure to provide them as the last parameter of the function
+ * make sure to provide them as the last argument of the function
  * for example mergeBirthdaysAllowDatesUpdate(newBirthdays, oldBirthdays)
  *
  * The only exception is birthdate year property, script will always try to update with a year even if it comes from newest duplicate row.

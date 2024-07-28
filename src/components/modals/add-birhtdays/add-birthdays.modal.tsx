@@ -12,17 +12,12 @@ import {
   Typography,
 } from '@material-ui/core';
 import { DateTime } from 'luxon';
-import React, {
-  FunctionComponent,
-  useRef,
-  useState,
-} from 'react';
+import React, { FunctionComponent, useRef, useState, } from 'react';
 import { translate } from '../../../filters/translate';
+import { updateStoredBirthdays } from "../../../libs/birthdays-scan";
+import { RawScannedUser } from "../../../libs/events/executed-script.types";
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
-import {
-  DialogTitle,
-  handleCloseModal,
-} from '../modals.lib';
+import { DialogTitle, handleCloseModal, } from '../modals.lib';
 
 declare global {
   interface Array<T> {
@@ -66,20 +61,40 @@ if (!Array.prototype.uniques) {
   };
 }
 
-interface ParsedBirthdate {
-  date: DateTime;
-  name: string;
-  source: string;
+function userToFormattedBirthdate(user: RawScannedUser): string {
+  return DateTime.fromObject({
+    year: user.birthdate.year,
+    month: user.birthdate.month,
+    day: user.birthdate.day,
+  }).toLocaleString();
 }
 
-const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceText = '01/25/1978 Volodymyr Zelenskyy' }) => {
+function isUserHaveValidBirthdate(user: RawScannedUser): boolean {
+  return DateTime.fromObject({
+    year: user.birthdate.year,
+    month: user.birthdate.month,
+    day: user.birthdate.day,
+  }).isValid;
+}
+
+const AddBirthdaysModal: FunctionComponent<{
+  sourceText?: string
+}> = ({ sourceText = '01/25/1978 Volodymyr Zelenskyy' }) => {
   const classes = useStyles();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [parsed, setParsed] = useState<ParsedBirthdate[]>([]);
+  const [parsed, setParsed] = useState<RawScannedUser[]>([]);
   const [text, setText] = useState(sourceText);
 
-  const removeBirthdate = (data: ParsedBirthdate) => {
+  const removeBirthdate = (data: RawScannedUser) => {
     setParsed((old) => old.filter((item) => item !== data));
+  };
+
+  const onStoreNewUsers = () => {
+    updateStoredBirthdays(parsed).subscribe({
+      next: () => {
+        setParsed([]);
+      }
+    });
   };
 
   const onSourceTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -88,20 +103,32 @@ const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceT
     // Remove last line, it could be not complete yet
     const last = lines.pop();
     const [valid, invalid] = lines
-      .map((line) => {
-        // Split the line into birthdate and full name
-        const [srcDate, name] = line.split(/(?<=^\S+)\s/);
-        const date = DateTime.fromFormat(srcDate, 'MM/dd/yyyy');
+      .map<RawScannedUser>((line) => {
+        // const [srcDate, name] = line.split(/(?<=^\S+)\s/);
+        // Split the date and name based on the first space after the date
+        const [datePart, name] = line.split(/ (.+)/);
+
+        // Further split the date into month, day, and year
+        const [month, day, year] = datePart.split('/');
         return {
-          date,
+          birthdate: {
+            day: parseInt(day),
+            month: parseInt(month),
+            year: parseInt(year),
+          },
           name,
-          source: line,
+          misc: {
+            source: 'manual',
+            original: line,
+          },
+          // Maybe we should use a real hash based on the line instead
+          id: line.slice(0, 64),
         };
       })
-      .partition((item) => item.date.isValid);
+      .partition(isUserHaveValidBirthdate);
 
     setParsed((old) => old.concat(valid));
-    setText([...invalid.map((i) => i.source), last].join('\n'));
+    setText([...invalid.map((i) => i.misc.original), last].join('\n'));
   };
 
   return (
@@ -119,10 +146,10 @@ const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceT
         </Typography>
         <Paper component="ul" className={classes.root}>
           {parsed.map((data, index) => (
-            <li key={data.source}>
+            <li key={index}>
               <Chip
                 size="small"
-                label={`${data.date.toLocaleString()} ${data.name}`}
+                label={`${userToFormattedBirthdate(data)} ${data.name}`}
                 onDelete={() => removeBirthdate(data)}
                 className={classes.root}
               />
@@ -147,6 +174,9 @@ const AddBirthdaysModal: FunctionComponent<{ sourceText?: string }> = ({ sourceT
           size="small"
           color="primary"
           variant="contained"
+          onClick={() => {
+            onStoreNewUsers();
+          }}
         >
           {translate('ADD_BIRTHDAYS_BUTTON_TITLE')}
         </Button>
