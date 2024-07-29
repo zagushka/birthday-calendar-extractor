@@ -24,6 +24,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { FunnyMessagesToAvoidCruelReality } from "./funny-messages-to-avoid-cruel-reality";
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { translate } from '../../filters/translate';
 import { translateString } from '../../filters/translateString';
@@ -63,6 +64,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     marginLeft: -12,
   },
 }));
+
+const funnyStringsToFakeCruelReality = JSON.parse(translateString("FUNNY_MESSAGES_TO_AVOID_REALITY"));
 
 export const Scan: FunctionComponent = () => {
   const classes = useStyles();
@@ -123,18 +126,21 @@ export const Scan: FunctionComponent = () => {
               className={buttonClassname}
               disabled={isScanning}
               onClick={startScanHandler}
-              startIcon={wasScanningAndDone ? (isScanSucceed ? <Done /> : <Error />) : <PlayArrow />}
+              startIcon={wasScanningAndDone ? (isScanSucceed ? <Done/> : <Error/>) : <PlayArrow/>}
             >
               {translateString('START_SCAN')}
             </Button>
-            {isScanning && <CircularProgress size={24} className={classes.buttonProgress} />}
+            {isScanning && <CircularProgress size={24} className={classes.buttonProgress}/>}
           </div>
         </Box>
 
         {/* Bottom part */}
         <Box flexGrow={1} textAlign="center" display="flex" alignItems="flex-start" justifyContent="center">
           <Typography variant="body1" gutterBottom>
-            {log}
+            {isScanning ? <FunnyMessagesToAvoidCruelReality
+              strings={funnyStringsToFakeCruelReality}
+              maxRuntime={25_000}
+            /> : log}
           </Typography>
         </Box>
       </Layout.Content>
