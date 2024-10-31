@@ -46,6 +46,32 @@ function isOnFacebookPage(url: string): boolean {
  * Throws error {type: SCAN_ERROR_FACEBOOK_REQUIRED} when not of a facebook
  */
 export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable((subscriber) => {
+  const urlPatterns = [
+    '*://*.facebook.com/*',
+  ];
+
+  chrome.tabs.query(
+    { url: urlPatterns },
+    (tabs) => {
+      console.log(tabs);
+      const url = tabs[0]?.url;
+      // check currTab.url is a Facebook page
+      if (typeof url === 'string') {
+        subscriber.next(tabs[0]);
+      } else {
+        subscriber.error({ type: SCAN_ERROR_FACEBOOK_REQUIRED });
+      }
+    },
+  );
+
+  return () => subscriber.complete();
+});
+
+/**
+ * Check that the current page is facebook and emit its Tab (`chrome.tabs.Tab`)
+ * Throws error {type: SCAN_ERROR_FACEBOOK_REQUIRED} when not of a facebook
+ */
+export const getFacebookTabOld = (): Observable<chrome.tabs.Tab> => new Observable((subscriber) => {
   chrome.tabs.query(
     { active: true, currentWindow: true },
     (tabs) => {
