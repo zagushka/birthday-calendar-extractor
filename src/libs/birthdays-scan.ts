@@ -138,6 +138,7 @@ function scannedUserToDecayedBirthday(raw: RawScannedUser): StoredBirthday {
 export function createStoredUserSettings(...settings: STORED_BIRTHDAY_SETTINGS[]): number {
   return settings.reduce((acc, setting) => acc | setting, 0);
 }
+
 /**
  * Toggle stored user settings, we use bitwise operations to toggle settings
  */
