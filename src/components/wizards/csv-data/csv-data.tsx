@@ -15,7 +15,10 @@ const CsvDataGeneratorWizard: FunctionComponent = () => {
   const { users, isScanning } = useContext(CurrentStatusContext);
 
   // Remove "hidden" users from the list
-  const activeUsers = useMemo(() => users.filter((u) => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
+  const activeUsers = useMemo(() => users.filter((u) => {
+    const settings = u[STORED_BIRTHDAY.SETTINGS] ?? 0;
+    return (settings & 1) === 0;
+  }), [users]);
 
   const { startDownload } = useHandleDownload(CREATE_CSV_DATA, activeUsers);
 

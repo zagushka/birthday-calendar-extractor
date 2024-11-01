@@ -59,7 +59,7 @@ const DayRow: FunctionComponent<DayRowProps> = (props) => {
           size="small"
           edge="end"
           className={classes.icon}
-          onClick={() => props.toggleVisibility(id, hidden ? 'on' : 'off')}
+          onClick={() => props.toggleVisibility(id, hidden ? 'off' : 'on')}
         >
           {hidden ? <VisibilityOff fontSize="small"/> : <Visibility fontSize="small"/>}
         </IconButton>

@@ -28,7 +28,10 @@ const CsvGeneratorWizard: FunctionComponent = () => {
   const { wizardsSettings: settings, users, isScanning } = useContext(CurrentStatusContext);
 
   // Remove "hidden" users from the list
-  const activeUsers = useMemo(() => users.filter((u) => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
+  const activeUsers = useMemo(() => users.filter((u) => {
+    const settings = u[STORED_BIRTHDAY.SETTINGS] ?? 0;
+    return (settings & 1) === 0;
+  }), [users]);
 
   const { startDownload } = useHandleDownload(CREATE_CALENDAR_CSV, activeUsers, settings.csv);
 
@@ -58,12 +61,12 @@ const CsvGeneratorWizard: FunctionComponent = () => {
         <RadioGroup row name="date-format" value={settings.csv.format} onChange={handleChange}>
           <FormControlLabel
             value="dd/LL/yyyy"
-            control={<Radio size="small" />}
+            control={<Radio size="small"/>}
             label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH')}
           />
           <FormControlLabel
             value="LL/dd/yyyy"
-            control={<Radio size="small" />}
+            control={<Radio size="small"/>}
             label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY')}
           />
         </RadioGroup>

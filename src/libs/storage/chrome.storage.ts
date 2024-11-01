@@ -69,6 +69,15 @@ export function storeLastBadgeClicked(): Observable<void> {
   }, true);
 }
 
+function generateHref(uid: string, settings: number) {
+  // Second bit is for custom-made contact they don't have a facebook link
+  if (settings & (1 << 1)) {
+    return undefined;
+  }
+
+  return `https://facebook.com/${uid}`;
+}
+
 export const reviveBirthday = (
   [name, uid, [day, month, year], misc, settings = 0]: StoredBirthday,
   useYear = 2020,
@@ -78,9 +87,10 @@ export const reviveBirthday = (
   // use provided or 2020 since scanned birthdates was originally from 2020, because of the leap years
   start: DateTime.local(2020, month, day)
     .set({ year: useYear }), // Convert to current year
-  href: (settings & 1) << 1 ? misc : `https://facebook.com/${uid}`,
+  href: generateHref(uid, settings),
   birthdate: { day, month, year },
-  hidden: !!((settings & 1) << 0),
+  // Second bit is for hidden from export
+  hidden: !!(settings & (1 << 0)),
 });
 
 /**

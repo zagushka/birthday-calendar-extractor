@@ -100,7 +100,7 @@ END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
       uid: formattedEvent.uid,
       // There is unicode cake character before event.name, you may not see it in you editor
       summary: `🎂 ${formattedEvent.name}`,
-      description: `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`,
+      description: formattedEvent.href ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!` : `This is ${formattedEvent.name} birthday!`,
     });
   }
 }

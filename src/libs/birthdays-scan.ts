@@ -53,7 +53,6 @@ export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable(
   chrome.tabs.query(
     { url: urlPatterns },
     (tabs) => {
-      console.log(tabs);
       const url = tabs[0]?.url;
       // check currTab.url is a Facebook page
       if (typeof url === 'string') {
@@ -171,7 +170,6 @@ export function createStoredUserSettings(...settings: STORED_BIRTHDAY_SETTINGS[]
 export function toggleStoredUserSettings(settings: number, flag: STORED_BIRTHDAY_SETTINGS, state: "on" | "off") {
   if (state === "on") {
     return settings | flag;
-
   }
   return settings & ~flag;
 }

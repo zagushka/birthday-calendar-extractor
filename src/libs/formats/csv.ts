@@ -85,7 +85,7 @@ export class CalendarCSV extends CalendarBase<string, string> {
       `${formattedEvent.name}`, // `Subject,`,
       formattedEvent.start, // `Start Date,`,
       'true', // `All Day Event,`,
-      `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`, // Description,`,
+      formattedEvent.href ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!` : `This is ${formattedEvent.name} birthday!`, // Description,`,
     ];
 
     return arrayToCSVRow(preEscaped);

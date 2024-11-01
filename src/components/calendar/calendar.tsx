@@ -118,7 +118,7 @@ const Calendar: FunctionComponent = () => {
       const todayOrdinal = DateTime.local().ordinal;
       index = users.usersMap.findIndex(({ ordinal }) => ordinal >= todayOrdinal);
     } else if (index < 0) {
-      // Small index, set index to the the end
+      // Small index, set index to the end
       index = users.userGroups.length - 1;
     } else if (index >= users.userGroups.length) {
       // Index is too big, start over
