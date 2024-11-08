@@ -31,19 +31,19 @@ export function UPGRADE_TO_3_1_3(version: string): Observable<any> {
   }
   return retrieveUserSettings(['birthdays'])
     .pipe(
-      map(({birthdays}) => {
+      map(({ birthdays }) => {
         const updated: Array<StoredBirthday> = birthdays
           .map((birthdate) => {
-            if (2020 === birthdate[STORED_BIRTHDAY.BIRTH_DATE][2]) {
+            if (birthdate[STORED_BIRTHDAY.BIRTH_DATE][2] === 2020) {
               birthdate[STORED_BIRTHDAY.BIRTH_DATE][2] = null;
             }
             return birthdate;
           });
         return updated;
       }),
-      switchMap(birthdays => storeUserSettings({birthdays}, true)),
-      tap((b) => {
+      switchMap((birthdays) => storeUserSettings({ birthdays }, true)),
+      tap(() => {
         console.log('upgrade to 3.1.3 successful');
       }),
     );
-};
+}

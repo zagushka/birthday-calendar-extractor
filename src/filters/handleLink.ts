@@ -7,7 +7,7 @@ interface LinkSettings {
   substitutions?: any;
 }
 
-const handleLink = (rawUrl: string, settings: LinkSettings, ev?: React.MouseEvent): boolean => {
+const handleLink = (rawUrl: string | undefined, settings: LinkSettings, ev?: React.MouseEvent): boolean => {
   const {
     close = false,
     active = false,
@@ -19,12 +19,12 @@ const handleLink = (rawUrl: string, settings: LinkSettings, ev?: React.MouseEven
     ev.stopPropagation();
   }
 
-  if (!rawUrl.length) {
+  if ("string" !== typeof rawUrl || !rawUrl.length) {
     return false;
   }
 
   const url = translateString(rawUrl, substitutions) || rawUrl;
-  chrome.tabs.create({url, active});
+  chrome.tabs.create({ url, active });
 
   if (close) {
     window.close();

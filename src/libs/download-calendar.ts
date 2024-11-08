@@ -20,10 +20,9 @@ import {
 
 export function downloadCalendar(type: typeof CREATE_CALENDAR_CSV, birthdays: Array<StoredBirthday>, options: CsvSettings): Observable<any>;
 export function downloadCalendar(type: typeof CREATE_CALENDAR_JSON, birthdays: Array<StoredBirthday>): Observable<any>;
-// tslint:disable-next-line:max-line-length
 export function downloadCalendar(type: typeof CREATE_CALENDAR_ICS | typeof CREATE_CALENDAR_DELETE_ICS, birthdays: Array<StoredBirthday>, options: IcsSettings): Observable<any>;
 export function downloadCalendar(type: any, birthdays: Array<StoredBirthday>, options?: any): Observable<any> {
-  return new Observable(subscriber => {
+  return new Observable((subscriber) => {
     switch (type) {
       case CREATE_CALENDAR_CSV: {
         const calendar = new CalendarCSV(options);
@@ -32,7 +31,7 @@ export function downloadCalendar(type: any, birthdays: Array<StoredBirthday>, op
       }
       case CREATE_CSV_DATA: {
         const calendar = calendarCSVData(birthdays);
-        downloadFile(calendar, {mimeType: 'text/csv; charset=UTF-8', filename: 'facebook-dates-of-birth.csv'})
+        downloadFile(calendar, { mimeType: 'text/csv; charset=UTF-8', filename: 'facebook-dates-of-birth.csv' })
           .subscribe(subscriber);
         break;
       }
@@ -52,7 +51,7 @@ export function downloadCalendar(type: any, birthdays: Array<StoredBirthday>, op
         break;
       }
       default:
-        subscriber.error({message: `WRONG EXPORT TYPE '${type}'`});
+        subscriber.error({ message: `WRONG EXPORT TYPE '${type}'` });
     }
 
     return () => subscriber.complete();

@@ -14,23 +14,21 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   getFacebookPage()
     .then(extractFacebookToken)
     // Fetch user friends birthday data
-    .then((token) => {
-      return concatPromise(
-        ...[
-          -1, // Apr, May
-          0, // May, June
-          2, // Jul, Aug
-          4, // Sep, Oct
-          6, // Nov, Jan
-          8, // Feb, March
-          10, // removed
-        ] // Make all the request with even assets
-          .map(offset => () => fetchFriendsBirthdayInfo(token, offset).then(extractBirthdays)),
-      )
-        .then(monthArray => [].concat(...monthArray));
-    })
+    .then((token) => concatPromise(
+      ...[
+        -1, // Apr, May
+        0, // May, June
+        2, // Jul, Aug
+        4, // Sep, Oct
+        6, // Nov, Jan
+        8, // Feb, March
+        10, // removed
+      ] // Make all the request with even assets
+        .map((offset) => () => fetchFriendsBirthdayInfo(token, offset).then(extractBirthdays)),
+    )
+      .then((monthArray) => [].concat(...monthArray)))
     .then((result) => executedScriptUserContextResponse(result))
-    .catch(error => executedScriptUserContextError(error.messageName, error.error));
+    .catch((error) => executedScriptUserContextError(error.messageName, error.error));
 
   /**
    * Send message with Scan log update
@@ -41,7 +39,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   function sendScanLog(messageName: string, substitutions?: Array<string>) {
     chrome.runtime.sendMessage({
       type: 'SEND_SCAN_LOG',
-      payload: {messageName, substitutions},
+      payload: { messageName, substitutions },
     });
   }
 
@@ -60,7 +58,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         error,
       },
     };
-    chrome.runtime.sendMessage(message);
+    return chrome.runtime.sendMessage(message);
   }
 
   /**
@@ -77,7 +75,7 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
         users,
       },
     };
-    chrome.runtime.sendMessage(message);
+    return chrome.runtime.sendMessage(message);
   }
 
   /**
@@ -103,18 +101,18 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
        * Make request to facebook.com in order to receive html with vital information such as
        * token
        */
-      response = await fetch('https://www.facebook.com', {headers: {accept: 'text/html'}});
+      response = await fetch('https://www.facebook.com', { headers: { accept: 'text/html' } });
     } catch (error) {
-      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_REQUEST', error});
+      sendScanLog('SCAN_LOG_PAGE_REQUEST_ERROR', [error as string]);
+      return Promise.reject({ messageName: 'SCAN_ERROR_FACEBOOK_PAGE_REQUEST', error });
     }
 
     try {
       sendScanLog('SCAN_LOG_PAGE_CONTENT');
       return await response.text();
     } catch (error) {
-      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_PAGE_CONTENT', error});
+      sendScanLog('SCAN_LOG_PAGE_CONTENT_ERROR', [error as string]);
+      return Promise.reject({ messageName: 'SCAN_ERROR_FACEBOOK_PAGE_CONTENT', error });
     }
   }
 
@@ -133,29 +131,29 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
        */
       sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST');
       response = await fetch('https://www.facebook.com/api/graphql/', {
-        'headers': {
+        headers: {
           'content-type': 'application/x-www-form-urlencoded',
         },
-        'body': '&__a=1'
-          + '&fb_dtsg=' + encodeURIComponent(token)
-          + '&fb_api_caller_class=RelayModern'
+        body: '&__a=1'
+          + `&fb_dtsg=${encodeURIComponent(token)
+          }&fb_api_caller_class=RelayModern`
           + '&fb_api_req_friendly_name=BirthdayCometMonthlyBirthdaysRefetchQuery'
-          + '&variables=' + encodeURIComponent(JSON.stringify({'count': 2, 'cursor': cursor.toString()}))
-          + '&server_timestamps=true'
+          + `&variables=${encodeURIComponent(JSON.stringify({ count: 2, cursor: cursor.toString() }))
+          }&server_timestamps=true`
           + '&doc_id=3681233908586032',
-        'method': 'POST',
+        method: 'POST',
       });
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error});
+      sendScanLog('SCAN_LOG_BIRTHDAYS_REQUEST_ERROR', [error as string]);
+      return Promise.reject({ messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST', error });
     }
 
     try {
       sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT');
       return await response.json();
     } catch (error) {
-      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error});
+      sendScanLog('SCAN_LOG_BIRTHDAYS_CONTENT_ERROR', [error as string]);
+      return Promise.reject({ messageName: 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT', error });
     }
   }
 
@@ -167,9 +165,9 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   async function extractFacebookToken(page: string) {
     const token = extractTokenFromPage(page);
     // No token found, report an error, quit
-    if ('string' !== typeof token) {
+    if (typeof token !== 'string') {
       sendScanLog('SCAN_LOG_EXTRACT_TOKEN_ERROR');
-      return Promise.reject({messageName: 'SCAN_ERROR_NO_TOKEN_DETECTED'});
+      return Promise.reject({ messageName: 'SCAN_ERROR_NO_TOKEN_DETECTED' });
     }
     return token;
   }
@@ -183,26 +181,37 @@ export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
     sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS');
     try {
       return response.data.viewer.all_friends_by_birthday_month.edges
-        .map(({node}: any) => node.friends.edges)
+        .map(({ node }: any) => node.friends.edges)
         .flat()
-        .map(({node}: any) => ({
+        .map(({ node }: any) => ({
           name: node.name,
           birthdate: node.birthdate,
           id: node.id,
         }));
     } catch (error) {
-      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error]);
-      return Promise.reject({messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error: {error, response}});
+      sendScanLog('SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR', [error as string]);
+      return Promise.reject({ messageName: 'SCAN_ERROR_BIRTHDAYS_EXTRACT', error: { error, response } });
     }
   }
+
+  /**
+   *
+   * The `concatPromise` function is designed to handle an array of functions that each return a promise.
+   * It executes these promises sequentially and accumulates their results into a single array.
+   * This function is particularly useful when the order of promise execution and result accumulation is important.
+
+   * #### Behavior
+   * - **Sequential Execution**: The promises provided are not executed in parallel. Each promise is executed only after the previous one has been resolved.
+   * - **Result Accumulation**: The results of each promise are accumulated into an array. The order of the results in the array corresponds to the order of the promise functions in the input array.
+   * - **Empty Input Handling**: If an empty array is passed as input, the function immediately resolves to an empty array.
+   * @param promises
+   */
 
   function concatPromise<T = any>(...promises: Array<() => Promise<any>>): Promise<Array<T>> {
     if (!promises.length) {
       return Promise.resolve([]);
     }
-    return promises.reduce((ac, promise) => {
-      return ac.then(r => promise().then(r2 => r.concat(r2)));
-    }, Promise.resolve([]));
+    return promises.reduce((ac, promise) => ac.then((r) => promise().then((r2) => r.concat(r2))), Promise.resolve([]));
   }
 
   return responseId;

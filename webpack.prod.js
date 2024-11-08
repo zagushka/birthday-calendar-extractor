@@ -1,5 +1,5 @@
 const ZipPlugin = require('zip-webpack-plugin');
-const {merge} = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -8,7 +8,7 @@ module.exports = merge(common, {
   plugins: [
     new ZipPlugin({
       path: '../',
-      filename: 'birthday-calendar-exporter.zip'
-    })
+      filename: 'birthday-calendar-exporter.zip',
+    }),
   ],
 });

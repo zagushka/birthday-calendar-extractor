@@ -14,34 +14,33 @@ import {
   handleLinkClickAndCloseModal,
 } from '../modals.lib';
 
-const FacebookRequiredModal: FunctionComponent = () => {
-  return (
-    <Dialog
-      open={true}
-      onClose={handleCloseModal}
-    >
-      <DialogTitle>
-        {translate('ATTENTION_HEADER')}
-      </DialogTitle>
+const FacebookRequiredModal: FunctionComponent = () => (
+  <Dialog
+    open
+    onClose={handleCloseModal}
+  >
+    <DialogTitle>
+      {translate('ATTENTION_HEADER')}
+    </DialogTitle>
 
-      <DialogContent>
-        <DialogContentText>
-          {translate('SCAN_ERROR_FACEBOOK_REQUIRED')}
-        </DialogContentText>
-      </DialogContent>
+    <DialogContent>
+      <DialogContentText>
+        {translate('SCAN_ERROR_FACEBOOK_REQUIRED')}
+      </DialogContentText>
+    </DialogContent>
 
-      <DialogActions>
-        <Button size='small'
-                color='primary'
-                variant='contained'
-                onClick={() => handleLinkClickAndCloseModal('SCAN_ERROR_FACEBOOK_REQUIRED_LINK')}
-        >
-          {translate('SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE')}
-        </Button>
-        <DialogCloseButton/>
-      </DialogActions>
-    </Dialog>
-  );
-};
+    <DialogActions>
+      <Button
+        size="small"
+        color="primary"
+        variant="contained"
+        onClick={() => handleLinkClickAndCloseModal('SCAN_ERROR_FACEBOOK_REQUIRED_LINK')}
+      >
+        {translate('SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE')}
+      </Button>
+      <DialogCloseButton />
+    </DialogActions>
+  </Dialog>
+);
 
 export default FacebookRequiredModal;

@@ -1,0 +1,56 @@
+{
+  "SCAN_ERROR_NO_TOKEN_DETECTED": {
+    "message": {
+      "en": "Unable to fetch birthdays data.<br/> Make sure you are logged into Facebook and try again.",
+      "zh": "无法获取生日数据。<br/>请确保您已登录 Facebook，然后重试。",
+      "es": "No se pueden obtener los datos de cumpleaños.<br/>Asegúrate de estar conectado a Facebook y vuelve a intentarlo.",
+      "hi": "जन्मदिन डेटा लाने में असमर्थ।<br/> कृपया सुनिश्चित करें कि आप फेसबुक में लॉग इन हैं और पुनः प्रयास करें।",
+      "ar": "غير قادر على جلب بيانات أعياد الميلاد.<br/> تأكد من أنك قمت بتسجيل الدخول إلى Facebook وحاول مرة أخرى.",
+      "bn": "জন্মদিনের তথ্য আনতে অক্ষম।<br/> নিশ্চিত করুন যে আপনি ফেসবুকে লগ ইন করেছেন এবং আবার চেষ্টা করুন।",
+      "pt": "Não foi possível buscar os dados dos aniversários.<br/> Certifique-se de estar logado no Facebook e tente novamente.",
+      "ja": "誕生日データを取得できません。<br/>Facebookにログインしていることを確認し、もう一度お試しください。",
+      "de": "Geburtstagsdaten können nicht abgerufen werden.<br/> Stellen Sie sicher, dass Sie bei Facebook angemeldet sind, und versuchen Sie es erneut.",
+      "it": "Impossibile recuperare i dati dei compleanni.<br/> Assicurati di essere connesso a Facebook e riprova.",
+      "uk": "Не вдалося отримати дані про дні народження.<br/> Переконайтеся, що ви увійшли в Facebook, і спробуйте ще раз.",
+      "ru": "Не удалось получить данные о днях рождения.<br/> Убедитесь, что вы вошли в Facebook, и повторите попытку.",
+      "he": "לא ניתן לאחזר נתוני ימי הולדת.<br/> ודא שאתה מחובר לפייסבוק ונסה שוב."
+    },
+    "description": "Description for error when no token found."
+  },
+  "LOG_INTO_FACEBOOK_TITLE": {
+    "message": {
+      "en": "Log into Facebook",
+      "zh": "登录 Facebook",
+      "es": "Inicia sesión en Facebook",
+      "hi": "फेसबुक में लॉग इन करें",
+      "ar": "تسجيل الدخول إلى Facebook",
+      "bn": "ফেসবুকে লগ ইন করুন",
+      "pt": "Entre no Facebook",
+      "ja": "Facebookにログイン",
+      "de": "Melden Sie sich bei Facebook an",
+      "it": "Accedi a Facebook",
+      "uk": "Увійдіть у Facebook",
+      "ru": "Войти в Facebook",
+      "he": "התחבר לפייסבוק"
+    },
+    "description": "Facebook url."
+  },
+  "LOG_INTO_FACEBOOK_URL": {
+    "message": {
+      "en": "https://www.facebook.com/",
+      "zh": "https://www.facebook.com/",
+      "es": "https://www.facebook.com/",
+      "hi": "https://www.facebook.com/",
+      "ar": "https://www.facebook.com/",
+      "bn": "https://www.facebook.com/",
+      "pt": "https://www.facebook.com/",
+      "ja": "https://www.facebook.com/",
+      "de": "https://www.facebook.com/",
+      "it": "https://www.facebook.com/",
+      "uk": "https://www.facebook.com/",
+      "ru": "https://www.facebook.com/",
+      "he": "https://www.facebook.com/"
+    },
+    "description": "Facebook login page."
+  }
+}

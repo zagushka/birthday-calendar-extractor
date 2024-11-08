@@ -1,0 +1,163 @@
+{
+  "DONE_DESCRIPTION": {
+    "message": {
+      "en": "Your calendar has been downloaded and is ready for import. <p>Please leave me a feedback if you find this extension helpful.<br/> You can also treat me to a cup of coffee :o)</p>",
+      "zh": "您的日历已下载完毕，可以导入。<p>如果您觉得这个扩展有帮助，请给我留下反馈。<br/>您也可以请我喝杯咖啡 :o)</p>",
+      "es": "Tu calendario ha sido descargado y está listo para importar. <p>Por favor, déjame un comentario si encuentras útil esta extensión.<br/> También puedes invitarme a una taza de café :o)</p>",
+      "hi": "आपका कैलेंडर डाउनलोड हो गया है और आयात के लिए तैयार है। <p>कृपया मुझे प्रतिक्रिया दें यदि आपको यह एक्सटेंशन सहायक लगे।<br/> आप मुझे एक कप कॉफ़ी भी खिला सकते हैं :o)</p>",
+      "ar": "تم تنزيل التقويم الخاص بك وهو جاهز للاستيراد. <p>يرجى ترك تعليق إذا وجدت هذا الامتداد مفيدًا.<br/> يمكنك أيضًا دعوتي لتناول فنجان من القهوة :o)</p>",
+      "bn": "আপনার ক্যালেন্ডারটি ডাউনলোড করা হয়েছে এবং আমদানির জন্য প্রস্তুত। <p>এই এক্সটেনশনটি সহায়ক বলে মনে হলে অনুগ্রহ করে আমাকে একটি প্রতিক্রিয়া জানান।<br/> আপনি আমাকে এক কাপ কফি খাওয়াতে পারেন :o)</p>",
+      "pt": "Seu calendário foi baixado e está pronto para importação. <p>Por favor, deixe-me um comentário se você achar esta extensão útil.<br/> Você também pode me pagar um café :o)</p>",
+      "ja": "カレンダーがダウンロードされ、インポートの準備が整いました。<p>この拡張機能が役に立つと思ったら、フィードバックをお願いします。<br/>コーヒーを一杯ごちそうしてくれるのもいいですね :o)</p>",
+      "de": "Ihr Kalender wurde heruntergeladen und ist bereit zum Importieren. <p>Bitte hinterlassen Sie mir ein Feedback, wenn Sie diese Erweiterung hilfreich finden.<br/> Sie können mir auch einen Kaffee spendieren :o)</p>",
+      "it": "Il tuo calendario è stato scaricato ed è pronto per l'importazione. <p>Per favore, lascia un feedback se trovi utile questa estensione.<br/> Puoi anche offrirmi una tazza di caffè :o)</p>",
+      "uk": "Ваш календар завантажено і готовий до імпорту. <p>Будь ласка, залиште відгук, якщо вам сподобався цей розширення.<br/> Ви також можете пригостити мене чашкою кави :o)</p>",
+      "ru": "Ваш календарь был загружен и готов к импорту. <p>Пожалуйста, оставьте отзыв, если вам понравилось это расширение.<br/> Вы также можете угостить меня чашкой кофе :o)</p>",
+      "he": "היומן שלך הורד ומוכן לייבוא. <p>בבקשה השאירו לי משוב אם מצאתם את ההרחבה הזו מועילה.<br/> אתם יכולים גם להזמין אותי לכוס קפה :o)</p>"
+    },
+    "description": "Description when the extraction process successfully finishes"
+  },
+  "DONE_TITLE": {
+    "message": {
+      "en": "Success!",
+      "zh": "成功！",
+      "es": "¡Éxito!",
+      "hi": "सफलता!",
+      "ar": "نجاح!",
+      "bn": "সাফল্য!",
+      "pt": "Sucesso!",
+      "ja": "成功！",
+      "de": "Erfolg!",
+      "it": "Successo!",
+      "uk": "Успіх!",
+      "ru": "Успех!",
+      "he": "הצלחה!"
+    },
+    "description": "Title when the extraction process successfully finishes"
+  },
+  "ERROR_HEADER": {
+    "message": {
+      "en": "Error...",
+      "zh": "错误...",
+      "es": "Error...",
+      "hi": "त्रुटि...",
+      "ar": "خطأ...",
+      "bn": "ত্রুটি...",
+      "pt": "Erro...",
+      "ja": "エラー...",
+      "de": "Fehler...",
+      "it": "Errore...",
+      "uk": "Помилка...",
+      "ru": "Ошибка...",
+      "he": "שגיאה..."
+    },
+    "description": "Error header"
+  },
+  "WARNING_HEADER": {
+    "message": {
+      "en": "Warning!",
+      "zh": "警告！",
+      "es": "¡Advertencia!",
+      "hi": "चेतावनी!",
+      "ar": "تحذير!",
+      "bn": "সতর্কতা!",
+      "pt": "Aviso!",
+      "ja": "警告！",
+      "de": "Warnung!",
+      "it": "Avviso!",
+      "uk": "Увага!",
+      "ru": "Предупреждение!",
+      "he": "אזהרה!"
+    },
+    "description": "Warning header"
+  },
+  "ATTENTION_HEADER": {
+    "message": {
+      "en": "Attention!",
+      "zh": "注意！",
+      "es": "¡Atención!",
+      "hi": "ध्यान दें!",
+      "ar": "انتباه!",
+      "bn": "মনোযোগ!",
+      "pt": "Atenção!",
+      "ja": "注意！",
+      "de": "Achtung!",
+      "it": "Attenzione!",
+      "uk": "Увага!",
+      "ru": "Внимание!",
+      "he": "תשומת לב!"
+    },
+    "description": "Attention header"
+  },
+  "ENABLE_BADGE": {
+    "message": {
+      "en": "Show birthday notification icon.",
+      "zh": "显示生日通知图标。",
+      "es": "Mostrar ícono de notificación de cumpleaños.",
+      "hi": "जन्मदिन की सूचना आइकन दिखाएं।",
+      "ar": "إظهار رمز إعلام عيد الميلاد.",
+      "bn": "জন্মদিনের বিজ্ঞপ্তি আইকন দেখান।",
+      "pt": "Mostrar ícone de notificação de aniversário.",
+      "ja": "誕生日通知アイコンを表示します。",
+      "de": "Geburtstagsbenachrichtigungssymbol anzeigen.",
+      "it": "Mostra l'icona di notifica del compleanno.",
+      "uk": "Показати іконку повідомлення про день народження.",
+      "ru": "Показать иконку уведомления о дне рождения.",
+      "he": "הצג אייקון התראה ליום הולדת."
+    },
+    "description": "Label for checkbox to display today's birthdays"
+  },
+  "TODAY_BIRTHDAY_TITLE": {
+    "message": {
+      "en": "Today's Birthdays",
+      "zh": "今天的生日",
+      "es": "Cumpleaños de Hoy",
+      "hi": "आज के जन्मदिन",
+      "ar": "أعياد ميلاد اليوم",
+      "bn": "আজকের জন্মদিন",
+      "pt": "Aniversários de Hoje",
+      "ja": "今日の誕生日",
+      "de": "Heutige Geburtstage",
+      "it": "Compleanni di Oggi",
+      "uk": "Сьогоднішні дні народження",
+      "ru": "Сегодняшние дни рождения",
+      "he": "ימי ההולדת של היום"
+    },
+    "description": "Header text above the list of today's birthdays"
+  },
+  "TODAY_NO_BIRTHDAYS_TITLE": {
+    "message": {
+      "en": "No Birthdays Today",
+      "zh": "今天没有生日",
+      "es": "No Hay Cumpleaños Hoy",
+      "hi": "आज कोई जन्मदिन नहीं",
+      "ar": "لا أعياد ميلاد اليوم",
+      "bn": "আজ কোনও জন্মদিন নেই",
+      "pt": "Nenhum Aniversário Hoje",
+      "ja": "今日は誕生日がありません",
+      "de": "Keine Geburtstage Heute",
+      "it": "Nessun Compleanno Oggi",
+      "uk": "Сьогодні немає днів народження",
+      "ru": "Сегодня нет дней рождения",
+      "he": "אין ימי הולדת היום"
+    },
+    "description": "Header text above the list when there are no birthdays today"
+  },
+  "THANKS_FOR_MAKING_IT_BETTER": {
+    "message": {
+      "en": "Thank you for making this extension better!",
+      "zh": "感谢您让这个扩展变得更好！",
+      "es": "¡Gracias por mejorar esta extensión!",
+      "hi": "इस एक्सटेंशन को बेहतर बनाने के लिए धन्यवाद!",
+      "ar": "شكرًا لك على جعل هذا الامتداد أفضل!",
+      "bn": "এই এক্সটেনশনটিকে আরও ভাল করার জন্য আপনাকে ধন্যবাদ!",
+      "pt": "Obrigado por tornar esta extensão melhor!",
+      "ja": "この拡張機能をより良くしてくれてありがとう！",
+      "de": "Danke, dass Sie diese Erweiterung verbessert haben!",
+      "it": "Grazie per aver reso migliore questa estensione!",
+      "uk": "Дякуємо, що зробили це розширення кращим!",
+      "ru": "Спасибо, что сделали это расширение лучше!",
+      "he": "תודה ששיפרת את התוסף הזה!"
+    }
+  }
+}

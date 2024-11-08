@@ -17,8 +17,9 @@ interface CsvFormattedEvent {
   href: string;
 }
 
-export class CalendarCSV extends CalendarBase<{}, string, string> {
+export class CalendarCSV extends CalendarBase<string, string> {
   readonly filename: string = 'birthday-calendar.csv';
+
   readonly fileMimeType: string = 'text/csv; charset=UTF-8';
 
   constructor(public settings: CsvSettings) {
@@ -38,18 +39,19 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
     fromYear: number = DateTime.utc().year, // Current year
     tillYear: number = DateTime.utc().year, // Same year
   ) {
-
     /**
      * Prepare Events
      */
 
     const events = storedBirthdays.map(reviveBirthday);
 
-    const currentDateTime = DateTime.utc().set({hour: 0, second: 0, minute: 0, millisecond: 0});
+    const currentDateTime = DateTime.utc().set({
+      hour: 0, second: 0, minute: 0, millisecond: 0,
+    });
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // csv requires past birthdays to be converted to future
-      .map(event => {
-        event.start = event.start < currentDateTime ? event.start.plus({year: 1}) : event.start;
+      .map((event) => {
+        event.start = event.start < currentDateTime ? event.start.plus({ years: 1 }) : event.start;
         return event;
       })
       // Sort incrementally
@@ -59,10 +61,10 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
      * Generate Calendar
      */
     const headers = arrayToCSVRow([
-      `Subject`,
-      `Start Date`,
-      `All Day Event`,
-      `Description`,
+      'Subject',
+      'Start Date',
+      'All Day Event',
+      'Description',
     ]);
 
     const rows = this.generateEvents(preparedEvents);
@@ -83,10 +85,9 @@ export class CalendarCSV extends CalendarBase<{}, string, string> {
       `${formattedEvent.name}`, // `Subject,`,
       formattedEvent.start, // `Start Date,`,
       'true', // `All Day Event,`,
-      `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`, // Description,`,
+      formattedEvent.href ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!` : `This is ${formattedEvent.name} birthday!`, // Description,`,
     ];
 
     return arrayToCSVRow(preEscaped);
   }
 }
-

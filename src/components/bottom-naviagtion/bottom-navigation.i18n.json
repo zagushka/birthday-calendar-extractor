@@ -1,0 +1,92 @@
+{
+  "BUTTON_TO_SCAN_TITLE": {
+    "message": {
+      "en": "Scan Birthdays",
+      "zh": "扫描生日",
+      "es": "Escanear Cumpleaños",
+      "hi": "जन्मदिन स्कैन करें",
+      "ar": "مسح أعياد الميلاد",
+      "bn": "জন্মদিন স্ক্যান করুন",
+      "pt": "Digitalizar Aniversários",
+      "ja": "誕生日をスキャン",
+      "de": "Geburtstage scannen",
+      "it": "Scansiona Compleanni",
+      "uk": "Сканувати дні народження",
+      "ru": "Сканировать дни рождения",
+      "he": "סרוק ימי הולדת"
+    },
+    "description": "Button title to navigate to scan page"
+  },
+  "BUTTON_TO_DOWNLOADS_TITLE": {
+    "message": {
+      "en": "Calendar Generator",
+      "zh": "日历生成器",
+      "es": "Generador de Calendario",
+      "hi": "कैलेंडर जनरेटर",
+      "ar": "مولد التقويم",
+      "bn": "ক্যালেন্ডার জেনারেটর",
+      "pt": "Gerador de Calendário",
+      "ja": "カレンダー生成",
+      "de": "Kalendergenerator",
+      "it": "Generatore di Calendari",
+      "uk": "Генератор календаря",
+      "ru": "Генератор календарей",
+      "he": "מחולל יומנים"
+    },
+    "description": "Button title to navigate to calendar generation page."
+  },
+  "BUTTON_TO_DOWNLOADS_TOOLTIP": {
+    "message": {
+      "en": "Create and download birthday calendar",
+      "zh": "创建并下载生日日历",
+      "es": "Crear y descargar calendario de cumpleaños",
+      "hi": "जन्मदिन कैलेंडर बनाएँ और डाउनलोड करें",
+      "ar": "إنشاء وتنزيل تقويم أعياد الميلاد",
+      "bn": "জন্মদিনের ক্যালেন্ডার তৈরি করুন এবং ডাউনলোড করুন",
+      "pt": "Criar e baixar calendário de aniversários",
+      "ja": "誕生日カレンダーを作成してダウンロード",
+      "de": "Erstellen und herunterladen Geburtstagskalender",
+      "it": "Crea e scarica calendario dei compleanni",
+      "uk": "Створити та завантажити календар днів народження",
+      "ru": "Создать и скачать Календарь Дней Рождений",
+      "he": "צור והורד יומן ימי הולדת"
+    },
+    "description": "Tooltip for calendar download page"
+  },
+  "BUTTON_TO_CALENDAR_TITLE": {
+    "message": {
+      "en": "Calendar",
+      "zh": "日历",
+      "es": "Calendario",
+      "hi": "कैलेंडर",
+      "ar": "التقويم",
+      "bn": "ক্যালেন্ডার",
+      "pt": "Calendário",
+      "ja": "カレンダー",
+      "de": "Kalender",
+      "it": "Calendario",
+      "uk": "Календар",
+      "ru": "Календарь",
+      "he": "יומן"
+    },
+    "description": "Button title to navigate to calendar page."
+  },
+  "BUTTON_TO_CALENDAR_TOOLTIP": {
+    "message": {
+      "en": "Your friends' birthdays calendar",
+      "zh": "您的朋友的生日日历",
+      "es": "Calendario de cumpleaños de tus amigos",
+      "hi": "आपके दोस्तों के जन्मदिन कैलेंडर",
+      "ar": "تقويم أعياد ميلاد أصدقائك",
+      "bn": "আপনার বন্ধুদের জন্মদিনের ক্যালেন্ডার",
+      "pt": "Calendário de aniversários dos seus amigos",
+      "ja": "友達の誕生日カレンダー",
+      "de": "Deine Freunde Geburtstagskalender",
+      "it": "Calendario dei compleanni dei tuoi amici",
+      "uk": "Календар днів народження ваших друзів",
+      "ru": "Календарь дней рождений друзей",
+      "he": "יומן ימי הולדת של חבריך"
+    },
+    "description": "Tooltip for button to calendar page."
+  }
+}

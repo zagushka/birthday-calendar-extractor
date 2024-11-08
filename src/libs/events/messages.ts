@@ -9,8 +9,8 @@ const onMessageListener = (
   sender: chrome.runtime.MessageSender,
   callback: (...params: Array<any>) => void,
 ) => {
-  allChromeMessages$.next({action, sender, callback});
-  if ('undefined' !== typeof callback) {
+  allChromeMessages$.next({ action, sender, callback });
+  if (typeof callback !== 'undefined') {
     return true;
   }
 };

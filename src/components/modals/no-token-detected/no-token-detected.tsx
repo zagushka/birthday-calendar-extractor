@@ -14,33 +14,32 @@ import {
   handleLinkClickAndCloseModal,
 } from '../modals.lib';
 
-const NoTokenDetectedModal: FunctionComponent = (props) => {
-  return (
-    <Dialog
-      open={true}
-      onClose={handleCloseModal}
-    >
-      <DialogTitle>
-        {translate('ERROR_HEADER')}
-      </DialogTitle>
+const NoTokenDetectedModal: FunctionComponent = () => (
+  <Dialog
+    open
+    onClose={handleCloseModal}
+  >
+    <DialogTitle>
+      {translate('ERROR_HEADER')}
+    </DialogTitle>
 
-      <DialogContent>
-        <DialogContentText>
-          {translate('SCAN_ERROR_NO_TOKEN_DETECTED')}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button size='small'
-                color='primary'
-                variant='contained'
-                onClick={() => handleLinkClickAndCloseModal('LOG_INTO_FACEBOOK_URL')}
-        >
-          {translate('LOG_INTO_FACEBOOK_TITLE')}
-        </Button>
-        <DialogCloseButton/>
-      </DialogActions>
-    </Dialog>
-  );
-};
+    <DialogContent>
+      <DialogContentText>
+        {translate('SCAN_ERROR_NO_TOKEN_DETECTED')}
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button
+        size="small"
+        color="primary"
+        variant="contained"
+        onClick={() => handleLinkClickAndCloseModal('LOG_INTO_FACEBOOK_URL')}
+      >
+        {translate('LOG_INTO_FACEBOOK_TITLE')}
+      </Button>
+      <DialogCloseButton />
+    </DialogActions>
+  </Dialog>
+);
 
 export default NoTokenDetectedModal;

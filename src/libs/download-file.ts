@@ -5,16 +5,17 @@ export interface DownloadFileOptions {
   filename: string;
 }
 
-export function downloadFile(calendarData: string, {mimeType, filename}: DownloadFileOptions): Observable<boolean> {
+export function downloadFile(calendarData: string, { mimeType, filename }: DownloadFileOptions): Observable<boolean> {
   return new Observable((subscriber) => {
     const url = URL.createObjectURL(
-      new Blob([calendarData], {endings: 'transparent', type: mimeType}),
+      new Blob([calendarData], { endings: 'transparent', type: mimeType }),
     );
 
-    chrome.downloads.download({url, filename: filename},
+    chrome.downloads.download(
+      { url, filename },
       (downloadId) => {
-        if ('undefined' === typeof downloadId) {
-          return subscriber.error({message: 'FAILED TO DOWNLOAD FILE', error: chrome.runtime.lastError});
+        if (typeof downloadId === 'undefined') {
+          return subscriber.error({ message: 'FAILED TO DOWNLOAD FILE', error: chrome.runtime.lastError });
         }
         subscriber.next(true);
         subscriber.complete();

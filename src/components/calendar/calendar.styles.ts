@@ -48,7 +48,7 @@ export const useDayListStyles = makeStyles((theme: Theme) => ({
     marginBottom: 10,
     color: theme.palette.grey['700'],
     fontFamily: theme.typography.fontFamily,
-    fontWeight: theme.typography.fontWeightMedium,
+    // fontWeight: theme.typography.fontWeightMedium,
     lineHeight: '16px',
     textTransform: 'capitalize',
   },

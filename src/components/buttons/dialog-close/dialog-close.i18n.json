@@ -1,0 +1,20 @@
+{
+  "CLOSE_BUTTON_TITLE": {
+    "message": {
+      "en": "Close",
+      "zh": "关闭",
+      "es": "Cerrar",
+      "hi": "बंद करें",
+      "ar": "إغلاق",
+      "bn": "বন্ধ করুন",
+      "pt": "Fechar",
+      "ja": "閉じる",
+      "de": "Schließen",
+      "it": "Chiudi",
+      "uk": "Закрити",
+      "ru": "Закрыть",
+      "he": "סגור"
+    },
+    "description": "Close button title"
+  }
+}

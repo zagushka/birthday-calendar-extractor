@@ -1,0 +1,38 @@
+{
+  "appName": {
+    "message": {
+      "en": "Birthday Calendar Exporter for Facebook",
+      "zh": "Facebook 生日日历导出器",
+      "es": "Exportador de Calendarios de Cumpleaños para Facebook",
+      "hi": "फेसबुक के लिए जन्मदिन कैलेंडर निर्यातक",
+      "ar": "مصدّر تقويم أعياد الميلاد لفيسبوك",
+      "bn": "ফেসবুকের জন্য জন্মদিনের ক্যালেন্ডার এক্সপোর্টার",
+      "pt": "Exportador de Calendário de Aniversários para Facebook",
+      "ja": "Facebookのための誕生日カレンダーエクスポーター",
+      "de": "Geburtstagskalender-Exporter für Facebook",
+      "it": "Esportatore di Calendari di Compleanni per Facebook",
+      "uk": "Генератор календаря днів народження для Facebook",
+      "ru": "Генератор Календаря Дней Рождений для Facebook",
+      "he": "מייצא יומן ימי הולדת לפייסבוק"
+    },
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appDesc": {
+    "message": {
+      "en": "Save your friends' birthdays from Facebook to your favorite calendar and never miss them again!",
+      "zh": "将您朋友的生日从 Facebook 保存到您喜欢的日历中，再也不会错过他们的生日！",
+      "es": "¡Guarda los cumpleaños de tus amigos de Facebook en tu calendario favorito y nunca los vuelvas a olvidar!",
+      "hi": "अपने दोस्तों के फेसबुक जन्मदिनों को अपने पसंदीदा कैलेंडर में सहेजें और उन्हें फिर कभी न भूलें!",
+      "ar": "احفظ أعياد ميلاد أصدقائك من Facebook إلى تقويمك المفضل ولن تفوتها مرة أخرى!",
+      "bn": "আপনার বন্ধুদের জন্মদিনগুলি ফেসবুক থেকে আপনার প্রিয় ক্যালেন্ডারে সংরক্ষণ করুন এবং আর কখনও মিস করবেন না!",
+      "pt": "Salve os aniversários dos seus amigos do Facebook no seu calendário favorito e nunca mais os perca!",
+      "ja": "Facebookの友達の誕生日をお気に入りのカレンダーに保存して、二度と忘れないでください！",
+      "de": "Speichern Sie die Geburtstage Ihrer Freunde von Facebook in Ihrem Lieblingskalender und verpassen Sie sie nie wieder!",
+      "it": "Salva i compleanni dei tuoi amici da Facebook nel tuo calendario preferito e non dimenticarli mai più!",
+      "uk": "Збережіть дні народження ваших друзів з Facebook у своєму улюбленому календарі та ніколи не пропускайте їх!",
+      "ru": "Сохраните дни рождения ваших друзей из Facebook в вашем любимом календаре и никогда больше их не пропустите!",
+      "he": "שמור את ימי ההולדת של חבריך מפייסבוק ביומן המועדף עליך ואל תחמיץ אותם שוב!"
+    },
+    "description": "The description of the application, displayed in the web store."
+  }
+}

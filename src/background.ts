@@ -30,15 +30,16 @@ chrome.runtime.onConnect.addListener((externalPort) => {
   externalPort.onDisconnect.addListener(() => {
     // Clean up
     // Remove opened modal
-    storeUserSettings({modal: null});
+    storeUserSettings({ modal: null });
+    return true;
   });
 
   /**
    * Since this event only fired when clicked on the badge mark badge as visited/clicked
    */
-  storeUserSettings({badgeVisited: DateTime.local()}, true)
+  storeUserSettings({ badgeVisited: DateTime.local() }, true)
     .subscribe(() => {
-      sendMessage(updateBadgeAction(), true);
+      sendMessage(updateBadgeAction());
     });
 });
 
@@ -51,31 +52,30 @@ listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
 
 // Tell to tha app new data was fetched and request to update the badge
 // Should be done via local storage update
-// sendMessage(updateBadgeAction(), true);
+// sendMessage(updateBadgeAction());
 
 listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
-  .subscribe(({action}) => {
+  .subscribe(() => {
     sendScanLog('SCAN_LOG_PROCESS_STARTED');
     // Update local storage, set scanning true
-    storeUserSettings({scanning: DateTime.utc().plus({minutes: 2}).toMillis()}, true)
+    storeUserSettings({ scanning: DateTime.utc().plus({ minutes: 2 }).toMillis() }, true)
       .pipe(
         // Start scan
-        switchMap(() => forceBirthdaysScan(false)),
-        switchMap(() => forceBirthdaysScan(true)),
+        switchMap(() => forceBirthdaysScan()),
       )
       .subscribe({
         next: () => {
           sendScanLog('SCAN_LOG_PROCESS_DONE');
-          sendMessage(updateBadgeAction(), true);
-          storeUserSettings({scanning: 0, scanSuccess: true, modal: {type: SHOW_MODAL_SCAN_SUCCESS}});
+          sendMessage(updateBadgeAction());
+          storeUserSettings({ scanning: 0, scanSuccess: true, modal: { type: SHOW_MODAL_SCAN_SUCCESS } });
         },
         error: (error: ScanErrorPayload) => {
-          storeUserSettings({scanning: 0, scanSuccess: false, modal: error});
+          storeUserSettings({ scanning: 0, scanSuccess: false, modal: error });
         },
       });
   });
 
 chrome.runtime.onInstalled.addListener(migrations);
 
-storeUserSettings({scanning: 0}); // Unlock scanning
+storeUserSettings({ scanning: 0 }); // Unlock scanning
 setupAlarms(); // Setup alarms

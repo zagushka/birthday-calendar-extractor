@@ -24,13 +24,16 @@ import {
 } from '../../../libs/storage/storaged.types';
 import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
 
-const CsvGeneratorWizard: FunctionComponent = (props) => {
-  const {wizardsSettings: settings, users, isScanning} = useContext(CurrentStatusContext);
+const CsvGeneratorWizard: FunctionComponent = () => {
+  const { wizardsSettings: settings, users, isScanning } = useContext(CurrentStatusContext);
 
   // Remove "hidden" users from the list
-  const activeUsers = useMemo(() => users.filter(u => !(u[STORED_BIRTHDAY.SETTINGS] ?? 0 & 1 << 0)), [users]);
+  const activeUsers = useMemo(() => users.filter((u) => {
+    const settings = u[STORED_BIRTHDAY.SETTINGS] ?? 0;
+    return (settings & 1) === 0;
+  }), [users]);
 
-  const {startDownload} = useHandleDownload(CREATE_CALENDAR_CSV, activeUsers, settings.csv);
+  const { startDownload } = useHandleDownload(CREATE_CALENDAR_CSV, activeUsers, settings.csv);
 
   const startGeneration = () => {
     startDownload();
@@ -38,9 +41,9 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value as CsvDateFormats;
-    const wizardSettings = update(settings, {csv: {format: {$set: value}}});
+    const wizardSettings = update(settings, { csv: { format: { $set: value } } });
     // Store updated settings
-    storeUserSettings({wizardsSettings: wizardSettings});
+    storeUserSettings({ wizardsSettings: wizardSettings });
   };
 
   if (!settings) {
@@ -49,21 +52,23 @@ const CsvGeneratorWizard: FunctionComponent = (props) => {
 
   return (
     <>
-      <Typography variant='body2'>
+      <Typography variant="body2">
         {translate('FILE_FORMAT_CSV_DESCRIPTION')}
       </Typography>
 
-      <FormControl size='small' component='fieldset'>
-        <FormLabel component='legend'>{translateString('CREATE_CSV_SETTINGS_DATE_FORMAT')}</FormLabel>
-        <RadioGroup row name='date-format' value={settings.csv.format} onChange={handleChange}>
+      <FormControl size="small" component="fieldset">
+        <FormLabel component="legend">{translateString('CREATE_CSV_SETTINGS_DATE_FORMAT')}</FormLabel>
+        <RadioGroup row name="date-format" value={settings.csv.format} onChange={handleChange}>
           <FormControlLabel
-            value='dd/LL/yyyy'
-            control={<Radio size='small'/>}
-            label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH')}/>
+            value="dd/LL/yyyy"
+            control={<Radio size="small"/>}
+            label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_DAY_MONTH')}
+          />
           <FormControlLabel
-            value='LL/dd/yyyy'
-            control={<Radio size='small'/>}
-            label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY')}/>
+            value="LL/dd/yyyy"
+            control={<Radio size="small"/>}
+            label={translateString('CREATE_CSV_SETTINGS_DATE_FORMAT_MONTH_DAY')}
+          />
         </RadioGroup>
       </FormControl>
       <GenerateAndDownloadButton

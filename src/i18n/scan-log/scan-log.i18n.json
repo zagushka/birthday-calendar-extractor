@@ -1,0 +1,315 @@
+{
+  "SCAN_LOG_PROCESS_STARTED": {
+    "message": {
+      "en": "Birthday scan has been initiated.",
+      "zh": "生日扫描已启动。",
+      "es": "El escaneo de cumpleaños se ha iniciado.",
+      "hi": "जन्मदिन स्कैन शुरू कर दिया गया है।",
+      "ar": "تم بدء مسح أعياد الميلاد.",
+      "bn": "জন্মদিনের স্ক্যান শুরু হয়েছে।",
+      "pt": "A varredura de aniversários foi iniciada.",
+      "ja": "誕生日スキャンが開始されました。",
+      "de": "Der Geburtstags-Scan wurde gestartet.",
+      "it": "La scansione dei compleanni è stata avviata.",
+      "uk": "Сканування днів народження розпочато.",
+      "ru": "Сканирование дней рождений началось.",
+      "he": "סריקת ימי ההולדת החלה."
+    },
+    "description": "Message sent the moment scan process has been initiated."
+  },
+  "SCAN_LOG_EXTRACT_TOKEN": {
+    "message": {
+      "en": "Checking for Facebook login.",
+      "zh": "检查 Facebook 登录状态。",
+      "es": "Verificando el inicio de sesión en Facebook.",
+      "hi": "फेसबुक लॉगिन की जाँच हो रही है।",
+      "ar": "التحقق من تسجيل الدخول إلى Facebook.",
+      "bn": "ফেসবুক লগইন চেক করা হচ্ছে।",
+      "pt": "Verificando o login do Facebook.",
+      "ja": "Facebookログインを確認しています。",
+      "de": "Überprüfen des Facebook-Logins.",
+      "it": "Verifica dell'accesso a Facebook.",
+      "uk": "Перевірка входу у Facebook.",
+      "ru": "Проверка входа в Facebook.",
+      "he": "בודק כניסה לפייסבוק."
+    },
+    "description": "Message sent before checking Facebook login."
+  },
+  "SCAN_LOG_EXTRACT_TOKEN_ERROR": {
+    "message": {
+      "en": "No Facebook login detected.",
+      "zh": "未检测到 Facebook 登录。",
+      "es": "No se detectó inicio de sesión en Facebook.",
+      "hi": "कोई फेसबुक लॉगिन नहीं पाया गया।",
+      "ar": "لم يتم الكشف عن تسجيل دخول إلى Facebook.",
+      "bn": "কোন ফেসবুক লগইন সনাক্ত করা হয়নি।",
+      "pt": "Nenhum login no Facebook detectado.",
+      "ja": "Facebookログインが検出されませんでした。",
+      "de": "Kein Facebook-Login erkannt.",
+      "it": "Nessun accesso a Facebook rilevato.",
+      "uk": "Вхід у Facebook не виявлено.",
+      "ru": "Вход в Facebook не обнаружен.",
+      "he": "לא נמצא כניסה לפייסבוק."
+    },
+    "description": "Error message sent when the user is not logged into Facebook."
+  },
+  "SCAN_LOG_PAGE_REQUEST": {
+    "message": {
+      "en": "Requesting Facebook page.",
+      "zh": "请求 Facebook 页面。",
+      "es": "Solicitando página de Facebook.",
+      "hi": "फेसबुक पेज का अनुरोध किया जा रहा है।",
+      "ar": "طلب صفحة Facebook.",
+      "bn": "ফেসবুক পৃষ্ঠা অনুরোধ করা হচ্ছে।",
+      "pt": "Solicitando página do Facebook.",
+      "ja": "Facebookページをリクエストしています。",
+      "de": "Facebook-Seite wird angefordert.",
+      "it": "Richiesta della pagina Facebook.",
+      "uk": "Запит сторінки Facebook.",
+      "ru": "Запрос страницы Facebook.",
+      "he": "מבקש דף פייסבוק."
+    },
+    "description": "Requesting a page from facebook.com."
+  },
+  "SCAN_LOG_PAGE_REQUEST_ERROR": {
+    "message": {
+      "en": "Failed to request Facebook page.",
+      "zh": "请求 Facebook 页面失败。",
+      "es": "Error al solicitar la página de Facebook.",
+      "hi": "फेसबुक पेज का अनुरोध करने में विफल।",
+      "ar": "فشل في طلب صفحة Facebook.",
+      "bn": "ফেসবুক পৃষ্ঠা অনুরোধ করতে ব্যর্থ হয়েছে।",
+      "pt": "Falha ao solicitar a página do Facebook.",
+      "ja": "Facebookページのリクエストに失敗しました。",
+      "de": "Fehler beim Anfordern der Facebook-Seite.",
+      "it": "Errore nella richiesta della pagina Facebook.",
+      "uk": "Не вдалося запитати сторінку Facebook.",
+      "ru": "Не удалось запросить страницу Facebook.",
+      "he": "בקשת דף פייסבוק נכשלה."
+    },
+    "description": "Error while making a request to facebook.com.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_PAGE_CONTENT": {
+    "message": {
+      "en": "Retrieving Facebook page content.",
+      "zh": "检索 Facebook 页面内容。",
+      "es": "Recuperando contenido de la página de Facebook.",
+      "hi": "फेसबुक पेज सामग्री प्राप्त की जा रही है।",
+      "ar": "استرداد محتوى صفحة Facebook.",
+      "bn": "ফেসবুক পৃষ্ঠা সামগ্রী পুনরুদ্ধার করা হচ্ছে।",
+      "pt": "Recuperando conteúdo da página do Facebook.",
+      "ja": "Facebookページのコンテンツを取得しています。",
+      "de": "Abrufen des Facebook-Seiteninhalts.",
+      "it": "Recupero del contenuto della pagina Facebook.",
+      "uk": "Отримання вмісту сторінки Facebook.",
+      "ru": "Получение содержимого страницы Facebook.",
+      "he": "מקבל תוכן של דף פייסבוק."
+    },
+    "description": "Getting the content of the facebook.com page."
+  },
+  "SCAN_LOG_PAGE_CONTENT_ERROR": {
+    "message": {
+      "en": "Failed to retrieve Facebook page content.",
+      "zh": "检索 Facebook 页面内容失败。",
+      "es": "Error al recuperar el contenido de la página de Facebook.",
+      "hi": "फेसबुक पेज सामग्री प्राप्त करने में विफल।",
+      "ar": "فشل في استرداد محتوى صفحة Facebook.",
+      "bn": "ফেসবুক পৃষ্ঠা সামগ্রী পুনরুদ্ধার করতে ব্যর্থ হয়েছে।",
+      "pt": "Falha ao recuperar conteúdo da página do Facebook.",
+      "ja": "Facebookページのコンテンツの取得に失敗しました。",
+      "de": "Fehler beim Abrufen des Facebook-Seiteninhalts.",
+      "it": "Errore nel recupero del contenuto della pagina Facebook.",
+      "uk": "Не вдалося отримати вміст сторінки Facebook.",
+      "ru": "Не удалось получить содержимое страницы Facebook.",
+      "he": "נכשל באחזור תוכן דף פייסבוק."
+    },
+    "description": "Error getting the content of the facebook.com page.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_BIRTHDAYS_REQUEST": {
+    "message": {
+      "en": "Requesting Facebook friends' birthdays data.",
+      "zh": "请求 Facebook 朋友的生日数据。",
+      "es": "Solicitando datos de cumpleaños de amigos de Facebook.",
+      "hi": "फेसबुक दोस्तों के जन्मदिन का डेटा मांगा जा रहा है।",
+      "ar": "طلب بيانات أعياد ميلاد أصدقاء Facebook.",
+      "bn": "ফেসবুক বন্ধুদের জন্মদিনের তথ্য অনুরোধ করা হচ্ছে।",
+      "pt": "Solicitando dados de aniversários de amigos do Facebook.",
+      "ja": "Facebookの友達の誕生日データをリクエストしています。",
+      "de": "Anfordern von Geburtstagsdaten von Facebook-Freunden.",
+      "it": "Richiesta di dati sui compleanni degli amici di Facebook.",
+      "uk": "Запит даних про дні народження друзів у Facebook.",
+      "ru": "Запрос данных о днях рождения друзей на Facebook.",
+      "he": "מבקש נתוני ימי הולדת של חברי פייסבוק."
+    },
+    "description": "Making a request to the Facebook birthdays endpoint."
+  },
+  "SCAN_LOG_BIRTHDAYS_REQUEST_ERROR": {
+    "message": {
+      "en": "Failed to request Facebook friends' birthday data.",
+      "zh": "请求 Facebook 朋友的生日数据失败。",
+      "es": "Error al solicitar los datos de cumpleaños de amigos de Facebook.",
+      "hi": "फेसबुक दोस्तों का जन्मदिन डेटा मांगने में विफल।",
+      "ar": "فشل في طلب بيانات أعياد ميلاد أصدقاء Facebook.",
+      "bn": "ফেসবুক বন্ধুদের জন্মদিনের তথ্য অনুরোধ করতে ব্যর্থ হয়েছে।",
+      "pt": "Falha ao solicitar dados de aniversários de amigos do Facebook.",
+      "ja": "Facebookの友達の誕生日データのリクエストに失敗しました。",
+      "de": "Fehler beim Anfordern von Geburtstagsdaten von Facebook-Freunden.",
+      "it": "Errore nella richiesta dei dati sui compleanni degli amici di Facebook.",
+      "uk": "Не вдалося запитати дані про дні народження друзів у Facebook.",
+      "ru": "Не удалось запросить данные о днях рождения друзей на Facebook.",
+      "he": "נכשל בבקשת נתוני ימי הולדת של חברי פייסבוק."
+    },
+    "description": "Failed to make a request to the Facebook birthdays endpoint.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_BIRTHDAYS_CONTENT": {
+    "message": {
+      "en": "Retrieving Facebook birthdays content.",
+      "zh": "检索 Facebook 生日内容。",
+      "es": "Recuperando contenido de cumpleaños de Facebook.",
+      "hi": "फेसबुक जन्मदिन सामग्री प्राप्त की जा रही है।",
+      "ar": "استرداد محتوى أعياد ميلاد Facebook.",
+      "bn": "ফেসবুক জন্মদিনের বিষয়বস্তু পুনরুদ্ধার করা হচ্ছে।",
+      "pt": "Recuperando conteúdo de aniversários do Facebook.",
+      "ja": "Facebookの誕生日コンテンツを取得しています。",
+      "de": "Abrufen von Geburtstagsinhalten von Facebook.",
+      "it": "Recupero del contenuto dei compleanni di Facebook.",
+      "uk": "Отримання контенту про дні народження у Facebook.",
+      "ru": "Получение контента о днях рождения на Facebook.",
+      "he": "מקבל תוכן ימי הולדת בפייסבוק."
+    },
+    "description": "Getting the Facebook birthdays content."
+  },
+  "SCAN_LOG_BIRTHDAYS_CONTENT_ERROR": {
+    "message": {
+      "en": "Failed to retrieve Facebook birthdays content.",
+      "zh": "检索 Facebook 生日内容失败。",
+      "es": "Error al recuperar el contenido de cumpleaños de Facebook.",
+      "hi": "फेसबुक जन्मदिन सामग्री प्राप्त करने में विफल।",
+      "ar": "فشل في استرداد محتوى أعياد ميلاد Facebook.",
+      "bn": "ফেসবুক জন্মদিনের বিষয়বস্তু পুনরুদ্ধার করতে ব্যর্থ হয়েছে।",
+      "pt": "Falha ao recuperar conteúdo de aniversários do Facebook.",
+      "ja": "Facebookの誕生日コンテンツの取得に失敗しました。",
+      "de": "Fehler beim Abrufen von Geburtstagsinhalten von Facebook.",
+      "it": "Errore nel recupero del contenuto dei compleanni di Facebook.",
+      "uk": "Не вдалося отримати контент про дні народження у Facebook.",
+      "ru": "Не удалось получить контент о днях рождения на Facebook.",
+      "he": "נכשל באחזור תוכן ימי הולדת בפייסבוק."
+    },
+    "description": "Failed to retrieve content from the Facebook birthdays endpoint.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_EXTRACT_BIRTHDAYS": {
+    "message": {
+      "en": "Extracting birthdays from fetched data.",
+      "zh": "从获取的数据中提取生日。",
+      "es": "Extrayendo cumpleaños de los datos obtenidos.",
+      "hi": "प्राप्त डेटा से जन्मदिन निकालना।",
+      "ar": "استخراج أعياد الميلاد من البيانات المستردة.",
+      "bn": "আনা তথ্য থেকে জন্মদিনগুলি বের করা হচ্ছে।",
+      "pt": "Extraindo aniversários dos dados recuperados.",
+      "ja": "取得したデータから誕生日を抽出しています。",
+      "de": "Extrahieren von Geburtstagen aus den abgerufenen Daten.",
+      "it": "Estrazione dei compleanni dai dati recuperati.",
+      "uk": "Витяг днів народження з отриманих даних.",
+      "ru": "Извлечение дней рождений из полученных данных.",
+      "he": "מוציא ימי הולדת מהנתונים שהובאו."
+    },
+    "description": "Starting to extract birthdays from the fetched data."
+  },
+  "SCAN_LOG_EXTRACT_BIRTHDAYS_ERROR": {
+    "message": {
+      "en": "Failed to extract birthdays from fetched data.",
+      "zh": "从获取的数据中提取生日失败。",
+      "es": "Error al extraer los cumpleaños de los datos obtenidos.",
+      "hi": "प्राप्त डेटा से जन्मदिन निकालने में विफल।",
+      "ar": "فشل في استخراج أعياد الميلاد من البيانات المستردة.",
+      "bn": "আনা তথ্য থেকে জন্মদিনগুলি বের করতে ব্যর্থ হয়েছে।",
+      "pt": "Falha ao extrair aniversários dos dados recuperados.",
+      "ja": "取得したデータから誕生日を抽出できませんでした。",
+      "de": "Fehler beim Extrahieren der Geburtstage aus den abgerufenen Daten.",
+      "it": "Errore nell'estrazione dei compleanni dai dati recuperati.",
+      "uk": "Не вдалося витягти дні народження з отриманих даних.",
+      "ru": "Не удалось извлечь дни рождения из полученных данных.",
+      "he": "נכשל בהוצאת ימי הולדת מהנתונים שהובאו."
+    },
+    "description": "Error while extracting birthdays from the fetched data.",
+    "placeholders": {
+      "message": {
+        "content": "$1"
+      }
+    }
+  },
+  "SCAN_LOG_MERGING_BIRTHDAYS": {
+    "message": {
+      "en": "Merging newly scanned birthdays with existing data.",
+      "zh": "将新扫描的生日与现有数据合并。",
+      "es": "Combinando los cumpleaños recién escaneados con los datos existentes.",
+      "hi": "नवीनतम स्कैन किए गए जन्मदिनों को मौजूदा डेटा के साथ मर्ज करना।",
+      "ar": "دمج أعياد الميلاد الممسوحة ضوئيًا حديثًا مع البيانات الحالية.",
+      "bn": "নতুন স্ক্যান করা জন্মদিনগুলি বিদ্যমান ডেটার সাথে মিশ্রিত করা হচ্ছে।",
+      "pt": "Mesclando aniversários recém digitalizados com dados existentes.",
+      "ja": "新しくスキャンした誕生日と既存のデータをマージしています。",
+      "de": "Zusammenführen der neu gescannten Geburtstage mit vorhandenen Daten.",
+      "it": "Unione dei compleanni appena scansionati con i dati esistenti.",
+      "uk": "Об'єднання нових відсканованих днів народження з існуючими даними.",
+      "ru": "Объединение вновь отсканированных дней рождений с существующими данными.",
+      "he": "ממזג ימי הולדת שנסרקו לאחרונה עם נתונים קיימים."
+    },
+    "description": "Message sent before merging newly scanned birthdays with old data."
+  },
+  "SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS": {
+    "message": {
+      "en": "Storing updated birthday data.",
+      "zh": "存储更新的生日数据。",
+      "es": "Almacenando datos de cumpleaños actualizados.",
+      "hi": "अपडेट किए गए जन्मदिन डेटा को संग्रहीत करना।",
+      "ar": "تخزين بيانات عيد الميلاد المحدثة.",
+      "bn": "আপডেট করা জন্মদিনের তথ্য সংরক্ষণ করা হচ্ছে।",
+      "pt": "Armazenando dados de aniversário atualizados.",
+      "ja": "更新された誕生日データを保存しています。",
+      "de": "Speichern der aktualisierten Geburtstagsdaten.",
+      "it": "Archiviazione dei dati di compleanno aggiornati.",
+      "uk": "Збереження оновлених даних про день народження.",
+      "ru": "Сохранение обновленных данных о днях рождения.",
+      "he": "מאחסן נתוני ימי הולדת מעודכנים."
+    },
+    "description": "Message sent before storing extracted birthdays to local storage."
+  },
+  "SCAN_LOG_PROCESS_DONE": {
+    "message": {
+      "en": "Birthday scan is complete.",
+      "zh": "生日扫描已完成。",
+      "es": "El escaneo de cumpleaños está completo.",
+      "hi": "जन्मदिन स्कैन पूरा हो गया है।",
+      "ar": "اكتمل مسح عيد الميلاد.",
+      "bn": "জন্মদিনের স্ক্যান সম্পূর্ণ হয়েছে।",
+      "pt": "A varredura de aniversário está completa.",
+      "ja": "誕生日スキャンが完了しました。",
+      "de": "Der Geburtstagsscan ist abgeschlossen.",
+      "it": "La scansione dei compleanni è completa.",
+      "uk": "Сканування днів народження завершено.",
+      "ru": "Сканирование дней рождений завершено.",
+      "he": "סריקת ימי ההולדת הושלמה."
+    },
+    "description": "Message sent after the extraction process is finished."
+  }
+}

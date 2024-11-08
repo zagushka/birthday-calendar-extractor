@@ -13,7 +13,7 @@ export function useCalendarDownloader(calendarType: any, users: Array<StoredBirt
   const [error, setError] = useState<any>();
 
   useEffect(() => {
-    if ('standby' === status) {
+    if (status === 'standby') {
       return;
     }
 
@@ -37,7 +37,6 @@ export function useCalendarDownloader(calendarType: any, users: Array<StoredBirt
       onDestroy$.complete();
       setResult('pending');
     };
-
   }, [status, calendarType, users, settings]);
 
   return {

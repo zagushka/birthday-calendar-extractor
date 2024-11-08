@@ -24,6 +24,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { FunnyMessagesToAvoidCruelReality } from "./funny-messages-to-avoid-cruel-reality";
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { translate } from '../../filters/translate';
 import { translateString } from '../../filters/translateString';
@@ -36,40 +37,40 @@ import {
 import { useScanLogListener } from '../../libs/hooks/scan-log-listener.hook';
 import Layout from '../layout/layout';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    wrapper: {
-      margin: theme.spacing(1),
-      position: 'relative',
-      alignSelf: 'center',
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+    alignSelf: 'center',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
     },
-    buttonSuccess: {
-      backgroundColor: green[500],
-      '&:hover': {
-        backgroundColor: green[700],
-      },
+  },
+  buttonFail: {
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
     },
-    buttonFail: {
-      backgroundColor: red[500],
-      '&:hover': {
-        backgroundColor: red[700],
-      },
-    },
-    buttonProgress: {
-      color: green[500],
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      marginTop: -12,
-      marginLeft: -12,
-    },
-  }),
-);
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}));
+
+const funnyStringsToFakeCruelReality = JSON.parse(translateString("FUNNY_MESSAGES_TO_AVOID_REALITY"));
 
 export const Scan: FunctionComponent = () => {
   const classes = useStyles();
 
-  const {isScanning, isScanSucceed, isActive} = useContext(CurrentStatusContext);
+  const { isScanning, isScanSucceed, isActive } = useContext(CurrentStatusContext);
   const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
 
   const [wasActivated] = useWasOff(isActive);
@@ -81,11 +82,10 @@ export const Scan: FunctionComponent = () => {
 
   const [[log], resetLog] = useScanLogListener(1);
 
-
   const startScanHandler = () => {
     resetWasScanningAndDone();
     resetLog();
-    sendMessage(BirthdaysStartScan(true), true);
+    sendMessage(BirthdaysStartScan());
   };
 
   const buttonClassname = clsx({
@@ -101,27 +101,28 @@ export const Scan: FunctionComponent = () => {
 
       <Layout.Content>
 
-        {/*Upper part*/}
-        <Box display={'flex'}
-             textAlign={'left'}
-             alignItems={'flex-end'}
-             flexGrow={1}
-             justifyContent={'center'}
-             pl={1}
-             pr={2}
+        {/* Upper part */}
+        <Box
+          display="flex"
+          textAlign="left"
+          alignItems="flex-end"
+          flexGrow={1}
+          justifyContent="center"
+          pl={1}
+          pr={2}
         >
-          <Typography variant='body1' gutterBottom>
+          <Typography variant="body1" gutterBottom>
             {translate(firstTime ? 'SCAN_PAGE_DESCRIPTION' : 'SCAN_PAGE_FIRST_TIME_DESCRIPTION')}
           </Typography>
         </Box>
 
-        {/*Button*/}
-        <Box display={'flex'} flexGrow={0} justifyContent={'center'}>
+        {/* Button */}
+        <Box display="flex" flexGrow={0} justifyContent="center">
           <div className={classes.wrapper}>
             <Button
-              variant='contained'
-              color='primary'
-              size='large'
+              variant="contained"
+              color="primary"
+              size="large"
               className={buttonClassname}
               disabled={isScanning}
               onClick={startScanHandler}
@@ -133,10 +134,13 @@ export const Scan: FunctionComponent = () => {
           </div>
         </Box>
 
-        {/*Bottom part*/}
-        <Box flexGrow={1} textAlign={'center'} display={'flex'} alignItems={'flex-start'} justifyContent={'center'}>
-          <Typography variant='body1' gutterBottom>
-            {log}
+        {/* Bottom part */}
+        <Box flexGrow={1} textAlign="center" display="flex" alignItems="flex-start" justifyContent="center">
+          <Typography variant="body1" gutterBottom>
+            {isScanning ? <FunnyMessagesToAvoidCruelReality
+              strings={funnyStringsToFakeCruelReality}
+              maxRuntime={25_000}
+            /> : log}
           </Typography>
         </Box>
       </Layout.Content>

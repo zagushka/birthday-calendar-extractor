@@ -7,8 +7,9 @@ import {
 import { reviveBirthday } from '../storage/chrome.storage';
 import { StoredBirthday } from '../storage/storaged.types';
 
-export class CalendarJSON extends CalendarBase<{}, {}, {}> {
+export class CalendarJSON extends CalendarBase<{}, {}> {
   readonly filename: string = 'birthday-calendar.json';
+
   readonly fileMimeType: string = 'application/json; charset=UTF-8';
 
   formatEvent(event: PreparedEvent) {
@@ -33,4 +34,3 @@ export class CalendarJSON extends CalendarBase<{}, {}, {}> {
     return this.formatEvent(event);
   }
 }
-

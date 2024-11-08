@@ -21,8 +21,8 @@ interface BuyCoffeeButtonProps extends ButtonProps {
 }
 
 const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
-  const {withIcon = false, ...parentProps} = props;
-  const {isDonated} = useContext(CurrentStatusContext);
+  const { withIcon = false, ...parentProps } = props;
+  const { isDonated } = useContext(CurrentStatusContext);
   const [title, setTitle] = useState<string>();
 
   useEffect(() => {
@@ -32,29 +32,27 @@ const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
   }, [withIcon]);
 
   return (
-    <>
-      {!isDonated && <Zoom in={!isDonated} style={{transitionDelay: !isDonated ? '500ms' : '0ms'}}>
-        <Button
-          onClick={() => handleLink('BUY_ME_COFFEE_LINK', {close: true, active: true})}
-          endIcon={withIcon ? <FreeBreakfast/> : null}
-          {...parentProps}
-        >
-          {title}
-        </Button>
-      </Zoom>}
-    </>
+    !isDonated && (
+    <Zoom in={!isDonated} style={{ transitionDelay: !isDonated ? '500ms' : '0ms' }}>
+      <Button
+        onClick={() => handleLink('BUY_ME_COFFEE_LINK', { close: true, active: true })}
+        endIcon={withIcon ? <FreeBreakfast /> : null}
+        {...parentProps}
+      >
+        {title}
+      </Button>
+    </Zoom>
+    )
   );
 };
 
-export const BuyCoffeeIconButton: FunctionComponent<IconButtonProps> = (props) => {
-  return (
-    <IconButton
-      {...props}
-      onClick={() => handleLink('BUY_ME_COFFEE_LINK', {close: true, active: true})}
-    >
-      <FreeBreakfast/>
-    </IconButton>
-  );
-};
+export const BuyCoffeeIconButton: FunctionComponent<IconButtonProps> = (props) => (
+  <IconButton
+    {...props}
+    onClick={() => handleLink('BUY_ME_COFFEE_LINK', { close: true, active: true })}
+  >
+    <FreeBreakfast />
+  </IconButton>
+);
 
 export default BuyCoffeeButton;

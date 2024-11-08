@@ -1,31 +1,32 @@
-import { Box } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import {
   generatePath,
-  useHistory,
-  useRouteMatch,
+  useNavigate,
+  useMatch,
 } from 'react-router-dom';
 import { WIZARD_NAMES } from '../../constants';
 import { translateString } from '../../filters/translateString';
 import ActionAccordion, { ActionAccordionInterface } from '../action-accordion';
 import Layout from '../layout/layout';
 import CsvDataGeneratorWizard from './csv-data/csv-data';
-import CsvGeneratorWizard from './csv/csv';
 import DeleteIcsGeneratorWizard from './delete-ics/delete-ics';
 import IcsGeneratorWizard from './ics/ics';
 
+type ActionTypes = typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];
+
 const SelectWizard: FunctionComponent = () => {
-  const {path, params: {action = WIZARD_NAMES.CREATE_ICS}} = useRouteMatch<{ action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES] }>();
-  const history = useHistory();
+  const { params: { action } } = useMatch('/export/:action');
+  const navigate = useNavigate();
 
-  const handleChange = (selectedAction: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]) =>
-    (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-      history.replace(generatePath(path, {action: isExpanded ? selectedAction : undefined}));
-    };
+  const handleChange = (selectedAction: ActionTypes) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    if (isExpanded) {
+      navigate(generatePath('/export/:action', { action: selectedAction }), { replace: true });
+    }
+  };
 
-  const attributes = (ac: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES]): ActionAccordionInterface => ({
+  const attributes = (ac: ActionTypes): ActionAccordionInterface => ({
     onChange: handleChange,
-    currentAction: action,
+    currentAction: action as ActionTypes,
     action: ac,
   });
 
@@ -37,19 +38,19 @@ const SelectWizard: FunctionComponent = () => {
 
       <Layout.Content pt={1} pr={1}>
         <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_ICS)}>
-          <IcsGeneratorWizard/>
+          <IcsGeneratorWizard />
         </ActionAccordion>
 
-        <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_DELETE_ICS)}>
-          <DeleteIcsGeneratorWizard/>
+        <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_DELETE_ICS)}>
+          <DeleteIcsGeneratorWizard />
         </ActionAccordion>
 
-        {/*<ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}>*/}
-        {/*  <CsvGeneratorWizard/>*/}
-        {/*</ActionAccordion>*/}
+        {/* <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV)}> */}
+        {/*  <CsvGeneratorWizard/> */}
+        {/* </ActionAccordion> */}
 
-        <ActionAccordion  {...attributes(WIZARD_NAMES.CREATE_CSV_DATA)}>
-          <CsvDataGeneratorWizard/>
+        <ActionAccordion {...attributes(WIZARD_NAMES.CREATE_CSV_DATA)}>
+          <CsvDataGeneratorWizard />
         </ActionAccordion>
       </Layout.Content>
     </>

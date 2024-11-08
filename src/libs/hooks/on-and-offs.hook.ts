@@ -67,9 +67,9 @@ export function useWasOnOff(trigger: boolean): [boolean, () => void] {
 
 export type ChainStatusType = 'on' | 'off' | 'pending';
 const chainStatuses: Record<ChainStatusType, ChainStatusType> = {
-  'pending': 'on',
-  'on': 'off',
-  'off': 'pending',
+  pending: 'on',
+  on: 'off',
+  off: 'pending',
 };
 
 /**

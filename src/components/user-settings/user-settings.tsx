@@ -4,12 +4,15 @@ import React, {
   useEffect,
 } from 'react';
 import {
-  Redirect,
+  Navigate,
   Route,
-  Switch,
+  Routes,
   useLocation,
 } from 'react-router-dom';
-import { isDevelopment } from '../../constants';
+import {
+  isDevelopment,
+  WIZARD_NAMES,
+} from '../../constants';
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { storeUserSettings } from '../../libs/storage/chrome.storage';
 import Calendar from '../calendar/calendar';
@@ -34,7 +37,9 @@ const UserSettings: FunctionComponent = () => {
    * after initDone and restoredLocation been fetched
    */
   useEffect(() => {
-    !!restoredLocation && storeUserSettings({location});
+    if (restoredLocation) {
+      storeUserSettings({ location });
+    }
   }, [location]);
 
   if (!initDone) {
@@ -45,32 +50,36 @@ const UserSettings: FunctionComponent = () => {
     <>
       <SwitchModals/>
       <Layout.Wrapper>
-        <Switch>
+        <Routes>
+          <Route
+            path="/"
+            element={restoredLocation.pathname === '/'
+              ? <Navigate to="calendar" replace/>
+              : <Navigate to={restoredLocation} replace/>}
+          />
+          <Route path="activate" element={<Scan/>}/>
 
-          <Route path='/activate'>
-            <Scan/>
-          </Route>
+          {isActive && (
+            <Route path="export">
+              <Route path=":action" element={<SelectWizard/>}/>
+              <Route path="" element={<Navigate to={`/export/${WIZARD_NAMES.CREATE_ICS}`} replace/>}/>
+            </Route>
+          )}
 
-          <Route path='/export/:action?'>
-            {isActive ? <SelectWizard/> : <Redirect to='/activate'/>}
-          </Route>
+          <Route
+            path="calendar"
+            element={isActive
+              ? <Calendar/>
+              : <Navigate to="/activate" replace/>}
+          />
 
-          <Route exact path='/calendar'>
-            {isActive ? <Calendar/> : <Redirect to='/activate'/>}
-          </Route>
+          {isDevelopment && <Route path="dev-tools" element={<DevTools/>}/>}
 
-          {isDevelopment && <Route path='/dev-tools'>
-            <DevTools/>
-          </Route>}
-
-          <Route exact path='/'>
-            {'/' === restoredLocation.pathname ?
-              <Redirect to='/calendar'/> :
-              <Redirect to={restoredLocation}/>
-            }
-          </Route>
-          <Redirect to='/'/>
-        </Switch>
+          <Route
+            path="*"
+            element={<Navigate to={"/"} replace/>}
+          />
+        </Routes>
         <Layout.Footer>
           <BottomMenu/>
         </Layout.Footer>

@@ -1,0 +1,75 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "webextensions": true
+  },
+  "globals": {
+    "JSX": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json"],
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+    "import/extensions": ["error", "never"],
+    "import/no-unresolved": [
+      "error", {
+        "ignore": ["@types/react"]
+      }
+    ],
+    "react/jsx-filename-extension": [2, {"extensions": [".tsx"]}],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "max-len": [
+      "warn",
+      {
+        "code": 120,
+        "ignoreComments": true
+      }
+    ],
+    "no-use-before-define": "off",
+    "no-bitwise": "off",
+    "no-mixed-operators": "off",
+    "no-redeclare": "off",
+    "@typescript-eslint/no-redeclare": ["error"],
+    "react/function-component-definition": ["error", {"namedComponents": "arrow-function"}],
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "prefer-regex-literals": "off",
+    "no-plusplus": "off",
+    "no-unused-expressions": "off",
+    "consistent-return": "off",
+    "class-methods-use-this": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "react/jsx-props-no-spreading": "off",
+    "prefer-promise-reject-errors": "off",
+    "no-nested-ternary": "off",
+    "no-loop-func": "off",
+    "react/no-unused-prop-types": "off",
+    "react/require-default-props": "off",
+    "react/destructuring-assignment" : "off",
+    "react/prop-types": "off"
+  }
+}

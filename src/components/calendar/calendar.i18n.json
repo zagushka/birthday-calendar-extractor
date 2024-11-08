@@ -1,0 +1,20 @@
+{
+  "TODAY": {
+    "message": {
+      "en": "Today",
+      "zh": "今天",
+      "es": "Hoy",
+      "hi": "आज",
+      "ar": "اليوم",
+      "bn": "আজ",
+      "pt": "Hoje",
+      "ja": "今日",
+      "de": "Heute",
+      "it": "Oggi",
+      "uk": "Сьогодні",
+      "ru": "Сегодня",
+      "he": "היום"
+    },
+    "description": "Title of the button to move the index to current date"
+  }
+}

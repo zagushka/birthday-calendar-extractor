@@ -1,15 +1,5 @@
 import { DateTime } from 'luxon';
-import {
-  Observable,
-  of,
-  throwError,
-} from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { retrieveUserSettings } from './storage/chrome.storage';
-import {
-  RestoredBirthday,
-  StoredBirthday,
-} from './storage/storaged.types';
+import { RestoredBirthday } from './storage/storaged.types';
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url
@@ -39,7 +29,7 @@ export function prepareEvent(event: RestoredBirthday, year: number): PreparedEve
   // Since all coming birthdays are from 2020 (leap year) 02/29 can occur
   // I change the year to required and
   // luxon knows to handle leap years and change 29 to 28 for Feb if needed
-  const start = event.start.set({year: year});
+  const start = event.start.set({ year });
 
   // Wrong date
   if (!start.isValid) {
@@ -48,10 +38,10 @@ export function prepareEvent(event: RestoredBirthday, year: number): PreparedEve
 
   return {
     name: event.name,
-    start: start,
-    end: start.plus({days: 1}),
+    start,
+    end: start.plus({ days: 1 }),
     href: event.href,
-    uid: btoa(event.href),
+    uid: btoa(event.href ?? event.id),
   };
 }
 
@@ -63,7 +53,7 @@ export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, 
   const result: Array<PreparedEvent> = [];
 
   do {
-    events.forEach(event => {
+    events.forEach((event) => {
       const preparedEvent = prepareEvent(event, year);
       if (preparedEvent) {
         result.push(preparedEvent);
@@ -74,19 +64,4 @@ export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, 
   } while (tillYear >= year);
 
   return result;
-}
-
-export function getBirthdaysList(): Observable<Array<StoredBirthday>> {
-  return retrieveUserSettings(['birthdays', 'activated'])
-    .pipe(
-      switchMap(({birthdays, activated}) => {
-        if (activated) {
-          // Using cached version
-          return of(birthdays);
-        }
-
-        // We should never reach this line
-        return throwError('SCAN BIRTHDAYS FIRST');
-      }),
-    );
 }

@@ -14,31 +14,28 @@ import {
   handleCloseModal,
 } from '../modals.lib';
 
-const ScanSuccessModal: FunctionComponent = () => {
+const ScanSuccessModal: FunctionComponent = () => (
   // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
-  return (
-    <Dialog
-      open={true}
-      onClose={handleCloseModal}
-    >
-      <DialogTitle>
-        {translate('MODAL_SCAN_SUCCESS_TITLE')}
-      </DialogTitle>
+  <Dialog
+    open
+    onClose={handleCloseModal}
+  >
+    <DialogTitle>
+      {translate('MODAL_SCAN_SUCCESS_TITLE')}
+    </DialogTitle>
 
-      <DialogContent>
-        <DialogContentText>
-          {translate('MODAL_SCAN_SUCCESS_DESCRIPTION')}
-        </DialogContentText>
-      </DialogContent>
+    <DialogContent>
+      <DialogContentText>
+        {translate('MODAL_SCAN_SUCCESS_DESCRIPTION')}
+      </DialogContentText>
+    </DialogContent>
 
-      <DialogActions>
-        <ToCalendarButton/>
-        <ToExportButton/>
-        <DialogCloseButton/>
-      </DialogActions>
+    <DialogActions>
+      <ToCalendarButton />
+      <ToExportButton />
+      <DialogCloseButton />
+    </DialogActions>
 
-    </Dialog>
-  );
-};
-
+  </Dialog>
+);
 export default ScanSuccessModal;

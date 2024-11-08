@@ -20,7 +20,7 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     backgroundColor: '#f5f5f5',
     flexGrow: 1,
-    minHeight: 425
+    minHeight: 425,
   },
   footer: {
     display: 'flex',

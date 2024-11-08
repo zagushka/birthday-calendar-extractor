@@ -1,0 +1,19 @@
+Mit dieser Erweiterung können Sie:
+
+- Die Geburtstage Ihrer Facebook-Freunde verfolgen und nie verpassen.
+- Einen Kalender mit allen Geburtstagen Ihrer Facebook-Freunde erstellen und in Ihr bevorzugtes Kalenderprogramm exportieren.
+- Überprüfen, ob Ihre Freunde heute Geburtstag haben, indem Sie das "Kuchen"-Symbol der Erweiterung überprüfen.
+- Einen Überblick über die Geburtstage Ihrer Freunde in der "Kalender"-Ansicht erhalten.
+
+Die Geburtstage können im ICS-Format exportiert werden, das von Microsoft Outlook, Google Calendar und Apple Calendar unterstützt wird. Sowie im CSV-Format, das mit Microsoft Excel oder Google Sheets kompatibel ist.
+
+Verwenden Sie die generierte Datei, um die Geburtstage Ihrer Freunde in Ihr bevorzugtes Kalenderprogramm zu importieren. Ich empfehle dringend, einen neuen geburtstagsthemenbezogenen Unterkalender für Importe zu erstellen.
+
+FAQ
+
+Frage: Ich habe versehentlich Geburtstage in meinen Hauptkalender exportiert. Wie kann ich das rückgängig machen?
+Antwort: Nur Google Calendar unterstützt das Entfernen von Ereignissen korrekt. Gehen Sie zum Tab "Kalender herunterladen" und verwenden Sie "Importiertes ICS aus Google Calendar löschen". Eine Datei namens `delete-birthday-calendar.ics` wird heruntergeladen. Importieren Sie diese Datei in den entsprechenden Kalender.
+
+Frage: Ist es möglich, einige Kontakte zu entfernen, bevor sie in den Kalender importiert werden?
+Antwort: Ja, Sie können zur Registerkarte "Kalender" gehen und Kontakte aus der Liste entfernen, indem Sie auf das "Auge"-Symbol neben dem Kontakt klicken. Und dann laden Sie den Kalender erneut herunter.
+Sie können auch ein Befehlszeilentool verwenden, das unter: https://github.com/guenter-r/calendar_file_splitter verfügbar ist

@@ -2,14 +2,40 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {version} = require('./package.json');
 const ejs = require('ejs');
-const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
+const {version} = require('./package.json');
+const MergeJsonPlugin = require("merge-json-webpack-plugin");
+
+/**
+ * Extracts only the locale messages for the specified language
+ *
+ * @param content
+ * @param lang
+ * @param fallback
+ * @returns {{}}
+ */
+function extractLocaleOnly(lang, fallback = "en") {
+  return function (content) {
+    return Object.keys(content).reduce((collector, key) => {
+      const value = content[key];
+      // Get the message for the specified language, or fallback to the default language
+      // If the default language is not available, use message as is (old format)
+      const message = value.message[lang] || value.message[fallback] || value.message;
+      if ("string" === typeof message) {
+        collector[key] = {
+          ...value,
+          message,
+        }
+      }
+      return collector;
+    }, {});
+  }
+}
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    'background': './background.ts',
+    background: './background.ts',
     // 'content': './content.ts',
     'popup/popup': './popup/popup.tsx',
   },
@@ -59,25 +85,22 @@ module.exports = {
           esModule: false,
         },
       },
-    ]
+    ],
   },
   plugins: [
-    new MergeJsonWebpackPlugin({
-      output: {
-        groupBy: [
-          {
-            pattern: "**/*.i18n.en.json",
-            fileName: "./_locales/en/messages.json"
-          },
-          {
-            pattern: "**/*.i18n.ru.json",
-            fileName: "./_locales/ru/messages.json"
-          },
-        ]
-      },
-      globOptions: {
-        nosort: true
-      }
+    new MergeJsonPlugin({
+      force: true,
+      groups: [
+        ...["zh", "es", "en", "hi", "ar", "bn", "pt", "ja", "de", "it", "uk", "ru", "he"]
+          .map((lang) => ({
+            pattern: `**/*.i18n.json`,
+            to: `./_locales/${lang}/messages.json`,
+            transform: extractLocaleOnly(lang),
+            globOptions: {
+              ignore: ['**/!*.json'],
+            },
+          })),
+      ],
     }),
     new webpack.DefinePlugin({
       global: 'window',
@@ -88,7 +111,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'public'), to: './',
+          from: path.resolve(__dirname, 'public'),
+          to: './',
           globOptions: {
             ignore: ['**/manifest.json'],
           },
@@ -105,10 +129,10 @@ module.exports = {
             return JSON.stringify(jsonContent, null, 2);
           },
         },
-      ]
+      ],
     }),
   ],
-  mode: 'production'
+  mode: 'production',
 };
 
 function transformHtml(content) {

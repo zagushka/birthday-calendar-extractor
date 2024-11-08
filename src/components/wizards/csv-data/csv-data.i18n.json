@@ -1,0 +1,38 @@
+{
+  "SELECT_FILE_FORMAT_CSV_DATA": {
+    "message": {
+      "en": "Download Dates of Birth as a CSV File.",
+      "zh": "将出生日期下载为 CSV 文件。",
+      "es": "Descargar fechas de nacimiento como archivo CSV.",
+      "hi": "जन्म तिथियों को CSV फ़ाइल के रूप में डाउनलोड करें।",
+      "ar": "تنزيل تواريخ الميلاد كملف CSV.",
+      "bn": "জন্ম তারিখগুলি CSV ফাইল হিসাবে ডাউনলোড করুন।",
+      "pt": "Baixar datas de nascimento como arquivo CSV.",
+      "ja": "誕生日をCSVファイルとしてダウンロードします。",
+      "de": "Laden Sie Geburtsdaten als CSV-Datei herunter.",
+      "it": "Scarica le date di nascita come file CSV.",
+      "uk": "Завантажте дати народження у вигляді файлу CSV.",
+      "ru": "Скачать даты рождения в виде файла CSV.",
+      "he": "הורד תאריכי לידה כקובץ CSV."
+    },
+    "description": "Label for the dates of birth CSV file type"
+  },
+  "SELECT_CSV_DATA_DESCRIPTION": {
+    "message": {
+      "en": "Create and download a CSV file containing your friends' dates of birth. <p>This CSV file format can be used with Microsoft Excel or Google Sheets.</p> <p>DO NOT USE it to import birthdays into a calendar; the ICS format is recommended instead.</p>",
+      "zh": "创建并下载包含您朋友的出生日期的 CSV 文件。<p>此 CSV 文件格式可用于 Microsoft Excel 或 Google 表格。</p> <p>请勿使用它将生日导入到日历；建议使用 ICS 格式。</p>",
+      "es": "Cree y descargue un archivo CSV que contenga las fechas de nacimiento de tus amigos. <p>Este formato de archivo CSV se puede usar con Microsoft Excel o Google Sheets.</p> <p>NO LO USE para importar cumpleaños a un calendario; se recomienda el formato ICS.</p>",
+      "hi": "अपने दोस्तों की जन्म तिथियों को शामिल करते हुए एक CSV फ़ाइल बनाएँ और डाउनलोड करें। <p>इस CSV फ़ाइल प्रारूप का उपयोग Microsoft Excel या Google शीट्स के साथ किया जा सकता है।</p> <p>जन्मदिनों को कैलेंडर में आयात करने के लिए इसका उपयोग न करें; इसके बजाय ICS प्रारूप की अनुशंसा की जाती है।</p>",
+      "ar": "قم بإنشاء وتنزيل ملف CSV يحتوي على تواريخ ميلاد أصدقائك. <p>يمكن استخدام تنسيق ملف CSV هذا مع Microsoft Excel أو Google Sheets.</p> <p>لا تستخدمه لاستيراد أعياد الميلاد إلى التقويم ؛ يوصى بدلاً من ذلك باستخدام تنسيق ICS.</p>",
+      "bn": "আপনার বন্ধুদের জন্ম তারিখগুলি ধারণকারী একটি CSV ফাইল তৈরি করুন এবং ডাউনলোড করুন। <p>এই CSV ফাইল বিন্যাসটি Microsoft Excel বা Google Sheets এর সাথে ব্যবহার করা যেতে পারে।</p> <p>জন্মদিনগুলি ক্যালেন্ডারে আমদানি করার জন্য এটি ব্যবহার করবেন না; পরিবর্তে ICS ফর্ম্যাট সুপারিশ করা হয়।</p>",
+      "pt": "Crie e baixe um arquivo CSV contendo as datas de nascimento dos seus amigos. <p>Este formato de arquivo CSV pode ser usado com o Microsoft Excel ou o Google Sheets.</p> <p>NÃO O USE para importar aniversários em um calendário; o formato ICS é recomendado.</p>",
+      "ja": "友達の生年月日を含むCSVファイルを作成してダウンロードします。 <p>このCSVファイル形式は、Microsoft ExcelまたはGoogleスプレッドシートで使用できます。</p> <p>カレンダーに誕生日をインポートするために使用しないでください。代わりにICS形式をお勧めします。</p>",
+      "de": "Erstellen und laden Sie eine CSV-Datei mit den Geburtsdaten Ihrer Freunde herunter. <p>Dieses CSV-Dateiformat kann mit Microsoft Excel oder Google Sheets verwendet werden.</p> <p>VERWENDEN SIE ES NICHT, um Geburtstage in einen Kalender zu importieren; stattdessen wird das ICS-Format empfohlen.</p>",
+      "it": "Crea e scarica un file CSV contenente le date di nascita dei tuoi amici. <p>Questo formato di file CSV può essere utilizzato con Microsoft Excel o Google Sheets.</p> <p>NON UTILIZZARLO per importare i compleanni in un calendario; è consigliato invece il formato ICS.</p>",
+      "uk": "Створіть і завантажте файл CSV із датами народження ваших друзів. <p>Цей формат файлів CSV можна використовувати з Microsoft Excel або Google Sheets.</p> <p>НЕ ВИКОРИСТОВУЙТЕ його для імпорту днів народження у календар; натомість рекомендується використовувати формат ICS.</p>",
+      "ru": "Создайте и скачайте файл CSV с датами рождения ваших друзей. <p>Этот формат файла CSV можно использовать с Microsoft Excel или Google Sheets.</p> <p>НЕ ИСПОЛЬЗУЙТЕ его для импорта дней рождения в календарь; вместо этого рекомендуется использовать формат ICS.</p>",
+      "he": "צור והורד קובץ CSV המכיל את תאריכי הלידה של חבריך. <p>תבנית קובץ CSV זו ניתנת לשימוש עם Microsoft Excel או Google Sheets.</p> <p>אל תשתמש בו כדי לייבא ימי הולדת ליומן; מומלץ במקום זאת להשתמש בתבנית ICS.</p>"
+    },
+    "description": "Description for the CSV data file type"
+  }
+}

@@ -1,4 +1,4 @@
-import { Location } from 'history';
+import type { Location } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import {
   useEffect,
@@ -71,12 +71,14 @@ export function useCurrentStatus() {
                     storeUserSettings({
                       scanning: 0,
                       scanSuccess: false,
-                      modal: {type: SCAN_ERROR_GENERAL, error: 'Removed infinite scan lock'},
+                      modal: { type: SCAN_ERROR_GENERAL, error: 'Removed infinite scan lock' },
                     });
                   }, wait > 0 ? wait : 0);
                 }
                 return setIsScanning(!!updates[key]);
               case 'scanSuccess':
+                // stop timer started by setTimeout
+                clearTimeout(timer);
                 return setIsScanSucceed(updates[key]);
               case 'activated':
                 return setIsActive(updates[key]);
@@ -104,7 +106,8 @@ export function useCurrentStatus() {
     location,
     wizardsSettings,
     isActive,
-    modal, isScanning,
+    modal,
+    isScanning,
     isScanSucceed,
     isDonated,
     users,

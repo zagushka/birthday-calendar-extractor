@@ -17,18 +17,20 @@ export interface ActionAccordionInterface {
 }
 
 const ActionAccordion: FunctionComponent<ActionAccordionInterface> = (params) => {
-  const {action, currentAction, onChange, children} = params;
+  const {
+    action, currentAction, onChange, children,
+  } = params;
   const isExpanded = action === currentAction;
 
   return (
     <Accordion expanded={isExpanded} onChange={onChange(action)}>
 
-      <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-        <Typography variant='subtitle1'>{translateString(action)}</Typography>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography variant="subtitle1">{translateString(action)}</Typography>
       </AccordionSummary>
 
       <AccordionDetails>
-        <Box flexDirection='column' display='flex' alignItems='flex-end'>
+        <Box flexDirection="column" display="flex" alignItems="flex-end">
           {children}
         </Box>
       </AccordionDetails>

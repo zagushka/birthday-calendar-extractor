@@ -1,0 +1,26 @@
+{
+  "TO_CALENDAR_EXPORT_TITLE": {
+    "message": {
+      "en": "Generate ($seconds$)",
+      "zh": "生成 ($seconds$)",
+      "es": "Generar ($seconds$)",
+      "hi": "उत्पन्न करें ($seconds$)",
+      "ar": "توليد ($seconds$)",
+      "bn": "উৎপন্ন করুন ($seconds$)",
+      "pt": "Gerar ($seconds$)",
+      "ja": "生成する ($seconds$)",
+      "de": "Generieren ($seconds$)",
+      "it": "Genera ($seconds$)",
+      "uk": "Створити ($seconds$)",
+      "ru": "Создать ($seconds$)",
+      "he": "צור ($seconds$)"
+    },
+    "description": "Title for the button to calendar generator with countdown.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "10"
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import { CalendarICS } from './ics';
 import { PreparedEvent } from '../lib';
 
-
 export class CalendarDeleteICS extends CalendarICS {
   readonly filename: string = 'delete-birthday-calendar.ics';
+
   readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
 
   generateEvent(event: PreparedEvent) {
@@ -19,11 +19,10 @@ DESCRIPTION:This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> 
 SEQUENCE:0
 METHOD:CANCEL
 STATUS:CANCELLED
-` +
+`
       // There is unicode cake character before event.name, you may not see it in you editor
-      `SUMMARY:🎂 ${formattedEvent.name}
+      + `SUMMARY:🎂 ${formattedEvent.name}
 TRANSP:TRANSPARENT
 END:VEVENT`;
   }
 }
-

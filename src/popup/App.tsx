@@ -1,17 +1,13 @@
 import {
-  createMuiTheme,
+  createTheme,
+  ThemeOptions,
   ThemeProvider,
 } from '@material-ui/core/styles';
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
-import React, {
-  FunctionComponent,
-  useEffect,
-} from 'react';
+import React, { FunctionComponent } from 'react';
 import UserSettings from '../components/user-settings/user-settings';
 import CurrentStatusContextProvider from '../context/current-status.context';
 import LoadingContextProvider from '../context/loading.context';
 import './App.scss';
-
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -80,24 +76,16 @@ export const themeOptions: ThemeOptions = {
   },
 };
 
-const theme = createMuiTheme(themeOptions);
+const theme = createTheme(themeOptions);
 
-const App: FunctionComponent = () => {
-
-  useEffect(() => {
-    // Let the background script know we are up and running
-    chrome.runtime.connect()
-  }, []);
-
-  return (
-    <LoadingContextProvider>
-      <CurrentStatusContextProvider>
-        <ThemeProvider theme={theme}>
-          <UserSettings/>
-        </ThemeProvider>
-      </CurrentStatusContextProvider>
-    </LoadingContextProvider>
-  );
-};
+const App: FunctionComponent = () => (
+  <LoadingContextProvider>
+    <CurrentStatusContextProvider>
+      <ThemeProvider theme={theme}>
+        <UserSettings />
+      </ThemeProvider>
+    </CurrentStatusContextProvider>
+  </LoadingContextProvider>
+);
 
 export default App;

@@ -1,0 +1,56 @@
+{
+  "BUY_ME_COFFEE_LINK": {
+    "message": {
+      "en": "https://www.buymeacoffee.com/zagushka",
+      "zh": "https://www.buymeacoffee.com/zagushka",
+      "es": "https://www.buymeacoffee.com/zagushka",
+      "hi": "https://www.buymeacoffee.com/zagushka",
+      "ar": "https://www.buymeacoffee.com/zagushka",
+      "bn": "https://www.buymeacoffee.com/zagushka",
+      "pt": "https://www.buymeacoffee.com/zagushka",
+      "ja": "https://www.buymeacoffee.com/zagushka",
+      "de": "https://www.buymeacoffee.com/zagushka",
+      "it": "https://www.buymeacoffee.com/zagushka",
+      "uk": "https://www.buymeacoffee.com/zagushka",
+      "ru": "https://www.buymeacoffee.com/zagushka",
+      "he": "https://www.buymeacoffee.com/zagushka"
+    },
+    "description": "Link to donation page"
+  },
+  "BUY_ME_COFFEE_TITLE": {
+    "message": {
+      "en": "Buy me a coffee",
+      "zh": "请我喝咖啡",
+      "es": "Cómprame un café",
+      "hi": "मुझे एक कॉफ़ी खरीदें",
+      "ar": "اشترِ لي قهوة",
+      "bn": "আমাকে একটি কফি কিনুন",
+      "pt": "Compre-me um café",
+      "ja": "コーヒーを買ってください",
+      "de": "Kauf mir einen Kaffee",
+      "it": "Comprami un caffè",
+      "uk": "Купи мені каву",
+      "ru": "Купи мне кофе",
+      "he": "תקנה לי קפה"
+    },
+    "description": "Donate button"
+  },
+  "BUY_ME_COFFEE_TITLE_SHORT": {
+    "message": {
+      "en": "Buy me a",
+      "zh": "请我",
+      "es": "Cómprame un",
+      "hi": "मुझे एक",
+      "ar": "اشترِ لي",
+      "bn": "আমাকে একটি",
+      "pt": "Compre-me um",
+      "ja": "私に",
+      "de": "Kauf mir ein",
+      "it": "Comprami un",
+      "uk": "Купи мені",
+      "ru": "Купи мне",
+      "he": "תקנה לי"
+    },
+    "description": "Donate button short version with icon"
+  }
+}

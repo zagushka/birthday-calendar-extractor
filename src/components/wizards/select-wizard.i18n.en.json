@@ -1,6 +1,0 @@
-{
-  "SELECT_EXPORT_FORMAT": {
-    "message": "Download Calendar",
-    "description": "Header for export format interface"
-  }
-}
