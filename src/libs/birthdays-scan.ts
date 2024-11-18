@@ -1,14 +1,10 @@
 import update from 'immutability-helper';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable, } from 'rxjs';
 import {
   filter,
-  map,
-  switchMap,
   take,
-  tap,
   timeout,
 } from 'rxjs/operators';
-import { FACEBOOK_REQUIRED_REGEXP } from '../constants';
 import { SendScanLog } from './events/actions';
 import {
   listenTo,
@@ -28,65 +24,32 @@ import {
   storeUserSettings,
 } from './storage/chrome.storage';
 import {
-  STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS,
+  STORED_BIRTHDAY,
+  STORED_BIRTHDAY_SETTINGS,
   StoredBirthday,
 } from './storage/storaged.types';
 
 /**
- * Check provided string match any facebook url pattern
- *
- * @param url - string to match with facebook url regexp pattern
- */
-function isOnFacebookPage(url: string): boolean {
-  return !!url.match(FACEBOOK_REQUIRED_REGEXP);
-}
-
-/**
  * Check that the current page is facebook and emit its Tab (`chrome.tabs.Tab`)
  * Throws error {type: SCAN_ERROR_FACEBOOK_REQUIRED} when not of a facebook
  */
-export const getFacebookTab = (): Observable<chrome.tabs.Tab> => new Observable((subscriber) => {
+export async function getFacebookTab(): Promise<chrome.tabs.Tab> {
   const urlPatterns = [
     '*://*.facebook.com/*',
   ];
 
-  chrome.tabs.query(
-    { url: urlPatterns },
-    (tabs) => {
-      const url = tabs[0]?.url;
-      // check currTab.url is a Facebook page
-      if (typeof url === 'string') {
-        subscriber.next(tabs[0]);
-      } else {
-        subscriber.error({ type: SCAN_ERROR_FACEBOOK_REQUIRED });
-      }
-    },
-  );
+  const tabs = await chrome.tabs.query({
+    url: urlPatterns,
+    lastFocusedWindow: true
+  });
+  const url = tabs[0]?.url;
 
-  return () => subscriber.complete();
-});
-
-/**
- * Check that the current page is facebook and emit its Tab (`chrome.tabs.Tab`)
- * Throws error {type: SCAN_ERROR_FACEBOOK_REQUIRED} when not of a facebook
- */
-export const getFacebookTabOld = (): Observable<chrome.tabs.Tab> => new Observable((subscriber) => {
-  chrome.tabs.query(
-    { active: true, currentWindow: true },
-    (tabs) => {
-      const url = tabs[0]?.url;
-      // check currTab.url is a Facebook page
-      if (typeof url === 'string' && isOnFacebookPage(url)) {
-        subscriber.next(tabs[0]);
-        return;
-      }
-
-      subscriber.error({ type: SCAN_ERROR_FACEBOOK_REQUIRED });
-    },
-  );
-
-  return () => subscriber.complete();
-});
+  // check currTab.url is a Facebook page
+  if (typeof url === 'string') {
+    return tabs[0];
+  }
+  throw { type: SCAN_ERROR_FACEBOOK_REQUIRED };
+}
 
 /**
  * Initiate Birthdays scan
@@ -106,7 +69,7 @@ export function scanUserBirthdays(tabId: number, waitTime = 10_000): Observable<
         func: fetchUserFriendsBirthdayInfoFromContext,
       },
       (response) => {
-        // Working with a single tab, use the firs array element
+        // Working with a single tab, use the first array element
         waitForResponse(response[0].result);
       },
     );
@@ -207,37 +170,30 @@ function mergeBirthdaysAllowDatesUpdate(...groupArray: Array<Array<StoredBirthda
   return Array.from(mappedBirthdays.values());
 }
 
-export function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
-  return retrieveUserSettings(['birthdays', 'activated'])
-    .pipe(
-      // Merge with stored birthdays
-      tap(() => sendScanLog('SCAN_LOG_MERGING_BIRTHDAYS')),
+export async function updateStoredBirthdays(rawUsers: Array<RawScannedUser>) {
+  const { birthdays: oldBirthdays } = await retrieveUserSettings(['birthdays', 'activated'])
 
-      map(({ birthdays: oldBirthdays }) => {
-        const birthdays = rawUsers.map(scannedUserToDecayedBirthday);
-        return mergeBirthdaysAllowDatesUpdate(birthdays, oldBirthdays);
-      }),
+  // Merge with stored birthdays
+  sendScanLog('SCAN_LOG_MERGING_BIRTHDAYS');
+  const birthdays = rawUsers.map(scannedUserToDecayedBirthday);
+  const combinedBirthdays = mergeBirthdaysAllowDatesUpdate(birthdays, oldBirthdays);
 
-      // Store fetched data for further usage
-      tap(() => sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS')),
-      switchMap((combinedBirthdays) => storeUserSettings({
-        birthdays: combinedBirthdays, activated: true,
-      }, true)),
-    );
+  // Store fetched data for further usage
+  sendScanLog('SCAN_LOG_STORING_EXTRACTED_BIRTHDAYS');
+  await storeUserSettings({
+    birthdays: combinedBirthdays, activated: true,
+  });
 }
 
 /**
  * Make new full scan of the birthdays data
  * Store fetched data to local storage
  */
-export function forceBirthdaysScan() {
+export async function forceBirthdaysScan() {
   // Check user on a facebook page and fetch current Tab info
-  return getFacebookTab()
-    .pipe(
-      // Check for the token and language
-      // Fetch the data from facebook
-      map(tab => tab.id),
-      switchMap((tabId) => scanUserBirthdays(tabId, 30_000)),
-      switchMap(updateStoredBirthdays),
-    );
+  const { id: tabId } = await getFacebookTab();
+  // Check for the token and language
+  // Fetch the data from facebook
+  const rawUsers = await firstValueFrom(scanUserBirthdays(tabId, 30_000));
+  await updateStoredBirthdays(rawUsers);
 }

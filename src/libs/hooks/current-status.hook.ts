@@ -50,7 +50,7 @@ export function useCurrentStatus() {
         'scanning',
         'scanSuccess',
         'wizardsSettings',
-      ]),
+      ], true),
       // Listen to storage changes and update changed values
       listenToUserSettings(),
     )

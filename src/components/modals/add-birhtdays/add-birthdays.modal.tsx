@@ -89,12 +89,9 @@ const AddBirthdaysModal: FunctionComponent<{
     setParsed((old) => old.filter((item) => item !== data));
   };
 
-  const onStoreNewUsers = () => {
-    updateStoredBirthdays(parsed).subscribe({
-      next: () => {
-        setParsed([]);
-      }
-    });
+  const onStoreNewUsers = async () => {
+    await updateStoredBirthdays(parsed);
+    setParsed([]);
   };
 
   const onSourceTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

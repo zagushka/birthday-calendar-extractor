@@ -27,20 +27,17 @@ import { migrations } from './migrations/migraions';
 
 // new connection means popup was initiated
 chrome.runtime.onConnect.addListener((externalPort) => {
-  externalPort.onDisconnect.addListener(() => {
+  externalPort.onDisconnect.addListener(async () => {
     // Clean up
     // Remove opened modal
-    storeUserSettings({ modal: null });
-    return true;
+    await storeUserSettings({ modal: null });
   });
 
   /**
    * Since this event only fired when clicked on the badge mark badge as visited/clicked
    */
-  storeUserSettings({ badgeVisited: DateTime.local() }, true)
-    .subscribe(() => {
-      sendMessage(updateBadgeAction());
-    });
+  storeUserSettings({ badgeVisited: DateTime.local() });
+  updateBadge();
 });
 
 // Update Badge on badge update request or new date alarm

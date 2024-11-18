@@ -48,7 +48,8 @@ const DevTools: React.FunctionComponent = () => {
       <Layout.Content>
         <Button variant="outlined" color="secondary" onClick={clearChromeStorage}>Clear Chrome Local Storage</Button>
         <Button variant="outlined" onClick={clearBadge}>Clear Badge</Button>
-        <Button variant="outlined" onClick={openModal(SCAN_ERROR_BIRTHDAYS_EXTRACT)}>Birthdays Extract Failed Modal</Button>
+        <Button variant="outlined" onClick={openModal(SCAN_ERROR_BIRTHDAYS_EXTRACT)}>Birthdays Extract Failed
+          Modal</Button>
         <Button variant="outlined" onClick={openModal(SHOW_MODAL_SCAN_SUCCESS)}>Scanning Success Modal</Button>
         <Button variant="outlined" onClick={openModal(SHOW_MODAL_EXPORT_SUCCESS)}>Export Success Modal</Button>
         <Button variant="outlined" onClick={openModal(SCAN_ERROR_FACEBOOK_REQUIRED)}>Facebook Required Modal</Button>

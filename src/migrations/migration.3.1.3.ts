@@ -29,7 +29,7 @@ export function UPGRADE_TO_3_1_3(version: string): Observable<any> {
   if (!(version >= '3.1.0' && version < '3.1.3')) {
     return of(false);
   }
-  return retrieveUserSettings(['birthdays'])
+  return retrieveUserSettings(['birthdays'], true)
     .pipe(
       map(({ birthdays }) => {
         const updated: Array<StoredBirthday> = birthdays
