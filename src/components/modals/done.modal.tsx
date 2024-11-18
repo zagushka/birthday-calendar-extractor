@@ -5,7 +5,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { translate } from '../../filters/translate';
+import { t } from '../../filters/translate';
 import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
 import LeaveFeedbackButton from '../buttons/leave-feedback.button/leave-feedback.button';
 import {
@@ -20,12 +20,12 @@ const DoneModal: FunctionComponent = () => (
     onClose={handleCloseModal}
   >
     <DialogTitle>
-      {translate('DONE_TITLE')}
+      {t('DONE_TITLE')}
     </DialogTitle>
 
     <DialogContent>
       <Typography variant="body1" color="textSecondary">
-        {translate('DONE_DESCRIPTION')}
+        {t('DONE_DESCRIPTION')}
       </Typography>
     </DialogContent>
 

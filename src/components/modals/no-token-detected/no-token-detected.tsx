@@ -6,7 +6,7 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
 import {
   DialogTitle,
@@ -20,12 +20,12 @@ const NoTokenDetectedModal: FunctionComponent = () => (
     onClose={handleCloseModal}
   >
     <DialogTitle>
-      {translate('ERROR_HEADER')}
+      {t('ERROR_HEADER')}
     </DialogTitle>
 
     <DialogContent>
       <DialogContentText>
-        {translate('SCAN_ERROR_NO_TOKEN_DETECTED')}
+        {t('SCAN_ERROR_NO_TOKEN_DETECTED')}
       </DialogContentText>
     </DialogContent>
     <DialogActions>
@@ -35,7 +35,7 @@ const NoTokenDetectedModal: FunctionComponent = () => (
         variant="contained"
         onClick={() => handleLinkClickAndCloseModal('LOG_INTO_FACEBOOK_URL')}
       >
-        {translate('LOG_INTO_FACEBOOK_TITLE')}
+        {t('LOG_INTO_FACEBOOK_TITLE')}
       </Button>
       <DialogCloseButton />
     </DialogActions>

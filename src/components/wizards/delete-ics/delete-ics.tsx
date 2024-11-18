@@ -4,7 +4,7 @@ import React, {
   useContext,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { CREATE_CALENDAR_DELETE_ICS } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
 import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
@@ -22,7 +22,7 @@ const DeleteIcsGeneratorWizard: FunctionComponent = () => {
   return (
     <>
       <Typography variant="body2">
-        {translate('SELECT_DELETE_ICS_DESCRIPTION')}
+        {t('SELECT_DELETE_ICS_DESCRIPTION')}
       </Typography>
 
       <GenerateAndDownloadButton

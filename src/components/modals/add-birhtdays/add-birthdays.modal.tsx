@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import { DateTime } from 'luxon';
 import React, { FunctionComponent, useRef, useState, } from 'react';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { updateStoredBirthdays } from "../../../libs/birthdays-scan";
 import { RawScannedUser } from "../../../libs/events/executed-script.types";
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
@@ -134,12 +134,12 @@ const AddBirthdaysModal: FunctionComponent<{
       onClose={handleCloseModal}
     >
       <DialogTitle>
-        {translate('ADD_BIRTHDAYS_HEADER')}
+        {t('ADD_BIRTHDAYS_HEADER')}
       </DialogTitle>
 
       <DialogContent>
         <Typography variant="body1" color="textSecondary" paragraph>
-          {translate('ADD_BIRTHDAYS_DESCRIPTION')}
+          {t('ADD_BIRTHDAYS_DESCRIPTION')}
         </Typography>
         <Paper component="ul" className={classes.root}>
           {parsed.map((data, index) => (
@@ -175,7 +175,7 @@ const AddBirthdaysModal: FunctionComponent<{
             onStoreNewUsers();
           }}
         >
-          {translate('ADD_BIRTHDAYS_BUTTON_TITLE')}
+          {t('ADD_BIRTHDAYS_BUTTON_TITLE')}
         </Button>
         <DialogCloseButton/>
       </DialogActions>

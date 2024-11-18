@@ -10,7 +10,7 @@ import React, {
   FunctionComponent,
   useRef,
 } from 'react';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { ShowModalAction } from '../../../libs/events/types';
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
@@ -42,15 +42,15 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({ erro
       onClose={handleCloseModal}
     >
       <DialogTitle>
-        {translate('ERROR_HEADER')}
+        {t('ERROR_HEADER')}
       </DialogTitle>
 
       <DialogContent>
         <Typography variant="body1" color="textSecondary" paragraph>
-          {translate(error.type)}
+          {t(error.type)}
         </Typography>
         <Typography variant="body1" color="textSecondary" paragraph>
-          {translate('REPORT_A_BUG_DESCRIPTION')}
+          {t('REPORT_A_BUG_DESCRIPTION')}
         </Typography>
         <TextField
           inputRef={textAreaRef}
@@ -74,7 +74,7 @@ const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({ erro
           variant="contained"
           onClick={handleReportBugClick}
         >
-          {translate('REPORT_A_BUG_TITLE')}
+          {t('REPORT_A_BUG_TITLE')}
         </Button>
         <DialogCloseButton />
       </DialogActions>

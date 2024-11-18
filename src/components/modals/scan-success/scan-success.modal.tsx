@@ -5,7 +5,7 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
 import ToExportButton from '../../buttons/to-export.button/to-export.button';
 import ToCalendarButton from '../../buttons/to-calendar.button/to-calendar.button';
@@ -21,12 +21,12 @@ const ScanSuccessModal: FunctionComponent = () => (
     onClose={handleCloseModal}
   >
     <DialogTitle>
-      {translate('MODAL_SCAN_SUCCESS_TITLE')}
+      {t('MODAL_SCAN_SUCCESS_TITLE')}
     </DialogTitle>
 
     <DialogContent>
       <DialogContentText>
-        {translate('MODAL_SCAN_SUCCESS_DESCRIPTION')}
+        {t('MODAL_SCAN_SUCCESS_DESCRIPTION')}
       </DialogContentText>
     </DialogContent>
 

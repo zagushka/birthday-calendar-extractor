@@ -26,7 +26,7 @@ import React, {
 } from 'react';
 import { FunnyMessagesToAvoidCruelReality } from "./funny-messages-to-avoid-cruel-reality";
 import { CurrentStatusContext } from '../../context/current-status.context';
-import { translate } from '../../filters/translate';
+import { t } from '../../filters/translate';
 import { translateString } from '../../filters/translateString';
 import { BirthdaysStartScan } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
@@ -112,7 +112,7 @@ export const Scan: FunctionComponent = () => {
           pr={2}
         >
           <Typography variant="body1" gutterBottom>
-            {translate(firstTime ? 'SCAN_PAGE_DESCRIPTION' : 'SCAN_PAGE_FIRST_TIME_DESCRIPTION')}
+            {t(firstTime ? 'SCAN_PAGE_DESCRIPTION' : 'SCAN_PAGE_FIRST_TIME_DESCRIPTION')}
           </Typography>
         </Box>
 

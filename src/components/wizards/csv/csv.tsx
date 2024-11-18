@@ -13,7 +13,7 @@ import React, {
   useMemo,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { translateString } from '../../../filters/translateString';
 import { CREATE_CALENDAR_CSV } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
@@ -53,7 +53,7 @@ const CsvGeneratorWizard: FunctionComponent = () => {
   return (
     <>
       <Typography variant="body2">
-        {translate('FILE_FORMAT_CSV_DESCRIPTION')}
+        {t('FILE_FORMAT_CSV_DESCRIPTION')}
       </Typography>
 
       <FormControl size="small" component="fieldset">

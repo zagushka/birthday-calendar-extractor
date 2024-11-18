@@ -5,7 +5,7 @@ import React, {
   useMemo,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { CREATE_CALENDAR_ICS } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
 import { STORED_BIRTHDAY } from '../../../libs/storage/storaged.types';
@@ -31,7 +31,7 @@ const IcsGeneratorWizard: FunctionComponent = () => {
   return (
     <>
       <Typography variant="body2">
-        {translate('SELECT_ICS_DESCRIPTION')}
+        {t('SELECT_ICS_DESCRIPTION')}
       </Typography>
 
       <GenerateAndDownloadButton

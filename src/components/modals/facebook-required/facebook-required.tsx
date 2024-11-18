@@ -6,7 +6,7 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
 import {
   DialogTitle,
@@ -20,12 +20,12 @@ const FacebookRequiredModal: FunctionComponent = () => (
     onClose={handleCloseModal}
   >
     <DialogTitle>
-      {translate('ATTENTION_HEADER')}
+      {t('ATTENTION_HEADER')}
     </DialogTitle>
 
     <DialogContent>
       <DialogContentText>
-        {translate('SCAN_ERROR_FACEBOOK_REQUIRED')}
+        {t('SCAN_ERROR_FACEBOOK_REQUIRED')}
       </DialogContentText>
     </DialogContent>
 
@@ -36,7 +36,7 @@ const FacebookRequiredModal: FunctionComponent = () => (
         variant="contained"
         onClick={() => handleLinkClickAndCloseModal('SCAN_ERROR_FACEBOOK_REQUIRED_LINK')}
       >
-        {translate('SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE')}
+        {t('SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE')}
       </Button>
       <DialogCloseButton />
     </DialogActions>
