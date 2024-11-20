@@ -3,7 +3,7 @@ import {
   filterBirthdaysForDate,
   retrieveUserSettings,
   reviveBirthday,
-} from './storage/chrome.storage';
+} from '@/libs/storage/chrome.storage';
 
 /**
  * Update Badge according to today's birthday counter

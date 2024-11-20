@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Location } from 'react-router-dom';
-import { ShowModalAction } from '../libs/events/types';
-import { useCurrentStatus } from '../libs/hooks/current-status.hook';
+import { ShowModalAction } from '@/libs/events/types';
+import { useCurrentStatus } from '@/libs/hooks/current-status.hook';
 import {
   StoredBirthday,
   WizardsSettings,
-} from '../libs/storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 interface CurrentStatusContextInterface {
   initDone: boolean;

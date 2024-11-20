@@ -1,7 +1,8 @@
 import update from 'immutability-helper';
 import { DateTime } from 'luxon';
 import {
-  bindCallback, firstValueFrom, from,
+  firstValueFrom,
+  from,
   Observable,
   Subscriber,
 } from 'rxjs';
@@ -10,13 +11,13 @@ import {
   fakeName,
   isDevelopment,
   isFakeNames,
-} from '../../constants';
+} from '@/constants';
 import {
   RestoredBirthday,
   Settings,
   StoredBirthday,
   StoredSettings,
-} from './storaged.types';
+} from '@/libs/storage/storaged.types';
 
 type AreaName = chrome.storage.AreaName;
 type StorageChange = chrome.storage.StorageChange;

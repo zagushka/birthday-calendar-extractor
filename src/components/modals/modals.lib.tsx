@@ -9,8 +9,8 @@ import {
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
-import handleLink from '../../filters/handleLink';
-import { storeUserSettings } from '../../libs/storage/chrome.storage';
+import handleLink from '@/filters/handleLink';
+import { storeUserSettings } from '@/libs/storage/chrome.storage';
 
 export const handleCloseModal = () => storeUserSettings({ modal: null });
 

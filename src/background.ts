@@ -1,29 +1,28 @@
 import { DateTime } from 'luxon';
 import {
   startWith,
-  switchMap,
 } from 'rxjs/operators';
-import { updateBadge } from './libs/badge';
+import { updateBadge } from '@/libs/badge';
 import {
   forceBirthdaysScan,
   sendScanLog,
-} from './libs/birthdays-scan';
-import { updateBadgeAction } from './libs/events/actions';
-import { setupAlarms } from './libs/events/alarms';
+} from '@/libs/birthdays-scan';
+import { updateBadgeAction } from '@/libs/events/actions';
+import { setupAlarms } from '@/libs/events/alarms';
 import {
   listenTo,
   sendMessage,
-} from './libs/events/events';
-import { ScanErrorPayload } from './libs/events/executed-script.types';
+} from '@/libs/events/events';
+import { ScanErrorPayload } from '@/libs/events/executed-script.types';
 import {
   ALARM_NEW_DAY,
   BIRTHDAYS_START_SCAN,
   BirthdaysStartExtractionAction,
   SHOW_MODAL_SCAN_SUCCESS,
   UPDATE_BADGE,
-} from './libs/events/types';
-import { storeUserSettings } from './libs/storage/chrome.storage';
-import { migrations } from './migrations/migraions';
+} from '@/libs/events/types';
+import { storeUserSettings } from '@/libs/storage/chrome.storage';
+import { migrations } from '@/migrations/migraions';
 
 // new connection means popup was initiated
 chrome.runtime.onConnect.addListener((externalPort) => {

@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { BoxProps } from '@material-ui/core/Box/Box';
 import React, { FunctionComponent } from 'react';
-import { useLayoutStyles } from './layout.styles';
+import { useLayoutStyles } from '@/components/layout/layout.styles';
 
 export const LayoutHeader: FunctionComponent = ({ children }) => {
   const classes = useLayoutStyles();

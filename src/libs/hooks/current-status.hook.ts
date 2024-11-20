@@ -9,17 +9,17 @@ import {
   Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ShowModalAction } from '../events/types';
+import { ShowModalAction } from '@/libs/events/types';
 import {
   listenToUserSettings,
   retrieveUserSettings,
   storeUserSettings,
-} from '../storage/chrome.storage';
+} from '@/libs/storage/chrome.storage';
 import {
   Settings,
   StoredBirthday,
   WizardsSettings,
-} from '../storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 /**
  * Return always updated stored values

@@ -14,11 +14,11 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import { CurrentStatusContext } from '../../context/current-status.context';
-import { translateString } from '../../filters/translateString';
-import { useTapsCounter } from '../../libs/hooks/tap-counter.hook';
-import { storeUserSettings } from '../../libs/storage/chrome.storage';
-import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
+import { CurrentStatusContext } from '@/context/current-status.context';
+import { translateString } from '@/filters/translateString';
+import { useTapsCounter } from '@/libs/hooks/tap-counter.hook';
+import { storeUserSettings } from '@/libs/storage/chrome.storage';
+import BuyCoffeeButton from '@/components/buttons/buy-coffee.button/buy-coffee.button';
 
 interface CalendarNavigationProps {
   updateDayIndex: (delta?: number) => void;

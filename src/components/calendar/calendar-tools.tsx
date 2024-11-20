@@ -2,7 +2,7 @@ import {
   DateTime,
   DateTimeFormatOptions,
 } from 'luxon';
-import { RestoredBirthday } from '../../libs/storage/storaged.types';
+import { RestoredBirthday } from '@/libs/storage/storaged.types';
 
 export const DAY_HEADER_HEIGHT = 38;
 export const USER_ROW_HEIGHT = 30;

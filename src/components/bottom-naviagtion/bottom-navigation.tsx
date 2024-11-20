@@ -17,9 +17,9 @@ import { NavLink } from 'react-router-dom';
 import {
   isDevelopment,
   isShowTools,
-} from '../../constants';
-import { CurrentStatusContext } from '../../context/current-status.context';
-import { translateString } from '../../filters/translateString';
+} from '@/constants';
+import { CurrentStatusContext } from '@/context/current-status.context';
+import { translateString } from '@/filters/translateString';
 
 const useStyles = makeStyles({
   root: {

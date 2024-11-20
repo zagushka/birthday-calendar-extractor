@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { SCAN_ERROR_GENERAL } from '../events/executed-script.types';
-import { SHOW_MODAL_EXPORT_SUCCESS } from '../events/types';
-import { storeUserSettings } from '../storage/chrome.storage';
-import { StoredBirthday } from '../storage/storaged.types';
+import { SCAN_ERROR_GENERAL } from '@/libs/events/executed-script.types';
+import { SHOW_MODAL_EXPORT_SUCCESS } from '@/libs/events/types';
+import { storeUserSettings } from '@/libs/storage/chrome.storage';
+import { StoredBirthday } from '@/libs/storage/storaged.types';
 import { useCalendarDownloader } from './download-calendar.hook';
 
 export const useHandleDownload = (calendarType: any, users: Array<StoredBirthday>, settings?: any) => {

@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { t } from '../../../filters/translate';
-import { handleCloseModal } from '../../modals/modals.lib';
+import { t } from '@/filters/translate';
+import { handleCloseModal } from '@/components/modals/modals.lib';
 
 export const DialogCloseButton: FunctionComponent = () => (
   <Button

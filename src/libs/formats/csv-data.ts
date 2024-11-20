@@ -1,10 +1,10 @@
-import { arrayToCSVRow } from '../lib';
-import { reviveBirthday } from '../storage/chrome.storage';
+import { arrayToCSVRow } from '@/libs/lib';
+import { reviveBirthday } from '@/libs/storage/chrome.storage';
 import {
   RestoredBirthday,
   STORED_BIRTHDAY,
   StoredBirthday,
-} from '../storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 /**
  * Sort function comparing two birthdays by user name

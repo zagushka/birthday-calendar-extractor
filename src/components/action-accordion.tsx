@@ -7,8 +7,8 @@ import {
 import Box from '@material-ui/core/Box';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { FunctionComponent } from 'react';
-import { WIZARD_NAMES } from '../constants';
-import { translateString } from '../filters/translateString';
+import { WIZARD_NAMES } from '@/constants';
+import { translateString } from '@/filters/translateString';
 
 export interface ActionAccordionInterface {
   action: typeof WIZARD_NAMES[keyof typeof WIZARD_NAMES];

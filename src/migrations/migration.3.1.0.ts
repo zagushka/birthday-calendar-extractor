@@ -11,8 +11,8 @@ import {
 import {
   retrieveUserSettings,
   storeUserSettings,
-} from '../libs/storage/chrome.storage';
-import { StoredBirthday } from '../libs/storage/storaged.types';
+} from '@/libs/storage/chrome.storage';
+import { StoredBirthday } from '@/libs/storage/storaged.types';
 
 /**
  * Starting from 3.1.0 additional functionality required contacts to have the birth-year

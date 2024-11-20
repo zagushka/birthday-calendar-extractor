@@ -16,11 +16,11 @@ import {
   SCAN_ERROR_NO_TOKEN_DETECTED,
   SCAN_ERROR_TIMEOUT,
   SHOW_MODAL_ADD_BIRTHDAYS,
-} from '../../libs/events/executed-script.types';
+} from '@/libs/events/executed-script.types';
 import {
   SHOW_MODAL_EXPORT_SUCCESS,
   SHOW_MODAL_SCAN_SUCCESS,
-} from '../../libs/events/types';
+} from '@/libs/events/types';
 import AddBirthdaysModal from './add-birhtdays/add-birthdays.modal';
 import DoneModal from './done.modal';
 import FacebookRequiredModal from './facebook-required/facebook-required';

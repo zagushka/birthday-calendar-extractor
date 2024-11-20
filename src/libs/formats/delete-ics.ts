@@ -1,5 +1,5 @@
 import { CalendarICS } from './ics';
-import { PreparedEvent } from '../lib';
+import { PreparedEvent } from '@/libs/lib';
 
 export class CalendarDeleteICS extends CalendarICS {
   readonly filename: string = 'delete-birthday-calendar.ics';

@@ -13,11 +13,11 @@ import {
 } from '@material-ui/core';
 import { DateTime } from 'luxon';
 import React, { FunctionComponent, useRef, useState, } from 'react';
-import { t } from '../../../filters/translate';
-import { updateStoredBirthdays } from "../../../libs/birthdays-scan";
-import { RawScannedUser } from "../../../libs/events/executed-script.types";
-import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
-import { DialogTitle, handleCloseModal, } from '../modals.lib';
+import { t } from '@/filters/translate';
+import { updateStoredBirthdays } from "@/libs/birthdays-scan";
+import { RawScannedUser } from "@/libs/events/executed-script.types";
+import { DialogCloseButton } from '@/components/buttons/dialog-close/dialog-close';
+import { DialogTitle, handleCloseModal, } from '@/components/modals/modals.lib';
 
 declare global {
   interface Array<T> {

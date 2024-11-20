@@ -8,14 +8,14 @@ import {
 import React, {
   FunctionComponent,
 } from 'react';
-import { t } from '../../../filters/translate';
-import { ShowModalAction } from '../../../libs/events/types';
-import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
+import { t } from '@/filters/translate';
+import { ShowModalAction } from "@/libs/events/types";
+import { DialogCloseButton } from '@/components/buttons/dialog-close/dialog-close';
 import {
   DialogTitle,
   handleCloseModal,
   handleLinkClickAndCloseModal,
-} from '../modals.lib';
+} from '@/components/modals/modals.lib';
 
 const GeneralErrorModal: FunctionComponent<{ error: ShowModalAction }> = ({ error }) => {
   const handleReportBugClick = () => {

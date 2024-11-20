@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
-import { Message } from './actions';
-import { ActionTypes } from './types';
+import { Message } from '@/libs/events/actions';
+import { ActionTypes } from '@/libs/events/types';
 
 export const allChromeMessages$: Subject<Message<ActionTypes>> = new Subject();
 

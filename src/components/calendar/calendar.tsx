@@ -17,13 +17,13 @@ import {
   ListOnScrollProps,
   VariableSizeList,
 } from 'react-window';
-import { toggleStoredUserSettings } from "../../libs/birthdays-scan";
-import { CurrentStatusContext } from '../../context/current-status.context';
+import { toggleStoredUserSettings } from "@/libs/birthdays-scan";
+import { CurrentStatusContext } from '@/context/current-status.context';
 import {
   reviveBirthday,
   storeUserSettings,
-} from '../../libs/storage/chrome.storage';
-import { STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS } from '../../libs/storage/storaged.types';
+} from '@/libs/storage/chrome.storage';
+import { STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS } from '@/libs/storage/storaged.types';
 import Layout from '../layout/layout';
 import { CalendarNavigation } from './calendar-navigation';
 import {

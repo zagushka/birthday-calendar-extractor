@@ -15,9 +15,9 @@ import React, {
   memo,
 } from 'react';
 import { ListChildComponentProps } from 'react-window';
-import handleLink from '../../filters/handleLink';
-import { RestoredBirthday } from '../../libs/storage/storaged.types';
-import { asLongDate } from './calendar-tools';
+import handleLink from '@/filters/handleLink';
+import { RestoredBirthday } from '@/libs/storage/storaged.types';
+import { asLongDate } from '@/components/calendar/calendar-tools';
 import {
   useDayListStyles,
   useDayRowStyles,

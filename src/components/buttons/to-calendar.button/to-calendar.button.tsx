@@ -1,8 +1,8 @@
 import { Button } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
-import { translateString } from '../../../filters/translateString';
-import { handleCloseModal } from '../../modals/modals.lib';
+import { translateString } from '@/filters/translateString';
+import { handleCloseModal } from '@/components/modals/modals.lib';
 
 const ToCalendarButton: FunctionComponent = () => (
   <Button

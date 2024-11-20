@@ -1,13 +1,12 @@
 import {
-  bindCallback,
   Observable,
   Subject,
 } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { Message } from './actions';
+import { Message } from '@/libs/events/actions';
 import { allChromeMessages$ } from './messages';
-import { ActionTypes } from './types';
+import { ActionTypes } from '@/libs/events/types';
 
 /**
  * All actions Observable

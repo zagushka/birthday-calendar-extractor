@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
-import { alarmNewDay } from './actions';
-import { sendMessage } from './events';
+import { alarmNewDay } from '@/libs/events/actions';
+import { sendMessage } from '@/libs/events/events';
 
 const onAlarmListener = (alarm: chrome.alarms.Alarm) => {
   if (alarm.name === 'new-day-alarm') {

@@ -13,16 +13,16 @@ import React, {
   useMemo,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { t } from '../../../filters/translate';
-import { translateString } from '../../../filters/translateString';
-import { CREATE_CALENDAR_CSV } from '../../../libs/events/types';
-import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
-import { storeUserSettings } from '../../../libs/storage/chrome.storage';
+import { t } from '@/filters/translate';
+import { translateString } from '@/filters/translateString';
+import { CREATE_CALENDAR_CSV } from "@/libs/events/types";
+import { useHandleDownload } from "@/libs/hooks/handle-download-calendar-results.hook";
+import { storeUserSettings } from "@/libs/storage/chrome.storage";
 import {
   CsvDateFormats,
   STORED_BIRTHDAY,
-} from '../../../libs/storage/storaged.types';
-import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
+} from "@/libs/storage/storaged.types";
+import GenerateAndDownloadButton from '@/components/buttons/generate.button/generate.button';
 
 const CsvGeneratorWizard: FunctionComponent = () => {
   const { wizardsSettings: settings, users, isScanning } = useContext(CurrentStatusContext);

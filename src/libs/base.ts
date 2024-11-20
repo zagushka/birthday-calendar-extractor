@@ -1,6 +1,6 @@
 import { Subscriber } from 'rxjs';
-import { PreparedEvent } from './lib';
-import { StoredBirthday } from './storage/storaged.types';
+import { PreparedEvent } from '@/libs/lib';
+import { StoredBirthday } from '@/libs/storage/storaged.types';
 
 export abstract class CalendarBase<GeneratedEvent, GeneratedCalendar> {
   abstract readonly filename: string;
