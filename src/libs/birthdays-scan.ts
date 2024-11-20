@@ -38,10 +38,7 @@ export async function getFacebookTab(): Promise<chrome.tabs.Tab> {
     '*://*.facebook.com/*',
   ];
 
-  const tabs = await chrome.tabs.query({
-    url: urlPatterns,
-    lastFocusedWindow: true
-  });
+  const tabs = await chrome.tabs.query({ url: urlPatterns });
   const url = tabs[0]?.url;
 
   // check currTab.url is a Facebook page
