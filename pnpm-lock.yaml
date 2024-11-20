@@ -89,13 +89,13 @@ importers:
         version: 5.62.0(eslint@8.57.1)(typescript@4.9.5)
       copy-webpack-plugin:
         specifier: ^6.3.2
-        version: 6.4.1(webpack@5.96.1)
+        version: 6.4.1(webpack@5.96.1(webpack-cli@4.10.0))
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
       css-loader:
         specifier: ^5.0.2
-        version: 5.2.7(webpack@5.96.1)
+        version: 5.2.7(webpack@5.96.1(webpack-cli@4.10.0))
       ejs:
         specifier: ^3.1.6
         version: 3.1.10
@@ -122,31 +122,31 @@ importers:
         version: 4.6.2(eslint@8.57.1)
       file-loader:
         specifier: ^6.2.0
-        version: 6.2.0(webpack@5.96.1)
+        version: 6.2.0(webpack@5.96.1(webpack-cli@4.10.0))
       jest:
         specifier: ^26.6.3
         version: 26.6.3
       merge-json-webpack-plugin:
         specifier: ^6.2.0
-        version: 6.2.0(webpack@5.96.1)
+        version: 6.2.0(webpack@5.96.1(webpack-cli@4.10.0))
       mini-css-extract-plugin:
         specifier: ^0.10.0
-        version: 0.10.1(webpack@5.96.1)
+        version: 0.10.1(webpack@5.96.1(webpack-cli@4.10.0))
       sass:
         specifier: ^1.56.2
         version: 1.80.6
       sass-loader:
         specifier: ^10.1.0
-        version: 10.5.2(sass@1.80.6)(webpack@5.96.1)
+        version: 10.5.2(sass@1.80.6)(webpack@5.96.1(webpack-cli@4.10.0))
       style-loader:
         specifier: ^2.0.0
-        version: 2.0.0(webpack@5.96.1)
+        version: 2.0.0(webpack@5.96.1(webpack-cli@4.10.0))
       ts-jest:
         specifier: ^26.4.4
         version: 26.5.6(jest@26.6.3)(typescript@4.9.5)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.9.5)(webpack@5.96.1)
+        version: 9.5.1(typescript@4.9.5)(webpack@5.96.1(webpack-cli@4.10.0))
       typescript:
         specifier: ^4.7.4
         version: 4.9.5
@@ -158,13 +158,13 @@ importers:
         version: 4.10.0(webpack@5.96.1)
       webpack-ext-reloader:
         specifier: ^1.1.9
-        version: 1.1.13(webpack@5.96.1)
+        version: 1.1.13(webpack@5.96.1(webpack-cli@4.10.0))
       webpack-merge:
         specifier: ^5.4.0
         version: 5.10.0
       zip-webpack-plugin:
         specifier: ^4.0.1
-        version: 4.0.2(webpack-sources@3.2.3)(webpack@5.96.1)
+        version: 4.0.2(webpack-sources@3.2.3)(webpack@5.96.1(webpack-cli@4.10.0))
 
 packages:
 
@@ -1316,8 +1316,8 @@ packages:
     engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
-  cross-spawn@6.0.5:
-    resolution: {integrity: sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ==}
+  cross-spawn@6.0.6:
+    resolution: {integrity: sha512-VqCUuhcd1iB+dsv8gxPttb5iZh/D0iubSP21g36KXdEuf6I5JiioesUVjpCdHV9MZRUfVFlvwtIUyPfxo5trtw==}
     engines: {node: '>=4.8'}
 
   cross-spawn@7.0.5:
@@ -4965,17 +4965,17 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@1.2.0(webpack-cli@4.10.0)(webpack@5.96.1)':
+  '@webpack-cli/configtest@1.2.0(webpack-cli@4.10.0(webpack@5.96.1))(webpack@5.96.1(webpack-cli@4.10.0))':
     dependencies:
       webpack: 5.96.1(webpack-cli@4.10.0)
       webpack-cli: 4.10.0(webpack@5.96.1)
 
-  '@webpack-cli/info@1.5.0(webpack-cli@4.10.0)':
+  '@webpack-cli/info@1.5.0(webpack-cli@4.10.0(webpack@5.96.1))':
     dependencies:
       envinfo: 7.14.0
       webpack-cli: 4.10.0(webpack@5.96.1)
 
-  '@webpack-cli/serve@1.7.0(webpack-cli@4.10.0)':
+  '@webpack-cli/serve@1.7.0(webpack-cli@4.10.0(webpack@5.96.1))':
     dependencies:
       webpack-cli: 4.10.0(webpack@5.96.1)
 
@@ -5393,7 +5393,7 @@ snapshots:
 
   clean-stack@2.2.0: {}
 
-  clean-webpack-plugin@4.0.0(webpack@5.96.1):
+  clean-webpack-plugin@4.0.0(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       del: 4.1.1
       webpack: 5.96.1(webpack-cli@4.10.0)
@@ -5453,7 +5453,7 @@ snapshots:
 
   copy-descriptor@0.1.1: {}
 
-  copy-webpack-plugin@6.4.1(webpack@5.96.1):
+  copy-webpack-plugin@6.4.1(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       cacache: 15.3.0
       fast-glob: 3.3.2
@@ -5476,7 +5476,7 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.5
 
-  cross-spawn@6.0.5:
+  cross-spawn@6.0.6:
     dependencies:
       nice-try: 1.0.5
       path-key: 2.0.1
@@ -5490,7 +5490,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  css-loader@5.2.7(webpack@5.96.1):
+  css-loader@5.2.7(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       loader-utils: 2.0.4
@@ -6013,7 +6013,7 @@ snapshots:
 
   execa@1.0.0:
     dependencies:
-      cross-spawn: 6.0.5
+      cross-spawn: 6.0.6
       get-stream: 4.1.0
       is-stream: 1.1.0
       npm-run-path: 2.0.2
@@ -6112,7 +6112,7 @@ snapshots:
     dependencies:
       flat-cache: 3.2.0
 
-  file-loader@6.2.0(webpack@5.96.1):
+  file-loader@6.2.0(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
@@ -7274,7 +7274,7 @@ snapshots:
 
   memoize-one@6.0.0: {}
 
-  merge-json-webpack-plugin@6.2.0(webpack@5.96.1):
+  merge-json-webpack-plugin@6.2.0(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       fast-glob: 3.3.2
       schema-utils: 4.2.0
@@ -7315,7 +7315,7 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  mini-css-extract-plugin@0.10.1(webpack@5.96.1):
+  mini-css-extract-plugin@0.10.1(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       loader-utils: 1.4.2
       normalize-url: 1.9.1
@@ -7909,7 +7909,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  sass-loader@10.5.2(sass@1.80.6)(webpack@5.96.1):
+  sass-loader@10.5.2(sass@1.80.6)(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       klona: 2.0.6
       loader-utils: 2.0.4
@@ -8198,7 +8198,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  style-loader@2.0.0(webpack@5.96.1):
+  style-loader@2.0.0(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
@@ -8245,7 +8245,7 @@ snapshots:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.10(webpack@5.96.1):
+  terser-webpack-plugin@5.3.10(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -8340,7 +8340,7 @@ snapshots:
       typescript: 4.9.5
       yargs-parser: 20.2.9
 
-  ts-loader@9.5.1(typescript@4.9.5)(webpack@5.96.1):
+  ts-loader@9.5.1(typescript@4.9.5)(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.17.1
@@ -8547,9 +8547,9 @@ snapshots:
   webpack-cli@4.10.0(webpack@5.96.1):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 1.2.0(webpack-cli@4.10.0)(webpack@5.96.1)
-      '@webpack-cli/info': 1.5.0(webpack-cli@4.10.0)
-      '@webpack-cli/serve': 1.7.0(webpack-cli@4.10.0)
+      '@webpack-cli/configtest': 1.2.0(webpack-cli@4.10.0(webpack@5.96.1))(webpack@5.96.1(webpack-cli@4.10.0))
+      '@webpack-cli/info': 1.5.0(webpack-cli@4.10.0(webpack@5.96.1))
+      '@webpack-cli/serve': 1.7.0(webpack-cli@4.10.0(webpack@5.96.1))
       colorette: 2.0.20
       commander: 7.2.0
       cross-spawn: 7.0.5
@@ -8560,11 +8560,11 @@ snapshots:
       webpack: 5.96.1(webpack-cli@4.10.0)
       webpack-merge: 5.10.0
 
-  webpack-ext-reloader@1.1.13(webpack@5.96.1):
+  webpack-ext-reloader@1.1.13(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       '@types/webextension-polyfill': 0.10.7
       '@types/webpack-sources': 3.2.3
-      clean-webpack-plugin: 4.0.0(webpack@5.96.1)
+      clean-webpack-plugin: 4.0.0(webpack@5.96.1(webpack-cli@4.10.0))
       colors: 1.4.0
       cross-env: 7.0.3
       json5: 2.2.3
@@ -8614,7 +8614,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.96.1)
+      terser-webpack-plugin: 5.3.10(webpack@5.96.1(webpack-cli@4.10.0))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     optionalDependencies:
@@ -8748,7 +8748,7 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zip-webpack-plugin@4.0.2(webpack-sources@3.2.3)(webpack@5.96.1):
+  zip-webpack-plugin@4.0.2(webpack-sources@3.2.3)(webpack@5.96.1(webpack-cli@4.10.0)):
     dependencies:
       webpack: 5.96.1(webpack-cli@4.10.0)
       webpack-sources: 3.2.3
