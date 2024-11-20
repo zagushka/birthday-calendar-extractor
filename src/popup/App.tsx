@@ -79,10 +79,16 @@ export const themeOptions: ThemeOptions = {
 const theme = createTheme(themeOptions);
 
 const App: FunctionComponent = () => {
-
   useEffect(() => {
-    // Let the background script know we are up and running
-    chrome.runtime.connect()
+    // Establish connection to the background script
+    const port = chrome.runtime.connect();
+
+    return () => {
+      if (port) {
+        // Clean up connection when the component unmounts
+        port.disconnect();
+      }
+    };
   }, []);
 
   return (

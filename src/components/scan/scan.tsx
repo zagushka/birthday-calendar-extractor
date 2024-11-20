@@ -140,7 +140,7 @@ export const Scan: FunctionComponent = () => {
              textAlign="center"
              display="flex"
              alignItems="center"
-             justifyContent="center">
+             justifyContent="flex-start">
           {isScanning && <>
             <Typography variant="body1" gutterBottom>
               <FunnyMessagesToAvoidCruelReality
