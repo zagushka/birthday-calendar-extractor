@@ -5,22 +5,22 @@ import React from 'react';
 import {
   setBadgeColor,
   setBadgeText,
-} from '../libs/badge';
+} from '@/libs/badge';
 import {
   SCAN_ERROR_BIRTHDAYS_EXTRACT,
   SCAN_ERROR_FACEBOOK_REQUIRED,
   SCAN_ERROR_NO_TOKEN_DETECTED,
   ScanErrorTypes,
-} from '../libs/events/executed-script.types';
+} from '@/libs/events/executed-script.types';
 import {
   SHOW_MODAL_EXPORT_SUCCESS,
   SHOW_MODAL_SCAN_SUCCESS,
   ShowModalTypes,
-} from '../libs/events/types';
+} from '@/libs/events/types';
 import {
   clearStorage,
   storeUserSettings,
-} from '../libs/storage/chrome.storage';
+} from '@/libs/storage/chrome.storage';
 import Layout from './layout/layout';
 
 const DevTools: React.FunctionComponent = () => {

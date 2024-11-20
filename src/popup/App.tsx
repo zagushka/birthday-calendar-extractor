@@ -4,10 +4,10 @@ import {
   ThemeProvider,
 } from '@material-ui/core/styles';
 import React, { FunctionComponent, useEffect } from 'react';
-import UserSettings from '../components/user-settings/user-settings';
-import CurrentStatusContextProvider from '../context/current-status.context';
-import LoadingContextProvider from '../context/loading.context';
-import './App.scss';
+import UserSettings from '@/components/user-settings/user-settings';
+import CurrentStatusContextProvider from '@/context/current-status.context';
+import LoadingContextProvider from '@/context/loading.context';
+import '@/popup/App.scss';
 
 export const themeOptions: ThemeOptions = {
   palette: {

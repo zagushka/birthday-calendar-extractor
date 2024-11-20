@@ -5,13 +5,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { t } from '../../filters/translate';
-import BuyCoffeeButton from '../buttons/buy-coffee.button/buy-coffee.button';
-import LeaveFeedbackButton from '../buttons/leave-feedback.button/leave-feedback.button';
+import { t } from '@/filters/translate';
+import BuyCoffeeButton from '@/components/buttons/buy-coffee.button/buy-coffee.button';
+import LeaveFeedbackButton from '@/components/buttons/leave-feedback.button/leave-feedback.button';
 import {
   DialogTitle,
   handleCloseModal,
-} from './modals.lib';
+} from '@/components/modals/modals.lib';
 
 const DoneModal: FunctionComponent = () => (
   <Dialog

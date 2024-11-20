@@ -2,7 +2,7 @@ import {
   ExecutedScriptScanResponseAction,
   RawScannedUser,
   ScanErrorTypes,
-} from '../events/executed-script.types';
+} from '@/libs/events/executed-script.types';
 
 export const fetchUserFriendsBirthdayInfoFromContext = (): string => {
   const responseId = Math.random().toString();

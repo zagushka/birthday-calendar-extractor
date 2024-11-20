@@ -9,9 +9,9 @@ import React, { FunctionComponent } from 'react';
 import {
   ScanErrorTypes,
   SHOW_MODAL_ADD_BIRTHDAYS,
-} from '../../libs/events/executed-script.types';
-import { ShowModalTypes } from '../../libs/events/types';
-import { storeUserSettings } from '../../libs/storage/chrome.storage';
+} from '@/libs/events/executed-script.types';
+import { ShowModalTypes } from '@/libs/events/types';
+import { storeUserSettings } from '@/libs/storage/chrome.storage';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   fab: {

@@ -5,11 +5,11 @@ import React, {
   useMemo,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { t } from '../../../filters/translate';
-import { CREATE_CALENDAR_ICS } from '../../../libs/events/types';
-import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
-import { STORED_BIRTHDAY } from '../../../libs/storage/storaged.types';
-import GenerateAndDownloadButton from '../../buttons/generate.button/generate.button';
+import { t } from '@/filters/translate';
+import { CREATE_CALENDAR_ICS } from "@/libs/events/types";
+import { useHandleDownload } from "@/libs/hooks/handle-download-calendar-results.hook";
+import { STORED_BIRTHDAY } from "@/libs/storage/storaged.types";
+import GenerateAndDownloadButton from '@/components/buttons/generate.button/generate.button';
 
 const IcsGeneratorWizard: FunctionComponent = () => {
   const { wizardsSettings: settings, users, isScanning } = useContext(CurrentStatusContext);

@@ -1,8 +1,8 @@
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { updateBadge } from '../libs/badge';
-import { UPGRADE_TO_3_1_0 } from './migration.3.1.0';
-import { UPGRADE_TO_3_1_3 } from './migration.3.1.3';
+import { updateBadge } from '@/libs/badge';
+import { UPGRADE_TO_3_1_0 } from '@/migrations/migration.3.1.0';
+import { UPGRADE_TO_3_1_3 } from '@/migrations/migration.3.1.3';
 
 export function migrations(details: chrome.runtime.InstalledDetails) {
   if (details.reason !== 'update') {

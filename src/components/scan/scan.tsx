@@ -26,15 +26,15 @@ import React, {
 } from 'react';
 import { FunnyMessagesToAvoidCruelReality } from "./funny-messages-to-avoid-cruel-reality";
 import { CurrentStatusContext } from '../../context/current-status.context';
-import { t } from '../../filters/translate';
-import { translateString } from '../../filters/translateString';
-import { BirthdaysStartScan } from '../../libs/events/actions';
-import { sendMessage } from '../../libs/events/events';
+import { t } from '@/filters/translate';
+import { translateString } from '@/filters/translateString';
+import { BirthdaysStartScan } from '@/libs/events/actions';
+import { sendMessage } from '@/libs/events/events';
 import {
   useWasOff,
   useWasOnOff,
-} from '../../libs/hooks/on-and-offs.hook';
-import { useScanLogListener } from '../../libs/hooks/scan-log-listener.hook';
+} from '@/libs/hooks/on-and-offs.hook';
+import { useScanLogListener } from '@/libs/hooks/scan-log-listener.hook';
 import Layout from '../layout/layout';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({

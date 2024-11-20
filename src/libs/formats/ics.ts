@@ -1,14 +1,14 @@
 import { DateTime } from 'luxon';
-import { CalendarBase } from '../base';
+import { CalendarBase } from '@/libs/base';
 import {
   generatePreparedEventsForYears,
   PreparedEvent,
-} from '../lib';
-import { reviveBirthday } from '../storage/chrome.storage';
+} from '@/libs/lib';
+import { reviveBirthday } from '@/libs/storage/chrome.storage';
 import {
   IcsSettings,
   StoredBirthday,
-} from '../storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 interface IcsEvent {
   start: string;

@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { RestoredBirthday } from './storage/storaged.types';
+import { RestoredBirthday } from '@/libs/storage/storaged.types';
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url

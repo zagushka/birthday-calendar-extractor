@@ -6,13 +6,13 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { t } from '../../../filters/translate';
-import { DialogCloseButton } from '../../buttons/dialog-close/dialog-close';
+import { t } from '@/filters/translate';
+import { DialogCloseButton } from '@/components/buttons/dialog-close/dialog-close';
 import {
   DialogTitle,
   handleCloseModal,
   handleLinkClickAndCloseModal,
-} from '../modals.lib';
+} from '@/components/modals/modals.lib';
 
 const FacebookRequiredModal: FunctionComponent = () => (
   <Dialog

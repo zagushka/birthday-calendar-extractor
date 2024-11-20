@@ -12,9 +12,9 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { CurrentStatusContext } from '../../../context/current-status.context';
-import handleLink from '../../../filters/handleLink';
-import { translateString } from '../../../filters/translateString';
+import { CurrentStatusContext } from '@/context/current-status.context';
+import handleLink from '@/filters/handleLink';
+import { translateString } from '@/filters/translateString';
 
 interface BuyCoffeeButtonProps extends ButtonProps {
   withIcon?: boolean;

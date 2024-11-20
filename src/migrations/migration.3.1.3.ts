@@ -10,11 +10,11 @@ import {
 import {
   retrieveUserSettings,
   storeUserSettings,
-} from '../libs/storage/chrome.storage';
+} from '@/libs/storage/chrome.storage';
 import {
   STORED_BIRTHDAY,
   StoredBirthday,
-} from '../libs/storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 /**
  * Because of the bug in 3.1.0 with migration to new storage format

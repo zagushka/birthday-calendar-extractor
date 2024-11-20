@@ -5,7 +5,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { downloadCalendar } from '../download-calendar';
-import { StoredBirthday } from '../storage/storaged.types';
+import { StoredBirthday } from '@/libs/storage/storaged.types';
 
 export function useCalendarDownloader(calendarType: any, users: Array<StoredBirthday>, settings?: any) {
   const [status, setStatus] = useState<'working' | 'standby'>('standby');

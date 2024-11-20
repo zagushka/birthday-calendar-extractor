@@ -14,7 +14,11 @@
       "es2019",
       "dom"
     ],
-    "moduleResolution": "node"
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "exclude": [
     "node_modules",

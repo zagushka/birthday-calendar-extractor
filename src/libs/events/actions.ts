@@ -13,7 +13,7 @@ import {
   SEND_SCAN_LOG,
   SendScanLogAction,
   UPDATE_BADGE,
-} from './types';
+} from '@/libs/events/types';
 
 export function sendError(error: string): NotificationActionTypes {
   return {

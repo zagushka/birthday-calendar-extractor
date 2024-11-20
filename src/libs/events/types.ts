@@ -2,7 +2,7 @@
 import {
   CsvSettings,
   IcsSettings,
-} from '../storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 import {
   ExecutedScriptTypes,
   ScanErrorTypes,

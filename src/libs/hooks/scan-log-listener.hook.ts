@@ -7,13 +7,13 @@ import {
   scan,
   takeUntil,
 } from 'rxjs/operators';
-import { translateString } from '../../filters/translateString';
-import { Message } from '../events/actions';
-import { listenTo } from '../events/events';
+import { translateString } from '@/filters/translateString';
+import { Message } from '@/libs/events/actions';
+import { listenTo } from '@/libs/events/events';
 import {
   SEND_SCAN_LOG,
   SendScanLogAction,
-} from '../events/types';
+} from '@/libs/events/types';
 
 /**
  * Listen to SCAN_LOG messages and return translated string

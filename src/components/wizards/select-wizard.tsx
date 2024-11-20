@@ -4,8 +4,8 @@ import {
   useNavigate,
   useMatch,
 } from 'react-router-dom';
-import { WIZARD_NAMES } from '../../constants';
-import { translateString } from '../../filters/translateString';
+import { WIZARD_NAMES } from '@/constants';
+import { translateString } from '@/filters/translateString';
 import ActionAccordion, { ActionAccordionInterface } from '../action-accordion';
 import Layout from '../layout/layout';
 import CsvDataGeneratorWizard from './csv-data/csv-data';

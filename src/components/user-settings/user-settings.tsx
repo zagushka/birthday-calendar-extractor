@@ -12,16 +12,16 @@ import {
 import {
   isDevelopment,
   WIZARD_NAMES,
-} from '../../constants';
-import { CurrentStatusContext } from '../../context/current-status.context';
-import { storeUserSettings } from '../../libs/storage/chrome.storage';
-import Calendar from '../calendar/calendar';
-import DevTools from '../dev-tools';
-import { BottomMenu } from '../bottom-naviagtion/bottom-navigation';
-import Layout from '../layout/layout';
-import SwitchModals from '../modals/switch-modals';
-import { Scan } from '../scan/scan';
-import SelectWizard from '../wizards/select-wizard';
+} from '@/constants';
+import { CurrentStatusContext } from '@/context/current-status.context';
+import { storeUserSettings } from '@/libs/storage/chrome.storage';
+import Calendar from '@/components/calendar/calendar';
+import DevTools from '@/components/dev-tools';
+import { BottomMenu } from '@/components/bottom-naviagtion/bottom-navigation';
+import Layout from '@/components/layout/layout';
+import SwitchModals from '@/components/modals/switch-modals';
+import { Scan } from '@/components/scan/scan';
+import SelectWizard from '@/components/wizards/select-wizard';
 
 const UserSettings: FunctionComponent = () => {
   const {

@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
-import { CalendarBase } from '../base';
+import { CalendarBase } from '@/libs/base';
 import {
   generatePreparedEventsForYears,
   PreparedEvent,
-} from '../lib';
-import { reviveBirthday } from '../storage/chrome.storage';
-import { StoredBirthday } from '../storage/storaged.types';
+} from '@/libs/lib';
+import { reviveBirthday } from '@/libs/storage/chrome.storage';
+import { StoredBirthday } from '@/libs/storage/storaged.types';
 
 export class CalendarJSON extends CalendarBase<{}, {}> {
   readonly filename: string = 'birthday-calendar.json';

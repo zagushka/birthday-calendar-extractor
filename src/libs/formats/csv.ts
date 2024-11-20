@@ -1,15 +1,15 @@
 import { DateTime } from 'luxon';
-import { CalendarBase } from '../base';
+import { CalendarBase } from '@/libs/base';
 import {
   arrayToCSVRow,
   generatePreparedEventsForYears,
   PreparedEvent,
-} from '../lib';
-import { reviveBirthday } from '../storage/chrome.storage';
+} from '@/libs/lib';
+import { reviveBirthday } from '@/libs/storage/chrome.storage';
 import {
   CsvSettings,
   StoredBirthday,
-} from '../storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 interface CsvFormattedEvent {
   name: string;

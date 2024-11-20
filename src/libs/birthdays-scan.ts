@@ -5,11 +5,11 @@ import {
   take,
   timeout,
 } from 'rxjs/operators';
-import { SendScanLog } from './events/actions';
+import { SendScanLog } from '@/libs/events/actions';
 import {
   listenTo,
   sendMessage,
-} from './events/events';
+} from '@/libs/events/events';
 import {
   EXECUTED_SCRIPT_RESPONSE,
   ExecutedScriptScanResponseAction,
@@ -22,12 +22,12 @@ import { fetchUserFriendsBirthdayInfoFromContext } from './executed-scripts/exec
 import {
   retrieveUserSettings,
   storeUserSettings,
-} from './storage/chrome.storage';
+} from '@/libs/storage/chrome.storage';
 import {
   STORED_BIRTHDAY,
   STORED_BIRTHDAY_SETTINGS,
   StoredBirthday,
-} from './storage/storaged.types';
+} from '@/libs/storage/storaged.types';
 
 /**
  * Check that the current page is facebook and emit its Tab (`chrome.tabs.Tab`)

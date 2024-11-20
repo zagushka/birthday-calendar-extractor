@@ -9,8 +9,8 @@ import React, {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { t } from '../../../filters/translate';
-import { handleCloseModal } from '../../modals/modals.lib';
+import { t } from '@/filters/translate';
+import { handleCloseModal } from '@/components/modals/modals.lib';
 
 const useStyles = makeStyles(() => ({
   success: {
