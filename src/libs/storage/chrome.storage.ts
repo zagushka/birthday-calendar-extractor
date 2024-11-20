@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 import { DateTime } from 'luxon';
 import {
-  bindCallback,
+  bindCallback, firstValueFrom, from,
   Observable,
   Subscriber,
 } from 'rxjs';
@@ -167,31 +167,45 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
  * Parameter is the array of properties names of Settings interface - values to fetch from storage
  *
  */
-export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K): Observable<U> {
-  const r = bindCallback(getWrapper)(keys)
-    .pipe(
-      map((data) => {
-        const result = keys
-          // Revive retrieved data
-          .reduce((accumulator, key) => {
-            const storedValue = data[key];
-            const value = reviveSettingsField(key, storedValue);
-            if (typeof value !== 'undefined') {
-              return update(accumulator, { [key]: { $set: value } });
-            }
-            return accumulator;
-          }, {} as Settings);
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K): Promise<U>;
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K, observableFlag: true): Observable<U>;
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K, callback: (c: U) => void): void;
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>
+(keys: K, callbackOrObservableFlag?: true | ((c: U) => void)): Observable<U> | Promise<U> | void {
 
-        return result as unknown as U;
-      }),
-    );
+  function mapStorageData(data: Settings) {
+    const result = keys
+      // Revive retrieved data
+      .reduce((accumulator, key) => {
+        const storedValue = data[key];
+        const value = reviveSettingsField(key, storedValue);
+        if (typeof value !== 'undefined') {
+          return update(accumulator, { [key]: { $set: value } });
+        }
+        return accumulator;
+      }, {} as Settings);
+    return result as unknown as U;
+  }
 
-  return r as unknown as Observable<U>; // <- Another dirty trick
+  if ('function' !== typeof callbackOrObservableFlag) {
+    const observableReturn = from(chrome.storage.local.get(keys) as Promise<Settings>).pipe(map(mapStorageData));
+    if (callbackOrObservableFlag === true) {
+      return observableReturn;
+    }
+    return firstValueFrom(observableReturn);
+  }
+
+
+  chrome.storage.local.get(keys, (data) => {
+    const formattedData = mapStorageData(data as Settings);
+    callbackOrObservableFlag(formattedData);
+  });
 }
 
-export function storeUserSettings(settings: Partial<Settings>): void;
-export function storeUserSettings(settings: Partial<Settings>, wait: true): Observable<void>;
-export function storeUserSettings(settings: Partial<Settings>, wait = false) {
+export function storeUserSettings(settings: Partial<Settings>): Promise<void>;
+export function storeUserSettings(settings: Partial<Settings>, observableFlag: true): Observable<void>;
+export function storeUserSettings(settings: Partial<Settings>, callback: () => void): void;
+export function storeUserSettings(settings: Partial<Settings>, callbackOrObservableFlag?: true | (() => void)): Promise<void> | Observable<void> | void {
   const data = (Object.keys(settings) as Array<keyof Settings>)
     .reduce<Partial<StoredSettings>>((accumulator, key) => {
       switch (key) {
@@ -211,11 +225,16 @@ export function storeUserSettings(settings: Partial<Settings>, wait = false) {
       }
     }, {});
 
-  if (wait) {
-    return bindCallback<[Partial<StoredSettings>], [void]>(setWrapper)(data);
+  if (callbackOrObservableFlag === true) {
+    return from(chrome.storage.local.set(data));
   }
 
-  chrome.storage.local.set(data, () => null);
+  // If no callback is provided, return the Observable
+  if (typeof callbackOrObservableFlag === "function") {
+    chrome.storage.local.set(data, callbackOrObservableFlag);
+  }
+
+  return chrome.storage.local.set(data);
 }
 
 export function clearStorage() {

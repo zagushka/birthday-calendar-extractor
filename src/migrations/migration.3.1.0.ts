@@ -28,7 +28,7 @@ export function UPGRADE_TO_3_1_0(version: string): Observable<any> {
   }
 
   // get stored birthdays
-  return retrieveUserSettings(['birthdays'])
+  return retrieveUserSettings(['birthdays'], true)
     .pipe(
       map(({ birthdays }) => {
         const updated: Array<StoredBirthday> = (birthdays as unknown as Array<[string, number, string, number?]>)

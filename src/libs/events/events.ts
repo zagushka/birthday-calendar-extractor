@@ -36,7 +36,7 @@ const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => ch
  */
 export function sendMessage(action: ActionTypes): void;
 export function sendMessage<T>(action: ActionTypes, wait: true): Promise<T>;
-export function sendMessage<T>(action: ActionTypes, wait = false): Promise<T> | void {
+export function sendMessage<T>(action: ActionTypes, wait?: boolean): Promise<T> | void {
   // Mirror for the local needs
   allActions$.next({
     action,
@@ -47,5 +47,5 @@ export function sendMessage<T>(action: ActionTypes, wait = false): Promise<T> | 
     return chrome.runtime.sendMessage(action);
   }
 
-  chrome.runtime.sendMessage(action, () => null);
+  chrome.runtime.sendMessage(action).catch();
 }

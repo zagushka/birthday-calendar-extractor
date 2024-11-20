@@ -150,20 +150,20 @@
   },
   "REPORT_A_BUG_TITLE": {
     "message": {
-      "en": "Copy and open а bug",
-      "zh": "复制并报告错误",
-      "es": "Copiar y abrir un error",
-      "hi": "एक बग की नकल करें और खोलें",
-      "ar": "نسخ وفتح خطأ",
-      "bn": "একটি বাগ অনুলিপি করুন এবং খুলুন",
-      "pt": "Copie e abra um bug",
-      "ja": "バグをコピーして開く",
-      "de": "Kopiere und öffne einen Fehler",
-      "it": "Copia e apri un bug",
-      "uk": "Скопіювати та відкрити помилку",
-      "ru": "Копировать и открыть ошибку",
-      "he": "העתק ופתח באג"
+      "en": "Report a bug",
+      "zh": "报告错误",
+      "es": "Informar un error",
+      "hi": "बग की रिपोर्ट करें",
+      "ar": "الإبلاغ عن خطأ",
+      "bn": "একটি বাগ রিপোর্ট করুন",
+      "pt": "Relatar um bug",
+      "ja": "バグを報告する",
+      "de": "Einen Fehler melden",
+      "it": "Segnala un bug",
+      "uk": "Повідомити про помилку",
+      "ru": "Сообщить об ошибке",
+      "he": "דווח על באג"
     },
-    "description": "Report а bug button name"
+    "description": "Report a bug button name"
   }
 }

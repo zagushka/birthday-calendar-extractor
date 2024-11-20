@@ -27,20 +27,17 @@ import { migrations } from './migrations/migraions';
 
 // new connection means popup was initiated
 chrome.runtime.onConnect.addListener((externalPort) => {
-  externalPort.onDisconnect.addListener(() => {
+  externalPort.onDisconnect.addListener(async () => {
     // Clean up
     // Remove opened modal
-    storeUserSettings({ modal: null });
-    return true;
+    await storeUserSettings({ modal: null });
   });
 
   /**
    * Since this event only fired when clicked on the badge mark badge as visited/clicked
    */
-  storeUserSettings({ badgeVisited: DateTime.local() }, true)
-    .subscribe(() => {
-      sendMessage(updateBadgeAction());
-    });
+  storeUserSettings({ badgeVisited: DateTime.local() });
+  updateBadge();
 });
 
 // Update Badge on badge update request or new date alarm
@@ -55,24 +52,19 @@ listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
 // sendMessage(updateBadgeAction());
 
 listenTo<BirthdaysStartExtractionAction>(BIRTHDAYS_START_SCAN)
-  .subscribe(() => {
+  .subscribe(async () => {
     sendScanLog('SCAN_LOG_PROCESS_STARTED');
     // Update local storage, set scanning true
-    storeUserSettings({ scanning: DateTime.utc().plus({ minutes: 2 }).toMillis() }, true)
-      .pipe(
-        // Start scan
-        switchMap(() => forceBirthdaysScan()),
-      )
-      .subscribe({
-        next: () => {
-          sendScanLog('SCAN_LOG_PROCESS_DONE');
-          sendMessage(updateBadgeAction());
-          storeUserSettings({ scanning: 0, scanSuccess: true, modal: { type: SHOW_MODAL_SCAN_SUCCESS } });
-        },
-        error: (error: ScanErrorPayload) => {
-          storeUserSettings({ scanning: 0, scanSuccess: false, modal: error });
-        },
-      });
+    await storeUserSettings({ scanning: DateTime.utc().plus({ minutes: 2 }).toMillis() });
+    try {
+      await forceBirthdaysScan();
+      sendScanLog('SCAN_LOG_PROCESS_DONE');
+      sendMessage(updateBadgeAction());
+      await storeUserSettings({ scanning: 0, scanSuccess: true, modal: { type: SHOW_MODAL_SCAN_SUCCESS } });
+    }
+    catch (error: unknown) {
+      await storeUserSettings({ scanning: 0, scanSuccess: false, modal: error as ScanErrorPayload });
+    }
   });
 
 chrome.runtime.onInstalled.addListener(migrations);

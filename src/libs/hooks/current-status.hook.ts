@@ -9,7 +9,6 @@ import {
   Subject,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SCAN_ERROR_GENERAL } from '../events/executed-script.types';
 import { ShowModalAction } from '../events/types';
 import {
   listenToUserSettings,
@@ -50,7 +49,7 @@ export function useCurrentStatus() {
         'scanning',
         'scanSuccess',
         'wizardsSettings',
-      ]),
+      ], true),
       // Listen to storage changes and update changed values
       listenToUserSettings(),
     )
@@ -71,9 +70,11 @@ export function useCurrentStatus() {
                     storeUserSettings({
                       scanning: 0,
                       scanSuccess: false,
-                      modal: { type: SCAN_ERROR_GENERAL, error: 'Removed infinite scan lock' },
+                      // modal: { type: SCAN_ERROR_GENERAL, error: 'Removed infinite scan lock' },
                     });
                   }, wait > 0 ? wait : 0);
+                } else if (timer) {
+                  clearTimeout(timer);
                 }
                 return setIsScanning(!!updates[key]);
               case 'scanSuccess':

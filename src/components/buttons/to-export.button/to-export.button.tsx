@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { handleCloseModal } from '../../modals/modals.lib';
 
 const useStyles = makeStyles(() => ({
@@ -55,7 +55,7 @@ const ToExportButton: FunctionComponent = () => {
       className={classes.success}
       onClick={handleClick}
     >
-      {translate('TO_CALENDAR_EXPORT_TITLE', [countdown.toString()])}
+      {t('TO_CALENDAR_EXPORT_TITLE', [countdown.toString()])}
     </Button>
   );
 };

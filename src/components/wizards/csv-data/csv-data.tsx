@@ -5,7 +5,7 @@ import React, {
   useMemo,
 } from 'react';
 import { CurrentStatusContext } from '../../../context/current-status.context';
-import { translate } from '../../../filters/translate';
+import { t } from '../../../filters/translate';
 import { CREATE_CSV_DATA } from '../../../libs/events/types';
 import { useHandleDownload } from '../../../libs/hooks/handle-download-calendar-results.hook';
 import { STORED_BIRTHDAY } from '../../../libs/storage/storaged.types';
@@ -27,7 +27,7 @@ const CsvDataGeneratorWizard: FunctionComponent = () => {
   return (
     <>
       <Typography variant="body2">
-        {translate('SELECT_CSV_DATA_DESCRIPTION')}
+        {t('SELECT_CSV_DATA_DESCRIPTION')}
       </Typography>
 
       <GenerateAndDownloadButton

@@ -26,7 +26,7 @@ import React, {
 } from 'react';
 import { FunnyMessagesToAvoidCruelReality } from "./funny-messages-to-avoid-cruel-reality";
 import { CurrentStatusContext } from '../../context/current-status.context';
-import { translate } from '../../filters/translate';
+import { t } from '../../filters/translate';
 import { translateString } from '../../filters/translateString';
 import { BirthdaysStartScan } from '../../libs/events/actions';
 import { sendMessage } from '../../libs/events/events';
@@ -112,7 +112,7 @@ export const Scan: FunctionComponent = () => {
           pr={2}
         >
           <Typography variant="body1" gutterBottom>
-            {translate(firstTime ? 'SCAN_PAGE_DESCRIPTION' : 'SCAN_PAGE_FIRST_TIME_DESCRIPTION')}
+            {t(firstTime ? 'SCAN_PAGE_DESCRIPTION' : 'SCAN_PAGE_FIRST_TIME_DESCRIPTION')}
           </Typography>
         </Box>
 
@@ -135,13 +135,20 @@ export const Scan: FunctionComponent = () => {
         </Box>
 
         {/* Bottom part */}
-        <Box flexGrow={1} textAlign="center" display="flex" alignItems="flex-start" justifyContent="center">
-          <Typography variant="body1" gutterBottom>
-            {isScanning ? <FunnyMessagesToAvoidCruelReality
-              strings={funnyStringsToFakeCruelReality}
-              maxRuntime={25_000}
-            /> : log}
-          </Typography>
+        <Box flexGrow={1}
+             flexDirection={'column'}
+             textAlign="center"
+             display="flex"
+             alignItems="center"
+             justifyContent="flex-start">
+          {isScanning && <>
+            <Typography variant="body1" gutterBottom>
+              <FunnyMessagesToAvoidCruelReality
+                strings={funnyStringsToFakeCruelReality}
+              />
+            </Typography>
+            {/*{log && <Typography variant="body2" gutterBottom>({log})</Typography>}*/}
+          </>}
         </Box>
       </Layout.Content>
     </>
