@@ -14,7 +14,6 @@ import {
 } from './modals.lib';
 
 const DoneModal: FunctionComponent = () => (
-  // @TODO ADD DESCRIPTION REGARDING OUTLOOK EVENTS REMOVAL ISSUES
   <Dialog
     open
     onClose={handleCloseModal}
@@ -32,7 +31,6 @@ const DoneModal: FunctionComponent = () => (
     <DialogActions>
       <LeaveFeedbackButton onClick={handleCloseModal} />
       <BuyCoffeeButton variant="outlined" color="secondary" withIcon />
-      {/* <DialogCloseButton/> */}
     </DialogActions>
 
   </Dialog>

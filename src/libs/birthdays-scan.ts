@@ -194,6 +194,6 @@ export async function forceBirthdaysScan() {
   const { id: tabId } = await getFacebookTab();
   // Check for the token and language
   // Fetch the data from facebook
-  const rawUsers = await firstValueFrom(scanUserBirthdays(tabId, 30_000));
+  const rawUsers = await firstValueFrom(scanUserBirthdays(tabId, 3 * 60_000));
   await updateStoredBirthdays(rawUsers);
 }
