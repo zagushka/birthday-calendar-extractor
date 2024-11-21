@@ -18,10 +18,11 @@ import {
   ALARM_NEW_DAY,
   BIRTHDAYS_START_SCAN,
   BirthdaysStartExtractionAction,
+  SHOW_MODAL_EXPORT_SUCCESS,
   SHOW_MODAL_SCAN_SUCCESS,
   UPDATE_BADGE,
 } from '@/libs/events/types';
-import { storeUserSettings } from '@/libs/storage/chrome.storage';
+import { retrieveUserSettings, storeUserSettings } from '@/libs/storage/chrome.storage';
 import { migrations } from '@/migrations/migraions';
 
 // new connection means popup was initiated
@@ -29,7 +30,10 @@ chrome.runtime.onConnect.addListener((externalPort) => {
   externalPort.onDisconnect.addListener(async () => {
     // Clean up
     // Remove opened modal
-    await storeUserSettings({ modal: null });
+    const { modal } = await retrieveUserSettings(['modal']);
+    if (![SHOW_MODAL_EXPORT_SUCCESS, SHOW_MODAL_SCAN_SUCCESS].includes(modal?.type)) {
+      await storeUserSettings({ modal: null });
+    }
   });
 
   /**
