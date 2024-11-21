@@ -24,6 +24,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { useNavigate } from "react-router-dom";
 import { FunnyMessagesToAvoidCruelReality } from "./funny-messages-to-avoid-cruel-reality";
 import { CurrentStatusContext } from '../../context/current-status.context';
 import { t } from '@/filters/translate';
@@ -69,6 +70,7 @@ const funnyStringsToFakeCruelReality = JSON.parse(translateString("FUNNY_MESSAGE
 
 export const Scan: FunctionComponent = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const { isScanning, isScanSucceed, isActive } = useContext(CurrentStatusContext);
   const [wasScanningAndDone, resetWasScanningAndDone] = useWasOnOff(isScanning);
@@ -79,6 +81,13 @@ export const Scan: FunctionComponent = () => {
   useEffect(() => {
     setFirstTime(!wasActivated && isActive);
   }, [wasActivated]);
+
+  // Redirect to the calendar page if the scan was successful
+  useEffect(() => {
+    if (wasScanningAndDone && isScanSucceed) {
+      navigate("/calendar");
+    }
+  }, [wasScanningAndDone, isScanSucceed]);
 
   const [[log], resetLog] = useScanLogListener(1);
 
