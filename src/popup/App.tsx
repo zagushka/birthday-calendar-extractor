@@ -1,3 +1,4 @@
+import usePageTracking from "@/libs/hooks/use-page-tracking";
 import {
   createTheme,
   ThemeOptions,
@@ -79,6 +80,8 @@ export const themeOptions: ThemeOptions = {
 const theme = createTheme(themeOptions);
 
 const App: FunctionComponent = () => {
+  usePageTracking();
+
   useEffect(() => {
     // Establish connection to the background script
     const port = chrome.runtime.connect();

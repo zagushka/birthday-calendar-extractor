@@ -41,18 +41,6 @@ export const DEFAULT_SETTINGS: Settings = {
   wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
 };
 
-/**
- * Helper wrapper function to be used with rxjs bindCallback
- */
-const setWrapper = <T>(parameters: T, callback: () => void) => chrome.storage.local.set(parameters, callback);
-
-/**
- * Helper wrapper function for local.get to be used with rxjs bindCallback
- */
-const getWrapper = <K extends Array<keyof StoredSettings>>(keys: K, callback: (items: StoredSettings) => void) => {
-  return chrome.storage.local.get(keys, callback as () => any);
-};
-
 export function filterBirthdaysForDate(
   birthdays: Array<RestoredBirthday>,
   date: DateTime = DateTime.local(),

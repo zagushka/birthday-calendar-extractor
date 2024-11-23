@@ -51,6 +51,12 @@ export interface WizardsSettings {
   ics: IcsSettings;
 }
 
+export interface Statistics {
+  installedOn: DateTime;
+  timesOpened: number;
+  birthdaysPassed: number;
+}
+
 export interface Settings {
   activated: boolean;
   badgeVisited: DateTime;

@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { CurrentStatusContext } from '../../context/current-status.context';
+import { CurrentStatusContext } from '@/context/current-status.context';
 import {
   SCAN_ERROR_BIRTHDAYS_EXTRACT,
   SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT,

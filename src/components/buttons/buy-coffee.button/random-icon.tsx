@@ -1,20 +1,31 @@
 import { SvgIconProps } from "@material-ui/core";
 import { Cake, EmojiFoodBeverage, FreeBreakfast, LocalBar, LocalPizza } from "@material-ui/icons";
-import { createElement, FunctionComponent, useEffect, useState } from "react";
+import { createElement, FunctionComponent, ReactElement, useEffect, useState } from "react";
 
-export const RandomIcon: FunctionComponent<SvgIconProps> = (props) => {
-  const [icon, setIcon] = useState<React.ReactElement<SvgIconProps> | null>(null);
+const iconNames = ["Cake", "EmojiFoodBeverage", "FreeBreakfast", "LocalBar", "LocalPizza"];
+
+interface RandomIconProps extends SvgIconProps {
+  onIconSelected?: (iconName: string) => void; // Callback to emit the icon name
+}
+
+export const RandomIcon: FunctionComponent<RandomIconProps> = (props) => {
+  const { onIconSelected, ...restProps } = props;
+  const [icon, setIcon] = useState<ReactElement<SvgIconProps> | null>(null);
   const [randomIcon, setRandomIcon] = useState<FunctionComponent<SvgIconProps> | null>(null);
 
   useEffect(() => {
     const icons = [Cake, EmojiFoodBeverage, FreeBreakfast, LocalBar, LocalPizza];
-    const selectedIcon = icons[Math.floor(Math.random() * icons.length)];
-    setRandomIcon(() => selectedIcon);
+    const index = Math.floor(Math.random() * icons.length);
+
+    if (onIconSelected) {
+      onIconSelected(iconNames.at(index));
+    }
+    setRandomIcon(() => icons.at(index));
   }, []);
 
   useEffect(() => {
     if (randomIcon) {
-      const iconElement = createElement(randomIcon, props);
+      const iconElement = createElement(randomIcon, restProps);
       setIcon(iconElement);
     }
   }, [randomIcon, props]);
