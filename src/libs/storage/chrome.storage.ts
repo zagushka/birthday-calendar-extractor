@@ -39,6 +39,14 @@ export const DEFAULT_SETTINGS: Settings = {
   scanning: 0,
   scanSuccess: true,
   wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
+  statistics: {
+    installedOn: Date.now(),
+    timesOpened: 0,
+    birthdaysPassed: 0,
+    followedBirthdayLinks: 0,
+    followedDonateLinks: 0,
+    scannedTimes: 0,
+  },
 };
 
 export function filterBirthdaysForDate(
@@ -138,6 +146,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case 'scanning':
     case 'scanSuccess':
     case 'wizardsSettings':
+    case "statistics":
       return value ?? DEFAULT_SETTINGS[key];
 
     case 'badgeVisited':
@@ -206,6 +215,7 @@ export function storeUserSettings(settings: Partial<Settings>, callbackOrObserva
         case 'scanning':
         case 'scanSuccess':
         case 'wizardsSettings':
+        case "statistics":
           return update(accumulator, { [key]: { $set: settings[key] } });
         case 'badgeVisited':
           return update(accumulator, { [key]: { $set: settings[key].toMillis() } });

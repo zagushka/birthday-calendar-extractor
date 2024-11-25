@@ -1,3 +1,4 @@
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import { DateTime } from 'luxon';
 import {
   filterBirthdaysForDate,
@@ -9,11 +10,11 @@ import {
  * Update Badge according to today's birthday counter
  * Set Badge color according to the last click on badge time
  */
-export async function updateBadge(): Promise<void> {
+export async function updateBadge(updateStatistics = false): Promise<void> {
   const { birthdays, badgeVisited, activated } = await retrieveUserSettings(['birthdays', 'activated', 'badgeVisited'])
 
   // filter only today's birthdays
-  let badgeNumber = '';
+  let badgeNumber = 0;
   let badgeColor: string | chrome.browserAction.ColorArray = [0, 0, 0, 0];
 
   // Update default badge value and color if functionality is active
@@ -21,7 +22,7 @@ export async function updateBadge(): Promise<void> {
     const { year } = DateTime.local();
     try { // Adding try so no application update can cause an error
       const filteredBirthdays = filterBirthdaysForDate(birthdays.map((b) => reviveBirthday(b, year)), DateTime.local());
-      badgeNumber = filteredBirthdays.length ? filteredBirthdays.length.toString() : '';
+      badgeNumber = filteredBirthdays.length ? filteredBirthdays.length : 0;
       badgeColor = (badgeVisited.ordinal < DateTime.local().ordinal) ? 'red' : [0, 0, 0, 0];
     }
     catch (e) {
@@ -29,7 +30,11 @@ export async function updateBadge(): Promise<void> {
     }
   }
 
-  setBadgeText(badgeNumber);
+  if (badgeNumber) {
+    await updateStatisticsAdd("birthdaysPassed", badgeNumber)
+  }
+
+  setBadgeText(badgeNumber ? badgeNumber.toString() : '');
   setBadgeColor(badgeColor);
 }
 

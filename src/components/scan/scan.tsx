@@ -1,5 +1,7 @@
 import Analytics from "@/libs/analytics";
 import useRuntime from "@/libs/hooks/use-runtime";
+import { retrieveUserSettings } from "@/libs/storage/chrome.storage";
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import {
   Button,
   CircularProgress,
@@ -87,12 +89,18 @@ export const Scan: FunctionComponent = () => {
 
   // Redirect to the calendar page if the scan was successful
   useEffect(() => {
-    if (wasScanningAndDone && isScanSucceed) {
-      Analytics.fireEvent("scan_succeed", {
+    async function asyncScanned() {
+      await updateStatisticsAdd('scannedTimes');
+      const { statistics } = await retrieveUserSettings(['statistics']);
+      await Analytics.fireEvent("scan_succeed", {
         scan_time: Math.round(scanTimeMsc),
-        scanned_times: 1,
+        scanned_times: statistics.scannedTimes,
       });
       navigate("/calendar");
+    }
+
+    if (wasScanningAndDone && isScanSucceed) {
+      asyncScanned();
     }
   }, [wasScanningAndDone, isScanSucceed]);
 

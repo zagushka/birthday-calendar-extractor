@@ -51,10 +51,13 @@ export interface WizardsSettings {
   ics: IcsSettings;
 }
 
-export interface Statistics {
-  installedOn: DateTime;
-  timesOpened: number;
-  birthdaysPassed: number;
+export interface UserStatistics {
+  installedOn: number; // ms since the epoch start
+  timesOpened: number; // Number of times the extension has been opened
+  birthdaysPassed: number; // Number of birthdays that have passed (unique number of birthdays that have been shown)
+  followedBirthdayLinks: number; // Number of times clicked on a birthday link
+  followedDonateLinks: number; // Number of times the donate link has been clicked
+  scannedTimes: number; // Number of times the extension has scanned for birthdays
 }
 
 export interface Settings {
@@ -67,6 +70,7 @@ export interface Settings {
   scanning: number;
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
+  statistics: UserStatistics;
 }
 
 export interface StoredSettings {
@@ -79,4 +83,5 @@ export interface StoredSettings {
   scanning: number;
   scanSuccess: boolean;
   wizardsSettings: WizardsSettings;
+  statistics: UserStatistics;
 }

@@ -3,6 +3,7 @@ import { CurrentStatusContext } from '@/context/current-status.context';
 import handleLink from '@/filters/handleLink';
 import { translateString } from '@/filters/translateString';
 import Analytics from "@/libs/analytics";
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import { Button, ButtonProps, IconButton, IconButtonProps, makeStyles, } from '@material-ui/core';
 import { FreeBreakfast } from "@material-ui/icons";
 import React, { FunctionComponent, useContext, useEffect, useState, } from 'react';
@@ -168,6 +169,7 @@ const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
         button_location: buttonLocation,
       }
     );
+    await updateStatisticsAdd('followedDonateLinks');
     if (onClick) {
       onClick();
     }

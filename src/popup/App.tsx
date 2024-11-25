@@ -1,4 +1,7 @@
+import Analytics from "@/libs/analytics";
 import usePageTracking from "@/libs/hooks/use-page-tracking";
+import { retrieveUserSettings } from "@/libs/storage/chrome.storage";
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import {
   createTheme,
   ThemeOptions,
@@ -9,6 +12,7 @@ import UserSettings from '@/components/user-settings/user-settings';
 import CurrentStatusContextProvider from '@/context/current-status.context';
 import LoadingContextProvider from '@/context/loading.context';
 import '@/popup/App.scss';
+import { useLocation } from "react-router-dom";
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -81,10 +85,22 @@ const theme = createTheme(themeOptions);
 
 const App: FunctionComponent = () => {
   usePageTracking();
+  const location = useLocation()
 
   useEffect(() => {
     // Establish connection to the background script
     const port = chrome.runtime.connect();
+
+    async function asyncFunction() {
+      await updateStatisticsAdd("timesOpened");
+      const { statistics } = await retrieveUserSettings(["statistics"]);
+      Analytics.fireEvent("popup_opened", {
+        page_location: location.pathname + location.search,
+        times_opened: statistics.timesOpened
+      });
+    }
+
+    asyncFunction();
 
     return () => {
       if (port) {

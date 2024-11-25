@@ -1,3 +1,4 @@
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import { DateTime } from 'luxon';
 import {
   startWith,
@@ -39,9 +40,19 @@ chrome.runtime.onConnect.addListener((externalPort) => {
   /**
    * Since this event only fired when clicked on the badge mark badge as visited/clicked
    */
-  storeUserSettings({ badgeVisited: DateTime.local() });
-  updateBadge();
+  badeClicked();
 });
+
+async function badeClicked() {
+  const { badgeVisited } = await retrieveUserSettings(["badgeVisited"]);
+  const isTheSameDay = badgeVisited.hasSame(DateTime.local(), 'day');
+
+  // if badge was not visited is not today update birthdaysPassed
+  if (!isTheSameDay) {
+    await storeUserSettings({ badgeVisited: DateTime.local() });
+  }
+  await updateBadge(!isTheSameDay);
+}
 
 // Update Badge on badge update request or new date alarm
 listenTo(UPDATE_BADGE, ALARM_NEW_DAY)
