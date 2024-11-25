@@ -1,3 +1,4 @@
+import Analytics from "@/libs/analytics";
 import {
   Button,
   makeStyles,
@@ -6,6 +7,7 @@ import { green } from '@material-ui/core/colors';
 import React, { FunctionComponent } from 'react';
 import handleLink from '@/filters/handleLink';
 import { translateString } from '@/filters/translateString';
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   success: {
@@ -22,12 +24,16 @@ interface LeaveFeedbackButtonProps {
 
 const LeaveFeedbackButton: FunctionComponent<LeaveFeedbackButtonProps> = (props) => {
   const classes = useStyles();
+  const location = useLocation();
 
-  const handleClick = (e: React.MouseEvent) => {
-    handleLink('LEAVE_FEEDBACK_LINK', { close: true, active: true }, e);
+  const handleClick = async (e: React.MouseEvent) => {
+    await Analytics.fireButtonClickEvent("leave_feedback", location.pathname);
+
     if (props.onClick) {
       props.onClick();
     }
+
+    await handleLink('LEAVE_FEEDBACK_LINK', { close: true, active: true }, e);
   };
 
   return (

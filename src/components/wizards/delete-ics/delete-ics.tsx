@@ -3,7 +3,7 @@ import React, {
   FunctionComponent,
   useContext,
 } from 'react';
-import { CurrentStatusContext } from '../../../context/current-status.context';
+import { CurrentStatusContext } from '@/context/current-status.context';
 import { t } from '@/filters/translate';
 import { CREATE_CALENDAR_DELETE_ICS } from "@/libs/events/types";
 import { useHandleDownload } from "@/libs/hooks/handle-download-calendar-results.hook";
@@ -28,6 +28,7 @@ const DeleteIcsGeneratorWizard: FunctionComponent = () => {
       <GenerateAndDownloadButton
         disabled={isScanning}
         onClick={startGeneration}
+        calendarType="delete-ics"
       />
     </>
   );

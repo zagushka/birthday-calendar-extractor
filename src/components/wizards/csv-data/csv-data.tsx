@@ -4,7 +4,7 @@ import React, {
   useContext,
   useMemo,
 } from 'react';
-import { CurrentStatusContext } from '../../../context/current-status.context';
+import { CurrentStatusContext } from '@/context/current-status.context';
 import { t } from '@/filters/translate';
 import { CREATE_CSV_DATA } from "@/libs/events/types";
 import { useHandleDownload } from '@/libs/hooks/handle-download-calendar-results.hook';
@@ -33,6 +33,7 @@ const CsvDataGeneratorWizard: FunctionComponent = () => {
       <GenerateAndDownloadButton
         disabled={isScanning}
         onClick={startGeneration}
+        calendarType="csv-data"
       />
     </>
   );

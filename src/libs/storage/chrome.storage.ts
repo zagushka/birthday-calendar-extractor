@@ -39,18 +39,14 @@ export const DEFAULT_SETTINGS: Settings = {
   scanning: 0,
   scanSuccess: true,
   wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
-};
-
-/**
- * Helper wrapper function to be used with rxjs bindCallback
- */
-const setWrapper = <T>(parameters: T, callback: () => void) => chrome.storage.local.set(parameters, callback);
-
-/**
- * Helper wrapper function for local.get to be used with rxjs bindCallback
- */
-const getWrapper = <K extends Array<keyof StoredSettings>>(keys: K, callback: (items: StoredSettings) => void) => {
-  return chrome.storage.local.get(keys, callback as () => any);
+  statistics: {
+    installedOn: Date.now(),
+    timesOpened: 0,
+    birthdaysPassed: 0,
+    followedBirthdayLinks: 0,
+    followedDonateLinks: 0,
+    scannedTimes: 0,
+  },
 };
 
 export function filterBirthdaysForDate(
@@ -150,6 +146,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case 'scanning':
     case 'scanSuccess':
     case 'wizardsSettings':
+    case "statistics":
       return value ?? DEFAULT_SETTINGS[key];
 
     case 'badgeVisited':
@@ -218,6 +215,7 @@ export function storeUserSettings(settings: Partial<Settings>, callbackOrObserva
         case 'scanning':
         case 'scanSuccess':
         case 'wizardsSettings':
+        case "statistics":
           return update(accumulator, { [key]: { $set: settings[key] } });
         case 'badgeVisited':
           return update(accumulator, { [key]: { $set: settings[key].toMillis() } });

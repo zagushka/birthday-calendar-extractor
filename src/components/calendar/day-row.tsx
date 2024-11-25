@@ -1,3 +1,5 @@
+import Analytics from "@/libs/analytics";
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import {
   IconButton,
   List,
@@ -23,8 +25,6 @@ import {
   useDayRowStyles,
 } from './calendar.styles';
 
-const handleClick = (href: string) => (e: React.MouseEvent) => handleLink(href, {}, e);
-
 interface MUIClassesProp<TUseStyles extends () => unknown> {
   classes?: Partial<ReturnType<TUseStyles>>;
 }
@@ -34,13 +34,37 @@ interface DayRowProps extends MUIClassesProp<typeof useDayRowStyles> {
   toggleVisibility: (id: string, state: "on" | "off") => void;
 }
 
+/**
+ * Calculate the shortest distance to the birthday, considering year transition
+ */
+function daysOffsetTo({ day, month }: { month: number, day: number; }): number {
+  const today = DateTime.local();
+  const birthday = DateTime.fromObject({ day, month });
+  const dayOffsets = [
+    birthday.diff(today, 'days').days,
+    birthday.diff(today.plus({ year: 1 }), 'days').days,
+    birthday.diff(today.minus({ year: 1 }), 'days').days
+  ];
+  // Find the index of the min absolute value from the offsets
+  return dayOffsets.sort((a, b) => Math.abs(a) - Math.abs(b)).at(0);
+}
+
 const DayRow: FunctionComponent<DayRowProps> = (props) => {
   const classes = useDayRowStyles(props);
   const {
     user: {
-      id, href, name, hidden,
+      id, href, name, hidden, birthdate
     },
   } = props;
+
+  const handleClick = async (e: React.MouseEvent) => {
+    await Analytics.fireButtonClickEvent("friend_birthday", "/calendar", {
+      day_offset: daysOffsetTo(birthdate),
+    });
+    await updateStatisticsAdd("followedBirthdayLinks");
+    await handleLink(href, {}, e);
+  }
+
   return (
     <ListItem
       button
@@ -49,7 +73,7 @@ const DayRow: FunctionComponent<DayRowProps> = (props) => {
         container: classes.listItem,
         dense: classes.dense,
       }}
-      onClick={handleClick(href)}
+      onClick={handleClick}
     >
       <ListItemText primary={name} className={classes.listItemText}/>
       <ListItemSecondaryAction

@@ -29,8 +29,8 @@ const DoneModal: FunctionComponent = () => (
     </DialogContent>
 
     <DialogActions>
-      <LeaveFeedbackButton onClick={handleCloseModal} />
-      <BuyCoffeeButton variant="outlined" color="secondary" withIcon />
+      <LeaveFeedbackButton onClick={handleCloseModal}/>
+      <BuyCoffeeButton onClick={handleCloseModal} buttonLocation="done-modal" variant="outlined" color="secondary" withIcon/>
     </DialogActions>
 
   </Dialog>

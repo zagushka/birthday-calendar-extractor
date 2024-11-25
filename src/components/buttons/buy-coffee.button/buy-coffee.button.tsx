@@ -2,15 +2,20 @@ import { RandomIcon } from "@/components/buttons/buy-coffee.button/random-icon";
 import { CurrentStatusContext } from '@/context/current-status.context';
 import handleLink from '@/filters/handleLink';
 import { translateString } from '@/filters/translateString';
+import Analytics from "@/libs/analytics";
+import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import { Button, ButtonProps, IconButton, IconButtonProps, makeStyles, } from '@material-ui/core';
 import { FreeBreakfast } from "@material-ui/icons";
 import React, { FunctionComponent, useContext, useEffect, useState, } from 'react';
+import { useLocation } from "react-router-dom";
 
 interface BuyCoffeeButtonProps extends ButtonProps {
+  buttonLocation: string;
   withIcon?: boolean;
+  onClick?: () => void;
 }
 
-const shakesArray = [
+const effectsArray = [
   'shake',
   'pulse',
   'bounce',
@@ -19,7 +24,7 @@ const shakesArray = [
   'flash',
   'teapotBoil',
 ];
-type shakeTypes = typeof shakesArray[number];
+type cssEffectKey = keyof typeof useStyles;
 
 const useStyles = makeStyles({
   shake: {
@@ -109,11 +114,13 @@ const useStyles = makeStyles({
 });
 
 const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
-  const { withIcon = false, ...parentProps } = props;
+  const { onClick, buttonLocation, withIcon = false, ...parentProps } = props;
   const { isDonated } = useContext(CurrentStatusContext);
   const [title, setTitle] = useState<string>();
   const [isShaking, setIsShaking] = useState(false);
-  const [currentClass, setCurrent] = useState<shakeTypes | undefined>();
+  const [selectedEffect, setSelectedEffect] = useState<cssEffectKey | undefined>();
+  const [selectedIcon, setSelectedIcon] = useState<string>("");
+  const location = useLocation();
 
   const classes = useStyles();
 
@@ -146,18 +153,44 @@ const BuyCoffeeButton: FunctionComponent<BuyCoffeeButtonProps> = (props) => {
   // Function that will randomly select a class from the classes when isShaking is changed
   useEffect(() => {
     if (!isShaking) {
-      return setCurrent(undefined);
+      return setSelectedEffect(undefined);
     }
-    const randomClassName = shakesArray[Math.floor(Math.random() * shakesArray.length)];
-    const randomClass = classes[randomClassName as keyof typeof classes];
-    setCurrent(randomClass);
+    const cssEffectName = effectsArray[Math.floor(Math.random() * effectsArray.length)];
+    setSelectedEffect(cssEffectName as cssEffectKey);
   }, [isShaking]);
+
+  const handleButtonClick = async () => {
+    await Analytics.fireButtonClickEvent(
+      'buy_me_coffee',
+      location.pathname,
+      {
+        button_effect: selectedEffect,
+        button_icon: selectedIcon,
+        button_location: buttonLocation,
+      }
+    );
+    await updateStatisticsAdd('followedDonateLinks');
+    if (onClick) {
+      onClick();
+    }
+    await handleLink('BUY_ME_COFFEE_LINK', { close: true, active: true });
+  }
+
+  const handleButtonSelectedIcon = (iconName: string) => {
+    setSelectedIcon(iconName);
+  }
 
   return (
     !isDonated && (
       <Button
-        onClick={() => handleLink('BUY_ME_COFFEE_LINK', { close: true, active: true })}
-        endIcon={withIcon ? <RandomIcon className={isShaking && currentClass}/> : null}
+        onClick={handleButtonClick}
+        endIcon={
+          withIcon ?
+            <RandomIcon
+              onIconSelected={handleButtonSelectedIcon}
+              className={(isShaking && selectedEffect) ? classes[selectedEffect] : ''}/>
+            : null
+        }
         {...parentProps}
       >
         {title}

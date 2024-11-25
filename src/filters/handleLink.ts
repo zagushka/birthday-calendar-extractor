@@ -7,7 +7,7 @@ interface LinkSettings {
   substitutions?: any;
 }
 
-const handleLink = (rawUrl: string | undefined, settings: LinkSettings, ev?: React.MouseEvent): boolean => {
+const handleLink = async (rawUrl: string | undefined, settings: LinkSettings, ev?: React.MouseEvent): Promise<boolean> => {
   const {
     close = false,
     active = false,
@@ -24,7 +24,7 @@ const handleLink = (rawUrl: string | undefined, settings: LinkSettings, ev?: Rea
   }
 
   const url = translateString(rawUrl, substitutions) || rawUrl;
-  chrome.tabs.create({ url, active });
+  await chrome.tabs.create({ url, active });
 
   if (close) {
     window.close();

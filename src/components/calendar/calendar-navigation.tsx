@@ -47,18 +47,18 @@ export const CalendarNavigation: FunctionComponent<CalendarNavigationProps> = ({
           </Button>
 
           <IconButton size="small" onClick={() => updateDayIndex(-1)}>
-            <ChevronLeft />
+            <ChevronLeft/>
           </IconButton>
 
           <IconButton size="small" onClick={() => updateDayIndex(1)}>
-            <ChevronRight />
+            <ChevronRight/>
           </IconButton>
         </Box>
 
-        <BuyCoffeeButton variant="outlined" color="secondary" withIcon />
+        <BuyCoffeeButton buttonLocation={'calendar-navigation'} variant="outlined" color="secondary" withIcon/>
       </Box>
 
-      <Divider />
+      <Divider/>
     </>
   );
 };
