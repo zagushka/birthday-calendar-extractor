@@ -1,0 +1,141 @@
+{
+  "VISIT_DONATION_MODAL_TITLE": {
+    "message": {
+      "en": "Secret keyword",
+      "zh": "秘密关键词",
+      "es": "Palabra clave secreta",
+      "hi": "गुप्त कुंजीशब्द",
+      "ar": "كلمة المرور السرية",
+      "bn": "গোপন কীওয়ার্ড",
+      "pt": "Palavra-chave secreta",
+      "ja": "秘密のキーワード",
+      "de": "Geheimes Schlüsselwort",
+      "it": "Parola chiave segreta",
+      "uk": "Секретне слово",
+      "ru": "Секретное слово",
+      "he": "מילת סוד",
+      "art-x-interslv-latin": "Tajna slovo",
+      "art-x-interslv-cyrl": "Тайна слово"
+    },
+    "description": "Visit donation modal title"
+  },
+  "VISIT_DONATION_MODAL_LINK": {
+    "message": {
+      "en": "https://buymeacoffee.com/zagushka/secret-keyword",
+      "zh": "https://buymeacoffee.com/zagushka/wijexodeta",
+      "es": "https://buymeacoffee.com/zagushka/palabra-clave-secreta",
+      "hi": "https://buymeacoffee.com/zagushka/herotavahi",
+      "ar": "https://buymeacoffee.com/zagushka/gogoluhamo",
+      "bn": "https://buymeacoffee.com/zagushka/sujipakize",
+      "pt": "https://buymeacoffee.com/zagushka/palavra-chave-secreta",
+      "ja": "https://buymeacoffee.com/zagushka/dunijivaze",
+      "de": "https://buymeacoffee.com/zagushka/geheimes-schlsselwort",
+      "it": "https://buymeacoffee.com/zagushka/parola-chiave-segreta",
+      "uk": "https://buymeacoffee.com/zagushka/numuzihoya",
+      "ru": "https://buymeacoffee.com/zagushka/zotumagani",
+      "he": "https://buymeacoffee.com/zagushka/banoxokibe",
+      "art-x-interslv-latin": "https://buymeacoffee.com/zagushka/tajna-slovo",
+      "art-x-interslv-cyrl": "https://buymeacoffee.com/zagushka/lahuzisegu"
+    },
+    "description": "Visit donation modal title"
+  },
+  "VISIT_DONATION_MODAL_DESCRIPTION": {
+    "message": {
+      "en": "Follow the link below and copy the special keyword from the page.",
+      "zh": "点击下方链接，从页面复制特殊关键词。",
+      "es": "Sigue el enlace a continuación y copia la palabra clave especial de la página.",
+      "hi": "नीचे दिए गए लिंक को फॉलो करें और पृष्ठ से विशेष कुंजीशब्द कॉपी करें।",
+      "ar": "اتبع الرابط أدناه وانسخ الكلمة المفتاحية الخاصة من الصفحة.",
+      "bn": "নীচের লিঙ্কটি অনুসরণ করুন এবং পৃষ্ঠাটি থেকে বিশেষ কীওয়ার্ডটি কপি করুন।",
+      "pt": "Siga o link abaixo e copie a palavra-chave especial da página.",
+      "ja": "以下のリンクを開き、ページから特別なキーワードをコピーしてください。",
+      "de": "Folge dem Link unten und kopiere das spezielle Schlüsselwort von der Seite.",
+      "it": "Segui il link qui sotto e copia la parola chiave speciale dalla pagina.",
+      "uk": "Перейдіть за посиланням нижче та скопіюйте спеціальне слово зі сторінки.",
+      "ru": "Перейдите по ссылке ниже и скопируйте специальное слово со страницы.",
+      "he": "עקוב אחר הקישור למטה והעתק את מילת הסוד מהעמוד.",
+      "art-x-interslv-latin": "Idi do sęvazanja niže i kopiraj tajno slovo iz stranice.",
+      "art-x-interslv-cyrl": "Иди до сęвазання ниже и копирај тайно слово из страници."
+    },
+    "description": "Visit donation modal description, it explains the user where to get the secret keyword."
+  },
+  "VISIT_DONATION_MODAL_KEYWORD": {
+    "message": {
+      "en": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "zh": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "es": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "hi": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "ar": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "bn": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "pt": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "ja": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "de": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "it": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "uk": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "ru": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "he": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "art-x-interslv-latin": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų",
+      "art-x-interslv-cyrl": "Lullaby 梦 Esperanza खुशी أمل স্বপ্ন Esperança 優しさ Träumen Serenità Мрія Надежда תקווה Snų Снų"
+    }
+  },
+  "VISIT_DONATION_MODAL_SUBMIT_BUTTON_TITLE": {
+    "message": {
+      "en": "Get the Keyword",
+      "zh": "获取关键词",
+      "es": "Obtener la palabra clave",
+      "hi": "कीवर्ड प्राप्त करें",
+      "ar": "احصل على الكلمة المفتاحية",
+      "bn": "কীওয়ার্ড পান",
+      "pt": "Obter a palavra-chave",
+      "ja": "キーワードを取得",
+      "de": "Schlüsselwort erhalten",
+      "it": "Ottieni la parola chiave",
+      "uk": "Отримати ключове слово",
+      "ru": "Получить ключевое слово",
+      "he": "קבל את מילת הסוד",
+      "art-x-interslv-latin": "Vzeti tajno slovo",
+      "art-x-interslv-cyrl": "Взети тайно слово"
+    },
+    "description": "Text for the link button that directs the user to get the keyword"
+  },
+  "VISIT_DONATION_MODAL_MORE_INFO": {
+    "message": {
+      "en": "<p>This extension is completely free, and I've put a lot of effort into making it work smoothly for you. By following the link, you'll discover a small way to support the project and help keep it going.</p><p>There's no obligation-just a quick visit to grab the keyword and continue. Thanks for being here and using the extension! 🚀</p>",
+      "zh": "<p>这个扩展完全免费，我投入了很多精力让它顺利运行。点击链接，您会发现一个小小的方式来支持该项目并帮助其持续发展。</p><p>当然，您没有任何义务--只需快速访问页面，获取关键词并继续。感谢您的使用！🚀</p>",
+      "es": "<p>Esta extensión es completamente gratuita y he puesto mucho esfuerzo en que funcione sin problemas para ti. Siguiendo el enlace, descubrirás una pequeña forma de apoyar el proyecto y ayudar a mantenerlo en marcha.</p><p>No hay ninguna obligación, solo una visita rápida para obtener la palabra clave y continuar. ¡Gracias por estar aquí y usar la extensión! 🚀</p>",
+      "hi": "<p>यह एक्सटेंशन पूरी तरह से मुफ्त है, और मैंने इसे आपके लिए सुचारू रूप से काम करने में बहुत प्रयास किया है। लिंक पर जाने से, आपको प्रोजेक्ट को सपोर्ट करने और इसे जारी रखने में मदद करने का एक छोटा तरीका मिलेगा।</p><p>कोई बाध्यता नहीं है-बस जल्दी से विजिट करें, कीवर्ड प्राप्त करें और जारी रखें। एक्सटेंशन का उपयोग करने के लिए धन्यवाद! 🚀</p>",
+      "ar": "</p>هذا الامتداد مجاني تمامًا، وقد بذلت الكثير من الجهد لجعله يعمل بسلاسة من أجلك. باتباع الرابط، ستكتشف طريقة صغيرة لدعم المشروع والمساعدة في استمراره.</p><p>لا يوجد أي التزام-مجرد زيارة سريعة للحصول على الكلمة المفتاحية والمتابعة. شكرًا لوجودك هنا واستخدام الامتداد! 🚀<p>",
+      "bn": "<p>এই এক্সটেনশন সম্পূর্ণ বিনামূল্যে, এবং এটি ঠিকমতো কাজ করার জন্য আমি প্রচুর পরিশ্রম করেছি। লিঙ্কটি অনুসরণ করলে, আপনি প্রকল্পটিকে সমর্থন করার এবং এটি চালিয়ে যাওয়ার একটি ছোট উপায় খুঁজে পাবেন।</p><p>কোন বাধ্যবাধকতা নেই-শুধুমাত্র দ্রুত একটি ভিজিট করুন, কীওয়ার্ডটি পান এবং চালিয়ে যান। এক্সটেনশন ব্যবহারের জন্য ধন্যবাদ! 🚀</p>",
+      "pt": "<p>Esta extensão é completamente gratuita e eu dediquei muito esforço para que ela funcione perfeitamente para você. Ao seguir o link, você descobrirá uma pequena forma de apoiar o projeto e ajudar a mantê-lo funcionando.</p><p>Não há obrigação - basta uma visita rápida para obter a palavra-chave e continuar. Obrigado por estar aqui e usar a extensão! 🚀</p>",
+      "ja": "<p>この拡張機能は完全に無料で、スムーズに動作するように多くの努力を注ぎました。リンクをたどることで、このプロジェクトをサポートし、継続を助ける小さな方法を見つけられます。</p><p>強制ではありません-短時間の訪問でキーワードを取得し、続行できます。ご利用ありがとうございます！🚀</p>",
+      "de": "<p>Diese Erweiterung ist völlig kostenlos, und ich habe viel Mühe investiert, damit sie reibungslos funktioniert. Durch das Folgen des Links entdeckst du eine kleine Möglichkeit, das Projekt zu unterstützen und am Laufen zu halten.</p><p>Es gibt keine Verpflichtung-einfach kurz vorbeischauen, das Schlüsselwort kopieren und weitermachen. Danke, dass du hier bist und die Erweiterung nutzt! 🚀</p>",
+      "it": "<p>Questa estensione è completamente gratuita e ho messo molto impegno per farla funzionare senza problemi. Seguendo il link, scoprirai un piccolo modo per supportare il progetto e aiutarlo a continuare.</p><p>Nessun obbligo-basta una rapida visita per ottenere la parola chiave e proseguire. Grazie per essere qui e usare l'estensione! 🚀</p>",
+      "uk": "<p>Це розширення є повністю безкоштовним, і я вклав багато зусиль, щоб воно працювало бездоганно. Перейшовши за посиланням, ви знайдете маленький спосіб підтримати проєкт і допомогти йому розвиватися.</p><p>Жодних зобов'язань - просто швидко відвідайте сторінку, отримайте ключове слово та продовжуйте. Дякую, що ви тут і використовуєте розширення! 🚀</p>",
+      "ru": "<p>Это расширение полностью бесплатно, и я вложил много усилий, чтобы оно работало безупречно. Перейдя по ссылке, вы найдете небольшой способ поддержать проект и помочь ему развиваться.</p><p>Никаких обязательств - просто быстрый визит, получите ключевое слово и продолжайте. Спасибо, что пользуетесь расширением! 🚀</p>",
+      "he": "</p>ההרחבה הזו חינמית לחלוטין, והשקעתי בה מאמץ רב כדי שתפעל בצורה חלקה עבורך. על ידי לחיצה על הקישור, תוכל לגלות דרך קטנה לתמוך בפרויקט ולעזור לשמור עליו פעיל.</p><p>אין כל התחייבות - רק ביקור מהיר לקבלת מילת הסוד והמשך. תודה על השימוש בהרחבה! 🚀<p>",
+      "art-x-interslv-latin": "<p>To je programno priloženje bezzaplatno, i ja vložih mnogo trudov da by ono rabotalo dobŕe. Sledovaj sęvazanje, i najdeš maly način podperati projekt i pomagati mu prodrživati.</p><p>Ne imaje obveznosti-samo brzo vizitovanje, vzemi tajno slovo i idi dalej. Blagodŕim te, že koristiš priloženje! 🚀</p>",
+      "art-x-interslv-cyrl": "<p>То є програмно приложенє беззаплатно, и ја вложих много трудов да бы оно работало добре. Следовај сęвазане, и најдеш малый начин подперати проект и помагати му продрживати.</p><p>Не имаје обвезности-само бързо визитованје, вземи тайно слово и иди даље. Благодарим те, же користиш приложенє! 🚀</p>"
+    },
+    "description": "Explanation of why the user is asked to visit the link before proceeding"
+  },
+  "VISIT_DONATION_MODAL_MORE_INFO_BUTTON_TITLE": {
+    "message": {
+      "en": "Why?",
+      "zh": "为什么？",
+      "es": "¿Por qué?",
+      "hi": "क्यों?",
+      "ar": "لماذا؟",
+      "bn": "কেন?",
+      "pt": "Por quê?",
+      "ja": "なぜ？",
+      "de": "Warum?",
+      "it": "Perché?",
+      "uk": "Чому?",
+      "ru": "Почему?",
+      "he": "למה?",
+      "art-x-interslv-latin": "Čemu?",
+      "art-x-interslv-cyrl": "Чему?"
+    },
+    "description": "Button title to show the explanation of why the user is asked to visit the link"
+  }
+}
