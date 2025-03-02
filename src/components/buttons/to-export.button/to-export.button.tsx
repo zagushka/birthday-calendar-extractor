@@ -1,21 +1,14 @@
-import {
-  Button,
-  makeStyles,
-} from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
-import React, {
-  FunctionComponent,
-  useEffect,
-  useState,
-} from 'react';
-import { useNavigate } from 'react-router-dom';
-import { t } from '@/filters/translate';
-import { handleCloseModal } from '@/components/modals/modals.lib';
+import { Button, makeStyles } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { t } from "@/filters/translate";
+import { handleCloseModal } from "@/components/modals/modals.lib";
 
 const useStyles = makeStyles(() => ({
   success: {
     backgroundColor: green[500],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: green[700],
     },
   },
@@ -43,19 +36,13 @@ const ToExportButton: FunctionComponent = () => {
   }, [countdown]);
 
   const handleClick = () => {
-    navigate('/export', { replace: true });
+    navigate("/export", { replace: true });
     handleCloseModal();
   };
 
   return (
-    <Button
-      size="small"
-      color="primary"
-      variant="contained"
-      className={classes.success}
-      onClick={handleClick}
-    >
-      {t('TO_CALENDAR_EXPORT_TITLE', [countdown.toString()])}
+    <Button size="small" color="primary" variant="contained" className={classes.success} onClick={handleClick}>
+      {t("TO_CALENDAR_EXPORT_TITLE", [countdown.toString()])}
     </Button>
   );
 };

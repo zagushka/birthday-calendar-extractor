@@ -13,19 +13,19 @@ import {
   SEND_SCAN_LOG,
   SendScanLogAction,
   UPDATE_BADGE,
-} from '@/libs/events/types';
+} from "@/libs/events/types";
 
 export function sendError(error: string): NotificationActionTypes {
   return {
     type: SEND_ERROR,
-    payload: {error},
+    payload: { error },
   };
 }
 
 export function sendGenerationStatus(status: string): NotificationActionTypes {
   return {
     type: SEND_GENERATION_STATUS,
-    payload: {status},
+    payload: { status },
   };
 }
 
@@ -62,12 +62,12 @@ export function BirthdaysScanComplete(): BirthdaysExtractionActionTypes {
 export function SendScanLog(messageName: string, substitutions?: Array<string>): SendScanLogAction {
   return {
     type: SEND_SCAN_LOG,
-    payload: {messageName, substitutions},
+    payload: { messageName, substitutions },
   };
 }
 
 export interface Message<T extends ActionTypes> {
-  action: T,
-  sender?: chrome.runtime.MessageSender,
-  callback?: (...params: Array<any>) => void
+  action: T;
+  sender?: chrome.runtime.MessageSender;
+  callback?: (...params: Array<any>) => void;
 }

@@ -1,14 +1,15 @@
-import { CalendarICS } from './ics';
-import { PreparedEvent } from '@/libs/lib';
+import { PreparedEvent } from "@/libs/lib";
+import { CalendarICS } from "./ics";
 
 export class CalendarDeleteICS extends CalendarICS {
-  readonly filename: string = 'delete-birthday-calendar.ics';
+  readonly filename: string = "delete-birthday-calendar.ics";
 
-  readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
+  readonly fileMimeType: string = "text/calendar; charset=UTF-8";
 
   generateEvent(event: PreparedEvent) {
     const formattedEvent = this.formatEvent(event);
-    return `BEGIN:VEVENT
+    return (
+      `BEGIN:VEVENT
 DTSTART;VALUE=DATE:${formattedEvent.start}
 DTEND;VALUE=DATE:${formattedEvent.end}
 RRULE:FREQ=YEARLY
@@ -19,10 +20,11 @@ DESCRIPTION:This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> 
 SEQUENCE:0
 METHOD:CANCEL
 STATUS:CANCELLED
-`
+` +
       // There is unicode cake character before event.name, you may not see it in you editor
-      + `SUMMARY:🎂 ${formattedEvent.name}
+      `SUMMARY:🎂 ${formattedEvent.name}
 TRANSP:TRANSPARENT
-END:VEVENT`;
+END:VEVENT`
+    );
   }
 }

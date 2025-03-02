@@ -10,14 +10,14 @@ import {
   TextField,
   Theme,
   Typography,
-} from '@material-ui/core';
-import { DateTime } from 'luxon';
-import React, { FunctionComponent, useRef, useState, } from 'react';
-import { t } from '@/filters/translate';
+} from "@material-ui/core";
+import { DateTime } from "luxon";
+import React, { FunctionComponent, useRef, useState } from "react";
+import { t } from "@/filters/translate";
 import { updateStoredBirthdays } from "@/libs/birthdays-scan";
 import { RawScannedUser } from "@/libs/events/executed-script.types";
-import { DialogCloseButton } from '@/components/buttons/dialog-close/dialog-close';
-import { DialogTitle, handleCloseModal, } from '@/components/modals/modals.lib';
+import { DialogCloseButton } from "@/components/buttons/dialog-close/dialog-close";
+import { DialogTitle, handleCloseModal } from "@/components/modals/modals.lib";
 
 declare global {
   interface Array<T> {
@@ -27,22 +27,24 @@ declare global {
   }
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    listStyle: 'none',
-    padding: theme.spacing(0.5),
-    margin: 0,
-  },
-  chip: {
-    margin: theme.spacing(0.5),
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      listStyle: "none",
+      padding: theme.spacing(0.5),
+      margin: 0,
+    },
+    chip: {
+      margin: theme.spacing(0.5),
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+    },
+  }),
+);
 
 // Extend array with partition function
 if (!Array.prototype.partition) {
@@ -78,8 +80,8 @@ function isUserHaveValidBirthdate(user: RawScannedUser): boolean {
 }
 
 const AddBirthdaysModal: FunctionComponent<{
-  sourceText?: string
-}> = ({ sourceText = '01/25/1978 Volodymyr Zelenskyy' }) => {
+  sourceText?: string;
+}> = ({ sourceText = "01/25/1978 Volodymyr Zelenskyy" }) => {
   const classes = useStyles();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [parsed, setParsed] = useState<RawScannedUser[]>([]);
@@ -106,16 +108,16 @@ const AddBirthdaysModal: FunctionComponent<{
         const [datePart, name] = line.split(/ (.+)/);
 
         // Further split the date into month, day, and year
-        const [month, day, year] = datePart.split('/');
+        const [month, day, year] = datePart.split("/");
         return {
           birthdate: {
-            day: parseInt(day),
-            month: parseInt(month),
-            year: parseInt(year),
+            day: parseInt(day, 10),
+            month: parseInt(month, 10),
+            year: parseInt(year, 10),
           },
           name,
           misc: {
-            source: 'manual',
+            source: "manual",
             original: line,
           },
           // Maybe we should use a real hash based on the line instead
@@ -125,21 +127,16 @@ const AddBirthdaysModal: FunctionComponent<{
       .partition(isUserHaveValidBirthdate);
 
     setParsed((old) => old.concat(valid));
-    setText([...invalid.map((i) => i.misc.original), last].join('\n'));
+    setText([...invalid.map((i) => i.misc.original), last].join("\n"));
   };
 
   return (
-    <Dialog
-      open={true}
-      onClose={handleCloseModal}
-    >
-      <DialogTitle>
-        {t('ADD_BIRTHDAYS_HEADER')}
-      </DialogTitle>
+    <Dialog open onClose={handleCloseModal}>
+      <DialogTitle>{t("ADD_BIRTHDAYS_HEADER")}</DialogTitle>
 
       <DialogContent>
         <Typography variant="body1" color="textSecondary" paragraph>
-          {t('ADD_BIRTHDAYS_DESCRIPTION')}
+          {t("ADD_BIRTHDAYS_DESCRIPTION")}
         </Typography>
         <Paper component="ul" className={classes.root}>
           {parsed.map((data, index) => (
@@ -175,11 +172,10 @@ const AddBirthdaysModal: FunctionComponent<{
             onStoreNewUsers();
           }}
         >
-          {t('ADD_BIRTHDAYS_BUTTON_TITLE')}
+          {t("ADD_BIRTHDAYS_BUTTON_TITLE")}
         </Button>
-        <DialogCloseButton/>
+        <DialogCloseButton />
       </DialogActions>
-
     </Dialog>
   );
 };

@@ -1,18 +1,15 @@
-import Analytics from "@/libs/analytics";
-import {
-  Button,
-  makeStyles,
-} from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
-import React, { FunctionComponent } from 'react';
-import handleLink from '@/filters/handleLink';
-import { translateString } from '@/filters/translateString';
+import { Button, makeStyles } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
+import React, { FunctionComponent } from "react";
 import { useLocation } from "react-router-dom";
+import handleLink from "@/filters/handleLink";
+import { translateString } from "@/filters/translateString";
+import Analytics from "@/libs/analytics";
 
 const useStyles = makeStyles(() => ({
   success: {
     backgroundColor: green[500],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: green[700],
     },
   },
@@ -33,18 +30,12 @@ const LeaveFeedbackButton: FunctionComponent<LeaveFeedbackButtonProps> = (props)
       props.onClick();
     }
 
-    await handleLink('LEAVE_FEEDBACK_LINK', { close: true, active: true }, e);
+    await handleLink("LEAVE_FEEDBACK_LINK", { close: true, active: true }, e);
   };
 
   return (
-    <Button
-      size="small"
-      color="primary"
-      variant="contained"
-      className={classes.success}
-      onClick={handleClick}
-    >
-      {translateString('LEAVE_FEEDBACK_TITLE')}
+    <Button size="small" color="primary" variant="contained" className={classes.success} onClick={handleClick}>
+      {translateString("LEAVE_FEEDBACK_TITLE")}
     </Button>
   );
 };

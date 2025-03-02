@@ -1,5 +1,5 @@
-import HTMLReactParser from 'html-react-parser';
-import { translateString } from '@/filters/translateString';
+import HTMLReactParser from "html-react-parser";
+import { translateString } from "@/filters/translateString";
 
 /**
  * Translate function returns RSX element/s

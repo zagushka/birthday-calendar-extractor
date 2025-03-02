@@ -1,19 +1,10 @@
-import {
-  useEffect,
-  useState,
-} from 'react';
-import { Subject } from 'rxjs';
-import {
-  scan,
-  takeUntil,
-} from 'rxjs/operators';
-import { translateString } from '@/filters/translateString';
-import { Message } from '@/libs/events/actions';
-import { listenTo } from '@/libs/events/events';
-import {
-  SEND_SCAN_LOG,
-  SendScanLogAction,
-} from '@/libs/events/types';
+import { useEffect, useState } from "react";
+import { Subject } from "rxjs";
+import { scan, takeUntil } from "rxjs/operators";
+import { translateString } from "@/filters/translateString";
+import { Message } from "@/libs/events/actions";
+import { listenTo } from "@/libs/events/events";
+import { SEND_SCAN_LOG, SendScanLogAction } from "@/libs/events/types";
 
 /**
  * Listen to SCAN_LOG messages and return translated string
@@ -26,9 +17,11 @@ export function useScanLogListener(limit: number = 256): [Array<string>, () => v
     // Start listening to scan logs
     listenTo<SendScanLogAction>(SEND_SCAN_LOG)
       .pipe(
-        scan<Message<SendScanLogAction>, Array<string>>((accumulator, { action }) => accumulator
-          .concat(translateString(action.payload.messageName, action.payload.substitutions))
-          .slice(-limit), []),
+        scan<Message<SendScanLogAction>, Array<string>>(
+          (accumulator, { action }) =>
+            accumulator.concat(translateString(action.payload.messageName, action.payload.substitutions)).slice(-limit),
+          [],
+        ),
         takeUntil(onDestroy$),
       )
       .subscribe((logs) => {

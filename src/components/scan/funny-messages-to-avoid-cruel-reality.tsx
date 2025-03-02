@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-export const FunnyMessagesToAvoidCruelReality = ({ strings }: {
-  strings: string[],
-}) => {
+export const FunnyMessagesToAvoidCruelReality = ({ strings }: { strings: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayingString, setDisplayingString] = useState<string>(strings[currentIndex]);
 
@@ -20,9 +18,5 @@ export const FunnyMessagesToAvoidCruelReality = ({ strings }: {
     return () => clearTimeout(timeout);
   }, [currentIndex, strings]);
 
-  return (
-    <>
-      {displayingString}
-    </>
-  );
+  return <>{displayingString}</>;
 };

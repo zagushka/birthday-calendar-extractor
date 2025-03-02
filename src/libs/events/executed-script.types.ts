@@ -1,4 +1,4 @@
-export const EXECUTED_SCRIPT_RESPONSE = 'EXECUTED_SCRIPT_RESPONSE';
+export const EXECUTED_SCRIPT_RESPONSE = "EXECUTED_SCRIPT_RESPONSE";
 
 export interface RawScannedUser {
   birthdate: {
@@ -11,10 +11,10 @@ export interface RawScannedUser {
   misc?: {
     source: "facebook" | "manual";
     [key: string]: any;
-  }
+  };
 }
 
-export type CalendarTypes = 'CSV' | 'ICS' | 'DELETE-ICS';
+export type CalendarTypes = "CSV" | "ICS" | "DELETE-ICS";
 
 export interface ExportDoneResponse {
   type: typeof RESPONSE_EXPORT_DONE;
@@ -45,27 +45,27 @@ export type ExecutedScriptTypes = ExecutedScriptScanResponseAction;
  */
 
 // Thrown when user is not on the facebook page
-export const SCAN_ERROR_FACEBOOK_REQUIRED = 'SCAN_ERROR_FACEBOOK_REQUIRED';
+export const SCAN_ERROR_FACEBOOK_REQUIRED = "SCAN_ERROR_FACEBOOK_REQUIRED";
 // Was unable to make a request and fetch www.facebook.com page
-export const SCAN_ERROR_FACEBOOK_PAGE_REQUEST = 'SCAN_ERROR_FACEBOOK_PAGE_REQUEST';
+export const SCAN_ERROR_FACEBOOK_PAGE_REQUEST = "SCAN_ERROR_FACEBOOK_PAGE_REQUEST";
 // Was unable to get content of fetch www.facebook.com page
-export const SCAN_ERROR_FACEBOOK_PAGE_CONTENT = 'SCAN_ERROR_FACEBOOK_PAGE_CONTENT';
+export const SCAN_ERROR_FACEBOOK_PAGE_CONTENT = "SCAN_ERROR_FACEBOOK_PAGE_CONTENT";
 // Was unable to extract facebook token
-export const SCAN_ERROR_NO_TOKEN_DETECTED = 'SCAN_ERROR_NO_TOKEN_DETECTED';
+export const SCAN_ERROR_NO_TOKEN_DETECTED = "SCAN_ERROR_NO_TOKEN_DETECTED";
 // Unable to make fetch birthdays request
-export const SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST = 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST';
+export const SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST = "SCAN_ERROR_FACEBOOK_BIRTHDAYS_REQUEST";
 // Unable to get content of the birthdays request
-export const SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT = 'SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT';
+export const SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT = "SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT";
 // Failed to extract birthdays from fetched birthdays page
-export const SCAN_ERROR_BIRTHDAYS_EXTRACT = 'SCAN_ERROR_BIRTHDAYS_EXTRACT';
+export const SCAN_ERROR_BIRTHDAYS_EXTRACT = "SCAN_ERROR_BIRTHDAYS_EXTRACT";
 // Any other error related to scan
-export const SCAN_ERROR_GENERAL = 'SCAN_ERROR_GENERAL';
+export const SCAN_ERROR_GENERAL = "SCAN_ERROR_GENERAL";
 // Scan script timeout error
-export const SCAN_ERROR_TIMEOUT = 'SCAN_ERROR_TIMEOUT';
+export const SCAN_ERROR_TIMEOUT = "SCAN_ERROR_TIMEOUT";
 // Scan success
-export const SCAN_SUCCESS = 'SCAN_SUCCESS';
+export const SCAN_SUCCESS = "SCAN_SUCCESS";
 // Add birthdays modal
-export const SHOW_MODAL_ADD_BIRTHDAYS = 'SHOW_MODAL_ADD_BIRTHDAYS';
+export const SHOW_MODAL_ADD_BIRTHDAYS = "SHOW_MODAL_ADD_BIRTHDAYS";
 
 /**
  * Types of EXECUTED_SCRIPT_RESPONSE
@@ -74,10 +74,10 @@ export const SHOW_MODAL_ADD_BIRTHDAYS = 'SHOW_MODAL_ADD_BIRTHDAYS';
  * RESPONSE_EXPORT_DONE - indicates successful calendar export
  */
 
-export const RESPONSE_EXPORT_DONE = 'RESPONSE_EXPORT_DONE';
+export const RESPONSE_EXPORT_DONE = "RESPONSE_EXPORT_DONE";
 
 export type ScanErrorTypes =
-  typeof SCAN_ERROR_FACEBOOK_REQUIRED
+  | typeof SCAN_ERROR_FACEBOOK_REQUIRED
   | typeof SCAN_ERROR_FACEBOOK_PAGE_REQUEST
   | typeof SCAN_ERROR_FACEBOOK_PAGE_CONTENT
   | typeof SCAN_ERROR_NO_TOKEN_DETECTED

@@ -1,9 +1,9 @@
-const GA_ENDPOINT = 'https://www.google-analytics.com/mp/collect';
-const GA_DEBUG_ENDPOINT = 'https://www.google-analytics.com/debug/mp/collect';
+const GA_ENDPOINT = "https://www.google-analytics.com/mp/collect";
+const GA_DEBUG_ENDPOINT = "https://www.google-analytics.com/debug/mp/collect";
 
 // Get via https://developers.google.com/analytics/devguides/collection/protocol/ga4/sending-events?client_type=gtag#recommended_parameters_for_reports
-const MEASUREMENT_ID = 'G-N0LP4JWXT6';
-const API_SECRET = 'YW58CFBkQOKEuDCffDQXqw';
+const MEASUREMENT_ID = "G-N0LP4JWXT6";
+const API_SECRET = "YW58CFBkQOKEuDCffDQXqw";
 
 // Duration of inactivity after which a new session is created
 const SESSION_EXPIRATION_IN_MIN = 30;
@@ -21,7 +21,7 @@ class Analytics {
   // Stores client id in local storage to keep the same client id as long as
   // the extension is installed.
   async getOrCreateClientId() {
-    let { clientId } = await chrome.storage.local.get('clientId') as { clientId: string | undefined };
+    let { clientId } = (await chrome.storage.local.get("clientId")) as { clientId: string | undefined };
     if (!clientId) {
       // Generate a unique client ID, the actual value is not relevant
       clientId = self.crypto.randomUUID();
@@ -34,15 +34,15 @@ class Analytics {
     return {
       timestamp: Date.now(), // Set timestamp to a past value to force a new session
       session_id: window.crypto.randomUUID(),
-    }
+    };
   }
 
   // Returns the current session id, or creates a new one if one doesn't exist or
   // the previous one has expired.
   async getOrCreateSessionId() {
     // Use storage.session because it is only in memory
-    let { sessionData } = await chrome.storage.session.get('sessionData') as {
-      sessionData: SessionData | undefined
+    let { sessionData } = (await chrome.storage.session.get("sessionData")) as {
+      sessionData: SessionData | undefined;
     };
 
     if (!sessionData) {
@@ -83,43 +83,42 @@ class Analytics {
       const response = await fetch(
         `${this.debug ? GA_DEBUG_ENDPOINT : GA_ENDPOINT}?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             client_id,
             events: [
               {
                 name,
-                params
-              }
-            ]
-          })
-        }
+                params,
+              },
+            ],
+          }),
+        },
       );
       if (!this.debug) {
         return;
       }
       console.log(await response.text());
-    }
-    catch (e) {
-      console.error('Google Analytics request failed with an exception', e);
+    } catch (e) {
+      console.error("Google Analytics request failed with an exception", e);
     }
   }
 
   // Fire a page view event.
   async firePageViewEvent(pageTitle: string, pageLocation: string, additionalParams = {}) {
-    return this.fireEvent('page_view', {
+    return this.fireEvent("page_view", {
       page_title: pageTitle,
       page_location: pageLocation,
-      ...additionalParams
+      ...additionalParams,
     });
   }
 
   // Fire a click event.
   async fireButtonClickEvent(button_name: string, page_location: string, additionalParams = {}) {
-    return this.fireEvent('button_click', {
+    return this.fireEvent("button_click", {
       button_name,
       page_location,
-      ...additionalParams
+      ...additionalParams,
     });
   }
 
@@ -127,9 +126,9 @@ class Analytics {
   async fireErrorEvent(error: Record<string, any>, additionalParams = {}) {
     // Note: 'error' is a reserved event name and cannot be used
     // see https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=gtag#reserved_names
-    return this.fireEvent('extension_error', {
+    return this.fireEvent("extension_error", {
       ...error,
-      ...additionalParams
+      ...additionalParams,
     });
   }
 }

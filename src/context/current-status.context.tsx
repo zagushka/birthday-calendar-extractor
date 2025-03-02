@@ -1,11 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { Location } from 'react-router-dom';
-import { ShowModalAction } from '@/libs/events/types';
-import { useCurrentStatus } from '@/libs/hooks/current-status.hook';
-import {
-  StoredBirthday,
-  WizardsSettings,
-} from '@/libs/storage/storaged.types';
+import React, { FunctionComponent } from "react";
+import { Location } from "react-router-dom";
+import { ShowModalAction } from "@/libs/events/types";
+import { useCurrentStatus } from "@/libs/hooks/current-status.hook";
+import { StoredBirthday, WizardsSettings } from "@/libs/storage/storaged.types";
 
 interface CurrentStatusContextInterface {
   initDone: boolean;
@@ -30,17 +27,13 @@ export const CurrentStatusContext = React.createContext<CurrentStatusContextInte
   isDonated: false,
   isDonationPageVisited: false,
   users: [],
-  wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
+  wizardsSettings: { csv: { format: "dd/LL/yyyy" }, ics: { groupEvents: false } },
 });
 
 const CurrentStatusContextProvider: FunctionComponent = (props) => {
   const statusVariables = useCurrentStatus();
 
-  return (
-    <CurrentStatusContext.Provider value={statusVariables}>
-      {props.children}
-    </CurrentStatusContext.Provider>
-  );
+  return <CurrentStatusContext.Provider value={statusVariables}>{props.children}</CurrentStatusContext.Provider>;
 };
 
 export default CurrentStatusContextProvider;

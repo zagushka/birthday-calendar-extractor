@@ -1,73 +1,69 @@
+import { createTheme, ThemeOptions, ThemeProvider } from "@material-ui/core/styles";
+import React, { FunctionComponent, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Analytics from "@/libs/analytics";
 import usePageTracking from "@/libs/hooks/use-page-tracking";
 import { retrieveUserSettings } from "@/libs/storage/chrome.storage";
 import { updateStatisticsAdd } from "@/libs/storage/statistics";
-import {
-  createTheme,
-  ThemeOptions,
-  ThemeProvider,
-} from '@material-ui/core/styles';
-import React, { FunctionComponent, useEffect } from 'react';
-import UserSettings from '@/components/user-settings/user-settings';
-import CurrentStatusContextProvider from '@/context/current-status.context';
-import LoadingContextProvider from '@/context/loading.context';
-import '@/popup/App.scss';
-import { useLocation } from "react-router-dom";
+import UserSettings from "@/components/user-settings/user-settings";
+import CurrentStatusContextProvider from "@/context/current-status.context";
+import LoadingContextProvider from "@/context/loading.context";
+import "@/popup/App.scss";
 
 export const themeOptions: ThemeOptions = {
   palette: {
-    type: 'light',
+    type: "light",
     primary: {
-      main: '#3f51b5',
+      main: "#3f51b5",
     },
     secondary: {
-      main: '#f50057',
+      main: "#f50057",
     },
   },
   props: {
     MuiTypography: {
       variantMapping: {
-        body1: 'span',
-        body2: 'span',
+        body1: "span",
+        body2: "span",
       },
     },
     MuiButton: {
-      size: 'small',
+      size: "small",
     },
     MuiButtonGroup: {
-      size: 'small',
+      size: "small",
     },
     MuiCheckbox: {
-      size: 'small',
+      size: "small",
     },
     MuiFab: {
-      size: 'small',
+      size: "small",
     },
     MuiFormControl: {
-      margin: 'dense',
-      size: 'small',
+      margin: "dense",
+      size: "small",
     },
     MuiFormHelperText: {
-      margin: 'dense',
+      margin: "dense",
     },
     MuiIconButton: {
-      size: 'small',
+      size: "small",
     },
     MuiInputBase: {
-      margin: 'dense',
+      margin: "dense",
     },
     MuiInputLabel: {
-      margin: 'dense',
+      margin: "dense",
     },
     MuiRadio: {
-      size: 'small',
+      size: "small",
     },
     MuiSwitch: {
-      size: 'small',
+      size: "small",
     },
     MuiTextField: {
-      margin: 'dense',
-      size: 'small',
+      margin: "dense",
+      size: "small",
     },
     MuiList: {
       dense: true,
@@ -76,7 +72,7 @@ export const themeOptions: ThemeOptions = {
       dense: true,
     },
     MuiTable: {
-      size: 'small',
+      size: "small",
     },
   },
 };
@@ -85,7 +81,7 @@ const theme = createTheme(themeOptions);
 
 const App: FunctionComponent = () => {
   usePageTracking();
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
     // Establish connection to the background script
@@ -96,7 +92,7 @@ const App: FunctionComponent = () => {
       const { statistics } = await retrieveUserSettings(["statistics"]);
       Analytics.fireEvent("popup_opened", {
         page_location: location.pathname + location.search,
-        times_opened: statistics.timesOpened
+        times_opened: statistics.timesOpened,
       });
     }
 
@@ -114,7 +110,7 @@ const App: FunctionComponent = () => {
     <LoadingContextProvider>
       <CurrentStatusContextProvider>
         <ThemeProvider theme={theme}>
-          <UserSettings/>
+          <UserSettings />
         </ThemeProvider>
       </CurrentStatusContextProvider>
     </LoadingContextProvider>

@@ -1,8 +1,8 @@
-import update from 'immutability-helper';
-import { Reducer } from 'react';
+import update from "immutability-helper";
+import { Reducer } from "react";
 
 interface LoaderAction {
-  type: 'START' | 'STOP';
+  type: "START" | "STOP";
   name: string; // instance name
 }
 
@@ -22,12 +22,12 @@ const LoaderReducer: Reducer<LoaderReducerInterface, LoaderAction> = (prevState,
   const { name, type } = action;
 
   switch (type) {
-    case 'START':
+    case "START":
       return update(prevState, {
         loading: { $set: true },
         instances: { [name]: { $apply: (v) => (v || 0) + 1 } },
       });
-    case 'STOP': {
+    case "STOP": {
       let newState: LoaderReducerInterface;
 
       if (instances[name] > 1) {
@@ -42,7 +42,7 @@ const LoaderReducer: Reducer<LoaderReducerInterface, LoaderAction> = (prevState,
     }
 
     default:
-      throw new Error('Should not reach this!');
+      throw new Error("Should not reach this!");
   }
 };
 

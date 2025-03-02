@@ -1,32 +1,15 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-} from '@material-ui/core';
-import React, { FunctionComponent } from 'react';
-import { t } from '@/filters/translate';
-import { DialogCloseButton } from '@/components/buttons/dialog-close/dialog-close';
-import {
-  DialogTitle,
-  handleCloseModal,
-  handleLinkClickAndCloseModal,
-} from '@/components/modals/modals.lib';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@material-ui/core";
+import React, { FunctionComponent } from "react";
+import { t } from "@/filters/translate";
+import { DialogCloseButton } from "@/components/buttons/dialog-close/dialog-close";
+import { DialogTitle, handleCloseModal, handleLinkClickAndCloseModal } from "@/components/modals/modals.lib";
 
 const FacebookRequiredModal: FunctionComponent = () => (
-  <Dialog
-    open
-    onClose={handleCloseModal}
-  >
-    <DialogTitle>
-      {t('ATTENTION_HEADER')}
-    </DialogTitle>
+  <Dialog open onClose={handleCloseModal}>
+    <DialogTitle>{t("ATTENTION_HEADER")}</DialogTitle>
 
     <DialogContent>
-      <DialogContentText>
-        {t('SCAN_ERROR_FACEBOOK_REQUIRED')}
-      </DialogContentText>
+      <DialogContentText>{t("SCAN_ERROR_FACEBOOK_REQUIRED")}</DialogContentText>
     </DialogContent>
 
     <DialogActions>
@@ -34,9 +17,9 @@ const FacebookRequiredModal: FunctionComponent = () => (
         size="small"
         color="primary"
         variant="contained"
-        onClick={() => handleLinkClickAndCloseModal('SCAN_ERROR_FACEBOOK_REQUIRED_LINK')}
+        onClick={() => handleLinkClickAndCloseModal("SCAN_ERROR_FACEBOOK_REQUIRED_LINK")}
       >
-        {t('SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE')}
+        {t("SCAN_ERROR_FACEBOOK_REQUIRED_LINK_TITLE")}
       </Button>
       <DialogCloseButton />
     </DialogActions>

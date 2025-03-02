@@ -1,11 +1,11 @@
+import { Button } from "@material-ui/core";
+import React, { FunctionComponent, useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CurrentStatusContext } from "@/context/current-status.context";
 import Analytics from "@/libs/analytics";
 import { SHOW_MODAL_DOWNLOAD_KEYWORD } from "@/libs/events/types";
 import { storeUserSettings } from "@/libs/storage/chrome.storage";
-import { Button } from "@material-ui/core";
-import React, { FunctionComponent, useContext, useEffect, useState } from "react";
 import { translateString } from "@/filters/translateString";
-import { useLocation } from "react-router-dom";
 
 interface GenerateAndDownloadButtonProps {
   disabled?: boolean;
@@ -34,26 +34,19 @@ const GenerateAndDownloadButton: FunctionComponent<GenerateAndDownloadButtonProp
       setOnceClicked(true);
       await storeUserSettings({ modal: { type: SHOW_MODAL_DOWNLOAD_KEYWORD } });
       // Log the request keyword modal shown
-      return await Analytics.fireButtonClickEvent("request_keyword", location.pathname, {
+      return Analytics.fireButtonClickEvent("request_keyword", location.pathname, {
         calendar_type: calendarType,
       });
     }
-
 
     await Analytics.fireButtonClickEvent("generate_calendar", location.pathname, {
       calendar_type: calendarType,
     });
     onClick();
-  }
+  };
 
   return (
-    <Button
-      size="small"
-      variant="contained"
-      color="primary"
-      disabled={disabled}
-      onClick={handleClick}
-    >
+    <Button size="small" variant="contained" color="primary" disabled={disabled} onClick={handleClick}>
       {translateString("GENERATE")}
     </Button>
   );

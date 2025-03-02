@@ -1,21 +1,18 @@
-import { DateTime } from 'luxon';
-import { CalendarBase } from '@/libs/base';
-import {
-  generatePreparedEventsForYears,
-  PreparedEvent,
-} from '@/libs/lib';
-import { reviveBirthday } from '@/libs/storage/chrome.storage';
-import { StoredBirthday } from '@/libs/storage/storaged.types';
+import { DateTime } from "luxon";
+import { CalendarBase } from "@/libs/base";
+import { generatePreparedEventsForYears, PreparedEvent } from "@/libs/lib";
+import { reviveBirthday } from "@/libs/storage/chrome.storage";
+import { StoredBirthday } from "@/libs/storage/storaged.types";
 
 export class CalendarJSON extends CalendarBase<{}, {}> {
-  readonly filename: string = 'birthday-calendar.json';
+  readonly filename: string = "birthday-calendar.json";
 
-  readonly fileMimeType: string = 'application/json; charset=UTF-8';
+  readonly fileMimeType: string = "application/json; charset=UTF-8";
 
   formatEvent(event: PreparedEvent) {
     return {
       name: event.name,
-      start: event.start.toFormat('LL/dd/yyyy'), // 05/30/2020
+      start: event.start.toFormat("LL/dd/yyyy"), // 05/30/2020
       href: event.href,
     };
   }

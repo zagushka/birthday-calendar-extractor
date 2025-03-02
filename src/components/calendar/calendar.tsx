@@ -1,41 +1,28 @@
-import { Box } from '@material-ui/core';
-import { useThrottleCallback } from '@react-hook/throttle';
-import update from 'immutability-helper';
+import { Box } from "@material-ui/core";
+import { useThrottleCallback } from "@react-hook/throttle";
+import update from "immutability-helper";
 
-import { DateTime } from 'luxon';
-import memoize from 'memoize-one';
-import React, {
-  FunctionComponent,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { DateTime } from "luxon";
+import memoize from "memoize-one";
+import React, { FunctionComponent, useCallback, useContext, useEffect, useRef, useState } from "react";
 
-import {
-  ListOnScrollProps,
-  VariableSizeList,
-} from 'react-window';
+import { ListOnScrollProps, VariableSizeList } from "react-window";
 import { toggleStoredUserSettings } from "@/libs/birthdays-scan";
-import { CurrentStatusContext } from '@/context/current-status.context';
-import {
-  reviveBirthday,
-  storeUserSettings,
-} from '@/libs/storage/chrome.storage';
-import { STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS } from '@/libs/storage/storaged.types';
-import Layout from '../layout/layout';
-import { CalendarNavigation } from './calendar-navigation';
+import { CurrentStatusContext } from "@/context/current-status.context";
+import { reviveBirthday, storeUserSettings } from "@/libs/storage/chrome.storage";
+import { STORED_BIRTHDAY, STORED_BIRTHDAY_SETTINGS } from "@/libs/storage/storaged.types";
+import Layout from "../layout/layout";
+import { CalendarNavigation } from "./calendar-navigation";
 import {
   asLongDate,
   DAY_HEADER_HEIGHT,
   groupUsersByOrdinal,
   mapGroupedUsersToDisplayItemDimensions,
   UserMapInterface,
-} from './calendar-tools';
-import { CreateButton } from './create-button';
-import { CustomScrollbarsVirtualList } from './custom-scrollbars';
-import { DayList } from './day-row';
+} from "./calendar-tools";
+import { CreateButton } from "./create-button";
+import { CustomScrollbarsVirtualList } from "./custom-scrollbars";
+import { DayList } from "./day-row";
 
 const createItemData = memoize((userGroup, toggleStatus) => ({
   userGroup,
@@ -51,10 +38,16 @@ const Calendar: FunctionComponent = () => {
     usersMap: [],
   });
 
-  const scrollHandler = useThrottleCallback(useCallback(({ scrollOffset }: ListOnScrollProps) => {
-    const index = users.usersMap.findIndex((item) => item.offset + item.height >= scrollOffset);
-    setDayIndex(index);
-  }, [users]), 10);
+  const scrollHandler = useThrottleCallback(
+    useCallback(
+      ({ scrollOffset }: ListOnScrollProps) => {
+        const index = users.usersMap.findIndex((item) => item.offset + item.height >= scrollOffset);
+        setDayIndex(index);
+      },
+      [users],
+    ),
+    10,
+  );
 
   const listRef = useRef<VariableSizeList>();
 
@@ -72,10 +65,10 @@ const Calendar: FunctionComponent = () => {
     const settings = toggleStoredUserSettings(
       rawUsers[index][STORED_BIRTHDAY.SETTINGS],
       STORED_BIRTHDAY_SETTINGS.HIDDEN_FOR_EXPORT,
-      state
+      state,
     );
     storeUserSettings({
-      birthdays: update(rawUsers, { [index]: { [STORED_BIRTHDAY.SETTINGS]: { $set: settings } } })
+      birthdays: update(rawUsers, { [index]: { [STORED_BIRTHDAY.SETTINGS]: { $set: settings } } }),
     });
   };
   const itemData = createItemData(users.userGroups, updateUserSettings);
@@ -100,7 +93,7 @@ const Calendar: FunctionComponent = () => {
    */
   const [title, setTitle] = useState<string>();
   useEffect(() => {
-    setTitle(users.userGroups[dayIndex] ? asLongDate(users.userGroups[dayIndex][0]) : '');
+    setTitle(users.userGroups[dayIndex] ? asLongDate(users.userGroups[dayIndex][0]) : "");
   }, [users, dayIndex]);
 
   /**
@@ -113,7 +106,7 @@ const Calendar: FunctionComponent = () => {
   const updateDayIndex = (delta?: number) => {
     let index = dayIndex + (delta ?? 0);
 
-    if (typeof delta === 'undefined') {
+    if (typeof delta === "undefined") {
       // No index provided, set index close to today
       const todayOrdinal = DateTime.local().ordinal;
       index = users.usersMap.findIndex(({ ordinal }) => ordinal >= todayOrdinal);
@@ -132,11 +125,11 @@ const Calendar: FunctionComponent = () => {
     <>
       {/* Top Part of the list */}
       <Layout.Header>
-        <Box style={{ textTransform: 'capitalize' }}>{title}</Box>
+        <Box style={{ textTransform: "capitalize" }}>{title}</Box>
       </Layout.Header>
 
       {/* Navigation with today, next and previous day buttons */}
-      <CalendarNavigation updateDayIndex={updateDayIndex}/>
+      <CalendarNavigation updateDayIndex={updateDayIndex} />
 
       <Layout.Content>
         {/* Scroll with list of birthdays */}
@@ -154,7 +147,7 @@ const Calendar: FunctionComponent = () => {
           {DayList}
         </VariableSizeList>
 
-        <CreateButton/>
+        <CreateButton />
       </Layout.Content>
     </>
   );
