@@ -28,6 +28,10 @@ const DevTools: React.FunctionComponent = () => {
     clearStorage();
   };
 
+  const clearDonationPageVisited = () => {
+    storeUserSettings({ donationPageVisited: DateTime.fromMillis(0) });
+  }
+
   const clearBadge = () => {
     setBadgeText('');
     setBadgeColor();
@@ -54,6 +58,7 @@ const DevTools: React.FunctionComponent = () => {
         <Button variant="outlined" onClick={openModal(SHOW_MODAL_EXPORT_SUCCESS)}>Export Success Modal</Button>
         <Button variant="outlined" onClick={openModal(SCAN_ERROR_FACEBOOK_REQUIRED)}>Facebook Required Modal</Button>
         <Button variant="outlined" onClick={openModal(SCAN_ERROR_NO_TOKEN_DETECTED)}>No token detected Modal</Button>
+        <Button variant="outlined" onClick={clearDonationPageVisited}>Clear Donation page visited</Button>
       </Layout.Content>
 
     </Layout.Wrapper>

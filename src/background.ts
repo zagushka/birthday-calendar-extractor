@@ -1,4 +1,3 @@
-import { updateStatisticsAdd } from "@/libs/storage/statistics";
 import { DateTime } from 'luxon';
 import {
   startWith,
@@ -19,6 +18,7 @@ import {
   ALARM_NEW_DAY,
   BIRTHDAYS_START_SCAN,
   BirthdaysStartExtractionAction,
+  SHOW_MODAL_DOWNLOAD_KEYWORD,
   SHOW_MODAL_EXPORT_SUCCESS,
   SHOW_MODAL_SCAN_SUCCESS,
   UPDATE_BADGE,
@@ -32,7 +32,7 @@ chrome.runtime.onConnect.addListener((externalPort) => {
     // Clean up
     // Remove opened modal
     const { modal } = await retrieveUserSettings(['modal']);
-    if (![SHOW_MODAL_EXPORT_SUCCESS, SHOW_MODAL_SCAN_SUCCESS].includes(modal?.type)) {
+    if (![SHOW_MODAL_EXPORT_SUCCESS, SHOW_MODAL_SCAN_SUCCESS, SHOW_MODAL_DOWNLOAD_KEYWORD].includes(modal?.type)) {
       await storeUserSettings({ modal: null });
     }
   });

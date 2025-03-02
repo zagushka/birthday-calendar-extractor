@@ -1,7 +1,10 @@
+import { CurrentStatusContext } from "@/context/current-status.context";
 import Analytics from "@/libs/analytics";
-import { Button } from '@material-ui/core';
-import React, { FunctionComponent } from 'react';
-import { translateString } from '@/filters/translateString';
+import { SHOW_MODAL_DOWNLOAD_KEYWORD } from "@/libs/events/types";
+import { storeUserSettings } from "@/libs/storage/chrome.storage";
+import { Button } from "@material-ui/core";
+import React, { FunctionComponent, useContext, useEffect, useState } from "react";
+import { translateString } from "@/filters/translateString";
 import { useLocation } from "react-router-dom";
 
 interface GenerateAndDownloadButtonProps {
@@ -13,9 +16,31 @@ interface GenerateAndDownloadButtonProps {
 const GenerateAndDownloadButton: FunctionComponent<GenerateAndDownloadButtonProps> = (props) => {
   const { onClick, calendarType, disabled = false } = props;
   const location = useLocation();
+  const { isDonated, isDonationPageVisited } = useContext(CurrentStatusContext);
+  const [onceClicked, setOnceClicked] = useState(false);
+
+  // Listen to the update of the donationPageVisited even,
+  // so we know if user successfully entered the keycode
+  // handle click if once clicked to proceed and was interrupted by the keyword modal
+  useEffect(() => {
+    if ((isDonated || isDonationPageVisited) && onceClicked) {
+      handleClick();
+    }
+  }, [isDonated, isDonationPageVisited]);
 
   const handleClick = async () => {
-    await Analytics.fireButtonClickEvent('generate_calendar', location.pathname, {
+    // if not donated yet and last time asked for keyword is greater than two weeks
+    if (!isDonated && !isDonationPageVisited) {
+      setOnceClicked(true);
+      await storeUserSettings({ modal: { type: SHOW_MODAL_DOWNLOAD_KEYWORD } });
+      // Log the request keyword modal shown
+      return await Analytics.fireButtonClickEvent("request_keyword", location.pathname, {
+        calendar_type: calendarType,
+      });
+    }
+
+
+    await Analytics.fireButtonClickEvent("generate_calendar", location.pathname, {
       calendar_type: calendarType,
     });
     onClick();
@@ -29,7 +54,7 @@ const GenerateAndDownloadButton: FunctionComponent<GenerateAndDownloadButtonProp
       disabled={disabled}
       onClick={handleClick}
     >
-      {translateString('GENERATE')}
+      {translateString("GENERATE")}
     </Button>
   );
 };

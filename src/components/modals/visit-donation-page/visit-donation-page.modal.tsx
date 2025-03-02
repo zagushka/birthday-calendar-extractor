@@ -1,18 +1,12 @@
+import { DialogCloseButton } from "@/components/buttons/dialog-close/dialog-close";
+import { DialogTitle, handleCloseModal } from "@/components/modals/modals.lib";
 import handleLink from "@/filters/handleLink";
+import { t } from "@/filters/translate";
 import { translateString } from "@/filters/translateString";
 import { storeUserSettings } from "@/libs/storage/chrome.storage";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent, Input,
-  Typography,
-} from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, Link, TextField, Typography } from "@material-ui/core";
 import { DateTime } from "luxon";
-import React, { FunctionComponent, useRef, useState, } from 'react';
-import { t } from '@/filters/translate';
-import { DialogCloseButton } from '@/components/buttons/dialog-close/dialog-close';
-import { DialogTitle, handleCloseModal, } from '@/components/modals/modals.lib';
+import React, { FunctionComponent } from "react";
 
 declare global {
   interface Array<T> {
@@ -36,7 +30,7 @@ const VisitDonationPageModal: FunctionComponent<{
   };
 
   const openAKeywordPage = async () => {
-    await handleLink('VISIT_DONATION_MODAL_LINK', { close: false, active: true });
+    await handleLink("VISIT_DONATION_MODAL_LINK", { close: false, active: true });
   }
 
   return (
@@ -45,33 +39,29 @@ const VisitDonationPageModal: FunctionComponent<{
       onClose={handleCloseModal}
     >
       <DialogTitle>
-        {t('VISIT_DONATION_MODAL_TITLE')}
+        {t("VISIT_DONATION_MODAL_TITLE")}
       </DialogTitle>
 
       <DialogContent>
-        <Typography variant="body1" color="textSecondary">
-          {t('VISIT_DONATION_MODAL_DESCRIPTION')}
-          <p> {t('VISIT_DONATION_MODAL_MORE_INFO_BUTTON_TITLE')}</p>
-          {t('VISIT_DONATION_MODAL_MORE_INFO')}
-          {/*{t('VISIT_DONATION_MODAL_DESCRIPTION')}*/}
+        <Typography variant="body1" color="textPrimary">
+          {t("VISIT_DONATION_MODAL_MORE_INFO")}
         </Typography>
-        <Input
+        <Link
+          href="#"
+          onClick={() => openAKeywordPage()}
+        >
+          {t("VISIT_DONATION_MODAL_SUBMIT_BUTTON_TITLE")}
+        </Link>
+        <TextField
           fullWidth
-          margin="none"
-          placeholder={translateString('VISIT_DONATION_MODAL_TITLE')}
+          variant="outlined"
+          margin="normal"
+          placeholder={translateString("VISIT_DONATION_MODAL_INPUT_PLACEHOLDER")}
           onChange={onKeywordChange}
         />
       </DialogContent>
 
       <DialogActions>
-        <Button
-          size="small"
-          color="primary"
-          variant="contained"
-          onClick={() => openAKeywordPage()}
-        >
-          {t('VISIT_DONATION_MODAL_SUBMIT_BUTTON_TITLE')}
-        </Button>
         <DialogCloseButton/>
       </DialogActions>
 

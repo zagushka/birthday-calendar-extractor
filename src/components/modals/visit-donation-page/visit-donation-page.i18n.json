@@ -2,46 +2,46 @@
   "VISIT_DONATION_MODAL_TITLE": {
     "message": {
       "en": "Secret Keyword Required",
-      "zh": "",
-      "es": "",
-      "hi": "",
-      "ar": "",
-      "bn": "",
-      "pt": "",
-      "ja": "",
-      "de": "",
-      "it": "",
-      "uk": "",
+      "zh": "必须输入秘密关键词",
+      "es": "Se requiere la palabra clave secreta",
+      "hi": "गुप्त शब्द आवश्यक है",
+      "ar": "الكلمة السرية مطلوبة",
+      "bn": "গোপন শব্দ প্রয়োজন",
+      "pt": "Palavra-chave secreta necessária",
+      "ja": "秘密のキーワードが必要です",
+      "de": "Geheimes Schlüsselwort erforderlich",
+      "it": "È richiesta la parola chiave segreta",
+      "uk": "Потрібне секретне слово",
       "ru": "Требуется секретное слово",
-      "he": "",
-      "art-x-interslv-latin": "",
-      "art-x-interslv-cyrl": ""
+      "he": "נדרש מילת מפתח סודית",
+      "art-x-interslv-latin": "Tajno slovo potrebno",
+      "art-x-interslv-cyrl": "Тајно слово потребно"
     },
     "description": "Visit donation modal title"
   },
   "VISIT_DONATION_MODAL_INPUT_PLACEHOLDER": {
     "message": {
       "en": "Enter the secret keyword",
-      "zh": "",
-      "es": "",
-      "hi": "",
-      "ar": "",
-      "bn": "",
-      "pt": "",
-      "ja": "",
-      "de": "",
-      "it": "",
-      "uk": "",
+      "zh": "输入秘密关键词",
+      "es": "Ingrese la palabra clave secreta",
+      "hi": "गुप्त शब्द दर्ज करें",
+      "ar": "أدخل الكلمة السرية",
+      "bn": "গোপন শব্দ প্রবেশ করুন",
+      "pt": "Digite a palavra-chave secreta",
+      "ja": "秘密のキーワードを入力してください",
+      "de": "Geben Sie das geheime Schlüsselwort ein",
+      "it": "Inserisci la parola chiave segreta",
+      "uk": "Введіть секретне слово",
       "ru": "Введите секретное слово",
-      "he": "",
-      "art-x-interslv-latin": "",
-      "art-x-interslv-cyrl": ""
+      "he": "הזן את מילת המפתח הסודית",
+      "art-x-interslv-latin": "Vvedi tajno slovo",
+      "art-x-interslv-cyrl": "Введи тајно слово"
     },
     "description": "Enter secret keyword input placeholder"
   },
   "VISIT_DONATION_MODAL_LINK": {
     "message": {
-      "en": "https://buymeacoffee.com/zagushka/secret-keyword",
+      "en": "https://buymeacoffee.com/zagushka",
       "zh": "https://buymeacoffee.com/zagushka/wijexodeta",
       "es": "https://buymeacoffee.com/zagushka/palabra-clave-secreta",
       "hi": "https://buymeacoffee.com/zagushka/herotavahi",
@@ -58,26 +58,6 @@
       "art-x-interslv-cyrl": "https://buymeacoffee.com/zagushka/lahuzisegu"
     },
     "description": "Visit donation modal link"
-  },
-  "VISIT_DONATION_MODAL_DESCRIPTION": {
-    "message": {
-      "en": "Click the button below to access the secret keyword to continue.",
-      "zh": "",
-      "es": "",
-      "hi": "",
-      "ar": "",
-      "bn": "",
-      "pt": "",
-      "ja": "",
-      "de": "",
-      "it": "",
-      "uk": "",
-      "ru": "Нажмите на кнопку ниже, чтобы получить секретное слово и продолжить.",
-      "he": "",
-      "art-x-interslv-latin": "",
-      "art-x-interslv-cyrl": ""
-    },
-    "description": "Visit donation modal description, it explains the user where to get the secret keyword."
   },
   "VISIT_DONATION_MODAL_KEYWORD": {
     "message": {
@@ -101,40 +81,40 @@
   "VISIT_DONATION_MODAL_SUBMIT_BUTTON_TITLE": {
     "message": {
       "en": "Retrieve your Secret Keyword",
-      "zh": "",
-      "es": "",
-      "hi": "",
-      "ar": "",
-      "bn": "",
-      "pt": "",
-      "ja": "",
-      "de": "",
-      "it": "",
-      "uk": "",
+      "zh": "获取秘密关键词",
+      "es": "Recupere su palabra clave secreta",
+      "hi": "अपना गुप्त शब्द प्राप्त करें",
+      "ar": "استرجع كلمتك السرية",
+      "bn": "আপনার গোপন শব্দ পান",
+      "pt": "Recupere sua palavra-chave secreta",
+      "ja": "秘密のキーワードを取得する",
+      "de": "Holen Sie Ihr geheimes Schlüsselwort ab",
+      "it": "Recupera la tua parola chiave segreta",
+      "uk": "Отримайте секретне слово",
       "ru": "Получить секретное слово",
-      "he": "",
-      "art-x-interslv-latin": "",
-      "art-x-interslv-cyrl": ""
+      "he": "קבל את מילת המפתח הסודית שלך",
+      "art-x-interslv-latin": "Poluči svoje tajno slovo",
+      "art-x-interslv-cyrl": "Добити своје тајно слово"
     },
     "description": "Text for the link button that directs the user to get the keyword"
   },
   "VISIT_DONATION_MODAL_MORE_INFO": {
     "message": {
       "en": "To download your calendar, please <strong>retrieve the secret keyword</strong> following the link below.<br/><p>I put a lot of effort into keeping \"Birthday Exporter\" free and running smoothly, so if you find it useful, you’re welcome to support me with donation, and it’s completely optional.</p>",
-      "zh": "",
-      "es": "",
-      "hi": "",
-      "ar": "",
-      "bn": "",
-      "pt": "",
-      "ja": "",
-      "de": "",
-      "it": "",
-      "uk": "",
-      "ru": "",
-      "he": "",
-      "art-x-interslv-latin": "",
-      "art-x-interslv-cyrl": ""
+      "zh": "要下载您的日历，请点击下面的链接<strong>获取秘密关键词</strong>。<br/><p>我付出了大量努力来保持 \"Birthday Exporter\" 免费且稳定运行，如果您觉得它有用，欢迎您捐款支持，但这完全是自愿的。</p>",
+      "es": "Para descargar su calendario, por favor <strong>obtenga la palabra clave secreta</strong> siguiendo el enlace de abajo.<br/><p>He puesto mucho esfuerzo para mantener \"Birthday Exporter\" gratis y funcionando sin problemas, así que si le resulta útil, puede apoyarme con una donación, aunque es completamente opcional.</p>",
+      "hi": "अपना कैलेंडर डाउनलोड करने के लिए, कृपया नीचे दिए गए लिंक का अनुसरण करते हुए <strong>गुप्त शब्द प्राप्त करें</strong>।<br/><p>मैंने \"Birthday Exporter\" को मुफ्त और सुचारू रूप से चलाने के लिए बहुत प्रयास किया है, इसलिए यदि आपको यह उपयोगी लगे, तो आप मेरा समर्थन करने के लिए दान कर सकते हैं, लेकिन यह पूरी तरह से वैकल्पिक है।</p>",
+      "ar": "لتنزيل تقويمك، يرجى <strong>استرجاع الكلمة السرية</strong> عبر الرابط أدناه.<br/><p>لقد بذلت جهدًا كبيرًا للحفاظ على \"Birthday Exporter\" مجانيًا ويعمل بسلاسة، لذا إذا وجدت أنه مفيد، يمكنك دعمي بالتبرع، وهذا أمر اختياري تمامًا.</p>",
+      "bn": "আপনার ক্যালেন্ডার ডাউনলোড করতে, দয়া করে নীচের লিঙ্কটি অনুসরণ করে <strong>গোপন শব্দটি পান</strong>।<br/><p>আমি \"Birthday Exporter\"-কে বিনামূল্যে এবং নির্বিঘ্নে চালু রাখার জন্য অনেক পরিশ্রম করেছি, তাই যদি আপনি এটি উপকারী মনে করেন, আপনি ডোনেশনের মাধ্যমে আমাকে সমর্থন করতে পারেন, যা সম্পূর্ণ ঐচ্ছিক।</p>",
+      "pt": "Para baixar seu calendário, por favor <strong>recupere a palavra-chave secreta</strong> seguindo o link abaixo.<br/><p>Eu me esforcei muito para manter o \"Birthday Exporter\" gratuito e funcionando sem problemas, então, se você achar útil, sinta-se à vontade para me apoiar com uma doação, mas isso é completamente opcional.</p>",
+      "ja": "カレンダーをダウンロードするには、下記のリンクに従って<strong>秘密のキーワードを取得</strong>してください。<br/><p>「Birthday Exporter」を無料でスムーズに動作させるために多くの努力をしているので、もし便利だと感じたら、ぜひドネーションでサポートしていただけると嬉しいです（ドネーションは完全に任意です）。</p>",
+      "de": "Um Ihren Kalender herunterzuladen, <strong>holen Sie bitte das geheime Schlüsselwort</strong> über den folgenden Link ab.<br/><p>Ich habe viel Arbeit investiert, um \"Birthday Exporter\" kostenlos und reibungslos am Laufen zu halten. Wenn Sie es nützlich finden, können Sie mich gerne mit einer Spende unterstützen – dies ist völlig optional.</p>",
+      "it": "Per scaricare il tuo calendario, per favore <strong>recupera la parola chiave segreta</strong> seguendo il link qui sotto.<br/><p>Ho messo molto impegno per mantenere \"Birthday Exporter\" gratuito e funzionante senza intoppi, quindi se lo trovi utile, sei il benvenuto a supportarmi con una donazione, che è completamente opzionale.</p>",
+      "uk": "Щоб завантажити свій календар, будь ласка, <strong>отримайте секретне слово</strong>, перейшовши за посиланням нижче.<br/><p>Я доклав багато зусиль, щоб \"Birthday Exporter\" був безкоштовним і працював без перебоїв, тому, якщо ви вважаєте його корисним, ви можете підтримати мене донатом — це повністю добровільно.</p>",
+      "ru": "Чтобы скачать ваш календарь, пожалуйста, <strong>получите секретное слово</strong>, перейдя по ссылке ниже.<br/><p>Я вложил много усилий, чтобы \"Birthday Exporter\" оставался бесплатным и работал без сбоев, поэтому, если вы считаете его полезным, можете поддержать меня донатом — это полностью добровольно.</p>",
+      "he": "כדי להוריד את הלוח השנה שלך, אנא <strong>קבל את מילת המפתח הסודית</strong> על ידי לחיצה על הקישור למטה.<br/><p>השקעתי הרבה מאמץ בשמירה על \"Birthday Exporter\" בחינם ובתפקוד תקין, ואם תמצא אותו מועיל, אתה מוזמן לתרום – זה לחלוטין אופציונלי.</p>",
+      "art-x-interslv-latin": "Čtoby skačati svoj kalendar, prošu <strong>poluči tajno slovo</strong> sledujači poniže link.<br/><p>Ja vložil mnogo truda, čtoby držati \"Birthday Exporter\" besplatnym i bez problém, tak že jestli ti je užito, možeš podporyti so donacijom, što je potpuno dobrovoljno.</p>",
+      "art-x-interslv-cyrl": "За да скаћате свој календар, молим вас <strong>добитe тајно слово</strong> следећи линк долу.<br/><p>Уложио/ла сам много труда да \"Birthday Exporter\" остане бесплатан и да ради без проблема, па ако вам је користан, можете ме подржати донацијом, што је потпуно опционално.</p>"
     },
     "description": "Explanation of why the user is asked to click the button before proceeding"
   }
