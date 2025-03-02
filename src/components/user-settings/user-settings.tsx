@@ -5,7 +5,7 @@ import { CurrentStatusContext } from "@/context/current-status.context";
 import { storeUserSettings } from "@/libs/storage/chrome.storage";
 import Calendar from "@/components/calendar/calendar";
 import DevTools from "@/components/dev-tools";
-import { BottomMenu } from "@/components/bottom-naviagtion/bottom-navigation";
+import { BottomMenu } from "@/components/bottom-navigation/bottom-navigation";
 import Layout from "@/components/layout/layout";
 import SwitchModals from "@/components/modals/switch-modals";
 import { Scan } from "@/components/scan/scan";
