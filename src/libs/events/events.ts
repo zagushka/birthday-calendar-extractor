@@ -1,12 +1,9 @@
-import {
-  Observable,
-  Subject,
-} from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Observable, Subject } from "rxjs";
+import { filter } from "rxjs/operators";
 
-import { Message } from '@/libs/events/actions';
-import { allChromeMessages$ } from './messages';
-import { ActionTypes } from '@/libs/events/types';
+import { Message } from "@/libs/events/actions";
+import { ActionTypes } from "@/libs/events/types";
+import { allChromeMessages$ } from "./messages";
 
 /**
  * All actions Observable
@@ -19,16 +16,14 @@ allChromeMessages$.subscribe((e) => allActions$.next(e));
 /**
  * Listen to allMessages$ filtered by actionName
  */
-export function listenTo<U extends ActionTypes, T = Message<U>>(...types: ActionTypes['type'][]): Observable<T>;
+export function listenTo<U extends ActionTypes, T = Message<U>>(...types: ActionTypes["type"][]): Observable<T>;
 
-export function listenTo(...types: ActionTypes['type'][]) {
-  return allActions$
-    .pipe(
-      filter<Message<ActionTypes>>((a) => types.includes(a.action.type)),
-    );
+export function listenTo(...types: ActionTypes["type"][]) {
+  return allActions$.pipe(filter<Message<ActionTypes>>((a) => types.includes(a.action.type)));
 }
 
-const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) => chrome.runtime.sendMessage(parameters, callback);
+const sendMessageWrapper = <P, C>(parameters: P, callback: (c: C) => void) =>
+  chrome.runtime.sendMessage(parameters, callback);
 
 /**
  * Can be used on both popup and backend

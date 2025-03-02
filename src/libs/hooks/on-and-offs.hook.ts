@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState,
-} from 'react';
+import { useEffect, useState } from "react";
 
 /**
  * Listen to `trigger` variable changes
@@ -54,7 +51,7 @@ export function useWasOnOff(trigger: boolean): [boolean, () => void] {
   const [wasOn, resetWasOn] = useWasOn(trigger);
 
   useEffect(() => {
-    (wasOn && !trigger && setValue(true));
+    wasOn && !trigger && setValue(true);
   }, [wasOn, trigger]);
 
   function reset() {
@@ -65,11 +62,11 @@ export function useWasOnOff(trigger: boolean): [boolean, () => void] {
   return [value, reset];
 }
 
-export type ChainStatusType = 'on' | 'off' | 'pending';
+export type ChainStatusType = "on" | "off" | "pending";
 const chainStatuses: Record<ChainStatusType, ChainStatusType> = {
-  pending: 'on',
-  on: 'off',
-  off: 'pending',
+  pending: "on",
+  on: "off",
+  off: "pending",
 };
 
 /**
@@ -78,10 +75,10 @@ const chainStatuses: Record<ChainStatusType, ChainStatusType> = {
  *
  */
 export function useChainStatus(): [ChainStatusType, (status: ChainStatusType) => boolean, () => void] {
-  const [switchStatus, setSwitchStatus] = useState<ChainStatusType>('pending');
+  const [switchStatus, setSwitchStatus] = useState<ChainStatusType>("pending");
 
   function reset() {
-    setSwitchStatus('pending');
+    setSwitchStatus("pending");
   }
 
   function update(status: ChainStatusType) {

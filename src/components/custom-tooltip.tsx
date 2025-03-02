@@ -1,13 +1,5 @@
-import {
-  makeStyles,
-  Tooltip,
-} from '@material-ui/core';
-import React, {
-  FunctionComponent,
-  ReactElement,
-  useEffect,
-  useState,
-} from 'react';
+import { makeStyles, Tooltip } from "@material-ui/core";
+import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 
 const useTooltipStyles = makeStyles(() => ({
   tooltipPlacementBottom: {

@@ -1,48 +1,43 @@
 // ACTIONS
-import {
-  CsvSettings,
-  IcsSettings,
-} from '@/libs/storage/storaged.types';
-import {
-  ExecutedScriptTypes,
-  ScanErrorTypes,
-} from './executed-script.types';
+import { CsvSettings, IcsSettings } from "@/libs/storage/storaged.types";
+import { ExecutedScriptTypes, ScanErrorTypes } from "./executed-script.types";
 
-export const SEND_ERROR = 'SEND_ERROR'; // Send error message
-export const SEND_GENERATION_STATUS = 'SEND_GENERATION_STATUS'; // Send result of generation process
+export const SEND_ERROR = "SEND_ERROR"; // Send error message
+export const SEND_GENERATION_STATUS = "SEND_GENERATION_STATUS"; // Send result of generation process
 
-export const UPDATE_BADGE = 'UPDATE_BADGE'; // Update badge status
+export const UPDATE_BADGE = "UPDATE_BADGE"; // Update badge status
 
-export const CREATE_CALENDAR_ICS = 'CREATE_CALENDAR_ICS';
-export const CREATE_CALENDAR_DELETE_ICS = 'CREATE_CALENDAR_DELETE_ICS';
-export const CREATE_CALENDAR_CSV = 'CREATE_CALENDAR_CSV';
-export const CREATE_CALENDAR_JSON = 'CREATE_CALENDAR_JSON';
-export const CREATE_CSV_DATA = 'CREATE_CSV_DATA';
+export const CREATE_CALENDAR_ICS = "CREATE_CALENDAR_ICS";
+export const CREATE_CALENDAR_DELETE_ICS = "CREATE_CALENDAR_DELETE_ICS";
+export const CREATE_CALENDAR_CSV = "CREATE_CALENDAR_CSV";
+export const CREATE_CALENDAR_JSON = "CREATE_CALENDAR_JSON";
+export const CREATE_CSV_DATA = "CREATE_CSV_DATA";
 
-export type CreateCalendarTypes = typeof CREATE_CALENDAR_ICS |
-  typeof CREATE_CALENDAR_DELETE_ICS |
-  typeof CREATE_CALENDAR_CSV |
-  typeof CREATE_CSV_DATA |
-  typeof CREATE_CALENDAR_JSON;
+export type CreateCalendarTypes =
+  | typeof CREATE_CALENDAR_ICS
+  | typeof CREATE_CALENDAR_DELETE_ICS
+  | typeof CREATE_CALENDAR_CSV
+  | typeof CREATE_CSV_DATA
+  | typeof CREATE_CALENDAR_JSON;
 
-export const BIRTHDAYS_START_SCAN = 'BIRTHDAYS_START_SCAN';
-export const BIRTHDAYS_SCAN_COMPLETE = 'BIRTHDAYS_SCAN_COMPLETE';
+export const BIRTHDAYS_START_SCAN = "BIRTHDAYS_START_SCAN";
+export const BIRTHDAYS_SCAN_COMPLETE = "BIRTHDAYS_SCAN_COMPLETE";
 
-export const GET_FACEBOOK_SETTINGS = 'GET_FACEBOOK_SETTINGS';
+export const GET_FACEBOOK_SETTINGS = "GET_FACEBOOK_SETTINGS";
 
-export const SEND_SCAN_LOG = 'SEND_SCAN_LOG';
+export const SEND_SCAN_LOG = "SEND_SCAN_LOG";
 
 // NOTIFICATIONS
-export const BADGE_CLICKED = 'BADGE_CLICKED'; // @TODO REMOVE IT, not used anymore
-export const ALARM_NEW_DAY = 'ALARM_NEW_DAY';
+export const BADGE_CLICKED = "BADGE_CLICKED"; // @TODO REMOVE IT, not used anymore
+export const ALARM_NEW_DAY = "ALARM_NEW_DAY";
 
 // MODALS
-export const SHOW_MODAL_SCAN_SUCCESS = 'SHOW_MODAL_SCAN_SUCCESS';
-export const SHOW_MODAL_EXPORT_SUCCESS = 'SHOW_MODAL_EXPORT_SUCCESS';
-export const SHOW_MODAL_DOWNLOAD_KEYWORD = 'SHOW_MODAL_DOWNLOAD_KEYWORD';
+export const SHOW_MODAL_SCAN_SUCCESS = "SHOW_MODAL_SCAN_SUCCESS";
+export const SHOW_MODAL_EXPORT_SUCCESS = "SHOW_MODAL_EXPORT_SUCCESS";
+export const SHOW_MODAL_DOWNLOAD_KEYWORD = "SHOW_MODAL_DOWNLOAD_KEYWORD";
 
 export type ShowModalTypes =
-  typeof SHOW_MODAL_SCAN_SUCCESS
+  | typeof SHOW_MODAL_SCAN_SUCCESS
   | typeof SHOW_MODAL_EXPORT_SUCCESS
   | typeof SHOW_MODAL_DOWNLOAD_KEYWORD;
 
@@ -99,7 +94,7 @@ interface CreateCalendarJsonAction {
 }
 
 export type CreateCalendarActionTypes =
-  CreateCalendarCsvAction
+  | CreateCalendarCsvAction
   | CreateCalendarIcsAction
   | CreateCalendarDeleteIcsAction
   | BirthdaysExtractionActionTypes
@@ -125,7 +120,7 @@ export interface SendScanLogAction {
 }
 
 export type ActionTypes =
-  NotificationActionTypes
+  | NotificationActionTypes
   | BadgeActionTypes
   | CreateCalendarActionTypes
   | AlarmTypes

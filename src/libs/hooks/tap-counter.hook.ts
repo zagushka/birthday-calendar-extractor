@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState,
-} from 'react';
+import { useEffect, useState } from "react";
 
 /**
  * Little helper to emulate click chains (double, triple, etc) with custom delay between them.

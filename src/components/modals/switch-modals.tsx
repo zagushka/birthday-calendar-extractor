@@ -1,10 +1,5 @@
-import React, {
-  FunctionComponent,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { CurrentStatusContext } from '@/context/current-status.context';
+import React, { FunctionComponent, useContext, useEffect, useState } from "react";
+import { CurrentStatusContext } from "@/context/current-status.context";
 import {
   SCAN_ERROR_BIRTHDAYS_EXTRACT,
   SCAN_ERROR_FACEBOOK_BIRTHDAYS_CONTENT,
@@ -16,18 +11,14 @@ import {
   SCAN_ERROR_NO_TOKEN_DETECTED,
   SCAN_ERROR_TIMEOUT,
   SHOW_MODAL_ADD_BIRTHDAYS,
-} from '@/libs/events/executed-script.types';
-import {
-  SHOW_MODAL_DOWNLOAD_KEYWORD,
-  SHOW_MODAL_EXPORT_SUCCESS,
-  SHOW_MODAL_SCAN_SUCCESS,
-} from '@/libs/events/types';
-import AddBirthdaysModal from './add-birhtdays/add-birthdays.modal';
-import DoneModal from './done.modal';
-import FacebookRequiredModal from './facebook-required/facebook-required';
-import GeneralErrorModal from './general-error/general-error.modal';
-import NoTokenDetectedModal from './no-token-detected/no-token-detected';
-import ScanSuccessModal from './scan-success/scan-success.modal';
+} from "@/libs/events/executed-script.types";
+import { SHOW_MODAL_DOWNLOAD_KEYWORD, SHOW_MODAL_EXPORT_SUCCESS, SHOW_MODAL_SCAN_SUCCESS } from "@/libs/events/types";
+import AddBirthdaysModal from "./add-birhtdays/add-birthdays.modal";
+import DoneModal from "./done.modal";
+import FacebookRequiredModal from "./facebook-required/facebook-required";
+import GeneralErrorModal from "./general-error/general-error.modal";
+import NoTokenDetectedModal from "./no-token-detected/no-token-detected";
+import ScanSuccessModal from "./scan-success/scan-success.modal";
 import VisitDonationPageModal from "./visit-donation-page/visit-donation-page.modal";
 
 const SwitchModals: FunctionComponent = () => {

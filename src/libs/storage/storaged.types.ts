@@ -15,7 +15,7 @@ export enum STORED_BIRTHDAY {
   UID,
   BIRTH_DATE,
   MISC,
-  SETTINGS
+  SETTINGS,
 }
 
 export enum STORED_BIRTHDAY_SETTINGS {

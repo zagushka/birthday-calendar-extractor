@@ -1,8 +1,5 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-} from 'react';
-import Scrollbars from 'react-custom-scrollbars-2';
+import React, { FunctionComponent, useCallback } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 
 export interface CustomScrollbarsProps {
   onScroll: any;
@@ -11,7 +8,10 @@ export interface CustomScrollbarsProps {
 }
 
 export const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({
-  onScroll, forwardedRef, style, children,
+  onScroll,
+  forwardedRef,
+  style,
+  children,
 }) => {
   const refSetter = useCallback((scrollbarsRef) => {
     if (scrollbarsRef) {
@@ -22,11 +22,7 @@ export const CustomScrollbars: FunctionComponent<CustomScrollbarsProps> = ({
   }, []);
 
   return (
-    <Scrollbars
-      ref={refSetter}
-      style={{ ...style, overflow: 'hidden' }}
-      onScroll={onScroll}
-    >
+    <Scrollbars ref={refSetter} style={{ ...style, overflow: "hidden" }} onScroll={onScroll}>
       {children}
     </Scrollbars>
   );

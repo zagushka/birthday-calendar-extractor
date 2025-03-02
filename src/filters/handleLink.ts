@@ -1,5 +1,5 @@
-import React from 'react';
-import { translateString } from '@/filters/translateString';
+import React from "react";
+import { translateString } from "@/filters/translateString";
 
 interface LinkSettings {
   close?: boolean;
@@ -7,19 +7,19 @@ interface LinkSettings {
   substitutions?: any;
 }
 
-const handleLink = async (rawUrl: string | undefined, settings: LinkSettings, ev?: React.MouseEvent): Promise<boolean> => {
-  const {
-    close = false,
-    active = false,
-    substitutions,
-  } = settings;
+const handleLink = async (
+  rawUrl: string | undefined,
+  settings: LinkSettings,
+  ev?: React.MouseEvent,
+): Promise<boolean> => {
+  const { close = false, active = false, substitutions } = settings;
 
   if (ev) {
     ev.preventDefault();
     ev.stopPropagation();
   }
 
-  if ("string" !== typeof rawUrl || !rawUrl.length) {
+  if (typeof rawUrl !== "string" || !rawUrl.length) {
     return false;
   }
 

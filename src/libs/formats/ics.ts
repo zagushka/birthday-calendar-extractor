@@ -1,14 +1,8 @@
-import { DateTime } from 'luxon';
-import { CalendarBase } from '@/libs/base';
-import {
-  generatePreparedEventsForYears,
-  PreparedEvent,
-} from '@/libs/lib';
-import { reviveBirthday } from '@/libs/storage/chrome.storage';
-import {
-  IcsSettings,
-  StoredBirthday,
-} from '@/libs/storage/storaged.types';
+import { DateTime } from "luxon";
+import { CalendarBase } from "@/libs/base";
+import { generatePreparedEventsForYears, PreparedEvent } from "@/libs/lib";
+import { reviveBirthday } from "@/libs/storage/chrome.storage";
+import { IcsSettings, StoredBirthday } from "@/libs/storage/storaged.types";
 
 interface IcsEvent {
   start: string;
@@ -35,9 +29,9 @@ END:VEVENT`;
 }
 
 export class CalendarICS extends CalendarBase<string, string> {
-  readonly filename: string = 'birthday-calendar.ics';
+  readonly filename: string = "birthday-calendar.ics";
 
-  readonly fileMimeType: string = 'text/calendar; charset=UTF-8';
+  readonly fileMimeType: string = "text/calendar; charset=UTF-8";
 
   constructor(public settings: IcsSettings) {
     super();
@@ -51,9 +45,9 @@ export class CalendarICS extends CalendarBase<string, string> {
      */
     return {
       name: event.name,
-      start: event.start.toFormat('yyyyLLdd'),
-      end: event.start.plus({ days: 1 }).toFormat('yyyyLLdd'),
-      stamp: DateTime.utc().toFormat('yyyyLLdd\'T\'HHmmss\'Z\''),
+      start: event.start.toFormat("yyyyLLdd"),
+      end: event.start.plus({ days: 1 }).toFormat("yyyyLLdd"),
+      stamp: DateTime.utc().toFormat("yyyyLLdd'T'HHmmss'Z'"),
       href: event.href,
       uid: event.uid,
     };
@@ -75,8 +69,8 @@ PRODID:Birthday Calendar Extractor for Facebook
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-${this.generateEvents(preparedEvents).join('\n')}
-END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
+${this.generateEvents(preparedEvents).join("\n")}
+END:VCALENDAR`.replace(/\r?\n/g, "\r\n");
   }
 
   generateEvents(events: Array<PreparedEvent>): Array<string> {
@@ -100,7 +94,9 @@ END:VCALENDAR`.replace(/\r?\n/g, '\r\n');
       uid: formattedEvent.uid,
       // There is unicode cake character before event.name, you may not see it in you editor
       summary: `🎂 ${formattedEvent.name}`,
-      description: formattedEvent.href ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!` : `This is ${formattedEvent.name} birthday!`,
+      description: formattedEvent.href
+        ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`
+        : `This is ${formattedEvent.name} birthday!`,
     });
   }
 }

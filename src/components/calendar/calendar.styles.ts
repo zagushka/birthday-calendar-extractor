@@ -1,13 +1,10 @@
-import {
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useDayRowStyles = makeStyles((theme: Theme) => ({
   listItemSecondaryAction: {
-    visibility: 'hidden',
-    '&.hidden': {
-      visibility: 'inherit',
+    visibility: "hidden",
+    "&.hidden": {
+      visibility: "inherit",
     },
   },
   listItem: {
@@ -15,13 +12,13 @@ export const useDayRowStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(0.25),
     // paddingTop: 6,
     backgroundColor: theme.palette.primary.main,
-    '&.active': {
+    "&.active": {
       backgroundColor: theme.palette.secondary.main,
     },
-    '&:hover $listItemSecondaryAction': {
-      visibility: 'inherit',
+    "&:hover $listItemSecondaryAction": {
+      visibility: "inherit",
     },
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.primary.light,
     },
   },
@@ -40,16 +37,16 @@ export const useDayRowStyles = makeStyles((theme: Theme) => ({
 export const useDayListStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: 0,
-    width: 'calc(100% - 16px) !important',
+    width: "calc(100% - 16px) !important",
   },
   dayTitle: {
     fontSize: 16,
     marginTop: 12,
     marginBottom: 10,
-    color: theme.palette.grey['700'],
+    color: theme.palette.grey["700"],
     fontFamily: theme.typography.fontFamily,
     // fontWeight: theme.typography.fontWeightMedium,
-    lineHeight: '16px',
-    textTransform: 'capitalize',
+    lineHeight: "16px",
+    textTransform: "capitalize",
   },
 }));

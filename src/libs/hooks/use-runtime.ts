@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const useRuntime = (isRunning: boolean) => {
   const [startTime, setStartTime] = useState<number | null>(null);

@@ -1,6 +1,6 @@
-import { Subject } from 'rxjs';
-import { Message } from '@/libs/events/actions';
-import { ActionTypes } from '@/libs/events/types';
+import { Subject } from "rxjs";
+import { Message } from "@/libs/events/actions";
+import { ActionTypes } from "@/libs/events/types";
 
 export const allChromeMessages$: Subject<Message<ActionTypes>> = new Subject();
 
@@ -10,7 +10,7 @@ const onMessageListener = (
   callback: (...params: Array<any>) => void,
 ) => {
   allChromeMessages$.next({ action, sender, callback });
-  if (typeof callback !== 'undefined') {
+  if (typeof callback !== "undefined") {
     return true;
   }
 };

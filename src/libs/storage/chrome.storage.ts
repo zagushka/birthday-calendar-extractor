@@ -1,23 +1,9 @@
-import update from 'immutability-helper';
-import { DateTime } from 'luxon';
-import {
-  firstValueFrom,
-  from,
-  Observable,
-  Subscriber,
-} from 'rxjs';
-import { map } from 'rxjs/operators';
-import {
-  fakeName,
-  isDevelopment,
-  isFakeNames,
-} from '@/constants';
-import {
-  RestoredBirthday,
-  Settings,
-  StoredBirthday,
-  StoredSettings,
-} from '@/libs/storage/storaged.types';
+import update from "immutability-helper";
+import { DateTime } from "luxon";
+import { firstValueFrom, from, Observable, Subscriber } from "rxjs";
+import { map } from "rxjs/operators";
+import { fakeName, isDevelopment, isFakeNames } from "@/constants";
+import { RestoredBirthday, Settings, StoredBirthday, StoredSettings } from "@/libs/storage/storaged.types";
 
 type AreaName = chrome.storage.AreaName;
 type StorageChange = chrome.storage.StorageChange;
@@ -29,17 +15,17 @@ export const DEFAULT_SETTINGS: Settings = {
   birthdays: [],
   donated: false,
   location: {
-    pathname: '/',
-    search: '',
-    hash: '',
+    pathname: "/",
+    search: "",
+    hash: "",
     state: undefined,
     //
-    key: '',
+    key: "",
   },
   modal: null,
   scanning: 0,
   scanSuccess: true,
-  wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
+  wizardsSettings: { csv: { format: "dd/LL/yyyy" }, ics: { groupEvents: false } },
   statistics: {
     installedOn: Date.now(),
     timesOpened: 0,
@@ -62,9 +48,12 @@ export function filterBirthdaysForDate(
  * Store data to sessionStorage
  */
 export function storeLastBadgeClicked(): Observable<void> {
-  return storeUserSettings({
-    badgeVisited: DateTime.local(),
-  }, true);
+  return storeUserSettings(
+    {
+      badgeVisited: DateTime.local(),
+    },
+    true,
+  );
 }
 
 function generateHref(uid: string, settings: number) {
@@ -83,8 +72,7 @@ export const reviveBirthday = (
   id: uid,
   name: isFakeNames && isDevelopment ? fakeName() : name,
   // use provided or 2020 since scanned birthdates was originally from 2020, because of the leap years
-  start: DateTime.local(2020, month, day)
-    .set({ year: useYear }), // Convert to current year
+  start: DateTime.local(2020, month, day).set({ year: useYear }), // Convert to current year
   href: generateHref(uid, settings),
   birthdate: { day, month, year },
   // Second bit is for hidden from export
@@ -98,19 +86,18 @@ export const reviveBirthday = (
  */
 function userSettingsListenerFunction(subscriber: Subscriber<Partial<Settings>>) {
   return (changes: { [key: string]: StorageChange }, areaName: AreaName) => {
-    if (areaName !== 'local') {
+    if (areaName !== "local") {
       return;
     }
 
-    const result = (Object.keys(changes) as Array<keyof Settings>)
-      .reduce((accumulator, key) => {
-        const { newValue } = changes[key];
-        const value = reviveSettingsField(key, newValue);
-        if (typeof value !== 'undefined') {
-          return update(accumulator, { [key]: { $set: value } });
-        }
-        return accumulator;
-      }, {} as Settings);
+    const result = (Object.keys(changes) as Array<keyof Settings>).reduce((accumulator, key) => {
+      const { newValue } = changes[key];
+      const value = reviveSettingsField(key, newValue);
+      if (typeof value !== "undefined") {
+        return update(accumulator, { [key]: { $set: value } });
+      }
+      return accumulator;
+    }, {} as Settings);
 
     // Emit next value
     subscriber.next(result);
@@ -139,20 +126,20 @@ export function listenToUserSettings(): Observable<Partial<Settings>> {
  */
 const reviveSettingsField = (key: keyof Settings, value: any): any => {
   switch (key) {
-    case 'activated':
-    case 'birthdays':
-    case 'donated':
-    case 'location':
-    case 'modal':
-    case 'scanning':
-    case 'scanSuccess':
-    case 'wizardsSettings':
+    case "activated":
+    case "birthdays":
+    case "donated":
+    case "location":
+    case "modal":
+    case "scanning":
+    case "scanSuccess":
+    case "wizardsSettings":
     case "statistics":
       return value ?? DEFAULT_SETTINGS[key];
 
-    case 'donationPageVisited':
-    case 'badgeVisited':
-      return value && DateTime.fromMillis(value) || DEFAULT_SETTINGS[key];
+    case "donationPageVisited":
+    case "badgeVisited":
+      return (value && DateTime.fromMillis(value)) || DEFAULT_SETTINGS[key];
 
     default:
       return undefined;
@@ -167,19 +154,28 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
  * Parameter is the array of properties names of Settings interface - values to fetch from storage
  *
  */
-export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K): Promise<U>;
-export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K, observableFlag: true): Observable<U>;
-export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(keys: K, callback: (c: U) => void): void;
-export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>
-(keys: K, callbackOrObservableFlag?: true | ((c: U) => void)): Observable<U> | Promise<U> | void {
-
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(
+  keys: K,
+): Promise<U>;
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(
+  keys: K,
+  observableFlag: true,
+): Observable<U>;
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(
+  keys: K,
+  callback: (c: U) => void,
+): void;
+export function retrieveUserSettings<K extends Array<keyof Settings>, U extends Pick<Settings, K[number]>>(
+  keys: K,
+  callbackOrObservableFlag?: true | ((c: U) => void),
+): Observable<U> | Promise<U> | void {
   function mapStorageData(data: Settings) {
     const result = keys
       // Revive retrieved data
       .reduce((accumulator, key) => {
         const storedValue = data[key];
         const value = reviveSettingsField(key, storedValue);
-        if (typeof value !== 'undefined') {
+        if (typeof value !== "undefined") {
           return update(accumulator, { [key]: { $set: value } });
         }
         return accumulator;
@@ -187,14 +183,13 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
     return result as unknown as U;
   }
 
-  if ('function' !== typeof callbackOrObservableFlag) {
+  if (typeof callbackOrObservableFlag !== "function") {
     const observableReturn = from(chrome.storage.local.get(keys) as Promise<Settings>).pipe(map(mapStorageData));
     if (callbackOrObservableFlag === true) {
       return observableReturn;
     }
     return firstValueFrom(observableReturn);
   }
-
 
   chrome.storage.local.get(keys, (data) => {
     const formattedData = mapStorageData(data as Settings);
@@ -205,27 +200,29 @@ export function retrieveUserSettings<K extends Array<keyof Settings>, U extends 
 export function storeUserSettings(settings: Partial<Settings>): Promise<void>;
 export function storeUserSettings(settings: Partial<Settings>, observableFlag: true): Observable<void>;
 export function storeUserSettings(settings: Partial<Settings>, callback: () => void): void;
-export function storeUserSettings(settings: Partial<Settings>, callbackOrObservableFlag?: true | (() => void)): Promise<void> | Observable<void> | void {
-  const data = (Object.keys(settings) as Array<keyof Settings>)
-    .reduce<Partial<StoredSettings>>((accumulator, key) => {
-      switch (key) {
-        case 'activated':
-        case 'birthdays':
-        case 'donated':
-        case 'location':
-        case 'modal':
-        case 'scanning':
-        case 'scanSuccess':
-        case 'wizardsSettings':
-        case "statistics":
-          return update(accumulator, { [key]: { $set: settings[key] } });
-        case 'badgeVisited':
-        case 'donationPageVisited':
-          return update(accumulator, { [key]: { $set: settings[key].toMillis() } });
-        default:
-          throw new Error(`Should not have ${key} key`);
-      }
-    }, {});
+export function storeUserSettings(
+  settings: Partial<Settings>,
+  callbackOrObservableFlag?: true | (() => void),
+): Promise<void> | Observable<void> | void {
+  const data = (Object.keys(settings) as Array<keyof Settings>).reduce<Partial<StoredSettings>>((accumulator, key) => {
+    switch (key) {
+      case "activated":
+      case "birthdays":
+      case "donated":
+      case "location":
+      case "modal":
+      case "scanning":
+      case "scanSuccess":
+      case "wizardsSettings":
+      case "statistics":
+        return update(accumulator, { [key]: { $set: settings[key] } });
+      case "badgeVisited":
+      case "donationPageVisited":
+        return update(accumulator, { [key]: { $set: settings[key].toMillis() } });
+      default:
+        throw new Error(`Should not have ${key} key`);
+    }
+  }, {});
 
   if (callbackOrObservableFlag === true) {
     return from(chrome.storage.local.set(data));

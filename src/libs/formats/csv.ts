@@ -1,15 +1,8 @@
-import { DateTime } from 'luxon';
-import { CalendarBase } from '@/libs/base';
-import {
-  arrayToCSVRow,
-  generatePreparedEventsForYears,
-  PreparedEvent,
-} from '@/libs/lib';
-import { reviveBirthday } from '@/libs/storage/chrome.storage';
-import {
-  CsvSettings,
-  StoredBirthday,
-} from '@/libs/storage/storaged.types';
+import { DateTime } from "luxon";
+import { CalendarBase } from "@/libs/base";
+import { arrayToCSVRow, generatePreparedEventsForYears, PreparedEvent } from "@/libs/lib";
+import { reviveBirthday } from "@/libs/storage/chrome.storage";
+import { CsvSettings, StoredBirthday } from "@/libs/storage/storaged.types";
 
 interface CsvFormattedEvent {
   name: string;
@@ -18,9 +11,9 @@ interface CsvFormattedEvent {
 }
 
 export class CalendarCSV extends CalendarBase<string, string> {
-  readonly filename: string = 'birthday-calendar.csv';
+  readonly filename: string = "birthday-calendar.csv";
 
-  readonly fileMimeType: string = 'text/csv; charset=UTF-8';
+  readonly fileMimeType: string = "text/csv; charset=UTF-8";
 
   constructor(public settings: CsvSettings) {
     super();
@@ -46,7 +39,10 @@ export class CalendarCSV extends CalendarBase<string, string> {
     const events = storedBirthdays.map(reviveBirthday);
 
     const currentDateTime = DateTime.utc().set({
-      hour: 0, second: 0, minute: 0, millisecond: 0,
+      hour: 0,
+      second: 0,
+      minute: 0,
+      millisecond: 0,
     });
     const preparedEvents = generatePreparedEventsForYears(events, fromYear, tillYear)
       // csv requires past birthdays to be converted to future
@@ -60,12 +56,7 @@ export class CalendarCSV extends CalendarBase<string, string> {
     /**
      * Generate Calendar
      */
-    const headers = arrayToCSVRow([
-      'Subject',
-      'Start Date',
-      'All Day Event',
-      'Description',
-    ]);
+    const headers = arrayToCSVRow(["Subject", "Start Date", "All Day Event", "Description"]);
 
     const rows = this.generateEvents(preparedEvents);
 
@@ -73,8 +64,8 @@ export class CalendarCSV extends CalendarBase<string, string> {
     rows.unshift(headers);
 
     return rows
-      .join('\n') // Separate each element by line
-      .replace(/\r?\n/g, '\r\n');
+      .join("\n") // Separate each element by line
+      .replace(/\r?\n/g, "\r\n");
   }
 
   generateEvent(event: PreparedEvent): string {
@@ -84,8 +75,10 @@ export class CalendarCSV extends CalendarBase<string, string> {
       // There is unicode cake character before event.name, you may not see it in you editor
       `${formattedEvent.name}`, // `Subject,`,
       formattedEvent.start, // `Start Date,`,
-      'true', // `All Day Event,`,
-      formattedEvent.href ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!` : `This is ${formattedEvent.name} birthday!`, // Description,`,
+      "true", // `All Day Event,`,
+      formattedEvent.href
+        ? `This is <a href='${formattedEvent.href}'>${formattedEvent.name}</a> birthday!`
+        : `This is ${formattedEvent.name} birthday!`, // Description,`,
     ];
 
     return arrayToCSVRow(preEscaped);

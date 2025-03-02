@@ -1,0 +1,7 @@
+node_modules
+dist
+build
+pnpm-lock.yaml
+package-lock.json
+.idea
+birthday-calendar-exporter.zip

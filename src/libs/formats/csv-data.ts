@@ -1,10 +1,6 @@
-import { arrayToCSVRow } from '@/libs/lib';
-import { reviveBirthday } from '@/libs/storage/chrome.storage';
-import {
-  RestoredBirthday,
-  STORED_BIRTHDAY,
-  StoredBirthday,
-} from '@/libs/storage/storaged.types';
+import { arrayToCSVRow } from "@/libs/lib";
+import { reviveBirthday } from "@/libs/storage/chrome.storage";
+import { RestoredBirthday, STORED_BIRTHDAY, StoredBirthday } from "@/libs/storage/storaged.types";
 
 /**
  * Sort function comparing two birthdays by user name
@@ -41,26 +37,20 @@ export const calendarCSVData = (storedBirthdays: Array<StoredBirthday>) => {
   /**
    * Generate Calendar
    */
-  const headers = arrayToCSVRow([
-    'Name',
-    'Year',
-    'Month',
-    'Day',
-    'Link to Profile',
-  ]);
+  const headers = arrayToCSVRow(["Name", "Year", "Month", "Day", "Link to Profile"]);
 
   // Prepend headers to rows
   rows.unshift(headers);
 
   return rows
-    .join('\n') // Separate each element by line
-    .replace(/\r?\n/g, '\r\n');
+    .join("\n") // Separate each element by line
+    .replace(/\r?\n/g, "\r\n");
 
   function generateEvent(formattedEvent: RestoredBirthday): string {
     const preEscaped = [
       // There is unicode cake character before event.name, you may not see it in you editor
       formattedEvent.name, // `Name,`,
-      (formattedEvent.birthdate.year ?? '').toString(), // `Year`,
+      (formattedEvent.birthdate.year ?? "").toString(), // `Year`,
       formattedEvent.birthdate.month.toString(), // `Month`,
       formattedEvent.birthdate.day.toString(), // `Day`,
       formattedEvent.href, // `Link to Profile`

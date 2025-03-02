@@ -1,10 +1,6 @@
-import React, {
-  FunctionComponent,
-  useMemo,
-  useReducer,
-} from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import LoaderReducer from '../reducers/loader.reducer';
+import React, { FunctionComponent, useMemo, useReducer } from "react";
+import { v4 as uuidv4 } from "uuid";
+import LoaderReducer from "../reducers/loader.reducer";
 
 interface LoadingContextInterface {
   loading: boolean;
@@ -41,7 +37,7 @@ const LoadingContextProvider: FunctionComponent = (props) => {
    * @param instanceName
    */
   const isLoading = (instanceName?: string) => {
-    if (typeof instanceName === 'undefined') {
+    if (typeof instanceName === "undefined") {
       return loader.loading;
     }
     return !!loader.instances[instanceName];
@@ -52,8 +48,8 @@ const LoadingContextProvider: FunctionComponent = (props) => {
    * @param instanceName
    */
   const startLoading = (instanceName: string = uuidv4()) => {
-    dispatch({ type: 'START', name: instanceName });
-    console.log('STARTING', instanceName);
+    dispatch({ type: "START", name: instanceName });
+    console.log("STARTING", instanceName);
     return instanceName;
   };
 
@@ -62,22 +58,21 @@ const LoadingContextProvider: FunctionComponent = (props) => {
    * @param instanceName
    */
   const stopLoading = (instanceName: string) => {
-    console.log('STOPPING', instanceName);
-    dispatch({ type: 'STOP', name: instanceName });
+    console.log("STOPPING", instanceName);
+    dispatch({ type: "STOP", name: instanceName });
   };
 
-  const providerValues = useMemo(() => ({
-    loading: loader.loading,
-    isLoading,
-    startLoading,
-    stopLoading,
-  }), [loader.loading]);
-
-  return (
-    <LoadingContext.Provider value={providerValues}>
-      {props.children}
-    </LoadingContext.Provider>
+  const providerValues = useMemo(
+    () => ({
+      loading: loader.loading,
+      isLoading,
+      startLoading,
+      stopLoading,
+    }),
+    [loader.loading],
   );
+
+  return <LoadingContext.Provider value={providerValues}>{props.children}</LoadingContext.Provider>;
 };
 
 export default LoadingContextProvider;

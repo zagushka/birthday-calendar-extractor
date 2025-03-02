@@ -1,5 +1,5 @@
-import { DateTime } from 'luxon';
-import { RestoredBirthday } from '@/libs/storage/storaged.types';
+import { DateTime } from "luxon";
+import { RestoredBirthday } from "@/libs/storage/storaged.types";
 
 export interface PreparedEvent {
   uid: string; // User Id, unique id generated from facebook page url
@@ -49,7 +49,11 @@ export function prepareEvent(event: RestoredBirthday, year: number): PreparedEve
  * Generate Array of events for required years range
  * RawEvent is not connected to any year, so we convert it to PreparedEvent and assign the year
  */
-export function generatePreparedEventsForYears(events: Array<RestoredBirthday>, year: number, tillYear: number): Array<PreparedEvent> {
+export function generatePreparedEventsForYears(
+  events: Array<RestoredBirthday>,
+  year: number,
+  tillYear: number,
+): Array<PreparedEvent> {
   const result: Array<PreparedEvent> = [];
 
   do {
