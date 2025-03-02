@@ -15,6 +15,7 @@ interface CurrentStatusContextInterface {
   isScanning: boolean;
   isScanSucceed: boolean;
   isDonated: boolean;
+  isDonationPageVisited: boolean;
   users: Array<StoredBirthday>;
   wizardsSettings: WizardsSettings;
 }
@@ -27,6 +28,7 @@ export const CurrentStatusContext = React.createContext<CurrentStatusContextInte
   isScanning: false,
   isScanSucceed: true,
   isDonated: false,
+  isDonationPageVisited: false,
   users: [],
   wizardsSettings: { csv: { format: 'dd/LL/yyyy' }, ics: { groupEvents: false } },
 });

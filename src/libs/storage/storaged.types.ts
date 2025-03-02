@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
-import type { Location } from 'react-router-dom';
-import { ShowModalAction } from '@/libs/events/types';
+import { DateTime } from "luxon";
+import type { Location } from "react-router-dom";
+import { ShowModalAction } from "@/libs/events/types";
 
-export type CsvDateFormats = 'LL/dd/yyyy' | 'dd/LL/yyyy';
+export type CsvDateFormats = "LL/dd/yyyy" | "dd/LL/yyyy";
 
 /**
  * [name, uid, [day, month, year], misc, settings] Stored birthdays format
@@ -65,6 +65,7 @@ export interface Settings {
   badgeVisited: DateTime;
   birthdays: Array<StoredBirthday>;
   donated: boolean;
+  donationPageVisited: DateTime;
   location: Location;
   modal: ShowModalAction;
   scanning: number;
@@ -76,6 +77,7 @@ export interface Settings {
 export interface StoredSettings {
   activated: boolean;
   badgeVisited: number;
+  donationPageVisited: number;
   birthdays: Array<StoredBirthday>;
   donated: boolean;
   location: Location;

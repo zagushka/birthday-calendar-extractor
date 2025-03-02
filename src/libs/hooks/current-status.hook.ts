@@ -33,6 +33,7 @@ export function useCurrentStatus() {
   const [isScanning, setIsScanning] = useState<boolean>(); // is Scanning in process
   const [isScanSucceed, setIsScanSucceed] = useState<boolean>(); // Flag to mark failed or successful scan
   const [isDonated, setIsDonated] = useState<boolean>();
+  const [isDonationPageVisited, setIsDonationPageVisited] = useState<boolean>();
   const [users, setUsers] = useState<Array<StoredBirthday>>();
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export function useCurrentStatus() {
         'scanning',
         'scanSuccess',
         'wizardsSettings',
+        'donationPageVisited'
       ], true),
       // Listen to storage changes and update changed values
       listenToUserSettings(),
@@ -85,6 +87,9 @@ export function useCurrentStatus() {
                 return setIsActive(updates[key]);
               case 'donated':
                 return setIsDonated(updates[key]);
+              case "donationPageVisited":
+                const date = updates[key];
+                return setIsDonationPageVisited(Math.abs(date.diffNow("days").days) < 14);
               case 'birthdays':
                 return setUsers(updates[key]);
               case 'wizardsSettings':
@@ -104,13 +109,14 @@ export function useCurrentStatus() {
 
   return {
     initDone,
-    location,
-    wizardsSettings,
     isActive,
-    modal,
+    isDonated,
+    isDonationPageVisited,
     isScanning,
     isScanSucceed,
-    isDonated,
+    location,
+    modal,
     users,
+    wizardsSettings,
   };
 }

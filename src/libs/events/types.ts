@@ -39,10 +39,12 @@ export const ALARM_NEW_DAY = 'ALARM_NEW_DAY';
 // MODALS
 export const SHOW_MODAL_SCAN_SUCCESS = 'SHOW_MODAL_SCAN_SUCCESS';
 export const SHOW_MODAL_EXPORT_SUCCESS = 'SHOW_MODAL_EXPORT_SUCCESS';
+export const SHOW_MODAL_DOWNLOAD_KEYWORD = 'SHOW_MODAL_DOWNLOAD_KEYWORD';
 
 export type ShowModalTypes =
   typeof SHOW_MODAL_SCAN_SUCCESS
-  | typeof SHOW_MODAL_EXPORT_SUCCESS;
+  | typeof SHOW_MODAL_EXPORT_SUCCESS
+  | typeof SHOW_MODAL_DOWNLOAD_KEYWORD;
 
 export interface ShowModalAction {
   type: ScanErrorTypes | ShowModalTypes;

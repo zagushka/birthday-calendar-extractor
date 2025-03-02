@@ -25,6 +25,7 @@ type StorageChange = chrome.storage.StorageChange;
 export const DEFAULT_SETTINGS: Settings = {
   activated: false,
   badgeVisited: DateTime.fromMillis(0),
+  donationPageVisited: DateTime.fromMillis(0),
   birthdays: [],
   donated: false,
   location: {
@@ -149,6 +150,7 @@ const reviveSettingsField = (key: keyof Settings, value: any): any => {
     case "statistics":
       return value ?? DEFAULT_SETTINGS[key];
 
+    case 'donationPageVisited':
     case 'badgeVisited':
       return value && DateTime.fromMillis(value) || DEFAULT_SETTINGS[key];
 
@@ -218,6 +220,7 @@ export function storeUserSettings(settings: Partial<Settings>, callbackOrObserva
         case "statistics":
           return update(accumulator, { [key]: { $set: settings[key] } });
         case 'badgeVisited':
+        case 'donationPageVisited':
           return update(accumulator, { [key]: { $set: settings[key].toMillis() } });
         default:
           throw new Error(`Should not have ${key} key`);
